@@ -1,0 +1,224 @@
+page{
+  background: #f2f2f2;
+  width: 100%;
+  height: 100%;
+}
+.index{
+  width: 100%;
+  height: 100%;
+}
+.tool{ 
+  display: block; 
+  width: 100%;
+  height: 410rpx;
+  overflow: hidden;
+  background: #fff;
+} 
+.tools{
+  width: 96%;
+  height: 400rpx;
+  padding: 0 2%;
+  background: #fff;
+  position: relative;  
+  overflow: hidden;
+}
+.li{
+  position: relative;  
+  float: left;  
+  padding: 0;  
+  width: 25%;
+  box-sizing: border-box;  
+}
+.icon{
+  width: 100rpx;  
+  height: 100rpx;  
+  padding-top: 10rpx;
+  margin: 10rpx auto;
+  display: flex;
+  justify-content: center;
+}
+.title{
+  display: block;  
+  text-align: center;   
+  font-size: 28rpx;  
+  white-space: nowrap;  
+  text-overflow: ellipsis;  
+  overflow: hidden; 
+  padding-bottom: 10rpx;
+}
+.swiper-box{ 
+  display: block; 
+  width: 100%;
+  height: 360rpx;
+  overflow: hidden; 
+}
+.dots{
+  height: 16rpx;
+  width: 44rpx;
+  margin: 14rpx auto;
+}
+.dot{
+  width: 16rpx;
+  height: 16rpx;
+  background: #aaa;
+  border-radius: 16rpx;
+  float: left;
+}
+.on{
+    background: #6ed4e6;
+}
+.dot:first-child{
+  margin-right: 12rpx;
+}
+.content{
+  width: 100%;
+  background: #f1f1f1;
+  padding-top: 20rpx;
+}
+.message{
+  margin-bottom: 20rpx;
+}
+.message_content{
+  height: 100rpx;
+  background: #fff;
+  padding: 0 20rpx;
+  font-size: 34rpx;
+  line-height: 100rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.course{
+  width: 100%;
+  margin-bottom: 20rpx;
+  background: #fff;
+}
+.course_list{
+  width: 100%;
+}
+.course_li{
+  height: 90rpx;
+  margin: 14rpx 0;
+  border-bottom: 1rpx solid #f2f2f2;
+}
+.course_li:last-child{
+  border-bottom: 0;
+}
+.jieci{
+  border-left: 2px solid #6ed4e6;
+  float: left;
+  margin-right:20rpx;
+  padding-left: 20rpx;
+  line-height: 80rpx;
+  font-size: 50rpx;
+  color:#6ed4e6;
+}
+.course_name{
+  float: left;
+  width: 40%;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  margin-left: 20rpx;
+  font-size: 30rpx;
+  line-height: 80rpx;
+}
+.course_address{
+  width: 30%;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  font-size: 30rpx;
+  line-height: 80rpx;
+  text-align: right;
+  float: right;
+  padding-right: 10px
+}
+.week{
+  font-size: 30rpx;
+  float: right;
+  color: #ccc;
+}
+.header{
+  background: #fff;
+  padding: 20rpx 0; 
+  height: 50rpx;
+  width: 100%;
+  font-size: 36rpx;
+  line-height: 50rpx;
+  border-bottom: 1px solid #f3f3f3;
+}
+.header_title{
+  float: left;
+  padding: 0 20rpx;
+}
+.news{
+  width: 100%;
+}
+.news_list{
+  padding-left:20rpx;
+  background: #fff;
+  margin-bottom: 20rpx;
+}
+.news_li{
+  width: 100%; 
+  border-bottom: 1px solid #eee;
+}
+.news_title{
+  font-size: 30rpx;
+  line-height: 42rpx;
+  float: left;
+  padding: 14rpx 20rpx 14rpx 0;
+}
+.news_date{
+  font-size: 20rpx;
+  padding-bottom: 14rpx;
+  clear: left;
+  color: #aaa;
+}
+.loading{
+  width: 32rpx;
+  height: 32rpx;
+  margin: 0 20rpx;
+}
+.more{
+  width: 30rpx;
+  height: 30rpx;
+  float: right;
+  margin: 10rpx 10rpx 10rpx 20rpx; 
+}
+.unlogin{
+  text-align: center;
+  padding: 40rpx 0;
+}
+
+.banner {
+  height: 200rpx;
+}
+.banner swiper-item image {
+  width: 100%;
+  height: 100%;
+}
+.exam{
+  height: 80rpx;
+  padding: 8rpx 20rpx;
+  background: #fff;
+  border-bottom: 1px solid #f1f1f1;
+  margin-top: 10rpx;
+}
+.name{
+  margin: 8rpx 0;
+  font-size: 36rpx;
+  float: left;
+}
+.diff{
+  margin: 8rpx 20rpx;
+  float: right;
+  color: #333;
+}
+.days{
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #6ed4e6;
+  padding: 0 10rpx;
+}

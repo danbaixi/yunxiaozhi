@@ -1,0 +1,49 @@
+<i-notice-bar wx:if="{{hasNotice}}" icon="systemprompt" loop closable>
+  {{notice}}
+</i-notice-bar>
+<swiper current="{{currentTab}}" style='height:{{winHeight}}px' class="swiper-box" duration="300" bindchange="bindChange">
+    <swiper-item  wx:if="{{!isNull}}" scroll-y="true" wx:for="{{term}}" wx:key="key">  
+      <view class='scores'>
+        <view class='head'>
+          <view class='term'>{{item.name}}</view>
+          <view class='avg' bindtap='analysis'>平均分：{{avg[index].avg}}分</view>
+          <image class='refresh' bindtap='refresh' src='../../assets/imgs/other/refresh.png'></image>
+        </view>
+        <scroll-view  scroll-y='true' class='list'>
+          <view class='li' wx:for="{{score[index]}}" wx:for-item="score" wx:key="key" bindtap='itemData' data-course='{{score.name}}' data-score='{{score.score}}' data-credit='{{score.credit}}' data-gpa='{{score.gpa}}'>
+            <view class='name'>{{score.name}}</view>
+            <view class='result'>
+              <text class='tag'>成绩：</text><text class='score'>{{score.score==-1?"挂科":score.score+"分"}}</text>
+            </view>
+          </view>
+        </scroll-view>
+      </view>  
+    </swiper-item> 
+    <swiper-item wx:if="{{isNull}}"> 
+      <view class='scores'>
+        <view class='null'>
+          <view class='answer'>空空如也~</view>
+          <view class='answer'>如果你是第一次使用云小智</view>
+          <view class='answer'>请下拉屏幕更新你的成绩</view>
+        </view>
+      </view>
+    </swiper-item>
+</swiper>
+<!-- <ad unit-id="adunit-f760d66d914b3463"></ad> -->
+<i-toast id="toast" />
+  <!--更新课表输入验证码弹窗-->
+  <!-- <view class="modal-mask" bindtap="hideModal" style='height:{{winHeight-32}}px;top:32px' catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
+  <view class="modal-dialog" wx:if="{{showModal}}" class="{{input_focus == 1?'modal-dialog input_focus':'modal-dialog'}}">
+    <view class="modal-title">更新课表</view>
+      <view class="modal-content">
+        <view class="modal-input">
+          <input placeholder-class="input-holder" bindfocus="inputFocus" bindblur="inputBlur" bindinput="yzmInput" maxlength="4" class="input">
+          </input>
+          <image bindtap='freshYzm' class="img_yzm" src="{{yzmUrl}}"></image>
+        </view>  
+      </view>
+      <view class="modal-footer">
+        <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
+        <view class="btn-confirm" bindtap="update" data-status="confirm">确定</view>
+      </view>
+</view> -->

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "裁剪头像",
+  "usingComponents": {
+    "i-toast": "../../dist/toast/index"
+  }
+}

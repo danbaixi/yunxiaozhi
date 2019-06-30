@@ -1,0 +1,33 @@
+<view class='content'>
+  <view class='head'>
+    <view class='left'>
+      <view class='course'>《{{course}}》</view>
+       <view class='xuefen'>学分：{{credit}}　绩点：{{gpa}}</view> 
+    </view>
+    <view class='right'>
+      <view>综合成绩</view>
+      <view class='score'>{{score}}</view>
+    </view>
+  </view>
+   <view class='body'>
+    <view class="top_item bg-g">本班该科成绩整体分析</view>
+    <view class="tr">
+      <view class='item'>平均分　<text class='blue'>{{avg}}</text></view>
+      <view class='item'>最高分　<text class='blue'>{{max}}</text></view>
+    </view>
+    <view class="tr">
+      <view class='item'>挂科率　<text class='blue'>{{fail_rate}}</text></view>
+      <view class='item'>排　名　<text class='blue'>{{my_top}}</text></view> 
+    </view>
+     <view class="top_item bg-g">本班成绩排名TOP3</view>
+    <view wx:for="{{top}}" wx:key="index">
+      <view class='top_item'>
+      <text class='index' style='background:{{color[item.color]}}'>{{item.rank}}</text>
+      <text class='name'>{{item.stu_name}}</text>
+      <text class='blue'>{{item.score}}分</text>
+      </view>
+    </view>
+  </view> 
+  <view class='ad'><ad unit-id="adunit-3eba2eaa58f27073"></ad></view>
+</view>
+<i-toast id="toast" />

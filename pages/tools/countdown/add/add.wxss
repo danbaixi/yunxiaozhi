@@ -1,0 +1,32 @@
+page{
+  background: #f8f6f6;
+}
+.picker_content{
+  font-size: 34rpx;
+  line-height: 80rpx;
+}
+.section{
+  margin: 24rpx 0;
+  width: 100%;
+  background: #fff;
+  height: 80rpx;
+  font-size: 32rpx;
+}
+.title{
+  display: block;
+  width: 20%;
+  text-align: center;
+  line-height: 80rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  float: left;
+  color: #555;
+}
+.input{
+  height: 100%;
+  padding-left: 4%;
+  width: 75%;
+  float: left;
+}
+

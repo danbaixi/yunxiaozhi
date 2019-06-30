@@ -1,0 +1,7 @@
+<view class='news_list'>
+  <view class='news_li' wx:for="{{news_list}}" wx:key="key" data-num="{{item['url']}}" data-title="{{item['title']}}" data-date="{{item['date']}}" bindtap='display'>
+    <view class='news_title'>{{item['title']}}</view>
+    <view class='news_date'>{{item['date']}}</view>
+  </view>
+</view>
+<i-toast id="toast" />

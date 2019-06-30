@@ -1,0 +1,15 @@
+<view class='input'>
+  <textarea class='text' value="{{yq_temp_data}}" bindinput='getData' placeholder='想说点啥...' maxlength='140'></textarea>
+  <text class='length'>还可以输入{{data_length}}字</text>
+</view>
+
+<view class='imgs'>
+  <image wx:for="{{pictures}}" wx:key="index" mode='aspectFill' data-num='{{index}}' bindlongpress='delPicture' class='picture'  src="{{item}}"></image>
+  <image bindtap='addPicture' class='add' src='../../assets/imgs/other/add_picture.png'></image>
+</view>
+
+<view class='btn'>
+  <button hover-class='btn_press' bindtap='submit'>发布</button>
+</view>
+
+

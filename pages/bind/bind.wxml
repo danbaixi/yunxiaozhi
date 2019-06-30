@@ -1,0 +1,49 @@
+<view class='header'>
+  <image class='banner' mode='widthFix' src='../assets/imgs/other/banner.png'></image> 
+</view>
+<view class='login'>
+  <i-notice-bar wx:if="{{hasNotice}}" icon="systemprompt" loop closable>
+   {{notice}}
+  </i-notice-bar>
+  <view class='select'>
+    <!-- <view class="li {{systemType==1?'active':''}}" data-type="1" bindtap='changeLoginType'>新教务系统账号</view> -->
+    <view class="li {{systemType==2?'active':''}}" data-type="2" bindtap='changeLoginType'>旧教务系统账号</view>
+  </view>
+  <view class='input'>
+    <view class='title'>学号 |</view>
+    <input class='content' bindinput='inputUserId' name='user_id' placeholder-style='color:#ddd' placeholder='请输入学号' type='number' value='{{user_id}}'></input>
+    <image class='clear' bindtap='clearUserId' wx:if="{{user_id!=''}}" src='../assets/imgs/other/clear.png'></image>
+  </view>
+
+  <view class='input'>
+    <view class='title'>密码 |</view>
+    <input wx:if="{{!display_password}}" class='content' value='{{user_password}}' bindinput='inputPwd' placeholder-style='color:#ddd' placeholder='请输入密码' type="password"></input>
+    <input wx:else class='content' value='{{user_password}}' bindinput='inputPwd' placeholder-style='color:#ddd' placeholder='请输入密码' type="text"></input>
+    <image wx:if="{{!display_password}}" class='clear' src='../assets/imgs/other/eye_close.png' bindtap='displayPwd'></image>
+    <image wx:else class='clear' src='../assets/imgs/other/eye_open.png' bindtap='hidePwd'></image>
+  </view>
+
+  <view class='input' wx:if="{{systemType==2}}">
+    <view class='title'>验证 |</view>
+    <input class='content code' value='{{code}}' bindinput='inputCode' type='text'></input>
+    <image bindtap='freshYzm' bindload='imageLoad' class="yzm" src="{{yzmUrl}}"></image> 
+    <i-spin i-class='loading' wx:if="{{loading}}"></i-spin>
+  </view>
+
+  <button class='btn' bindtap='login'>登录</button>
+
+  <view class='help' bindtap='help'>
+    帮助
+    <i-icon type="feedback" size="22" color="#bfbfbf"/>
+  </view>
+
+  <i-toast id="toast" />
+  <i-modal title="帮助" visible="{{modal_visible}}" bind:cancel="handleClose" bind:ok="handleClose">
+    <view class='help-info'>
+      <text class='question'>Q:账号和密码是什么？\n</text>
+      <text class='answer'>A:教务系统账号账号\n</text>
+      <text class='question'>Q:忘记密码怎么办？\n</text>
+      <text class='answer'>A:请到教务系统找回\n</text>　
+    </view>
+  </i-modal>
+</view>

@@ -1,0 +1,50 @@
+.page{
+  background: #f1f1f1;
+}
+.input{
+  width: 100%;
+  height: 150px;
+  border-bottom: 1px solid #eee;
+}
+.text{
+  padding: 10rpx 3%;
+  height: 100px;
+  width: 94%;
+  background: #fff;
+}
+.imgs{
+  background: #fff;
+  width: 100%;
+  margin: 30rpx 0;
+  padding: 20rpx 0;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+.picture{
+  width: 158rpx;
+  height: 158rpx;
+  margin: 12rpx 12rpx 0;
+  border: 1px solid #eee;
+}
+.add{
+  width: 100rpx;
+  height: 100rpx;
+  padding: 30rpx;
+  margin: 12rpx 12rpx 0;
+  border: 1px dashed #ddd;
+  border-style: dashed;
+}
+.btn button{
+  margin: 20px auto;
+  width: 90%;
+  color: #fff;
+  background: #6ed4e6;
+}
+.btn_press{
+  background: #60b9c9;
+}
+.length{
+  float: right;
+  margin-right: 20rpx;
+  color: #ccc;
+}

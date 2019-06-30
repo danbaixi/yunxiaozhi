@@ -1,0 +1,85 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/course/course",
+    "pages/community/community",
+    "pages/community/home/home",
+    "pages/my/my",
+    "pages/my/userInfo/userInfo",
+    "pages/tool/tool",
+    "pages/tools/score/ana/ana",
+    "pages/bind/bind",
+    "pages/tools/score/score",
+    "pages/logs/logs",
+    "pages/tools/exam/exam",
+    "pages/tools/calendar/calendar",
+    "pages/tools/attendance/attendance",
+    "pages/tools/yct/yct",
+    "pages/tools/assess/assess",
+    "pages/tools/yct/add/add",
+    "pages/tools/score/top/top",
+    "pages/my/set/set",
+    "pages/course/info/info",
+    "pages/tools/countdown/add/add",
+    "pages/tools/countdown/countdown",
+    "pages/community/new/new",
+    "pages/community/item/item",
+    "pages/cropper/cropper",
+    "pages/tools/certificate/certificate",
+    "pages/tools/dangjian/dangjian",
+    "pages/tools/dangjian/item/item",
+    "pages/tools/who/who",
+    "pages/course/surprised/surprised",
+    "pages/index/more_news/more_news",
+    "pages/index/message/message",
+    "pages/tools/exam/add/add",
+    "pages/my/time/time",
+    "pages/my/pwd/pwd",
+    "pages/course/info/students/students",
+    "pages/news/news",
+    "pages/news/item/item"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#6ed4e6",
+    "backgroundColor": "#6ed4e6",
+    "navigationBarTitleText": "云小智",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "color": "#515151",
+    "selectedColor": "#6ed4e6",
+    "borderStyle": "white",
+    "backgroundColor": "#fff",
+    "list": [
+      {
+        "selectedIconPath": "pages/assets/imgs/index_icon/index_press.png",
+        "iconPath": "pages/assets/imgs/index_icon/index.png",
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "selectedIconPath": "pages/assets/imgs/index_icon/course_press.png",
+        "iconPath": "pages/assets/imgs/index_icon/course.png",
+        "pagePath": "pages/course/course",
+        "text": "课表"
+      },
+      {
+        "selectedIconPath": "pages/assets/imgs/index_icon/news_press.png",
+        "iconPath": "pages/assets/imgs/index_icon/news.png",
+        "pagePath": "pages/news/news",
+        "text": "资讯"
+      },
+      {
+        "selectedIconPath": "pages/assets/imgs/index_icon/my_press.png",
+        "iconPath": "pages/assets/imgs/index_icon/my.png",
+        "pagePath": "pages/my/my",
+        "text": "我的"
+      }
+    ]
+  },
+  "navigateToMiniProgramAppIdList": [
+    "wx18a2ac992306a5a4"
+  ],
+  "sitemapLocation": "sitemap.json"
+}

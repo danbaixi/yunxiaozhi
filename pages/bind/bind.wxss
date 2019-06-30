@@ -1,0 +1,162 @@
+page{
+  background: #f1f1f1;
+}
+.header{
+    position: relative;
+    align-items: center;
+    min-height: 200rpx;
+    background-color: #f1f1f1;
+    overflow: hidden;
+    z-index: -100;
+}
+.header:after,.header:before{
+    content: "";
+    position: absolute;
+    left: 50%;
+    min-width: 300vw;
+    min-height: 300vw;
+    background-color: #6ed4e6;
+    animation-name: rotate;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    z-index: -100;
+}
+.header:before{
+    bottom: 60rpx;
+    border-radius: 45%;
+    animation-duration: 15s;
+    z-index: -100;
+}
+
+.header:after{
+    bottom: 20rpx;
+    opacity: .5;
+    border-radius: 47%;
+    animation-duration: 15s;
+    z-index: -100;
+}
+ 
+@keyframes rotate {
+    0% {
+        transform: translate(-50%, 0) rotateZ(0deg);
+    }
+    50% {
+        transform: translate(-50%, -2%) rotateZ(180deg);
+    }
+    100% {
+        transform: translate(-50%, 0%) rotateZ(360deg);
+    }
+}
+
+.banner{
+  width: 50%;
+  margin: 40rpx 25%;
+}
+
+.login{
+  width: 94%;
+  margin: 60rpx auto;
+}
+.input{
+  width: 100%;
+  height: 100rpx;
+  background: #fff;
+  border-radius: 10rpx;
+  margin: 40rpx 0;
+}
+.title{
+  float: left;
+  height: 60rpx;
+  color: #d4d4d4;
+  font-size: 38rpx;
+  line-height: 60rpx;
+  margin: 20rpx 40rpx;
+  letter-spacing: 4rpx;
+} 
+.content{
+  width: 400rpx;
+  float: left;
+  margin: 20rpx 0;
+  padding: 4rpx 0;
+  height: 60rpx;
+  color: #666;
+  font-size: 38rpx;
+}
+.clear{
+  height: 50rpx;
+  width: 50rpx;
+  float: right;
+  padding: 25rpx 20rpx;
+}
+.code{
+  width: 100px;
+}
+.yzm{
+  height: 80rpx;
+  width: 200rpx;
+  float: right;
+  margin: 10rpx 20rpx;
+}
+.btn{
+  background: linear-gradient(to right, #4cdbfd , #6ed4e6);
+  letter-spacing: 10rpx;
+  border: 0;
+  color: #fff;
+  margin-top: 10rpx;
+}
+button::after{
+  border: 0;
+}
+.loading{
+  height: 40rpx;
+  width: 40rpx;
+  float: right;
+  margin: -66rpx 60rpx;
+}
+.help{
+  float: right;
+  color: #bfbfbf;
+  font-size: 30rpx;
+  margin-top: 40rpx;
+  margin-right: 20rpx;
+}
+.what{
+  height: 38rpx;
+  width: 38rpx;
+  float: right;
+  margin: 4rpx 10rpx;
+}
+.help-info{
+  text-align: left;
+  margin-left: 30px;
+}
+.help-info text{
+  line-height: 48rpx;
+  font-size: 32rpx;
+}
+.question{
+  color: #6ed4e6
+}
+.answer{
+  color: #333
+}
+.select{
+  height: 80rpx;
+  width: 100%;
+  margin: 40rpx auto 0;
+}
+.select .li{
+  display: inline-block;
+  width: 42%;
+  margin: 0 3%;
+  padding: 0 1%;
+  line-height: 80rpx;
+  text-align: center;
+  background: #fff;
+  border-radius: 10rpx;
+  color: #666;
+}
+.select .active{
+  background: #6ed4e6;
+  color: #fff;
+}

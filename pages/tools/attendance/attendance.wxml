@@ -1,0 +1,57 @@
+<view class='attendance'>
+  <button class='update-btn' bindtap="onPullDownRefresh">更新</button>
+  <view class='content' wx:if="{{!isNull}}">
+   <block wx:for="{{term}}" wx:key="key" wx:for-item="xueqi" wx:for-index="index">   
+    <view class='xueqi'>{{xueqi.term}}</view>
+      <view class="tr bg-w">
+        <view class="th">课程</view>
+        <view class="th">老师</view>
+        <view class="th s">周次</view>
+        <view class="th">节次</view>
+        <view class="th">日期</view>
+        <view class="th s">记录</view>
+      </view>
+      <block wx:for="{{attendance[xueqi.term]}}" wx:key="key" wx:for-item="att" wx:for-index="index1">
+        <view class="tr bg-g" wx:if="{{index1 % 2 == 1}}">
+          <view class="td">{{att.course}}</view>
+          <view class="td">{{att.teacher}}</view>
+          <view class="td s">{{att.zhouci}}</view>
+          <view class="td">{{att.jieci}}</view>
+          <view class="td">{{att.date}}</view>
+          <view class="td s" wx:if="{{att.reason!='旷课'&&att.reason!='迟到'&&att.reason!='早退'}}">{{att.reason}}</view>
+          <view class="td s red" wx:if="{{att.reason=='旷课'||att.reason=='迟到'||att.reason=='早退'}}">{{att.reason}}</view>
+        </view>
+        <view class="tr" wx:else>
+          <view class="td">{{att.course}}</view>
+          <view class="td">{{att.teacher}}</view>
+          <view class="td s">{{att.zhouci}}</view>
+          <view class="td">{{att.jieci}}</view>
+          <view class="td">{{att.date}}</view>
+          <view class="td s" wx:if="{{att.reason!='旷课'&&att.reason!='迟到'&&att.reason!='早退'}}">{{att.reason}}</view>
+          <view class="td s red" wx:if="{{att.reason=='旷课'||att.reason=='迟到'||att.reason=='早退'}}">{{att.reason}}</view>
+        </view> 
+      </block>
+    </block>
+  </view>
+<view wx:if="{{isNull}}">
+  <view style="margin-top:50px;text-align:center">没有记录，下拉可更新考勤</view>
+</view>
+
+  <!--更新考勤输入验证码弹窗-->
+  <view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
+  <view class="modal-dialog" wx:if="{{showModal}}" class="{{input_focus == 1?'modal-dialog input_focus':'modal-dialog'}}">
+    <view class="modal-title">更新考勤记录</view>
+      <view class="modal-content">
+        <view class="modal-input">
+          <input placeholder-class="input-holder" bindfocus="inputFocus" bindblur="inputBlur" bindinput="yzmInput" maxlength="4" class="input">
+          </input>
+          <image bindtap='freshYzm' class="img_yzm" src="{{yzmUrl}}"></image>
+        </view>  
+      </view>
+      <view class="modal-footer">
+        <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
+        <view class="btn-confirm" bindtap="onConfirm" data-status="confirm">确定</view>
+      </view>
+  </view>
+</view>
+<i-toast id="toast" />

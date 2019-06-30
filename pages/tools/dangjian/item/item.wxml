@@ -1,0 +1,10 @@
+<view class='item'>
+  <text class='title'>分数：{{score}}</text>
+</view>
+<view class='item'>
+  <text class='title'>类型：{{jl_type}}</text>
+</view>
+<view class='item'>
+  <text class='title'>记录：</text>
+  <text class='jilu'>{{jilu}}</text>
+</view>

@@ -1,0 +1,43 @@
+<view class='content'>
+
+  <view class='list'>
+    <view class='li' bindtap='updateImg'>
+      <text class='title'>头像</text>
+      <image class='rightArrow' src='../../assets/imgs/other/right.png'></image>
+      <text class='info none' wx:if="{{user_img==null}}">未设置</text>
+      <image wx:else class='img' src='{{img_pre}}{{user_img}}'></image> 
+    </view>
+  </view>
+  <view class='list' bindtap='openUpdateName'>
+    <view class='li'>
+      <text class='title'>昵称</text>
+      <image class='rightArrow' src='../../assets/imgs/other/right.png'></image>
+      <text class='info none' wx:if="{{user_name==null}}">未设置</text>
+      <text class='info' wx:else>{{user_name}}</text>
+    </view>
+  </view>
+
+  <view class='list'>
+    <view class='li xueji' wx:for="{{xueji}}" wx:key="key">
+      <text class='title'>{{item.title}}</text>
+      <text class='info'>{{item.data}}</text>
+    </view>
+  </view>
+</view>
+
+  <!--修改用户昵称-->
+  <view class="modal-mask"bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
+  <view class="modal-dialog" wx:if="{{showModal}}" class="{{input_focus == 1?'modal-dialog input_focus':'modal-dialog'}}">
+    <view class="modal-title">修改昵称</view>
+      <view class="modal-content">
+        <view class="modal-input">
+          <input focus='true' placeholder='{{user_name}}' placeholder-class="input-holder" bindfocus="inputFocus" bindblur="inputBlur" bindinput="yzmInput" maxlength="32" class="input">
+          </input>
+        </view>  
+      </view>
+      <view class="modal-footer">
+        <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
+        <view class="btn-confirm" bindtap="UpdateName" data-status="confirm">确定</view>
+      </view>
+  </view>
+  <i-toast id="toast" />

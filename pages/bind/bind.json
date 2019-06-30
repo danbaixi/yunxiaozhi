@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "登录",
+  "usingComponents": {
+    "i-toast": "../../dist/toast/index",
+    "i-modal": "../../dist/modal/index",
+    "i-icon": "../../dist/icon/index",
+    "i-spin": "../../dist/spin/index",
+    "i-notice-bar": "../../dist/notice-bar/index"
+  }
+}

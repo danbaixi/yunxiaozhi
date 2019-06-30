@@ -1,0 +1,7 @@
+<image src="{{pic}}" mode='widthFix' class='img'></image>
+<text class='title text'>{{title}}</text>
+<text class='text'>{{text}}</text>
+<text class='center text'>{{center}}</text>
+<view class='imgs'>
+  <image mode='widthFix' wx:for="{{imgs}}" wx:key="key" src="{{item}}"></image>
+</view>

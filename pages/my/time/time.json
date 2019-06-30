@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "校园时光",
+    "usingComponents": {
+      "i-toast": "../../../dist/toast/index",
+      "i-button": "../../../dist/button/index"
+    }
+}

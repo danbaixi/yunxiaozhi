@@ -1,0 +1,102 @@
+<view class='null' wx:if="{{!login}}">
+  <view>此功能需要登录才能使用</view>
+  <view class="login" bindtap='login'>
+    <i-button type="primary" shape="ghost" size="small">点击登录</i-button>
+  </view>
+</view>
+<view class="container container-fill" wx:if="{{login}}">
+  <image class='music {{rotating}}' bindtap='playBG' mode='scaleToFill' src='../../assets/imgs/other/music.png'></image>
+  <image class='qr' mode='aspectFit' src='../../assets/imgs/other/qr.jpg'></image>
+	<view class="scroll-fullpage" bindtouchstart="scrollTouchstart" bindtouchmove="scrollTouchmove" bindtouchend="scrollTouchend" style="transform:translateY(-{{scrollindex*100}}%);margin-top: {{margintop}}px">
+
+  <view class="section section02 {{scrollindex==0?'active':''}}">
+    <image class='bg' mode='scaleToFill' src='http://yunxiaozhi-1251388077.cosgz.myqcloud.com/xiaochengxu/time_bg1.jpg'>
+    </image>
+    <view class='content'>
+      <view class='section-text upIn'>
+        <view><text style='font-weight:bold'>{{name}}</text> 同学</view>
+        <view>{{start_date}}，你第一次踏进白云</view>
+        <view>{{end_date}}，你将要离开校园</view>
+      </view>
+      <view class='lave upIn'>你的校园生活仅剩</view>
+      <view class='countdown fade'>
+        <view class='li' wx:for="{{countdown}}" wx:key="key" wx:index="index">
+          <view class='time'>
+            <view class='spot'></view>
+            <text style='font-weight:bold'>{{item}}</text> {{units[index]}}
+          </view>
+        </view>
+      </view>
+    </view>
+	</view>
+
+		<view class="section section03 {{scrollindex==1?'active':''}}">
+      <image class='bg' mode='scaleToFill' src='http://yunxiaozhi-1251388077.cosgz.myqcloud.com/xiaochengxu/time_bg33.jpg'>
+      </image>
+      <view class='content'>
+        <view class='section-text upIn'>
+          <view>珍惜大学时光</view>
+          <view>在剩下的校园时光，你大约还能</view>
+        </view>
+        <view class='countdown fade'>
+          <view class='li' wx:for="{{cando}}" wx:key="key" wx:index="index">
+            <view class='time'>
+              <view class='spot'></view>
+              {{cando_pre[index]}} 
+              <text style='font-weight:bold'>{{item}}</text> 
+              {{cando_last[index]}}
+            </view>
+          </view>
+        </view>
+      </view>
+		</view>
+
+    <view class="section section03 {{scrollindex==2?'active':''}}">
+      <image class='bg' mode='scaleToFill' src='http://yunxiaozhi-1251388077.cosgz.myqcloud.com/xiaochengxu/time_bg2.jpg'>
+      </image>
+      <view class='content'>
+        <view class='section-text upIn'>
+          <view>假如你能活100岁</view>
+          <view>你还能存在 <text style='font-weight:bold'>{{diff_year_100}}</text> 天</view>
+        </view>
+        <view class='lave upIn'>剩下的日子，你大约可以</view>
+        <view class='countdown fade'>
+          <view class='li' wx:for="{{year_100_cando}}" wx:key="key" wx:index="index">
+            <view class='time'>
+              <view class='spot'></view>
+              {{year_100_cando_pre[index]}} 
+              <text style='font-weight:bold'>{{item}}</text> 
+              {{year_100_cando_last[index]}}
+            </view>
+          </view>
+        </view>
+      </view>
+		</view>
+
+    <view class="section section04 {{scrollindex==3?'active':''}}">
+      <image class='bg' mode='scaleToFill' src='http://yunxiaozhi-1251388077.cosgz.myqcloud.com/xiaochengxu/time_bg4.jpg'>
+      </image>
+      <view style='padding-top:300rpx;' class='content'>
+        <view class='section-text upIn'>
+          <view>在上大学之前</view>
+          <view>兴奋于脱离高考的痛苦</view>
+          <view>我们都会对大学生活有所憧憬</view>
+        </view>
+        <view class='section-text upIn'>
+          <view>美好的时光总是短暂的</view>
+          <view>所以要好好珍惜</view>
+          <view>希望你有一个难忘的大学时光</view>
+          <view>云小智，与你同在</view>
+        </view>
+        <button class='share leftIn' open-type='share'>分享</button>
+      </view>
+		</view>
+
+	</view>
+</view>
+<view class='content' wx:if="{{login}}">
+  
+</view>
+ 
+
+<i-toast id="toast" />

@@ -1,0 +1,17 @@
+<view class='add_yct'>
+  <form bindsubmit="formSubmit" bindreset="formReset">
+    <view class='inputView'>
+      <label>请输入羊城通卡号</label>
+      <input name='number' class='info' />
+    </view>
+
+    <view class='btn'>
+      <button formType="submit">添加</button>
+    </view>
+
+    <view class='img'>
+      <image src='http://yunxiaozhi-1251388077.file.myqcloud.com/xiaochengxu/yct_demo.png'></image>
+    </view>
+  </form>
+</view>
+<i-toast id="toast" />

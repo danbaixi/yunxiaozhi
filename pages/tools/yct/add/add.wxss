@@ -1,0 +1,31 @@
+label{
+  color: #6ed4e6;
+  font-size: 16px;
+}
+.inputView{
+    border-bottom:  1px solid #ddd;
+    width: 90%;
+    margin: 10px auto;
+}
+.info{
+  height: 44px;
+  width: 90%;
+  font-size: 20px;
+  color: #6ed4e6;
+}
+.btn button{
+  margin: 20px auto;
+  width: 90%;
+}
+.btn_press{
+  background: #60b9c9;
+}
+.img{
+  width: 260px;
+  height: 155px;
+  margin: 0 auto;
+}
+ image{
+  width: 260px;
+  height: 155px;
+} 

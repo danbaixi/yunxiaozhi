@@ -1,0 +1,47 @@
+<view class="swiper-tab">
+     <view wx:for="{{tab_title}}" wx:key="index" class="swiper-tab-list {{currentTab==index ? 'on' : ''}}" data-current="{{index}}" bindtap="swichNav">{{item}}</view>
+</view>
+
+<swiper current="{{currentTab}}" class="swiper-box" duration="300" style="height:{{winHeight-36}}px" bindchange="bindChange">
+    <swiper-item>  
+       <view class='exam' wx:if="{{!courseExamIsNull}}">
+       <view class='term'>{{term}}</view>
+        <view class='content'>
+        <view class='course' wx:for="{{course_exam}}" wx:key="key">
+          <view>科目：{{item.course}}</view>
+          <view>时间：{{item.time}}</view>
+          <view class='item' wx:for="{{item.info}}" wx:key="key" wx:index="index" wx:for-item="list">
+            <view>学号：{{list.stuNum}} {{list.number}}人</view>
+            <view>监考：{{list.teacher1}} {{list.teacher2}}</view>
+            <view>考场：{{list.address}}</view>
+          </view>
+          <view class='copy' bindtap='copy' data-id='{{index}}'>复制</view>
+        </view>
+        </view>
+      </view> 
+      <view style='margin-top:40px;text-align:center' wx:if="{{courseExamIsNull}}">暂时没有记录</view>  
+    </swiper-item> 
+
+    <swiper-item>  
+      <view wx:if="{{!myExamIsNull}}">
+        <view class='exam' bindtap='edit' data-id='{{index}}' wx:index="{{index}}" wx:for="{{my_exam}}" wx:key="key">
+          <view class='info'>
+            <view class='name'>{{item.exam_name}}</view>
+            <view class='date'>{{item.exam_date}} {{item.exam_address}}</view>
+          </view>
+          <view class='diff'>
+            <text wx:if="{{item.days>=0}}">剩余<text class='days'>{{item.days}}</text>天</text>
+            <text wx:else class='examed'>已考完</text>
+          </view>
+        </view>
+        <view style='margin-top:40px;text-align:center' wx:if="{{myExamIsNull}}">
+          点击下方按钮添加等级考试
+        </view>
+      </view>
+      <button class='add' bindtap='add'>添加考试</button>
+    </swiper-item>  
+
+</swiper> 
+
+
+<i-toast id="toast" />

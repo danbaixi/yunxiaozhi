@@ -1,0 +1,31 @@
+<view class='content'>
+  <form bindsubmit="formSubmit">
+    <view class='form-group'>
+      <label>考试科目</label>
+      <input name='name' placeholder='请输入科目名称' value='{{name}}'></input>
+    </view>
+    <view class='form-group'>
+      <label>考试日期</label>
+      <picker mode="date" value="{{date}}" start="2018-09-03" bindchange="bindDateChange">
+        <view class="picker">
+          <input name='date' placeholder='点击选择日期' value='{{date}}'></input>
+        </view>
+      </picker>
+    </view>
+    <view class='form-group'>
+      <label>考试地点</label>
+      <input name='address' placeholder='请输入考试地点(选填)' value='{{address}}'></input>
+    </view>
+    <view class='form-group'>
+      <label>准考证</label>
+      <input name='num' placeholder='请输入准考证(选填)' value='{{num}}'></input>
+    </view>
+    <view class='form-group'>
+      <label>座位号</label>
+      <input name='position' placeholder='请输入座位号(选填)' value='{{position}}'></input>
+    </view>
+    <button  formType="submit" class='add'>{{action}}</button>
+    <view wx:if="{{action=='修改'}}" class='del' bindtap='del'>删除</view>
+  </form>
+</view>
+<i-toast id="toast" />

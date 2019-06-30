@@ -1,0 +1,33 @@
+<view class='access'>
+  <button class='accessing' bindtap='access'>{{btn}}</button>
+  <view class='ana'>已为{{count}}个同学完成评教，节省了{{count*146}}秒时间</view>
+  <view class='content' wx:if="{{!isNull}}">  
+      <view class="tr bg-w">
+        <view class="th" style='width:40%'>课程</view>
+        <view class="th" style='width:12%'>教师</view>
+        <view class="th" style='width:12%'>评分</view>
+        <view class="th" style='width:12%'>已评</view>
+        <view class="th" style='width:14%'>已提交</view>
+      </view>
+      <block wx:for="{{accesses}}" wx:key="key" wx:for-index="index">
+        <view class="tr bg-g" wx:if="{{index % 2 == 1}}">
+          <view class="td" style='width:40%'>{{item.name}}</view>
+          <view class="td" style='width:12%'>{{item.teacher}}</view>
+          <view class="td" style='width:12%'>{{item.total}}</view>
+          <view class="td" style='width:12%'>{{item.is_access}}</view>
+          <view class="td" style='width:14%'>{{item.is_submit}}</view>
+        </view>
+        <view class="tr" wx:else>
+          <view class="td" style='width:40%'>{{item.name}}</view>
+          <view class="td" style='width:12%'>{{item.teacher}}</view>
+          <view class="td" style='width:12%'>{{item.total}}</view>
+          <view class="td" style='width:12%'>{{item.is_access}}</view>
+          <view class="td" style='width:14%'>{{item.is_submit}}</view>
+        </view> 
+      </block>
+  </view>
+</view>
+<view wx:if="{{isNull}}">
+  <view style="margin-top:50px;text-align:center">当前学期评教已结束</view>
+</view>
+<i-toast id="toast" />

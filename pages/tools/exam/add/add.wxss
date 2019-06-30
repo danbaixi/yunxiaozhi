@@ -1,0 +1,39 @@
+page{
+  background: #f3f3f3;
+}
+.content{
+  margin-top: 10px;
+}
+.form-group{
+  padding: 20rpx;
+  border-bottom: 1px solid #f1f1f1;
+  height: 50rpx;
+  background: #fff;
+}
+.form-group label{
+  float: left;
+  min-width: 180rpx;
+  line-height: 50rpx;
+}
+.form-group input{
+  float: left;
+  width: 500rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+}
+.add{
+  width: 94%;
+  margin: 20rpx 3% ;
+  background: linear-gradient(to left, #0cebeb, #20e3b2, #29ffc6);
+  color: #fff;
+  font-size: 16px;
+}
+button::after{
+  border: 0;
+}
+.del{
+  color: #999;
+  text-align: center;
+  margin-top: 30rpx;
+  font-size: 30rpx;
+}

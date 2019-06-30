@@ -1,0 +1,27 @@
+<!-- <view class='head' wx:if="{{num==0}}">无记录</view>
+<view class='info'><text class='text' wx:if="{{num==0}}">{{info}}</text></view>
+<view class='dangjian' wx:if="{{num!=0}}">
+  <view class='head'>学号：{{user_id}} <text>总分：{{total}}</text></view>
+  <view class='content' wx:if="{{num!=0}}">
+   <block wx:if="{{num!=0}}">   
+      <view class="tr bg-w">
+        <view class="th jilu">记录</view>
+        <view class="th score">分数</view>
+        <view class="th type">类型</view>
+      </view>
+      <block wx:for="{{jilu}}" wx:key="key" wx:for-index="index">
+        <view class="tr bg-g" wx:if="{{index % 2 == 1}}" bindtap='item' data-index='{{index}}'>
+          <view class="td jilu">{{item.jilu}}</view>
+          <view class="td score s">{{item.score}}</view>
+          <view class="td type">{{item.type}}</view>
+        </view>
+        <view class="tr" wx:else bindtap='item' data-index='{{index}}'>
+          <view class="td jilu">{{item.jilu}}</view>
+          <view class="td score s">{{item.score}}</view>
+          <view class="td type">{{item.type}}</view>
+        </view>
+      </block>
+    </block>
+  </view>
+</view> -->
+<view style='text-align:center;margin-top:40px'>近期上线，敬请期待</view>

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "一键评教",
+  "usingComponents": {
+    "i-toast": "../../../dist/toast/index"
+  }
+}

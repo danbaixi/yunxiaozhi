@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "羊城通查询",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "i-toast": "../../../dist/toast/index",
+    "i-steps": "../../../dist/steps/index",
+    "i-step": "../../../dist/step/index"
+  }
+}

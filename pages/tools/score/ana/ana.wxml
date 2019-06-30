@@ -1,0 +1,9 @@
+<view class="content" wx:if="{{!isNull}}">
+  <text class='jidian'>GPA(平均绩点)：{{gpa}}</text>
+  <text class='title tip'>数据仅供参考，与奖学金无关</text>
+  <text class='title'>成绩趋向图</text>
+  <canvas  class='line' canvas-id="lineCanvas" disable-scroll="true"></canvas>
+  <text class='title'>成绩分布图</text>
+  <canvas class='column' canvas-id="columnCanvas"></canvas>
+</view>
+<view wx:if="{{isNull}}" style='margin-top:40px;text-align:center'>没有数据，请在成绩页面更新后再进入</view>

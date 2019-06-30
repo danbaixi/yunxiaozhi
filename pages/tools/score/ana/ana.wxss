@@ -1,0 +1,28 @@
+.content{
+  margin-top:4px;
+  height: 100%;
+  width: 100%;
+}
+.line{
+  height: 400rpx;
+  width: 100%;
+}
+.column{
+  height: 600rpx;
+  width: 100%;
+  margin: 0 auto;
+}
+.title{
+  display: block;
+  text-align: center;
+  font-size: 14px;
+  margin: 20rpx 0;
+}
+.jidian{
+  display: block;
+  text-align: center;
+}
+.tip{
+  font-size: 12px;
+  color: #f4e;
+}

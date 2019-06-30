@@ -1,0 +1,72 @@
+page{
+  background: #f2f4f7;
+}
+.cal{
+  height: auto;
+  padding: 14rpx;
+}
+.cal .cal-item{
+  border-radius: 4px;
+  border: 1px solid #666;
+  color: #333;
+  float: left;
+  margin: 20rpx 10rpx;
+  padding: 10rpx 20rpx;
+  font-size: 28rpx;
+}
+.active{
+  border: 1px solid #6ed4e6!important;
+  background: #6ed4e6;
+  color: #fff!important;
+}
+.list{
+  position: relative;
+}
+.section{
+  padding: 0 20rpx;
+}
+.section .li{
+  margin-bottom: 40rpx;
+}
+.section .li-title{
+  font-size: 30rpx;
+  color: #333;
+  width: 96%;
+  overflow: hidden;
+  white-space:nowrap;
+  text-overflow: ellipsis;
+}
+.section .li-date{
+  font-size: 20rpx;
+  color: #666;
+  float: left;
+  margin-top: 10rpx;
+}
+
+.article{
+  border-radius: 4px;
+  background: #fff;
+  padding-bottom: 6px;
+  margin-bottom: 14px;
+}
+.article image{
+  height: 160px;
+  width: 100%;
+  border-radius: 4px 4px 0 0;
+}
+.article .title{
+  font-size: 34rpx;
+  color: #333;
+  padding: 4px 6px;
+  overflow: hidden;
+  white-space:nowrap;
+  text-overflow: ellipsis;
+}
+.article .desc{
+  padding: 4px 6px;
+  font-size: 26rpx;
+  color: #999;
+  overflow: hidden;
+  white-space:nowrap;
+  text-overflow: ellipsis;
+}

@@ -1,0 +1,45 @@
+<view class='cal'>
+  <block wx:for="{{tabs}}" wx:key="key">
+    <view class="cal-item {{current == index?'active':''}}" data-index="{{index}}" bindtap='tabChange'>{{item}}</view>
+  </block>
+  <view style='clear:both'></view>
+</view>
+
+<view class='list'>
+  <view class='section' hidden='{{current!=0}}'>
+    <view style='padding:0 10px 10px;font-size:30rpx;color:red;text-align:center'>更多实用文章，欢迎关注云小智公众号！</view>
+    <view class='article' wx:for="{{article}}" wx:key="key" bindtap='viewArticle' data-src='{{item.src}}'>
+      <image mode='aspectFill' src='{{item.img}}'></image>
+      <view class='title'>{{item.title}}</view>
+      <view class='desc'>{{item.desc}}</view>
+      <view style='clear:both'></view>
+    </view>
+  </view>
+
+  <view class='section' hidden='{{current!=1}}'>
+    <view class='li' wx:for="{{baiyunxinwen_list}}" wx:key="key" bindtap='display' data-num='{{item.url}}' data-title='{{item.title}}' data-date='{{item.date}}' data-type='baiyunxinwen'>
+      <view class='li-title'>{{item.title}}</view>
+      <view class='li-date'>{{item.date}}</view>
+      <view style='clear:both'></view>
+    </view>
+  </view>
+
+  <view class='section' hidden='{{current!=2}}'>
+    <view class='li' wx:for="{{xykx_list}}" wx:key="key" bindtap='display' data-num='{{item.url}}' data-title='{{item.title}}' data-date='{{item.date}}' data-type='xykx'>
+      <view class='li-title'>{{item.title}}</view>
+      <view class='li-date'>{{item.date}}</view>
+      <view style='clear:both'></view>
+    </view>
+  </view>
+
+  <view class='section' hidden='{{current!=3}}'>
+    <view class='li' wx:for="{{xinxigonggao_list}}" wx:key="key" bindtap='display' data-num='{{item.url}}' data-title='{{item.title}}' data-date='{{item.date}}' data-type='xinxigonggao'>
+      <view class='li-title'>{{item.title}}</view>
+      <view class='li-date'>{{item.date}}</view>
+      <view style='clear:both'></view>
+    </view>
+  </view>
+  
+</view>
+
+<i-toast id="toast" />

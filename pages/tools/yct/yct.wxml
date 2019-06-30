@@ -1,0 +1,23 @@
+<view class='yct'>
+  <view class='list'>
+    <view class='none' wx:if="{{isExit == 0}}">未添加任何卡，请点击下方按钮添加</view>
+    <view class='yct_list' wx:if="{{isExit == 1}}" wx:for="{{yct}}" wx:key="key">
+      <view class='li' data-num='{{item.account}}' bindtap='query' bindtouchstart="mytouchstart" bindtouchend="mytouchend">
+        <image class='logo' src='../../assets/imgs/apps_icon/query_yct.png'></image>
+        <text class='logo_text'>羊城通</text>
+        <view class='num'>{{item.account}}</view>
+      </view>
+    </view>
+    <button class='btn' bindtap='add'>添加卡号</button>
+  </view>
+  <view class='result' wx:if='{{display == 1}}'>
+    <view class='info center'>{{history}}</view>
+    <view class='result_text'>
+      <view class='info left'>卡号：{{num}}</view>
+      <view class='info left'>余额：{{money}}</view>
+      <view class='info left'>月乘车次数：{{amount}}</view>
+      <view class='info left'>更新时间：{{time}}</view> 
+    </view>
+  </view>
+</view>
+<i-toast id="toast" />

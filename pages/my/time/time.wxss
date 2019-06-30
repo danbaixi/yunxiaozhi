@@ -1,0 +1,180 @@
+.content{
+  padding: 0 40rpx;
+}
+.section01{
+  color: #000;
+}
+.section-text{
+  padding: 40rpx 0;
+  line-height: 60rpx;
+}
+.countdown{
+  margin-left: 8rpx;
+  padding: 20rpx 0 20rpx 0;
+  border-left: 1px solid #fff;
+  position: relative;
+}
+.lave{
+  font-size:24rpx;
+  margin-bottom: 20rpx;
+}
+.li{
+  padding: 30rpx 0;
+}
+.time{
+  position: relative;
+  padding: 0 20rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+}
+.spot{
+  position: absolute;
+  background: #fff;
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 100%;
+  left: -8rpx;
+  top: 17rpx;
+}
+.bg{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -100;
+}
+.music{
+  position: absolute;
+  width: 72rpx;
+  height: 72rpx;
+  top: 30rpx;
+  right: 30rpx;
+  z-index: 999;
+}
+page{
+	height: 100%;
+	background: #fff;
+	color: #fff;
+  display: flex;
+	flex-direction: column;
+}
+.container {
+	flex: 1;
+  display: flex;
+  flex-direction: column;
+ 	box-sizing: border-box;
+}
+.container-fill{
+	height: 100%;
+	overflow: hidden;
+}
+.scroll-fullpage{
+	height: 100%;
+	transition: all 0.3s;
+}
+.section{
+  position: relative;
+	height: 100%;
+  font-size: 40rpx;
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2)
+}
+.active .leftIn{
+	animation: leftIn 1s;
+}
+.active .rightIn{
+  animation: rightIn 1s;
+}
+.active .upIn{
+	animation: upIn 1s;
+}
+.active .downIn{
+  animation: downIn 1s;
+}
+.active .fade{
+  animation: fade 3s;
+}
+.rotating{
+  animation: rotating 6s linear infinite;
+}
+.qr{
+  position: absolute;
+  height: 100rpx;
+  width: 100rpx;
+  bottom: 30rpx;
+  right: 30rpx;
+  z-index: 999;
+}
+@keyframes leftIn{
+	from {
+		transform: translateX(-200rpx);
+    opacity: 0;
+	}
+	to {
+		transform: translateX(0);
+    opacity: 1;
+	}
+}
+@keyframes rightIn{
+	from {
+		transform: translateX(0);
+    opacity: 0;
+	}
+	to {
+		transform: translateX(200rpx);
+    opacity: 1;
+	}
+}
+@keyframes upIn{
+	from {
+		transform: translateY(80rpx);
+    opacity: 0;
+	}
+	to {
+		transform: translateY(0);
+    opacity: 1;
+	}
+}
+@keyframes downIn{
+	from {
+		transform: translateY(-80rpx);
+    opacity: 0;
+	}
+	to {
+		transform: translateY(0);
+    opacity: 1;
+	}
+}
+@keyframes fade{
+  from {
+    opacity: 0;
+	}
+	to {
+    opacity: 1;
+	}
+}
+@keyframes rotating{
+  from{
+    transform:rotate(0)
+  }
+  to{
+    transform:rotate(360deg)
+  }
+}
+.null{
+  margin-top: 300rpx;
+  color: #000;
+  text-align: center;
+}
+.login{
+  width: 300rpx;
+  margin: 0 auto;
+}
+.share{
+  text-shadow: none;
+  height: 80rpx;
+  width: 200rpx;
+  font-size: 32rpx;
+  line-height: 80rpx;
+  float: left;
+}

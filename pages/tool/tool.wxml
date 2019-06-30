@@ -1,0 +1,29 @@
+<view class="content">
+  <view class='top'>
+    <text class='title'>学业查询</text>
+  </view>
+  <view class="weui-grids">
+    <form class='weui-grid' bindsubmit="collectFormid" wx:for="{{study}}" wx:key="name" report-submit>
+     <button class='form-btn' data-url="{{item.url}}" form-type="submit">
+      <view class="weui-grid__icon">  
+        <image src=" {{item.icon}}" mode="scaleToFill" />  
+      </view>  
+      <text class="weui-grid__label">{{item.name}}</text>  
+      </button>
+    </form>
+  </view>
+
+  <view class='top'>
+    <text class='title'>生活服务</text>
+  </view>
+  <view class="weui-grids">  
+    <form class='weui-grid' bindsubmit="collectFormid" wx:for="{{life}}" wx:key="name" report-submit>
+     <button class='form-btn' data-url="{{item.url}}" form-type="submit">
+      <view class="weui-grid__icon">  
+        <image src=" {{item.icon}}" mode="scaleToFill" />  
+      </view>  
+      <text class="weui-grid__label">{{item.name}}</text>  
+      </button>
+    </form>
+  </view>
+</view>  

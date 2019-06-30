@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "课表",
+  "usingComponents": {
+    "i-action-sheet": "../../dist/action-sheet/index",
+    "i-toast": "../../dist/toast/index",
+    "i-notice-bar": "../../dist/notice-bar/index"
+  }
+}

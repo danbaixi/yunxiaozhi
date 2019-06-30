@@ -1,0 +1,97 @@
+<view class="mask" bindtap="hideMask" style='height:{{winHeight-32}}px' wx:if="{{list_is_display}}"></view>
+<view class='select_week'>
+  <view class='train' data-id="{{train_course_id}}" bindtap='train' wx:if="{{train_course_id!=0}}">实训周</view>
+  <picker  class='week_num' mode="selector" range="{{zhou_num}}" bindchange="select" value="{{now_week-1}}">
+    <text>第 {{now_week}} 周</text>
+    <image class='xiala' src='../assets/imgs/other/xiala.png'></image>
+  </picker> 
+  <view class='update' bindtap='listDisplay'>
+    <image class="{{list_is_display == 0 ? '' : 'rotateRight'}}" style='transition: all 0.5s;width:20px;height:20px;margin:4px 0' src='../assets/imgs/other/plus.png' ></image>
+  </view>
+</view>
+<i-notice-bar wx:if="{{course_notice_display}}" icon="systemprompt" loop closable>
+    {{course_notice}}
+</i-notice-bar>
+<view class='list' style='top:{{list_is_display?32:-180}}px'>
+  <view bindtap='updateCourse' class='li'>
+    更新课表
+    <image class='right' src='../assets/imgs/other/grey_right.png'></image>
+  </view>
+  <view bindtap='selectImg' class='li'>
+    <text class='text_left'>课表背景</text>
+    <image class='right' src='../assets/imgs/other/grey_right.png'></image>
+    <text class='text_right'>{{imageUrl!=''?'已设置':'未设置'}}</text>
+  </view>
+  <view class='li'>
+    <text class='text_left'>边框透明度</text>
+    <view class="slider">
+      <slider data-type='frime' bindchange="sliderchange" activeColor="#6ed4e6" value='{{Kopacity}}' min="0" max="100" show-value/>
+    </view>
+  </view>
+  <view class='li'>
+    <text class='text_left'>课表透明度</text>
+    <view class="slider">
+      <slider data-type='course' bindchange="sliderchange" activeColor="#6ed4e6" value='{{Copacity}}' min="0" max="100" show-value/>
+    </view>
+  </view>
+  <view class='li'>
+    <text class='text_left'>字体大小</text>
+    <view class="slider">
+      <slider data-type='font' bindchange="sliderchange" activeColor="#6ed4e6" value='{{fontSize}}' min="6" max="12" show-value/>
+    </view>
+  </view>
+
+</view>
+
+<!-- 背景图片 -->
+<view class='content'>
+  <image class="course_bg" src="{{imageUrl}}" mode="aspectFill"> </image>
+</view>
+
+<view class="top" style="background-color:rgba(220,220,220,{{(100-Kopacity)/100}})">
+    <view class='top-text month'>{{now_month}}</view>
+    <view wx:for="{{zhou}}" wx:key="key" class="top-text">周{{item}}</view>
+  </view>
+  <view class="top" style="background-color:rgba(220,220,220,{{(100-Kopacity)/100}})">
+    <view class='top-text month'>月</view>
+    <view wx:for="{{now_day}}" wx:key="key" class="top-text {{(todayMonth==now_month&&todayDay==item)?'todayDate':''}}">{{item}}日</view>
+  </view>
+
+  <scroll-view scroll-y="true" class="scroll">
+    <view class='course'>
+      <view class='jie' style="background-color:rgba(220,220,220,{{(100-Kopacity)/100}})">
+        <view wx:for="{{jie}}" wx:key="key" class="left">
+          {{item}}
+        </view>
+      </view>
+
+      <view wx:for="{{course}}" wx:key="key">
+        <!-- 收集formId -->
+         <form bindsubmit="collectFormid" report-submit>
+          <button class='form-btn flex-item kcb-item' data-num="{{item.indexNum}}" form-type="submit" style="margin-left:{{(item.week-1)*104}}rpx;margin-top:{{(item.jie-1)*100+6}}rpx;height:{{item.jieshu==2?196:396}}rpx;background-color:rgba({{colorArrays[item.num]}},{{(100-Copacity)/100}});"> 
+          <!-- 课表 -->
+           <view class="smalltext" style="font-size:{{fontSize}}pt" >{{item.name}}@{{item.address}}</view>
+          </button>
+        </form>
+      </view>
+    </view>
+    
+  </scroll-view>
+
+  <!--更新课表输入验证码弹窗-->
+  <view class="modal-mask" bindtap="hideModal" style='height:{{winHeight-32}}px;top:32px' catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
+  <view class="modal-dialog" wx:if="{{showModal}}" class="{{input_focus == 1?'modal-dialog input_focus':'modal-dialog'}}">
+    <view class="modal-title">更新课表</view>
+      <view class="modal-content">
+        <view class="modal-input">
+          <input placeholder-class="input-holder" bindfocus="inputFocus" bindblur="inputBlur" bindinput="yzmInput" maxlength="4" class="input">
+          </input>
+          <image bindtap='freshYzm' class="img_yzm" src="{{yzmUrl}}"></image>
+        </view>  
+      </view>
+      <view class="modal-footer">
+        <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
+        <view class="btn-confirm" bindtap="update" data-status="confirm">确定</view>
+      </view>
+</view>
+<i-toast id="toast" />

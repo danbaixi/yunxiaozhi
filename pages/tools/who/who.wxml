@@ -1,0 +1,19 @@
+<view class='who'>
+  <view class='info'>戳下面的数字，等待命运的安排</view>
+    <view class='num' bindtap='click' data-num='{{num}}'>
+      <text>{{num}}</text>
+    </view>
+    <view class='control'>
+      <button class='btn' bindtap='stop'>{{press}}</button>
+      <button class='btn' bindtap='clear'>重置</button>
+      <button class='btn' open-type='share'>分享</button>
+    </view>
+  <view class='list'>
+    <view class="li {{item==min?'min':''}}" wx:for="{{data}}" wx:key="key">
+      <view class='top'>{{index+1}}</view>
+      <view class='tip' wx:if="{{item==min}}">就你最小啦，乖乖去拿外卖</view>
+      <view class='data'>{{item}}</view>
+    </view>
+  </view>
+</view>
+<ad unit-id="adunit-e67cddfbc6eaebf3"></ad>

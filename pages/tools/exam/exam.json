@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "我的考试",
+  "usingComponents": {
+    "i-toast": "../../../dist/toast/index"
+  }
+}

@@ -1,0 +1,161 @@
+{
+	"description": "项目配置文件。",
+	"setting": {
+		"urlCheck": true,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true,
+		"autoAudits": false
+	},
+	"compileType": "miniprogram",
+	"libVersion": "2.1.0",
+	"appid": "wxe0f03cdec8ab9416",
+	"projectname": "%E4%BA%91%E5%B0%8F%E6%99%BA",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"current": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": 19,
+			"list": [
+				{
+					"id": -1,
+					"name": "评教",
+					"pathName": "pages/tools/assess/assess",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "应用",
+					"pathName": "pages/tool/tool",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "校历",
+					"pathName": "pages/tools/calendar/calendar",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "四六级",
+					"pathName": "pages/tools/cet/cet",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "羊城通",
+					"pathName": "pages/tools/yct/yct",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "新闻",
+					"pathName": "pages/news/news",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "登录",
+					"pathName": "pages/bind/bind",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "考证",
+					"pathName": "pages/tools/countdown/countdown",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "我的",
+					"pathName": "pages/my/my",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "活动",
+					"pathName": "pages/tools/countdown/countdown",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "成绩",
+					"pathName": "pages/tools/score/score",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "成绩分析",
+					"pathName": "pages/tools/score/ana/ana",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "考勤记录",
+					"pathName": "pages/tools/attendance/attendance",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "考试安排",
+					"pathName": "pages/tools/exam/exam",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "课表",
+					"pathName": "pages/course/course",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "添加等级考试",
+					"pathName": "pages/tools/exam/add/add",
+					"query": ""
+				},
+				{
+					"id": 16,
+					"name": "时光",
+					"pathName": "pages/my/time/time",
+					"query": ""
+				},
+				{
+					"id": 17,
+					"name": "课表",
+					"pathName": "pages/course/course",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "资讯",
+					"pathName": "pages/news/news",
+					"query": ""
+				},
+				{
+					"id": 19,
+					"name": "推文",
+					"pathName": "pages/web/web",
+					"query": "src=https://mp.weixin.qq.com/s?__biz=MzI1NTUwNDIzNQ==&mid=2247484116&idx=1&sn=59418ea4f122e80e561def4650c9e302&chksm=ea35b8d0dd4231c62275111f5e4c348560797a18e210dfe009ccb01a0479ab88f59927d23f02&token=1677165237&lang=zh_CN#rd",
+					"scene": null
+				}
+			]
+		}
+	}
+}
