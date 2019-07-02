@@ -5,10 +5,10 @@
   <i-notice-bar wx:if="{{hasNotice}}" icon="systemprompt" loop closable>
    {{notice}}
   </i-notice-bar>
-  <view class='select'>
-    <!-- <view class="li {{systemType==1?'active':''}}" data-type="1" bindtap='changeLoginType'>新教务系统账号</view> -->
+  <!-- <view class='select'>
+    <view class="li {{systemType==1?'active':''}}" data-type="1" bindtap='changeLoginType'>新教务系统账号</view>
     <view class="li {{systemType==2?'active':''}}" data-type="2" bindtap='changeLoginType'>旧教务系统账号</view>
-  </view>
+  </view> -->
   <view class='input'>
     <view class='title'>学号 |</view>
     <input class='content' bindinput='inputUserId' name='user_id' placeholder-style='color:#ddd' placeholder='请输入学号' type='number' value='{{user_id}}'></input>

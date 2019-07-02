@@ -1,4 +1,5 @@
-/**app.wxss**/
+@import "pages/assets/colorui/main.wxss";
+@import "pages/assets/colorui/icon.wxss";
 
 /*toast start*/
 .wxapp-toast-mask{
