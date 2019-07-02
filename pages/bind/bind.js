@@ -141,7 +141,7 @@ Page({
         },
         success: function (res) {
           $Toast.hide();
-          if (res.data.status == 1002) {
+          if (res.data.status == 0) {
             var str = app.globalData.key + user_id;
             var sign = md5.hexMD5(str);
             wx.setStorageSync('user_id', user_id);
@@ -170,7 +170,7 @@ Page({
               },
             }); 
           }else {
-            $Toast({ content: '登录失败', type: 'error' });
+            $Toast({ content: res.data.message, type: 'error' });
             that.freshYzm();
           }
         }

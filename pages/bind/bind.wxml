@@ -26,7 +26,7 @@
   <view class='input' wx:if="{{systemType==2}}">
     <view class='title'>验证 |</view>
     <input class='content code' value='{{code}}' bindinput='inputCode' type='text'></input>
-    <image bindtap='freshYzm' bindload='imageLoad' class="yzm" src="{{yzmUrl}}"></image> 
+    <image bindtap='freshYzm' bindload='imageLoad' class="bind_yzm" src="{{yzmUrl}}"></image> 
     <i-spin i-class='loading' wx:if="{{loading}}"></i-spin>
   </view>
 

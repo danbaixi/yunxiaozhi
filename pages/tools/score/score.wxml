@@ -29,7 +29,6 @@
       </view>
     </swiper-item>
 </swiper>
-<!-- <ad unit-id="adunit-f760d66d914b3463"></ad> -->
 <i-toast id="toast" />
   <!--更新课表输入验证码弹窗-->
   <view class="modal-mask" bindtap="hideModal" style='height:{{winHeight-32}}px;top:32px' catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
