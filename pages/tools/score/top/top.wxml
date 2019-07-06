@@ -24,7 +24,7 @@
       <view class='top_item'>
       <text class='index' style='background:{{color[item.color]}}'>{{item.rank}}</text>
       <text class='name'>{{item.stu_name}}</text>
-      <text class='blue'>{{item.score}}分</text>
+      <text class='blue'>{{item.score}}</text>
       </view>
     </view>
   </view> 

@@ -13,7 +13,7 @@
           <view class='li' wx:for="{{score[index]}}" wx:for-item="score" wx:key="key" bindtap='itemData' data-course='{{score.name}}' data-score='{{score.score}}' data-credit='{{score.credit}}' data-gpa='{{score.gpa}}'>
             <view class='name'>{{score.name}}</view>
             <view class='result'>
-              <text class='tag'>成绩：</text><text class='score'>{{score.score==-1?"挂科":score.score+"分"}}</text>
+              <text class='tag'>成绩：</text><text class='score'>{{score.score==-1?"挂科":score.score}}</text>
             </view>
           </view>
         </scroll-view>
@@ -29,12 +29,11 @@
       </view>
     </swiper-item>
 </swiper>
-<!-- <ad unit-id="adunit-f760d66d914b3463"></ad> -->
 <i-toast id="toast" />
   <!--更新课表输入验证码弹窗-->
-  <!-- <view class="modal-mask" bindtap="hideModal" style='height:{{winHeight-32}}px;top:32px' catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
+  <view class="modal-mask" bindtap="hideModal" style='height:{{winHeight-32}}px;top:32px' catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
   <view class="modal-dialog" wx:if="{{showModal}}" class="{{input_focus == 1?'modal-dialog input_focus':'modal-dialog'}}">
-    <view class="modal-title">更新课表</view>
+    <view class="modal-title">更新成绩</view>
       <view class="modal-content">
         <view class="modal-input">
           <input placeholder-class="input-holder" bindfocus="inputFocus" bindblur="inputBlur" bindinput="yzmInput" maxlength="4" class="input">
@@ -46,4 +45,4 @@
         <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
         <view class="btn-confirm" bindtap="update" data-status="confirm">确定</view>
       </view>
-</view> -->
+</view>

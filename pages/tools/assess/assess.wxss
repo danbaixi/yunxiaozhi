@@ -2,7 +2,7 @@
   display: flex;
   width: 100%;
   justify-content: center;
-  height: 3rem;
+  height: 2rem;
   align-items: center;
 }
 .td {
@@ -28,7 +28,7 @@
   background: f9f9f9;
   color: #848b91;
   display: flex;
-  height: 3rem;
+  height: 2rem;
   font-size: 30rpx;
   align-items: center;
 }
@@ -44,4 +44,13 @@
   margin: 0 0 30rpx 0;
   font-size: 28rpx;
   color: #0978f7;
+}
+.null{
+  font-size:32rpx;
+  text-align:center;
+  margin:200rpx 0;
+  line-height: 2;
+}
+button{
+  margin:20rpx 20rpx;
 }

@@ -43,7 +43,7 @@ page{
   border-bottom: 2rpx solid #d5d5d5;
 }
 .li .result{
-  min-width: 212rpx;
+  min-width: 190rpx;
   float: right;
   text-align: left;
 }
@@ -77,97 +77,4 @@ page{
   position: absolute;
   right: 40rpx;
   top: 12rpx;
-}
-/** 更新课表 */
-.img_yzm{
-  float: right;
-  margin: 4rpx;
-  width: 200rpx;
-  height: 76rpx
-}
-
-.modal-mask {
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  background: #000;
-  opacity: 0.4;
-  overflow: hidden;
-  z-index: 2;
-  color: #fff;
-  transition: all 0.4s;
-}
-
-.modal-dialog {
-  transition: all 0.5s;
-  width: 540rpx;
-  overflow: hidden;
-  position: fixed;
-  top: 50%;
-  left: 0;
-  z-index: 100;
-  background: #f9f9f9;
-  margin: -180rpx 105rpx;
-  border-radius: 28rpx;
-}
-.input_focus{
-  top: 30%;
-}
-
-.modal-title {
-  padding-top: 50rpx; 
-  font-size: 36rpx;
-  color: #030303;
-  text-align: center;
-}
-
-.modal-content {
-   padding: 50rpx 32rpx; 
-}
-
-.modal-input {
-  display: flex;
-  background: #fff;
-  border: 2rpx solid #ddd;
-  border-radius: 4rpx;
-  font-size: 28rpx;
-}
-
-.input {
-  width: 100%;
-  height: 82rpx;
-  font-size: 28rpx;
-  line-height: 28rpx;
-  padding: 0 20rpx;
-  box-sizing: border-box;
-  color: #333;
-}
-
-input-holder {
-  color: #666;
-  font-size: 28rpx;
-}
-
-.modal-footer {
-  display: flex;
-  flex-direction: row;
-  height: 86rpx;
-  border-top: 1px solid #dedede;
-  font-size: 34rpx;
-  line-height: 86rpx;
-}
-
-.btn-cancel {
-  width: 50%;
-  color: #666;
-  text-align: center;
-  border-right: 1px solid #dedede;
-}
-
-.btn-confirm {
-  width: 50%;
-  color: #ec5300;
-  text-align: center;
 }

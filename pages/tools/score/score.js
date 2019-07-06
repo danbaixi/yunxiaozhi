@@ -55,53 +55,54 @@ Page({
       })
       return
     }
-    var time = (new Date()).getTime();
-    if (wx.getStorageInfoSync('score_update_time') != ""){
-      var update_time = wx.getStorageSync('score_update_time');
-      var cha = time - update_time;
-      var second = Math.floor(cha / 24 / 60);
-    }else{
-      var second = that.data.maxUpdateTime*60;
-    }
-    if (second >= that.data.maxUpdateTime*60){
-      wx.showNavigationBarLoading();
-      $Toast({ content: '更新中', type: 'loading', duration: 0 });
-      var user_id = wx.getStorageSync('user_id');
-      var user_password = wx.getStorageSync('user_new_password');
-      var str = app.globalData.key + user_id;
-      var sign = md5.hexMD5(str);
-      var encoded = util.encodeInp(user_id) + "%%%" + util.encodeInp(user_password);
-      wx.request({
-        url: app.globalData.domain + 'score/updateScore',
-        data: {
-          stu_id: user_id,
-          password: user_password,
-          encoded: encoded,
-          sign: sign
-        },
-        success: function (res) {
-          $Toast.hide();
-          wx.hideNavigationBarLoading();
-          wx.setStorageSync('score_update_time', time);
-          if (res.data.status == 1001) {
-            $Toast({ content: '更新了' + res.data.data + '条记录', type: 'success' });
-            if(res.data.data>0){
-              that.setData({
-                isNull: false
-              })
-              setTimeout(function () {
-                that.getScore(true);
-              }, 1000)
-            }
-          } else {
-            $Toast({content:res.data.message, type: 'error' });
-          }
-        }
-      })
-    }else{
-      wx.hideNavigationBarLoading();
-      $Toast({ content: (that.data.maxUpdateTime*60-second)+'秒后可更新', type: 'error' });
-    }
+    that.updateScore()
+    // var time = (new Date()).getTime();
+    // if (wx.getStorageInfoSync('score_update_time') != ""){
+    //   var update_time = wx.getStorageSync('score_update_time');
+    //   var cha = time - update_time;
+    //   var second = Math.floor(cha / 24 / 60);
+    // }else{
+    //   var second = that.data.maxUpdateTime*60;
+    // }
+    // if (second >= that.data.maxUpdateTime*60){
+    //   wx.showNavigationBarLoading();
+    //   $Toast({ content: '更新中', type: 'loading', duration: 0 });
+    //   var user_id = wx.getStorageSync('user_id');
+    //   var user_password = wx.getStorageSync('user_new_password');
+    //   var str = app.globalData.key + user_id;
+    //   var sign = md5.hexMD5(str);
+    //   var encoded = util.encodeInp(user_id) + "%%%" + util.encodeInp(user_password);
+    //   wx.request({
+    //     url: app.globalData.domain + 'score/updateScore',
+    //     data: {
+    //       stu_id: user_id,
+    //       password: user_password,
+    //       encoded: encoded,
+    //       sign: sign
+    //     },
+    //     success: function (res) {
+    //       $Toast.hide();
+    //       wx.hideNavigationBarLoading();
+    //       wx.setStorageSync('score_update_time', time);
+    //       if (res.data.status == 1001) {
+    //         $Toast({ content: '更新了' + res.data.data + '条记录', type: 'success' });
+    //         if(res.data.data>0){
+    //           that.setData({
+    //             isNull: false
+    //           })
+    //           setTimeout(function () {
+    //             that.getScore(true);
+    //           }, 1000)
+    //         }
+    //       } else {
+    //         $Toast({content:res.data.message, type: 'error' });
+    //       }
+    //     }
+    //   })
+    // }else{
+    //   wx.hideNavigationBarLoading();
+    //   $Toast({ content: (that.data.maxUpdateTime*60-second)+'秒后可更新', type: 'error' });
+    // }
   },
 
   /**
@@ -329,8 +330,8 @@ Page({
           },
           success: function (res) {
             $Toast.hide();
-            wx.hideNavigationBarLoading();
-            wx.setStorageSync('score_update_time', time);
+            that.hideModal();
+            wx.hideNavigationBarLoading()
             if (res.data.status == 1001) {
               $Toast({ content: '更新了' + res.data.data + '条记录', type: 'success' });
               if (res.data.data > 0) {
@@ -341,6 +342,7 @@ Page({
                   that.getScore(true);
                 }, 1000)
               }
+              wx.setStorageSync('score_update_time', time);
             } else {
               $Toast({ content: res.data.message, type: 'error' });
             }

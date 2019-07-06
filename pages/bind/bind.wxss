@@ -91,7 +91,7 @@ page{
 .code{
   width: 100px;
 }
-.yzm{
+.bind_yzm{
   height: 80rpx;
   width: 200rpx;
   float: right;
