@@ -13,7 +13,7 @@
           <view class='li' wx:for="{{score[index]}}" wx:for-item="score" wx:key="key" bindtap='itemData' data-course='{{score.name}}' data-score='{{score.score}}' data-credit='{{score.credit}}' data-gpa='{{score.gpa}}'>
             <view class='name'>{{score.name}}</view>
             <view class='result'>
-              <text class='tag'>成绩：</text><text class='score'>{{score.score==-1?"挂科":score.score+"分"}}</text>
+              <text class='tag'>成绩：</text><text class='score'>{{score.score==-1?"挂科":score.score}}</text>
             </view>
           </view>
         </scroll-view>

@@ -331,9 +331,7 @@ Page({
           success: function (res) {
             $Toast.hide();
             that.hideModal();
-            wx.hideNavigationBarLoading();
-            wx.setStorageSync('score_update_time', time);
-
+            wx.hideNavigationBarLoading()
             if (res.data.status == 1001) {
               $Toast({ content: '更新了' + res.data.data + '条记录', type: 'success' });
               if (res.data.data > 0) {
@@ -344,6 +342,7 @@ Page({
                   that.getScore(true);
                 }, 1000)
               }
+              wx.setStorageSync('score_update_time', time);
             } else {
               $Toast({ content: res.data.message, type: 'error' });
             }

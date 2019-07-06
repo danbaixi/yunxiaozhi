@@ -43,7 +43,7 @@ page{
   border-bottom: 2rpx solid #d5d5d5;
 }
 .li .result{
-  min-width: 212rpx;
+  min-width: 190rpx;
   float: right;
   text-align: left;
 }
