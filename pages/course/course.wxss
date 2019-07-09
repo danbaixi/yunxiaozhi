@@ -27,9 +27,10 @@
   position: relative;
   background: #6ed4e6; 
   color: #fff;
-  height: 26px;
-  padding-bottom: 6px;
+  height: 32px;
   z-index: 1000;
+  font-size:16px;
+
 }
 .xiala{
   width: 20px;
@@ -40,13 +41,14 @@
   color: #fff;
   justify-content: center;
   display: flex;
+  height: 100%;
+  line-height:1.8;
 }
 .update{
   position: fixed; 
   justify-content: center;
   top:0;
-  right: 5px;
-  padding: 0 10px;
+  right: 12px;
 }
 .train{
   position: fixed; 

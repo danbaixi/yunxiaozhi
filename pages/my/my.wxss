@@ -47,7 +47,7 @@ page{
   font-size: 32rpx;
   padding: 20rpx 0;
 }
-.content{
+.infoContent{
   position: absolute;
   top: 320rpx;
   left: 5%;
@@ -82,4 +82,7 @@ button::after{
   top: 0;
   left: 0;
   opacity: 0;
+}
+.navigator-hover{
+  background: #fff;
 }

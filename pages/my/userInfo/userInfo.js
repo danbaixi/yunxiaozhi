@@ -1,7 +1,4 @@
-var util = require('../../../utils/util.js');
-var md5 = require('../../../utils/md5.js');
 var uploadFn = require('../../../utils/upload.js');
-const { $Toast } = require('../../../dist/base/index');
 var app = getApp();
 Page({
 
@@ -9,7 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: { 
-    img_pre:'http://yunxiaozhi-1251388077.file.myqcloud.com/user_imgs/',
+    img_pre:'http://yunxiaozhi-1251388077.cosgz.myqcloud.com/user_imgs/',
   },
 
   /**
@@ -92,20 +89,22 @@ Page({
     if(nickName == that.data.user_name){
       wx.showToast({ title: '修改成功', icon: 'success' }); 
     }else{
-      var user_id = wx.getStorageSync('user_id');
-      var str = app.globalData.key + user_id;
-      var sign = md5.hexMD5(str);
-      wx.request({
-        url: app.globalData.domain + 'user/alternickname',
+      wx.showLoading({
+        title: '提交中',
+      })
+      app.httpRequest({
+        url: 'user/alternickname',
         data: {
-          sign:sign,
-          stu_id: user_id,
+          sign: app.getSign(),
           nickname: nickName,
         },
         success: function (res) {
-          if(res.data.status == 1001){
+          wx.hideLoading()
+          if (res.data.status == 0) {
             that.hideModal();
-            $Toast({ content: '修改成功', type: 'success' })
+            wx.showToast({
+              title: '修改成功',
+            })
             setTimeout(function () {
               //返回后刷新
               var pages = getCurrentPages();
@@ -116,11 +115,9 @@ Page({
                 isFresh: true
               });
               wx.navigateBack({})
-            }, 1000) 
-          }else if(res.data.status == 1003){
-            $Toast({content:'用户不存在',type:'error'})
-          }else{
-            $Toast({ content: '修改失败', type: 'error' })
+            }, 1000)
+          } else{
+            app.msg(res.data.message)
           }
         }
       })

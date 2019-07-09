@@ -2,9 +2,9 @@
   <image class='banner' mode='widthFix' src='../assets/imgs/other/banner.png'></image> 
 </view>
 <view class='login'>
-  <i-notice-bar wx:if="{{hasNotice}}" icon="systemprompt" loop closable>
+  <!-- <i-notice-bar wx:if="{{hasNotice}}" icon="systemprompt" loop closable>
    {{notice}}
-  </i-notice-bar>
+  </i-notice-bar> -->
   <!-- <view class='select'>
     <view class="li {{systemType==1?'active':''}}" data-type="1" bindtap='changeLoginType'>新教务系统账号</view>
     <view class="li {{systemType==2?'active':''}}" data-type="2" bindtap='changeLoginType'>旧教务系统账号</view>
@@ -32,18 +32,24 @@
 
   <button class='btn' bindtap='login'>登录</button>
 
-  <view class='help' bindtap='help'>
-    帮助
-    <i-icon type="feedback" size="22" color="#bfbfbf"/>
-  </view>
+  <view class='help' bindtap='help'>帮助<text class="icon-question lg text-black"></text></view>
 
-  <i-toast id="toast" />
-  <i-modal title="帮助" visible="{{modal_visible}}" bind:cancel="handleClose" bind:ok="handleClose">
-    <view class='help-info'>
-      <text class='question'>Q:账号和密码是什么？\n</text>
-      <text class='answer'>A:教务系统账号账号\n</text>
-      <text class='question'>Q:忘记密码怎么办？\n</text>
-      <text class='answer'>A:请到教务系统找回\n</text>　
+<view class="cu-modal {{modal_visible?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">帮助</view>
+      <view class="action" bindtap="handleClose">
+        <text class="icon-close text-red"></text>
+      </view>
     </view>
-  </i-modal>
+    <view class="padding-xl">
+      <view class='help-info'>
+        <text class='question'>Q:账号和密码是什么？\n</text>
+        <text class='answer'>A:教务系统账号账号\n</text>
+        <text class='question'>Q:忘记密码怎么办？\n</text>
+        <text class='answer'>A:请到教务系统找回\n</text>　
+      </view>
+    </view>
+  </view>
+</view>
 </view>

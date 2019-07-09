@@ -2,16 +2,16 @@
 <view class='select_week'>
   <view class='train' data-id="{{train_course_id}}" bindtap='train' wx:if="{{train_course_id!=0}}">实训周</view>
   <picker  class='week_num' mode="selector" range="{{zhou_num}}" bindchange="select" value="{{now_week-1}}">
-    <text>第 {{now_week}} 周</text>
-    <image class='xiala' src='../assets/imgs/other/xiala.png'></image>
+    <text>第 {{now_week}} 周 </text>
+    <text class="icon-unfold lg text-white"></text>
   </picker> 
   <view class='update' bindtap='listDisplay'>
-    <image class="{{list_is_display == 0 ? '' : 'rotateRight'}}" style='transition: all 0.5s;width:20px;height:20px;margin:4px 0' src='../assets/imgs/other/plus.png' ></image>
+    <text style="font-size:26px;" class="icon-add lg text-white {{list_is_display == 0 ? '' : 'rotateRight'}}"></text>
   </view>
 </view>
-<i-notice-bar wx:if="{{course_notice_display}}" icon="systemprompt" loop closable>
+<!-- <i-notice-bar wx:if="{{course_notice_display}}" icon="systemprompt" loop closable>
     {{course_notice}}
-</i-notice-bar>
+</i-notice-bar> -->
 <view class='list' style='top:{{list_is_display?32:-180}}px'>
   <view bindtap='updateCourse' class='li'>
     更新课表

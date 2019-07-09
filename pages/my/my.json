@@ -1,11 +1,4 @@
 {
   "navigationBarTitleText": "我的",
-  "enablePullDownRefresh": true,
-  "usingComponents": {
-    "i-cell-group": "../../dist/cell-group/index",
-    "i-cell": "../../dist/cell/index",
-    "i-icon": "../../dist/icon/index",
-    "i-toast": "../../dist/toast/index",
-    "i-modal": "../../dist/modal/index"
-  }
+  "enablePullDownRefresh": true
 }

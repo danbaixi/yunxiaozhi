@@ -1,3 +1,4 @@
+const md5 = require('/utils/md5.js');
 App({
   onLoad: function () {
     //检查是否登录
@@ -33,8 +34,8 @@ App({
   },
   /** 全局变量 */
   globalData:{
-    isDebug:true,
-    xdebug:"?XDEBUG_SESSION_START=12050",
+    isDebug:false,
+    xdebug:"?XDEBUG_SESSION_START=10885",
     domain:'https://www.yunxiaozhi.cn/v1/public/api/',
     key:'ihzoaixnuy4f8835032505e8a45ac102c52d58593e',
     start_year: 2019,
@@ -49,10 +50,26 @@ App({
     return this.globalData.isDebug ? 'https://danbaixi.utools.club/yxz_v1/public/api/' : 'https://www.yunxiaozhi.cn/v1/public/api/'
   },
 
+  getSign:function(){
+    var uid = wx.getStorageSync('user_id')
+    var key = this.globalData.key
+    var sign = md5.hexMD5(key + uid)
+    return sign
+  },
+
   /**
    *  封装request 
    */
   httpRequest:function(datas){
+    if(datas.page != 'bind'){
+      var uid = wx.getStorageSync('user_id')
+      if(uid == ""){
+        app.msg('请先登录')
+        return
+      }else{
+        datas.data.stu_id = uid
+      }
+    }
     var that = this,
         isDebug = this.globalData.isDebug,
         domain = this.getDomain(),
@@ -72,6 +89,9 @@ App({
         'content-type': contentType
       },
       success:function(res){
+        if(res.data.code == 1101){
+          app.msg('请求失败')
+        }
         datas.success(res)
       },
       fail:function(res){

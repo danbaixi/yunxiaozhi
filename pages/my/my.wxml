@@ -1,51 +1,65 @@
 <view class='header'>
-    <view class="userinfo" bindtap="{{bind==1?'toUserInfo':'bind'}}">
-      <image mode='aspectFill' class="avatar" src="{{img_pre}}{{user_img}}" background-size="cover"  ></image>
-      <view class="nickname">{{bind==1?user_name:'未登录'}}</view>
+  <view class="userinfo" bindtap="{{bind==1?'toUserInfo':'bind'}}">
+    <image mode='aspectFill' class="avatar" src="{{img_pre}}{{user_img}}" background-size="cover"  ></image>
+    <view class="nickname">{{bind==1?user_name:'未登录'}}</view>
+  </view>
+</view>
+<view class='infoContent'>
+  <view class='my' bindtap="{{bind==1?'exit':'bind'}}">
+    <view>教务信息</view>
+    <view>帐号：{{user_id}}</view>
+  </view>
+  <view class="cu-list menu sm-border">
+    <view class="cu-item arrow" data-page='userInfo' bindtap="goPage">
+      <view class="content">
+        <text class="icon-my lg text-black"></text>
+        <text class="text-black">详细信息</text>
+      </view>
+    </view>
+    <view class="cu-item arrow" data-page='set' bindtap="goPage">
+      <view class="content">
+        <text class="icon-settings lg text-black"></text>
+        <text class="text-black">个人设置</text>
+      </view>
+    </view>
+    <!-- <view class="cu-item arrow" data-page='pwd' bindtap="goPage">
+      <view class="content">
+        <text class="icon-settings lg text-black"></text>
+        <text class="text-black">找回密码</text>
+      </view>
+    </view> -->
+    <view class="cu-item arrow" bindtap="showModal">
+      <view class="content">
+        <text class="icon-comment lg text-black"></text>
+        <text class="text-black">问题反馈</text>
+      </view>
+    </view>
+    <view class="cu-item arrow">
+      <navigator class="content" target="miniProgram"open-type="navigate" app-id="wx18a2ac992306a5a4" path="pages/apps/largess/detail?id=fepGU2z7jvagPc1CLmE7uw%3D%3D">
+        <text class="icon-appreciate lg text-black"></text>
+        <text class="text-black">赞赏支持</text>
+      </navigator>
+    </view>
+    <view class="cu-item arrow" bindtap="exit">
+      <view class="content">
+        <text class="icon-exit lg text-black"></text>
+        <text class="text-black">退出登录</text>
+      </view>
+    </view>
+  </view>
+  <view class="cu-modal {{modalName=='kefu'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">温馨提示</view>
+      <view class="action" bindtap="hideModal">
+        <text class="icon-close text-red"></text>
+      </view>
+    </view>
+    <view class="padding-xl">
+        <view>由于微信的限制，不再提供在线客服</view>
+        <view style='color:red'>请关注云小智公众号留言反馈你的问题</view>
+      </view>
     </view>
 </view>
-<view class='content'>
-  <view class='my' bindtap='exit' wx:if="{{bind ==1}}">
-    <view>教务信息</view>
-    <view>帐号：{{user_id}}</view>
-  </view>
-  <view class='my' bindtap='bind' wx:if="{{bind ==0}}">
-    <view>教务信息</view>
-    <view>帐号：{{user_id}}</view>
-  </view>
-
-  <i-cell-group>
-    <i-cell title="详细资料" slot="icon" is-link  bindtap="{{bind==1?'toUserInfo':'pleaseLogin'}}">
-      <i-icon slot="icon" size='21' type="other" />
-    </i-cell>
-    <i-cell title="个人设置" slot="icon" bindtap="{{bind==1?'':'pleaseLogin'}}" is-link url="{{bind==1?'/pages/my/set/set':''}}">
-      <i-icon slot="icon" size='21' type="setup" />
-    </i-cell>
-    <!-- <i-cell title="找回密码" slot="icon" is-link  bindtap="toFind">
-      <i-icon slot="icon" size='21' type="search" />
-    </i-cell> -->
-    <i-cell title="问题反馈" bindtap='kefu' is-link>
-      <i-icon slot="icon" size='21' type="feedback" />
-    </i-cell>
-      <i-cell title="赞赏支持" style="position:relative" is-link>
-        <navigator class='zanshang' target="miniProgram"open-type="navigate" app-id="wx18a2ac992306a5a4" path="pages/apps/largess/detail?id=fepGU2z7jvagPc1CLmE7uw%3D%3D">
-        支持赞赏     
-        </navigator>
-        <i-icon slot="icon" size='21' type="like" />
-    </i-cell>
-    <i-cell title="退出登录" slot="icon" is-link  bindtap="{{bind==1?'exit':'pleaseLogin'}}">
-      <i-icon slot="icon" size='21' type="undo" />
-    </i-cell>
-    <official-account></official-account>
-    <!-- <i-cell title="关于云小智" is-link>
-      <i-icon slot="icon" size='21' type="integral" />
-    </i-cell> -->
-  </i-cell-group>
-  <i-modal title="温馨提示" visible="{{visible}}" bind:ok="handleClose" bind:cancel="handleClose">
-    <view>由于微信的限制，不再提供在线客服</view>
-    <view style='color:red'>请关注云小智公众号留言反馈你的问题</view>
-    <view>请谅解，谢谢你的支持</view>
-</i-modal>
 </view>
-<i-toast id="toast" />
 

@@ -139,6 +139,7 @@ Page({
     } else {
       app.httpRequest({
         url: 'login/LoginV1',
+        page:'bind',
         data: {
           stu_id: user_id,
           password: password,
@@ -278,6 +279,7 @@ Page({
     var that = this
     app.httpRequest({
       url: 'login/getLoginInitData',
+      page: 'bind',
       success: function (res) {
         that.setData({
           cookie_2: res.data.data.cookie,

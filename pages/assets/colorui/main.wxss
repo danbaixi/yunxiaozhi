@@ -12,7 +12,7 @@
  ==================== */
 
 page {
-  background-color: #f1f1f1;
+  background-color: var(--backgroud);
   font-size: 28rpx;
   color: #333;
   font-family: Helvetica Neue, Helvetica, sans-serif;
@@ -32,6 +32,7 @@ page {
   --gray: #aaa;
   --black: #333;
   --white: #fff;
+  --backgroud: #f4f5f7;
   --gradualRed: linear-gradient(45deg, #f43f3b, #ec008c);
   --gradualOrange: linear-gradient(45deg, #ff9700, #ed1c24);
   --gradualGreen: linear-gradient(45deg, #39b54a, #8dc63f);

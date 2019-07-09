@@ -128,7 +128,6 @@ button::after{
 }
 .help-info{
   text-align: left;
-  margin-left: 30px;
 }
 .help-info text{
   line-height: 48rpx;

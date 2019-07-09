@@ -1,11 +1,31 @@
 <view class='content'>
-
-  <view class='list'>
-    <view class='li' bindtap='updateImg'>
+  <view class="cu-list menu">
+    <view class="cu-item arrow" bindtap="updateImg">
+      <view class="content">
+        <text class="text-black">头像</text>
+      </view>
+      <view class="action">
+        <view class="cu-avatar-group">
+          <view class="cu-avatar round sm" style="background-image:url({{img_pre+user_img}});"></view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="cu-list menu">
+    <view class="cu-item arrow" bindtap="openUpdateName">
+      <view class="content">
+        <text class="text-black">昵称</text>
+      </view>
+      <view class="action">
+        <text class="text-black text-sm">{{user_name==null?'未设置':user_name}}</text>
+      </view>
+    </view>
+  </view>
+  <!-- <view class='list'>
+    <view class='li' bindtap='头像'>
       <text class='title'>头像</text>
-      <image class='rightArrow' src='../../assets/imgs/other/right.png'></image>
+      <image src='{{img_pre+user_img}}' class="png" mode="aspectFit"></image>
       <text class='info none' wx:if="{{user_img==null}}">未设置</text>
-      <image wx:else class='img' src='{{img_pre}}{{user_img}}'></image> 
     </view>
   </view>
   <view class='list' bindtap='openUpdateName'>
@@ -15,14 +35,30 @@
       <text class='info none' wx:if="{{user_name==null}}">未设置</text>
       <text class='info' wx:else>{{user_name}}</text>
     </view>
+  </view> -->
+  <view class="cu-bar bg-white solid-bottom margin-top">
+    <view class="action">
+      学籍信息
+    </view>
   </view>
 
-  <view class='list'>
+  <view class="cu-list menu">
+    <view class="cu-item" wx:for="{{xueji}}" wx:key="key">
+      <view class="content">
+        <text class="text-black">{{item.title}}</text>
+      </view>
+      <view class="action">
+        <text class="text-black text-sm">{{item.data}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- <view class='list'>
     <view class='li xueji' wx:for="{{xueji}}" wx:key="key">
       <text class='title'>{{item.title}}</text>
       <text class='info'>{{item.data}}</text>
     </view>
-  </view>
+  </view> -->
 </view>
 
   <!--修改用户昵称-->
@@ -40,4 +76,3 @@
         <view class="btn-confirm" bindtap="UpdateName" data-status="confirm">确定</view>
       </view>
   </view>
-  <i-toast id="toast" />

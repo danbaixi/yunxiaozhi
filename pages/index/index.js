@@ -47,11 +47,11 @@ Page({
       },
     ],
     tools_2:[
-      {
-        name: '党建工作',
-        url: '../tools/dangjian/dangjian',
-        icon: '../assets/imgs/apps_icon/dangjian.png'
-      },
+      // {
+      //   name: '党建工作',
+      //   url: '../tools/dangjian/dangjian',
+      //   icon: '../assets/imgs/apps_icon/dangjian.png'
+      // },
       {
         name: '谁去拿外卖',
         url: '../tools/who/who',

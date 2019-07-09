@@ -142,7 +142,7 @@ page{
 .header{
   background: #fff;
   padding: 20rpx 0; 
-  height: 50rpx;
+  height: 90rpx;
   width: 100%;
   font-size: 36rpx;
   line-height: 50rpx;
