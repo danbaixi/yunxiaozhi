@@ -1,11 +1,5 @@
 page{
-  background: #f2f2f2;
   width: 100%;
-  height: 100%;
-}
-.index{
-  width: 100%;
-  height: 100%;
 }
 .tool{ 
   display: block; 
@@ -15,9 +9,8 @@ page{
   background: #fff;
 } 
 .tools{
-  width: 96%;
+  width: 100%;
   height: 400rpx;
-  padding: 0 2%;
   background: #fff;
   position: relative;  
   overflow: hidden;
@@ -26,13 +19,13 @@ page{
   position: relative;  
   float: left;  
   padding: 0;  
-  width: 25%;
-  box-sizing: border-box;  
+  width: 20%;
+  box-sizing: border-box; 
+  margin:12rpx 0;
 }
 .icon{
-  width: 100rpx;  
-  height: 100rpx;  
-  padding-top: 10rpx;
+  width: 80rpx;  
+  height: 80rpx;  
   margin: 10rpx auto;
   display: flex;
   justify-content: center;
@@ -70,7 +63,7 @@ page{
 .dot:first-child{
   margin-right: 12rpx;
 }
-.content{
+.page-content{
   width: 100%;
   background: #f1f1f1;
   padding-top: 20rpx;

@@ -1,3 +1,6 @@
+page{
+  background: #fff;
+}
 .form-btn{
   background: transparent;
   width: 98rpx;
@@ -42,19 +45,23 @@
   justify-content: center;
   display: flex;
   height: 100%;
-  line-height:1.8;
+  line-height:3;
 }
-.update{
-  position: fixed; 
+.settings{
+  position: absolute; 
   justify-content: center;
   top:0;
-  right: 12px;
+  line-height: 3;
+  padding-left: 20px;
 }
 .train{
-  position: fixed; 
-  top:6rpx;
-  left: 6px;
-  padding: 0 10px;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  padding: 8rpx 10px;
+  background: rgba(0,0,0,.5);
+  color: #fff;
+  border-radius: 8rpx;
 }
 .flex-item {
   width: 98rpx;
@@ -80,6 +87,7 @@
   flex-direction: row;
   color: #3f3f3f;
   padding: 2px 0;
+  line-height: 1.4;
 }
 
 .top-text {
@@ -287,11 +295,9 @@ input-holder {
   border-bottom: 1px #ddd solid;
 }
 .right{
-  height: 20px;
+  height: 40px;
   width: 20px;
   float: right;
-  margin-right: 10px;
-  margin-top: 10px;
 }
 .text_right{
   float: right;

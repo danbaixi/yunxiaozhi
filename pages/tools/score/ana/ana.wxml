@@ -1,3 +1,7 @@
+<cu-custom bgColor="bg-theme" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">学业分析</view>
+</cu-custom>
 <view class="content" wx:if="{{!isNull}}">
   <text class='jidian'>GPA(平均绩点)：{{gpa}}</text>
   <text class='title tip'>数据仅供参考，与奖学金无关</text>

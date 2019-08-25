@@ -3,14 +3,22 @@
 	"setting": {
 		"urlCheck": false,
 		"es6": true,
+		"enhance": false,
 		"postcss": true,
 		"minified": true,
 		"newFeature": true,
-		"autoAudits": false,
-		"checkInvalidKey": true
+		"autoAudits": true,
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		}
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.1.0",
+	"libVersion": "2.8.0",
 	"appid": "wxe0f03cdec8ab9416",
 	"projectname": "%E4%BA%91%E5%B0%8F%E6%99%BA",
 	"simulatorType": "wechat",
@@ -33,7 +41,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 19,
+			"current": -1,
 			"list": [
 				{
 					"id": -1,
@@ -75,12 +83,6 @@
 					"id": -1,
 					"name": "登录",
 					"pathName": "pages/bind/bind",
-					"query": ""
-				},
-				{
-					"id": -1,
-					"name": "考证",
-					"pathName": "pages/tools/countdown/countdown",
 					"query": ""
 				},
 				{
@@ -154,6 +156,20 @@
 					"name": "推文",
 					"pathName": "pages/web/web",
 					"query": "src=https://mp.weixin.qq.com/s?__biz=MzI1NTUwNDIzNQ==&mid=2247484116&idx=1&sn=59418ea4f122e80e561def4650c9e302&chksm=ea35b8d0dd4231c62275111f5e4c348560797a18e210dfe009ccb01a0479ab88f59927d23f02&token=1677165237&lang=zh_CN#rd",
+					"scene": null
+				},
+				{
+					"id": 20,
+					"name": "引导",
+					"pathName": "pages/tools/guide/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 21,
+					"name": "更多应用",
+					"pathName": "pages/tool/tool",
+					"query": "",
 					"scene": null
 				}
 			]

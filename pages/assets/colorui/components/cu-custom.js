@@ -27,6 +27,14 @@ Component({
       type: String,
       default: ''
     },
+    isUpdate: {
+      type: [Boolean, String],
+      default: false
+    },
+    update:{
+      type:String,
+      default:'defaultUpdate'
+    }
   },
   /**
    * 组件的初始数据
@@ -48,6 +56,12 @@ Component({
     toHome(){
       wx.reLaunch({
         url: '/pages/index/index',
+      })
+    },
+    defaultUpdate(){
+      wx.showToast({
+        title: '当前没有更新',
+        icon: 'none'
       })
     }
   }

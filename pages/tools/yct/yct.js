@@ -1,6 +1,5 @@
 var md5 = require('../../../utils/md5.js');
 var util = require('../../../utils/util.js');
-const { $Toast } = require('../../../dist/base/index');
 var app = getApp();
 Page({
 
@@ -29,7 +28,7 @@ Page({
         url: '../../bind/bind',
       })
     } else {
-      $Toast({content:"加载中",type:'loading',duration:0})
+      wx.showLoading({title:"加载中"})
       that.getAccount();
       //加载历史查询记录
       var data = wx.getStorageSync('yct-data');
@@ -42,7 +41,7 @@ Page({
           time: data[3],
         })
       }
-      $Toast.hide();
+      wx.hideLoading()
     }
   },
   /**
@@ -83,7 +82,7 @@ Page({
     if (touchTime > 350) {
       that.delete(num);
     }else{
-      $Toast({content:'查询中',type:'loading',duration:0})
+      wx.showLoading({title:"查询中"})
       wx.request({
         url: "https://r2.gzyct.com/gw/base",
         method: "POST",
@@ -105,9 +104,9 @@ Page({
         },
         success: function (a) {
           var data = a.data;
-          $Toast.hide();
+          wx.hideLoading()
           if(data.err_msg == ""){
-            $Toast({ content: '查询成功', type: 'success' })
+            app.msg("查询成功","success")
             var time = data.balance_time.substring(0, 4) + "-" + data.balance_time.substring(4, 6) + "-" + data.balance_time.substring(6, 8) + " " + data.balance_time.substring(8, 10) + ":" + data.balance_time.substring(10, 12) + ":" + data.balance_time.substring(12, 14);
             that.setData({
               num: data.card_num,
@@ -120,7 +119,7 @@ Page({
             var data = new Array(data.card_num, data.balance / 100, data.threshold, time);
             wx.setStorageSync('yct-data', data);
           }else{
-            $Toast({ content: '查询失败，请重试', type: 'error' })
+            app.msg("查询失败，请重试")
           }
         }
       });
@@ -146,14 +145,14 @@ Page({
             },
             success: function (res) {
               if(res.data.status == 1001){
-                $Toast({content:'删除成功',type:'success'});
+                app.msg("删除成功","success")
                 setTimeout(function(){
                   wx.removeStorageSync("ycts");
                   that.onLoad();
                 },1000)
                 
               }else{
-                $Toast({ content: '删除失败', type: 'warning' });
+                app.msg("删除失败")
               }
             },
           })
@@ -182,7 +181,7 @@ Page({
   },
   //获取卡号
   getAccount:function(){
-    $Toast({ content: "加载中", type: 'loading', duration: 0 })
+    wx.showLoading({title:"加载中"})
     var that = this;
     var ycts = wx.getStorageSync("ycts");
     if(ycts){
@@ -190,7 +189,7 @@ Page({
         isExit: 1,
         yct: ycts,
       });
-      $Toast.hide();
+      wx.hideLoading()
     }else{
       var user_id = wx.getStorageSync('user_id');
       var str = app.globalData.key + user_id;
@@ -202,7 +201,7 @@ Page({
           sign: sign
         },
         success: function (res) {
-          $Toast.hide();
+          wx.hideLoading()
           if (res.data.status == 1001) {
             that.setData({
               isExit: 1,
@@ -212,7 +211,7 @@ Page({
           } else if (res.data.status == 1002) {
             that.setData({ isExit: 0 });
           } else {
-            $Toast({ content: '获取失败', type: 'error' })
+            app.msg('获取失败')
           }
         },
       });

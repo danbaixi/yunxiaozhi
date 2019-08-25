@@ -44,8 +44,8 @@
     </view>
     <view class="padding-xl">
       <view class='help-info'>
-        <text class='question'>Q:账号和密码是什么？\n</text>
-        <text class='answer'>A:教务系统账号账号\n</text>
+        <text class='question'>Q:登录账号和密码？\n</text>
+        <text class='answer'>A:白云教务管理系统账号密码\n</text>
         <text class='question'>Q:忘记密码怎么办？\n</text>
         <text class='answer'>A:请到教务系统找回\n</text>　
       </view>

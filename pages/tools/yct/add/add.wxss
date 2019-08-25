@@ -1,3 +1,6 @@
+page{
+  background: #fff;
+}
 label{
   color: #6ed4e6;
   font-size: 16px;

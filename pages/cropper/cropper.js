@@ -6,7 +6,6 @@ var delPictureFn = require('../../utils/delPicture.js');
 const device = wx.getSystemInfoSync()
 const width = device.windowWidth
 const height = device.windowHeight - 50
-const { $Toast } = require('../../dist/base/index');
 var app = getApp();
 
 Page({
@@ -68,7 +67,7 @@ Page({
             },
             success: function (res) {
               if (res.data.status == 1001) {
-                $Toast({content:'修改成功',type:'success'});
+                app.msg("修改成功","success")
                 setTimeout(function () {
                   //返回后刷新
                   var pages = getCurrentPages();
@@ -81,18 +80,18 @@ Page({
                   wx.navigateBack({})
                 }, 1000);
               } else if (res.data.status == 1003) {
-                $Toast({ content: '用户不存在', type: 'error' });
+                app.msg("用户不存在")
               } else {
-                $Toast({ content: '修改失败', type: 'error' });
+                app.msg("修改失败")
               }
 
             }
           })
         } else {
-          $Toast({ content: '请勿重复提交', type: 'warning' });
+          app.msg("请勿重复提交")
         } 
       } else {
-        $Toast({ content: '获取图片地址失败', type: 'warning' });
+        app.msg("获取图片地址失败")
       }
     })
   },

@@ -1,3 +1,7 @@
+<cu-custom bgColor="bg-theme" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">课程详情</view>
+</cu-custom>
 <view class='info'>
   <view class='li title'>{{name}}</view>
   <view class='li'><image class='icon' src='../../assets/imgs/class_item_data/weekly.png'></image><text class='left'>周数</text>　{{zhoushu}}</view>
@@ -9,13 +13,4 @@
   <view class='li'><image class='icon' src='../../assets/imgs/class_item_data/address.png'></image><text class='left'>地点</text>　{{address}}</view>
 <view class='li'><image class='icon' src='../../assets/imgs/class_item_data/time.png'></image><text class='left'>时间</text>　{{time}}</view>
 <view class='div_tip'><image class='icon' src='../../assets/imgs/class_item_data/tip.png'></image><text class='tip'>上课时间与教学楼有关，具体上课时间查看白云作息表</text></view>
-</view>
-
-
-<view class='course_like' wx:if="{{xuefen=='null'&&category=='null'&method=='null'}}">
-  <i-cell-group>
-    <i-cell title="看看还有谁在上这门课" slot="icon" is-link url="students/students?name={{name}}&weekly={{weekly}}&section={{section}}&teacher={{teacher}}&address={{address}}">
-      <i-icon slot="icon" size='21' type="group" />
-    </i-cell>
-  </i-cell-group>
 </view>

@@ -1,6 +1,5 @@
 var util = require('../../utils/util.js');
 var md5 = require('../../utils/md5.js');
-const { $Toast } = require('../../dist/base/index');
 var app = getApp();
 Page({
   /**
@@ -39,6 +38,9 @@ Page({
     train_course_id:0,
     list_is_display:false,
     sheet_visible: false,
+    StatusBar: app.globalData.StatusBar,
+    CustomBar: app.globalData.CustomBar,
+    Custom: app.globalData.Custom
   },
 
   /**
@@ -72,6 +74,7 @@ Page({
     if (n == -1) {
       zhou_num[week - 1] = zhou_num[week - 1] + "(本周)";
     }
+
     that.setData({
       now_week: week,
       zhou_num: zhou_num
@@ -88,8 +91,9 @@ Page({
     }
     var user_id = wx.getStorageSync('user_id');
     if(!user_id){
-      $Toast({ content: "请先登录", type: "warning" });
+      app.msg("请先登录")
     }else{
+      // that.getCourseList()
       //获取当前日期
       that.getTodayDate();
       //获取课表
@@ -151,8 +155,8 @@ Page({
     var left_time = parseInt((date.getTime()-start.getTime())/1000);
     var days = parseInt(left_time/3600/24);
     var week = Math.floor(days / 7) + 1;
-    if(week>20){
-      return 20;
+    if(week>20 || week <= 0){
+      return 1;
     }else{
       return week;
     }
@@ -225,8 +229,8 @@ Page({
   /**
    * 显示课表详细内容
    */
-  displayCourseInfo:function(num){
-    var indexNum = num;
+  displayCourseInfo:function(e){
+    var indexNum = e.currentTarget.dataset.num;
     var data = this.data.course;
     var jieshu = data[indexNum]['jie'] + '-' + (parseInt(data[indexNum]['jie']) + parseInt(data[indexNum]['jieshu']) - 1)+'节';
     var week;
@@ -352,7 +356,7 @@ Page({
     var that = this;
     var system_type = wx.getStorageSync('system_type');
     if (system_type == 1) {
-      $Toast({ content: "请使用旧教务系统账号登录后更新课表", type: "warning" });
+      app.msg("请使用旧教务系统账号登录后更新课表")
       setTimeout(function(){
         wx.navigateTo({
           url: '/pages/bind/bind',
@@ -410,72 +414,112 @@ Page({
     that.setData({ list_is_display: false })
     var user_id = wx.getStorageSync('user_id');
     if (!user_id) {
-      $Toast({ content: "请先登录", type: "warning" });
+      app.msg("请先登录")
       return;
     }
-    // var time = (new Date()).getTime();
-    // if (wx.getStorageInfoSync('course_update_time') != "") {
-    //   var update_time = wx.getStorageSync('course_update_time');
-    //   var cha = time - update_time;
-    //   var minutes = Math.floor(cha / 24 / 3600);
-    // } else {
-    //   var minutes = 10;
-    // }
-    // if (minutes >= 10) {
-      $Toast({ content: '更新中', type: 'loading', duration: 0 })
-      var user_id = wx.getStorageSync('user_id');
-      var user_password = wx.getStorageSync('user_old_password');
-      var yzm = that.data.yzm;
-      var cookie = that.data.cookie;
-      var str = app.globalData.key + user_id;
-      var sign = md5.hexMD5(str);
-      if (yzm == "") {
-        $Toast({ content: '请输入验证码', type: 'warning'})
-      } else {
-        wx.request({
-          url: app.globalData.domain + 'course/updateV1',
-          data: {
-            stu_id: user_id,
-            password: user_password,
-            // encoded: encoded,
-            code: yzm,
-            cookie: cookie,
-            __VIEWSTATE: that.data.__VIEWSTATE,
-            sign: sign
-          },
-          success: function (res) {
-            $Toast.hide();
-            if(res.data.status == 1001){
-              wx.request({
-                url: app.globalData.domain + 'course/getList',
-                data: {
-                  stu_id: user_id,
-                  sign: sign
-                },
-                success: function (res) {
-                  that.hideModal()
-                  if (res.data.status == 1001) {
-                    $Toast({ content: "更新成功", type: 'success' })
-                    wx.setStorageSync('course', res.data.data.course);
-                    wx.setStorageSync('train', res.data.data.train_course);
-                    that.onLoad();
-                  } else {
-                    $Toast({ content: res.data.message, type: 'error' });
-                  }
-                },
-              });
-            }else if(res.data.status == 1003){
-              $Toast({ content: "验证码错误,如多次出现请尝试重新登录", type: 'error'})
-              that.freshYzm();
-            }else{
-              $Toast({ content: "更新失败", type: 'error' })
-            }
+    wx.showLoading({
+      title: '更新中',
+    })
+    var user_id = wx.getStorageSync('user_id');
+    var user_password = wx.getStorageSync('user_password');
+    var yzm = that.data.yzm;
+    var cookie = that.data.cookie;
+    var str = app.globalData.key + user_id;
+    var sign = md5.hexMD5(str);
+    if (yzm == "") {
+      app.msg("请输入验证码")
+      return
+    }
+    app.httpRequest({
+      url: 'course/updateV1',
+      data: {
+        stu_id: user_id,
+        password: user_password,
+        // encoded: encoded,
+        code: yzm,
+        cookie: cookie,
+        __VIEWSTATE: that.data.__VIEWSTATE,
+        sign: sign
+      },
+      success: function (res) {
+        wx.hideLoading();
+        if (res.data.status == 1001) {
+          app.httpRequest({
+            url: 'course/getList',
+            data: {
+              stu_id: user_id,
+              sign: sign
+            },
+            success: function (res) {
+              that.hideModal()
+              if (res.data.status == 1001) {
+                wx.showToast({
+                  title: '更新成功',
+                })
+                app.msg("更新成功", 'success')
+                wx.setStorageSync('course', res.data.data.course);
+                wx.setStorageSync('train', res.data.data.train_course);
+                that.onLoad();
+              } else {
+                app.msg(res.data.message)
+              }
+            },
+          })
+        } else {
+          if (res.data.status == 1002) {
+            that.freshYzm()
+          } else if (res.data.status == 1006){
+            that.setData({
+              showModal:false
+            })
           }
-        })
+          app.msg(res.data.message)
+        }
       }
-    // } else {
-    //   $Toast({ content: (10 - minutes) + '分钟后可更新', type: 'error' });
-    // }
+    })
+    // wx.request({
+    //   url: app.globalData.domain + 'course/updateV1',
+    //   data: {
+    //     stu_id: user_id,
+    //     password: user_password,
+    //     // encoded: encoded,
+    //     code: yzm,
+    //     cookie: cookie,
+    //     __VIEWSTATE: that.data.__VIEWSTATE,
+    //     sign: sign
+    //   },
+    //   success: function (res) {
+    //     wx.hideLoading();
+    //     if (res.data.status == 1001) {
+    //       wx.request({
+    //         url: app.globalData.domain + 'course/getList',
+    //         data: {
+    //           stu_id: user_id,
+    //           sign: sign
+    //         },
+    //         success: function (res) {
+    //           that.hideModal()
+    //           if (res.data.status == 1001) {
+    //             wx.showToast({
+    //               title: '更新成功',
+    //             })
+    //             app.msg("更新成功", 'success')
+    //             wx.setStorageSync('course', res.data.data.course);
+    //             wx.setStorageSync('train', res.data.data.train_course);
+    //             that.onLoad();
+    //           } else {
+    //             app.msg(res.data.message)
+    //           }
+    //         },
+    //       });
+    //     } else if (res.data.status == 1003) {
+    //       app.msg("验证码错误,如多次出现请尝试重新登录")
+    //       that.freshYzm();
+    //     } else {
+    //       app.msg("更新失败")
+    //     }
+    //   }
+    // })
   },
   /** 刷新验证码 */
   freshYzm: function () {
@@ -565,31 +609,6 @@ Page({
       AdClose:1
     })
   },
-  //收集formId
-  collectFormid: function (e) {
-    var that = this;
-    // var formId = e.detail.formId;
-    // var time = util.formatTime3(new Date());
-    // var user_id = wx.getStorageSync('user_id');
-    var num = e.detail.target.dataset.num;
-    that.displayCourseInfo(num);
-  //   wx.request({
-  //     url: app.globalData.domain + '/wx_api/collectFormid.php',
-  //     data: {
-  //       user_id: user_id,
-  //       formId: formId,
-  //       time: time
-  //     },
-  //   })
-   },
-   surprised:function(){
-     var that = this;
-     if(that.data.AdItem == 1){
-       wx.navigateTo({
-         url: 'surprised/surprised',
-       })
-     }
-   },
    getNotice:function(){
      var that = this;
      wx.request({
@@ -614,6 +633,26 @@ Page({
   hideMask:function(){
     this.setData({
       list_is_display: false
+    })
+  },
+
+  getCourseList(){
+    var user_id = wx.getStorageSync('user_id')
+    var str = app.globalData.key + user_id;
+    var sign = md5.hexMD5(str);
+    app.httpRequest({
+      url: 'course/getList',
+      data: {
+        stu_id: user_id,
+        sign: sign,
+      },
+      success: function (res) {
+        if (res.data.status == 1001) {
+          wx.setStorageSync('course', res.data.data.course);
+        } else {
+          app.msg(res.data.message)
+        }
+      },
     })
   }
 })

@@ -6,59 +6,93 @@ Page({
    * 页面的初始数据
    */
   data: {
+    gridCol: 4,
     study: [
       {
-        name: '学业成绩',
-        url: '../tools/score/score',
-        icon: '../assets/imgs/apps_icon/query_score.png'
-      },
-      // {
-      //   name: '绩点排名',
-      //   url: '../tools/top/top',
-      //   icon: '../assets/imgs/apps_icon/top.png'
-      // },
-      {
-        name: '学习报告',
-        url: '../tools/score/ana/ana',
-        icon: '../assets/imgs/apps_icon/query_report.png'
-      },
-      {
-        name: '考勤记录',
-        url: '../tools/attendance/attendance',
-        icon: '../assets/imgs/apps_icon/query_attendance.png'
-      },
-      {
-        name: '考试安排',
-        url: '../tools/exam/exam',
-        icon: '../assets/imgs/apps_icon/apps_exam.png'
-      },
-      {
-        name: '一键评教',
-        url: '../tools/assess/assess',
-        icon: '../assets/imgs/apps_icon/apps_assess.png'
-      },
+        icon: 'form',
+        color: 'blue',
+        badge: 0,
+        name: '成绩',
+        needLogin:true,
+        url: '../tools/score/score?from=index',
+      }, {
+        icon: 'rank',
+        color: 'green',
+        badge: 0,
+        name: '报告',
+        needLogin: true,
+        url: '../tools/score/ana/ana?from=index',
+      }, {
+        icon: 'list',
+        color: 'orange',
+        badge: 0,
+        name: '考勤',
+        needLogin: true,
+        url: '../tools/attendance/attendance?from=index',
+      }, {
+        icon: 'remind',
+        color: 'olive',
+        badge: 0,
+        name: '考试',
+        needLogin: true,
+        url: '../tools/exam/exam?from=index',
+      }, {
+        icon: 'evaluate',
+        color: 'red',
+        badge: 0,
+        name: '评教',
+        needLogin: true,
+        url: '../tools/assess/assess?from=index',
+      }, 
     ],
     life:[
       {
-        name: '羊城通',
-        url: '../tools/yct/yct',
-        icon: '../assets/imgs/apps_icon/query_yct.png'
+        icon: 'delete',
+        color: 'yellow',
+        badge: 1,
+        name: '垃圾分类',
+        needLogin: false,
+        appid: "wx4a10dd9594992a0d",
+        path: "pages/home/home",
+        url: '../tools/calendar/calendar?from=index',
       },
       {
+        icon: 'home',
+        color: 'theme',
+        badge: 1,
+        name: '校园导览',
+        needLogin: false,
+        url: '../tools/guide/index?from=index',
+      },
+      {
+        icon: 'calendar',
+        color: 'cyan',
+        badge: 0,
         name: '校历',
-        url: '../tools/calendar/calendar',
-        icon: '../assets/imgs/apps_icon/calender.png'
-      },
-      {
-        name: '党建工作',
-        url: '../tools/dangjian/dangjian',
-        icon: '../assets/imgs/apps_icon/dangjian.png'
-      },
-      {
-        name: '谁去拿外卖',
-        url: '../tools/who/who',
-        icon: '../assets/imgs/apps_icon/who.png'
-      },
+        needLogin: false,
+        url: '../tools/calendar/calendar?from=index',
+      }, {
+        icon: 'vipcard',
+        color: 'purple',
+        badge: 0,
+        name: '羊城通',
+        needLogin: true,
+        url: '../tools/yct/yct?from=index',
+      }, {
+        icon: 'time',
+        color: 'pink',
+        badge: 0,
+        name: '时光',
+        needLogin: true,
+        url: '../my/time/time?from=index',
+      }, {
+        icon: 'expressman',
+        color: 'mauve',
+        badge: 0,
+        name: '拿外卖',
+        needLogin: false,
+        url: '../tools/who/who?from=index',
+      }, 
     ],
   },
 
@@ -67,28 +101,6 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-    var user_id = wx.getStorageSync('user_id');
-    if(user_id){
-      wx.request({
-        url: app.globalData.domain + '/wx/isRelogin.php',
-        data: {
-          user_id: user_id,
-        },
-        header: { 'content-type': 'application/x-www-form-urlencoded'},
-        method: 'POST',
-        success: function (res) { 
-          if(res.data.code==1001){
-            wx.showToast({title: '请重新登录',icon: 'loading',});
-            setTimeout(function(){
-              wx.navigateTo({
-                url: '../bind/bind',
-              })
-            },1500)
-          }
-        },
-      })
-    }
-
   },
 
   /**
@@ -97,23 +109,27 @@ Page({
   onShareAppMessage: function () {
   
   },
-  //收集formId
-  collectFormid: function (e) {
+  /** 打开应用 */
+  openTool: function (e) {
     var that = this;
-    var url = e.detail.target.dataset.url;
-    // var formId = e.detail.formId;
-    // var time = util.formatTime3(new Date());
-    // var user_id = wx.getStorageSync('user_id');
-    // wx.request({
-    //   url: app.globalData.domain + '/wx_api/collectFormid.php',
-    //   data: {
-    //     user_id: user_id,
-    //     formId: formId,
-    //     time: time
-    //   },
-    // });
+    var url = e.currentTarget.dataset.url;
+    var user_id = wx.getStorageSync('user_id');
+    var appid = e.currentTarget.dataset.appid
+    var path = e.currentTarget.dataset.path
+    var needLogin = e.currentTarget.dataset.needLogin
+    if (!user_id && needLogin) {
+      app.msg("请先登录")
+      return;
+    }
+    if(appid){
+      wx.navigateToMiniProgram({
+        appId:appid,
+        path: path
+      })
+      return
+    }
     wx.navigateTo({
       url: url,
     })
-  }
+  },
 })

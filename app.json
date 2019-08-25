@@ -20,8 +20,6 @@
     "pages/tools/score/top/top",
     "pages/my/set/set",
     "pages/course/info/info",
-    "pages/tools/countdown/add/add",
-    "pages/tools/countdown/countdown",
     "pages/community/new/new",
     "pages/community/item/item",
     "pages/cropper/cropper",
@@ -29,7 +27,6 @@
     "pages/tools/dangjian/dangjian",
     "pages/tools/dangjian/item/item",
     "pages/tools/who/who",
-    "pages/course/surprised/surprised",
     "pages/index/more_news/more_news",
     "pages/index/message/message",
     "pages/tools/exam/add/add",
@@ -37,14 +34,19 @@
     "pages/my/pwd/pwd",
     "pages/course/info/students/students",
     "pages/news/news",
-    "pages/news/item/item"
+    "pages/news/item/item",
+    "pages/tools/guide/index"
   ],
   "window": {
+    "navigationStyle":"custom",
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#6ed4e6",
     "backgroundColor": "#6ed4e6",
     "navigationBarTitleText": "云小智",
     "navigationBarTextStyle": "white"
+  },
+  "usingComponents": {
+    "cu-custom": "/pages/assets/colorui/components/cu-custom"
   },
   "tabBar": {
     "color": "#515151",
@@ -78,8 +80,9 @@
       }
     ]
   },
-  "navigateToMiniProgramAppIdList": [
+  "sitemapLocation": "sitemap.json",
+  "navigateToMiniProgramAppIdList":[
+    "wx4a10dd9594992a0d",
     "wx18a2ac992306a5a4"
-  ],
-  "sitemapLocation": "sitemap.json"
+  ]
 }

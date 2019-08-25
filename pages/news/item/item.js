@@ -1,5 +1,4 @@
 var app = getApp();
-const { $Toast } = require('../../../dist/base/index');
 Page({
 
   /**
@@ -47,7 +46,7 @@ Page({
    */
   getNewsItem:function(num){
     var that = this;
-    $Toast({ content: "加载中···", type: 'loading' })
+    wx.showLoading({title:"加载中"})
     wx.request({
       url: app.globalData.domain + 'news/getitem',
       data:{
@@ -56,14 +55,14 @@ Page({
       },
       success:function(res){
         if(res.data.status == 1001){
-          $Toast.hide();
+          wx.hideLoading()
           that.setData({
             section: res.data.data.section,
             img: res.data.data.img,
             desc: res.data.data.desc,
           })
         }else{
-          $Toast({content:"加载失败",type:"error"});
+          app.msg("加载失败")
           setTimeout(function(){
             wx.navigateBack({
               

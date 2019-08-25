@@ -1,6 +1,3 @@
-page{
-  background: #f2f4f7;
-}
 .cal{
   height: auto;
   padding: 14rpx;

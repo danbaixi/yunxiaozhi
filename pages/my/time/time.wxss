@@ -5,7 +5,7 @@
   color: #000;
 }
 .section-text{
-  padding: 40rpx 0;
+  padding: 100rpx 0 40rpx;
   line-height: 60rpx;
 }
 .countdown{
@@ -44,13 +44,26 @@
   height: 100%;
   z-index: -100;
 }
-.music{
+.tool{
   position: absolute;
-  width: 72rpx;
-  height: 72rpx;
-  top: 30rpx;
   right: 30rpx;
   z-index: 999;
+  font-size: 40rpx;
+  line-height: 1.5;
+  background: rgba(255, 255, 255, 0.2);
+  width: 60rpx;
+  height: 60rpx;
+  text-align: center;
+  border-radius:100%
+}
+.music{
+  top: 150rpx;
+}
+.back{
+  top: 230rpx;
+}
+.share-btn{
+  top: 310rpx;
 }
 page{
 	height: 100%;
@@ -66,6 +79,7 @@ page{
  	box-sizing: border-box;
 }
 .container-fill{
+  position: relative;
 	height: 100%;
 	overflow: hidden;
 }
@@ -93,9 +107,6 @@ page{
 }
 .active .fade{
   animation: fade 3s;
-}
-.rotating{
-  animation: rotating 6s linear infinite;
 }
 .qr{
   position: absolute;
@@ -153,14 +164,6 @@ page{
     opacity: 1;
 	}
 }
-@keyframes rotating{
-  from{
-    transform:rotate(0)
-  }
-  to{
-    transform:rotate(360deg)
-  }
-}
 .null{
   margin-top: 300rpx;
   color: #000;
@@ -177,4 +180,16 @@ page{
   font-size: 32rpx;
   line-height: 80rpx;
   float: left;
+}
+.cu-dialog{
+  background-color: #fff;
+  color: #000;
+  font-size: 40rpx;
+}
+.margin-top{
+  margin-top: 30px;
+}
+.wx-share{
+  font-size: 40rpx;
+  line-height: 1.5;
 }

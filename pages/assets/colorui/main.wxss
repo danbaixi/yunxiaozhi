@@ -39,6 +39,9 @@ page {
   --gradualPurple: linear-gradient(45deg, #9000ff, #5e00ff);
   --gradualPink: linear-gradient(45deg, #ec008c, #6739b6);
   --gradualBlue: linear-gradient(45deg, #0081ff, #1cbbb4);
+
+  /** 扩展 **/
+  --theme: #6ed4e6;
 }
 
 view, scroll-view, swiper, button, input, textarea, label, navigator, image {
@@ -3735,4 +3738,13 @@ scroll-view.cu-steps .cu-item {
 
 .text-shadow {
   text-shadow: 2rpx 4rpx 6rpx rgba(0, 0, 0, 0.4);
+}
+
+/** 扩展 */
+.text-theme, .line-theme, .lines-theme {
+  color: var(--theme)
+}
+.bg-theme{
+  background-color: var(--theme);
+  color: #fff;
 }

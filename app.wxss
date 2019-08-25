@@ -137,3 +137,14 @@ ad{
   color: #ec5300;
   text-align: center;
 }
+
+/** 微信分享按钮 */
+.wx-share{
+  width: 100%;
+  height: 100%;
+  background: none;
+  padding: 0;
+}
+.wx-share::after{
+  opacity: 0
+}

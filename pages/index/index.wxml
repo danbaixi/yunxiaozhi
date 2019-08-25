@@ -1,96 +1,61 @@
+<image src='/pages/assets/imgs/other/bgImage.jpg' mode='widthFix' class='png' style='width:100%;height:400rpx'></image>
+
 <view class="index">
-  <swiper wx:if="{{banner_display}}" class='banner' indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" vertical="{{isVertical}}" duration="{{duration}}" circular='false'>
-    <swiper-item wx:for="{{banner}}" wx:key="key">
-      <image mode='aspectFill' src="{{item.img_src}}" bindtap='bannerClick' data-index='{{index}}' />
-    </swiper-item>
-  </swiper>
-
-  <view class='tool'>
-    <swiper current="{{currentTab}}" class="swiper-box" duration="200" bindchange="bindChange">
-    <swiper-item>  
-      <view class='tools'>
-        <view class='li' wx:for="{{tools_1}}" wx:key="key" data-url="{{item.url}}" bindtap='openTool'>
-          <image class='icon' mode="scaleToFill" src="{{item.icon}}"></image>
-          <text class='title'>{{item.name}}</text>
+  <view class="cu-list grid col-{{gridCol}} no-border">
+    <view class="cu-item" wx:for="{{tools}}" wx:key data-url="{{item.url}}" bindtap='openTool'>
+      <view class="icon-{{item.icon}} text-{{item.color}}">
+        <view class="cu-tag badge" wx:if="{{item.badge!=0}}">
+          <block wx:if="{{item.badge!=1}}">{{item.badge>99?"99+":item.badge}}</block>
         </view>
       </view>
-    </swiper-item> 
-
-    <swiper-item>  
-      <view class='tools'>
-        <view class='li' wx:for="{{tools_2}}" wx:key="key" data-url="{{item.url}}" bindtap='openTool'>
-          <image class='icon' mode="scaleToFill" src="{{item.icon}}"></image>
-          <text class='title'>{{item.name}}</text>
-        </view>
-      </view>
-    </swiper-item> 
-    </swiper> 
-
-    <view class='dots'>
-      <view class="dot {{tab==1?'on':''}}"></view>
-      <view class="dot {{tab==2?'on':''}}"></view>
+      <text>{{item.name}}</text>
     </view>
-
   </view>
 
-  
-
-  <view class='content'>
-
-    <view class='course' wx:if="{{!myExamIsNull}}">
-      <view class='header' bindtap='goExam'>
-        <text class='header_title'>考试倒计时</text>
-        <image class='more' src='../assets/imgs/other/right.png'></image>
+  <view class='page-content'>
+    <view class='course'>
+      <view class="cu-bar bg-white solid-bottom arrow" bindtap='goCourse'>
+        <view class="action">今日课表</view>
+        <view class="action">
+          {{now_week}} 周{{WEEKDAY}}
+        </view>
       </view>
-      <view class='exam_list'>
-        <view class='exam'  wx:if="{{item.days>=0}}" bindtap='goExam'wx:index="{{index}}" wx:for="{{my_exam}}" wx:key="key">
-          <view class='name'>{{item.exam_name}}</view>
-          <view class='diff'>
-            <text>剩余<text class='days'>{{item.days}}</text>天</text>
+      <view class="cu-list menu" wx:if="{{user_id!=''&&course.length>0}}">
+        <view class="cu-item" wx:for="{{course}}" wx:key bindtap='displayCourseInfo' data-num='{{item.indexNum}}'>
+          <view class="content">
+            <text class="text-grey">{{item.jie}}-{{item.jie_end}} </text>
+            <text class="text-black">{{item.name}}</text>
+          </view>
+          <view class="action">
+            <text class="text-black text-sm">{{item.address}}</text>
           </view>
         </view>
       </view>
-    </view>
-
-    <view class='course'>
-       <view class='header' bindtap='goCourse'>
-        <text class='header_title'>今日课表</text>
-        <image class='more' src='../assets/imgs/other/right.png'></image>
-        <text class='week'>第{{now_week}}周 周{{WEEKDAY}}</text>
-      </view>
-      <view class='course_list' wx:if="{{user_id!=''}}">
-        <view class='course_li' bindtap='displayCourseInfo' data-num='{{item.indexNum}}' wx:for="{{course}}" wx:key="key">
-          <text class='jieci'>{{item.jie}}-{{item.jie_end}}</text>
-          <view class='course_name'>{{item.name}}</view>
-          <view class='course_address'>{{item.address}}</view>
-        </view>
-      </view>
-      <view wx:else class='course_list unlogin'>
-        <text bindtap='goLogin'>登录后可查看，点击登录</text>
+      <view wx:if="{{user_id==''}}" class='course_list unlogin'>
+          <text bindtap='goLogin'>登录后可查看，点击登录</text>
       </view> 
-      <view wx:if="{{course_length==0 && user_id!=''}}" class='course_list unlogin'>
+      <view wx:if="{{user_id!='' && (course.length<=0 || course == null)}}" class='course_list unlogin'>
         <text>今天没课，做点别的充实自己</text>
       </view>
-      
     </view>
 
-    <!-- <view class='news'>
-      <view class='header' bindtap='goMoreNews'>
-        <text class='header_title'>校园资讯</text>
-        <image class='more' src='../assets/imgs/other/right.png'></image>
-        <image class='loading' wx:if="{{news_loading}}"src='../assets/imgs/other/loading.gif'></image>
-      </view>
-      <view class='news_list'>
-        <view class='news_li' wx:for="{{news_list}}" wx:key="key" data-num="{{item['url']}}" data-title="{{item['title']}}" data-date="{{item['date']}}" bindtap='display'>
-          <view class='news_title'>{{item['title']}}</view>
-          <view class='news_date'>{{item['date']}}</view>
+    <view class='course' wx:if="{{my_exam.length>0}}">
+      <view class="cu-bar bg-white solid-bottom arrow" bindtap='goExam'>
+        <view class="action">考试安排</view>
+        <view class="action">
+          <text class="text-theme icon-right"></text>
         </view>
       </view>
-    </view> -->
-
+      <view class="cu-list menu">
+        <view class="cu-item"  wx:if="{{item.days>=0}}" bindtap='goExam' wx:index="{{index}}" wx:for="{{my_exam}}" wx:key="key">
+          <view class="content">
+            <text class="text-black">{{item.exam_name}}</text>
+          </view>
+          <view class="action">
+            <text>剩余<text class='days'>{{item.days}}</text>天</text>
+          </view>
+        </view>
+    </view>
   </view>
-
-<view class='ad'><ad unit-id="adunit-b1d34b2a7d687d44"></ad></view>
-
+  </view>
 </view>
-<i-toast id="toast" />

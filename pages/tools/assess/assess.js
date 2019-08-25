@@ -1,7 +1,6 @@
 var app = getApp();
 var util = require('../../../utils/util.js');
 var md5 = require('../../../utils/md5.js');
-const { $Toast } = require('../../../dist/base/index');
 Page({
 
   /**
@@ -70,10 +69,10 @@ Page({
     var that = this;
     var user_id = wx.getStorageSync('user_id');
     if (!user_id) {
-      $Toast({ content: "请先登录", type: "warning" });
+      app.msg("请先登录")
       return;
     }
-    $Toast({ content: '加载中', type: 'loading', duration: 0 })
+    wx.showLoading({title:"加载中"})
     var user_id = wx.getStorageSync('user_id');
     var user_password = wx.getStorageSync('user_password');
     var str = app.globalData.key + user_id;
@@ -88,7 +87,7 @@ Page({
         sign: sign
       },
       success: function (res) {
-        $Toast.hide();
+        wx.hideLoading()
         if (res.data.status == 1001) {
           var accesses = res.data.data.data;
           that.setData({
@@ -108,13 +107,8 @@ Page({
               btn:"你已完成所有评教"
             })
           }
-        }else if(res.data.status==1003){
-          $Toast({content:res.data.message,type:'warning'})
         }else{
-          that.setData({
-            isNull: true,
-          })
-          $Toast({ content: "你修改了密码，请重新登录", type: 'error' })
+          app.msg(res.data.message)
         }
       }
     })
@@ -123,11 +117,13 @@ Page({
     var that = this;
     var user_id = wx.getStorageSync('user_id');
     if (!user_id) {
-      $Toast({ content: "请先登录", type: "warning" });
+      app.msg("请先登录")
       return;
     }
     if(!that.data.is_accessed){
-      $Toast({ content: '拼命评教中，请稍等', type: 'loading', duration: 0 })
+      wx.showLoading({
+        title: '加载中',
+      })
       var user_id = wx.getStorageSync('user_id');
       var user_password = wx.getStorageSync('user_password');
       var str = app.globalData.key + user_id;
@@ -142,23 +138,19 @@ Page({
           sign: sign
         },
         success: function (res) {
-          $Toast.hide();
+          wx.hideLoading()
           if (res.data.status == 1001) {
-            $Toast({ content: "评教成功！", type: 'success' });
+            app.msg("评教成功！","success")
             setTimeout(function(){
               that.getList();
             },1000);
-          }else if(res.data.stauts == 1003){
-            $Toast({content:res.data.message,type:"error"})
-          }else if(res.data.status == 1004) {
-            $Toast({ content: "出了点问题，请反馈给客服", type: 'error' })
           }else{
-            $Toast({ content: "密码不正确，你是否修改了密码？", type: 'error' })
+            app.msg(res.data.message)
           }
         }
       })
     }else{
-      $Toast({ content: "你已经评教完啦！", type: "warning" });
+      app.msg("你已经评教完啦！")
     }
    
   },
@@ -186,13 +178,15 @@ Page({
 */
   updateScore: function (e) {
     var that = this;
+    if (that.checkStatus) {
+      app.msg("你已完成评教")
+      return
+    }
     var system_type = wx.getStorageSync('system_type');
     if (system_type != 2) {
-      $Toast({ content: "请退出登录后使用旧教务系统账号登录", type: "warning" });
+      app.msg("请退出登录后使用旧教务系统账号登录")
       setTimeout(function () {
-        wx.redirectTo({
-          url: '/pages/bind/bind',
-        })
+        app.needLogin(that.route)
       }, 2000)
       return;
     }
@@ -204,8 +198,9 @@ Page({
       type:type
     })
     /**获取验证码 */
-    wx.request({
-      url: app.globalData.domain + 'login/getLoginInitData',
+    app.httpRequest({
+      url: 'login/getLoginInitData',
+      needLogin:false,
       success: function (res) {
         that.setData({
           cookie: res.data.data['cookie'],
@@ -245,27 +240,30 @@ Page({
   //旧版获取列表
   assessV0:function(){
     var that = this
+    if (that.checkStatus){
+      app.msg("你已完成评教")
+      return
+    }
     var type = that.data.type
     if(type == 1){
-      $Toast({ content: '正在查询', type: 'loading', duration: 0 })
+      app.msg("正在查询")
     }else{
-      $Toast({ content: '正在评教，请勿进行其他操作', type: 'loading', duration: 0 })
+      wx.showLoading({
+        title: '加载中',
+      })
     }
     var user_id = wx.getStorageSync('user_id');
-    var user_password = wx.getStorageSync('user_old_password');
+    var user_password = wx.getStorageSync('user_password');
     var yzm = that.data.yzm;
     var cookie = that.data.cookie;
     var str = app.globalData.key + user_id;
     var sign = md5.hexMD5(str);
     if (yzm == "") {
-      $Toast({ content: '请输入验证码', type: 'warning' })
+      app.msg("请输入验证码")
     } else {
-      wx.request({
-        url: app.globalData.domain + 'access/accessing',
+      app.httpRequest({
+        url: 'access/accessing',
         method: 'POST',
-        header: {
-          'content-type': 'application/x-www-form-urlencoded'
-        },
         data: {
           stu_id: user_id,
           password: user_password,
@@ -276,20 +274,32 @@ Page({
           type: type
         },
         success: function (res) {
-          $Toast.hide();
+          wx.hideLoading()
           that.hideModal();
           wx.hideNavigationBarLoading();
           if (res.data.status == 0) {
-            $Toast({ content: res.data.message, type: 'success' });
             that.setData({
               assesses: res.data.data
             })
             wx.setStorageSync('assess', that.data.assesses)
           } else {
-            $Toast({ content: res.data.message, type: 'error' });
+            app.msg(res.data.message)
           }
         }
       })
     }
   },
+
+  checkStatus:function(){
+    var assess = this.data.assesses
+    if (assess.length <= 0){
+      return false
+    }
+    for (let i = 0; i < assess.length;i++){
+      if(assess[i].status != '已评'){
+        return false
+      }
+    }
+    return true
+  }
 })

@@ -1,3 +1,6 @@
+page{
+  background: #fff
+}
 .content{
   margin-top:4px;
   height: 100%;

@@ -1,3 +1,6 @@
+page{
+  background: #fff;
+}
 .content{
   width: 100%;
 }

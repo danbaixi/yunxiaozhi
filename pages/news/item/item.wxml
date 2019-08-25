@@ -18,4 +18,3 @@
   <button class='share' open-type='share'>分享</button>
   
 </view>
-<i-toast id="toast" />

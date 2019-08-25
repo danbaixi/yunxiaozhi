@@ -1,6 +1,5 @@
 var md5 = require('../../../utils/md5.js');
 var util = require('../../../utils/util.js');
-const { $Toast } = require('../../../dist/base/index');
 var app = getApp();
 Page({
 
@@ -19,6 +18,9 @@ Page({
     input_focus: 0,
     update_time:null,
     isNull:false,
+    StatusBar: app.globalData.StatusBar,
+    CustomBar: app.globalData.CustomBar,
+    Custom: app.globalData.Custom
   },
 
   /**
@@ -26,49 +28,49 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
+    if(options)
+    that.setData({
+      from:options.from
+    })
     //检查是否登录
     if (!wx.getStorageSync('user_id')) {
       wx.reLaunch({
         url: '../../bind/bind',
       })
-    } else {
-      $Toast({ content: '加载中', type: 'loading', duration: 0 });
-      var user_id = wx.getStorageSync('user_id');
-      var str = app.globalData.key + user_id;
-      var sign = md5.hexMD5(str);
-      wx.request({
-        url: app.globalData.domain + 'attendance/getlist',
-        data: {
-          stu_id: user_id,
-          sign: sign
-        },
-        success: function (res) {
-          $Toast.hide();
-          if(res.data.status == 1001){
-            that.setData({
-              term: res.data.data.terms,
-              attendance: res.data.data.attendance,
-              isNull:false
-            });
-          }else if(res.data.status == 1002){
-            that.setData({
-              isNull:true
-            })
-          }else{
-            $Toast({ content: '获取失败', type: 'error' });
-          }
-        },
-      });
+      return
     }
+    var user_id = wx.getStorageSync('user_id');
+    var str = app.globalData.key + user_id;
+    var sign = md5.hexMD5(str);
+    wx.request({
+      url: app.globalData.domain + 'attendance/getlist',
+      data: {
+        stu_id: user_id,
+        sign: sign
+      },
+      success: function (res) {
+        if (res.data.status == 1001) {
+          that.setData({
+            term: res.data.data.terms,
+            attendance: res.data.data.attendance,
+            isNull: false
+          });
+        } else if (res.data.status == 1002) {
+          that.setData({
+            isNull: true
+          })
+        } else {
+          app.msg('获取失败')
+        }
+      },
+    });
   },
 
   /**
    * 下拉刷新
    */
   onPullDownRefresh:function(){
-    // $Toast({ content: '考勤暂时无法更新', type: 'error'});
-    wx.stopPullDownRefresh();
-    this.showDialogBtn();
+
   },
   /**
    * 用户点击右上角分享
@@ -139,11 +141,11 @@ Page({
     var cookie = that.data.cookie;
     var __VIEWSTATE = that.data.__VIEWSTATE;
     if (yzm == "") {
-      $Toast({ content: '请输入验证码', type: 'warning' });
+      app.msg("请输入验证码")
       wx.hideNavigationBarLoading();
     } else {
       that.inputBlur();
-      $Toast({ content: '加载中', type: 'loading', duration: 0 });
+      wx.showLoading({title:"加载中"})
       var str = app.globalData.key + user_id;
       var sign = md5.hexMD5(str);
       wx.request({
@@ -157,20 +159,20 @@ Page({
           sign:sign
         },
         success: function (res) {
-          $Toast.hide();
+          wx.hideLoading()
           wx.hideNavigationBarLoading();
           wx.stopPullDownRefresh();
           if(res.data.status == 1001){
-            $Toast({content:'更新了'+res.data.data+'条记录',type:'success'});
+            app.msg('更新了'+res.data.data+'条记录')
             setTimeout(function(){
               that.onLoad();
               that.hideModal();
             },2000)
           }else if(res.data.status == 1003){
-            $Toast({content:'验证码错误',type:'error'});
+            app.msg("验证码错误")
             that.freshYzm();
           }else{
-            $Toast({ content: '更新失败', type: 'error' });
+            app.msg("更新失败")
           }
         }
       })
@@ -194,5 +196,16 @@ Page({
     this.setData({
       input_focus: 0
     })
+  },
+  backPage: function () {
+    if (this.data.from == 'index') {
+      wx.navigateBack({
+        delta: 1
+      });
+    } else {
+      wx.reLaunch({
+        url: '/pages/index/index',
+      })
+    }
   }
 })

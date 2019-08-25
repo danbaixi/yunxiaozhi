@@ -1,9 +1,4 @@
 {
       "navigationBarTitleText": "学业成绩",
-      "usingComponents": {
-        "i-toast": "../../../dist/toast/index",
-        "i-icon": "../../../dist/icon/index",
-        "i-notice-bar": "../../../dist/notice-bar/index"
-      },
       "enablePullDownRefresh": true
 }

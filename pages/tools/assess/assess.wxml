@@ -1,21 +1,20 @@
+<cu-custom bgColor="bg-theme" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">一键评教</view>
+</cu-custom>
 <view class='access'>
-  <view class='content'>  
+  <view class='content' style="padding: 20rpx;">  
       <view class="tr bg-w" wx:if="{{assesses}}">
         <view class="th" style='width:60%'>课程</view>
         <view class="th" style='width:25%'>教师</view>
         <view class="th" style='width:15%'>状态</view>
       </view>
       <block wx:if="{{assesses}}" wx:for="{{assesses}}" wx:key="key" wx:for-index="index">
-        <view class="tr bg-g" wx:if="{{index % 2 == 1}}">
+        <view class="tr">
           <view class="td" style='width:60%'>{{item.name}}</view>
           <view class="td" style='width:25%'>{{item.teacher}}</view>
           <view class="td" style="width:15%;color:{{item.status=='已评'?'#6ed4e6':'#666'}}">{{item.status}}</view>
         </view>
-        <view class="tr" wx:else>
-          <view class="td" style='width:60%'>{{item.name}}</view>
-          <view class="td" style='width:25%'>{{item.teacher}}</view>
-          <view class="td" style="width:15%;color:{{item.status=='已评'?'#6ed4e6':'#666'}}">{{item.status}}</view>
-        </view> 
       </block>
       <view wx:if="{{!assesses}}" class='null'>
         <view>当前没有评教信息</view>
@@ -29,8 +28,6 @@
 <button bindtap='updateScore' data-type='1'>刷新状态</button>
 <button bindtap='updateScore' data-type='2' type='primary'>{{btn}}</button>
 <!-- <view class='ana'>已为{{count}}个同学完成评教，节省了{{count*146}}秒时间</view> -->
-<view class='ad'><ad unit-id="adunit-f760d66d914b3463"></ad></view>
-<i-toast id="toast" />
   <!--查询评教输入验证码弹窗-->
   <view class="modal-mask" bindtap="hideModal" style='height:{{winHeight}}px' catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
   <view class="modal-dialog" wx:if="{{showModal}}" class="{{input_focus == 1?'modal-dialog input_focus':'modal-dialog'}}">

@@ -1,7 +1,4 @@
 {
   "navigationBarTitleText": "云小智",
-  "enablePullDownRefresh": true,
-  "usingComponents": {
-    "i-toast": "../../dist/toast/index"
-  }
+  "enablePullDownRefresh": false
 }

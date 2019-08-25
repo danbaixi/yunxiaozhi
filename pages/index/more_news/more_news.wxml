@@ -4,4 +4,3 @@
     <view class='news_date'>{{item['date']}}</view>
   </view>
 </view>
-<i-toast id="toast" />

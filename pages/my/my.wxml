@@ -1,4 +1,4 @@
-<view class='header'>
+<view class='header' data-page='userInfo' bindtap="goPage">
   <view class="userinfo" bindtap="{{bind==1?'toUserInfo':'bind'}}">
     <image mode='aspectFill' class="avatar" src="{{img_pre}}{{user_img}}" background-size="cover"  ></image>
     <view class="nickname">{{bind==1?user_name:'未登录'}}</view>
@@ -22,12 +22,6 @@
         <text class="text-black">个人设置</text>
       </view>
     </view>
-    <!-- <view class="cu-item arrow" data-page='pwd' bindtap="goPage">
-      <view class="content">
-        <text class="icon-settings lg text-black"></text>
-        <text class="text-black">找回密码</text>
-      </view>
-    </view> -->
     <view class="cu-item arrow" bindtap="showModal">
       <view class="content">
         <text class="icon-comment lg text-black"></text>
@@ -57,7 +51,7 @@
     </view>
     <view class="padding-xl">
         <view>由于微信的限制，不再提供在线客服</view>
-        <view style='color:red'>请关注云小智公众号留言反馈你的问题</view>
+        <view>请关注云小智公众号留言反馈你的问题</view>
       </view>
     </view>
 </view>

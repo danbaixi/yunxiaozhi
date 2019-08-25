@@ -1,12 +1,15 @@
+<cu-custom bgColor="bg-theme" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">添加羊城通</view>
+</cu-custom>
 <view class='add_yct'>
   <form bindsubmit="formSubmit" bindreset="formReset">
     <view class='inputView'>
       <label>请输入羊城通卡号</label>
       <input name='number' class='info' />
     </view>
-
-    <view class='btn'>
-      <button formType="submit">添加</button>
+    <view class="padding flex flex-direction">
+      <button class="cu-btn bg-theme lg" bindtap='add' formType="submit">添加</button>
     </view>
 
     <view class='img'>
@@ -14,4 +17,3 @@
     </view>
   </form>
 </view>
-<i-toast id="toast" />

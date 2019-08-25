@@ -1,64 +1,81 @@
 var app = getApp()
 var md5 = require('../../utils/md5.js');
 var util = require('../../utils/util.js');
-const { $Toast } = require('../../dist/base/index');
 Page({
   data: {
-    tools_1: [
-      {
-        name: '学业成绩',
-        url: '../tools/score/score',
-        icon: '../assets/imgs/apps_icon/query_score.png'
-      },
-      {
-        name: '学习报告',
-        url: '../tools/score/ana/ana',
-        icon: '../assets/imgs/apps_icon/query_report.png'
-      },
-      {
-        name: '校园时光',
-        url: '../my/time/time',
-        icon: '../assets/imgs/apps_icon/time.png'
-      },
-      {
-        name: '考勤记录',
-        url: '../tools/attendance/attendance',
-        icon: '../assets/imgs/apps_icon/query_attendance.png'
-      },
-      {
-        name: '我的考试',
-        url: '../tools/exam/exam',
-        icon: '../assets/imgs/apps_icon/apps_exam.png'
-      },
-      {
-        name: '一键评教',
-        url: '../tools/assess/assess',
-        icon: '../assets/imgs/apps_icon/apps_assess.png'
-      },
-      {
-        name: '羊城通',
-        url: '../tools/yct/yct',
-        icon: '../assets/imgs/apps_icon/query_yct.png'
-      },
-      {
-        name: '校历',
-        url: '../tools/calendar/calendar',
-        icon: '../assets/imgs/apps_icon/calender.png'
-      },
-    ],
-    tools_2:[
-      // {
-      //   name: '党建工作',
-      //   url: '../tools/dangjian/dangjian',
-      //   icon: '../assets/imgs/apps_icon/dangjian.png'
-      // },
-      {
-        name: '谁去拿外卖',
-        url: '../tools/who/who',
-        icon: '../assets/imgs/apps_icon/who.png'
-      }
-    ],
-    tab:1,
+    tools: [
+    {
+      icon: 'form',
+      color: 'blue',
+      badge: 0,
+      name: '成绩',
+      needLogin:true,
+      url: '../tools/score/score?from=index',
+    }, {
+      icon: 'rank',
+      color: 'green',
+      badge: 0,
+      name: '报告',
+      needLogin: true,
+      url: '../tools/score/ana/ana?from=index',
+    }, {
+      icon: 'list',
+      color: 'orange',
+      badge: 0,
+      name: '考勤',
+      needLogin: true,
+      url: '../tools/attendance/attendance?from=index',
+    }, {
+      icon: 'remind',
+      color: 'olive',
+      badge: 0,
+      name: '考试',
+      needLogin: true,
+      url: '../tools/exam/exam?from=index',
+    }, {
+      icon: 'evaluate',
+      color: 'red',
+      badge: 0,
+      name: '评教',
+      needLogin: true,
+      url: '../tools/assess/assess?from=index',
+    }, {
+      icon: 'calendar',
+      color: 'cyan',
+      badge: 0,
+      name: '校历',
+      needLogin: false,
+      url: '../tools/calendar/calendar?from=index',
+    }, {
+      icon: 'vipcard',
+      color: 'purple',
+      badge: 0,
+      name: '羊城通',
+      needLogin: true,
+      url: '../tools/yct/yct?from=index',
+    }, {
+      icon: 'time',
+      color: 'pink',
+      badge: 0,
+      name: '时光',
+      needLogin: true,
+      url: '../my/time/time?from=index',
+    }, {
+      icon: 'emoji',
+      color: 'mauve',
+      badge: 0,
+      name: '新生必看',
+      needLogin: false,
+      url: '../tools/guide/index?from=index',
+    }, {
+      icon: 'apps',
+      color: 'theme',
+      badge: 0,
+      needLogin: false,
+      name: '更多',
+      url: '../tool/tool?from=index',
+    }],
+    gridCol: 5,
     news_loading:false,
     course_loading:false,
     message_loading:false,
@@ -66,7 +83,7 @@ Page({
     indicatorDots: true,
     autoplay: true,
     interval: 5000,
-    duration: 1000,
+    duration: 10001
   },
 
   onLoad: function () {
@@ -149,27 +166,15 @@ Page({
     var that = this;
     var url = e.currentTarget.dataset.url;
     var user_id = wx.getStorageSync('user_id');
-    if (!user_id && url != "../tools/calendar/calendar" && url !="../tools/who/who") {
-      $Toast({ content: "请先登录", type: "warning" });
+    var needLogin = e.currentTarget.dataset.needLogin
+    if (!user_id && needLogin) {
+      app.msg("请先登录")
       return;
     }
     wx.navigateTo({
       url: url,
     })
   },
-  /** 滑动切换tab */
-  bindChange: function (e) {
-    var that = this;
-    if(that.data.tab == 1){
-      var tab = 2;
-    }else{
-      var tab = 1;
-    }
-    that.setData({ 
-      currentTab: e.detail.current,
-      tab:tab,
-    });
-  }, 
   /** 获取当前周 */
   getNowWeek: function () {
     var that = this;
@@ -177,16 +182,15 @@ Page({
     var year = app.globalData.start_year;
     var month = app.globalData.start_month;
     var day = app.globalData.start_day;
-    //这里减1，不知道为什么输出的月份比原来的大1..
     var start = new Date(year, month - 1, day);
     //计算时间差
     var left_time = parseInt((date.getTime() - start.getTime()) / 1000);
     var days = parseInt(left_time / 3600 / 24);
     var week = Math.floor(days / 7) + 1;
-    if (week > 20) {
-      var now_week = 20;
-    } else {
-      var now_week = week;
+    if (week <= 0 || week > 20) {
+      var now_week = '假期'
+    }else {
+      var now_week = '第' + week + '周';
     }
     that.setData({
       now_week:now_week,
@@ -250,8 +254,7 @@ Page({
         }
       }
       that.setData({ 
-        course: courses,
-        course_length:courses.length
+        course: courses
       });
     } else {
       that.setData({ course: null });
@@ -372,23 +375,6 @@ Page({
       url: "../course/info/info?name=" + data[index]['name'] + "&zhoushu=" + data[index]['zhoushu'] + "&jieshu=" + jieshu + "&teacher=" + data[index]['teacher'] + "&xuefen=" + data[index]['credit'] + "&category=" + data[index]['category'] + "&method=" + data[index]['method'] + "&address=" + data[index]['address'],
     })
   },
-  /** 获取公告 */
-  // getMessage:function(){
-  //   var that = this;
-  //   wx.request({
-  //     url: app.globalData.domain + '/wx/getMessage.php',
-  //     data:{
-  //       message_type:'1'
-  //     },
-  //     success:function(res){
-  //       if(res.data.code == 1001){
-  //         that.setData({
-  //           message:res.data.data[0].message,
-  //         })
-  //       }
-  //     }
-  //   })
-  // },
   /** 获取banner信息 */
   getBanner:function(){
     var that = this;
@@ -433,7 +419,7 @@ Page({
     var that = this;
     var my_exams = wx.getStorageSync("my_exams");
     if(my_exams){
-      $Toast.hide();
+      wx.hideLoading()
       that.setData({
         my_exam: my_exams,
         myExamIsNull: false,
@@ -456,5 +442,5 @@ Page({
     wx.navigateTo({
       url: '../tools/exam/exam?currentTab=1',
     })
-  }
+  },
 })

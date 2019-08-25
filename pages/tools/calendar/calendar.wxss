@@ -1,22 +1,26 @@
+page{
+  background: #fff;
+}
 .head{
   position: fixed;
-  top: 0;
   height: 40px;
   width: 100%;
   justify-content: center;
   background: #fff;
 }
-.left{
-  height: 20px;
+.left,.right{
+  padding: 0 20px;
+  font-size: 22px;
+  height: 40px;
+  line-height: 40px;
   position: absolute;
-  left: 15px;
   top:0px;
 }
+.left{
+  left: 15px;
+}
 .right{
-  height: 20px;
-  position: absolute;
   right: 15px;
-  top:0px;
 }
 image{
   padding: 10px;

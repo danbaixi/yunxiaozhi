@@ -1,6 +1,5 @@
 var app = getApp();
 var md5 = require('../../../utils/md5.js');
-const { $Toast } = require('../../../dist/base/index');
 Page({
   /**
    * 页面的初始数据
@@ -22,7 +21,7 @@ Page({
     var user_id = wx.getStorageSync('user_id');
     var str = app.globalData.key + user_id;
     var sign = md5.hexMD5(str);
-    $Toast({ content: '加载中', type: 'loading', duration: 0 });
+    wx.showLoading({title:"加载中"})
     wx.request({
       url: app.globalData.domain + 'user/getUserConfig',
       data:{
@@ -30,7 +29,7 @@ Page({
         stu_id:user_id,
       },
       success:function(res){
-        $Toast.hide();
+        wx.hideLoading()
         if(res.data.status == 1001){
           if(res.data.data == null){
             that.setData({
@@ -63,9 +62,9 @@ Page({
       },
       success: function (res) {
         if(res.data.status == 1001){
-          $Toast({ content: '设置成功', type: 'success' })
+          app.msg("设置成功","success")
         }else{
-          $Toast({ content: '设置失败', type: 'error' })
+          app.msg("设置失败")
         }
       }
     })

@@ -1,5 +1,4 @@
 var app = getApp();
-const { $Toast } = require('../../../dist/base/index');
 Page({
 
   /**
@@ -31,7 +30,7 @@ Page({
   },
   /** 获取新闻列表 */
   getNewsList: function () {
-    $Toast({content:'加载中',type:'loading',duration:0})
+    wx.showLoding()
     var that = this;
     var last_date;
     if (that.data.news_last_date) {
@@ -46,13 +45,13 @@ Page({
         num: 20,
       },
       success: function (res) {
-        $Toast.hide();
+        wx.hideLoading()
         if (res.data.status == 1001 || res.data.status == 1002) {
           that.setData({
             news_list: res.data.data
           })
         } else if (res.data.status == 1004 || res.data.status == 1005) {
-          $Toast({ content: "加载失败", type: 'error' })
+          app.msg("加载失败")
           wx.navigateBack({
             
           })

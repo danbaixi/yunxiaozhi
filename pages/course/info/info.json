@@ -1,8 +1,3 @@
 {
-  "navigationBarTitleText": "课程详情",
-  "usingComponents": {
-    "i-cell-group": "../../../dist/cell-group/index",
-    "i-cell": "../../../dist/cell/index",
-    "i-icon": "../../../dist/icon/index"
-  }
+  "navigationBarTitleText": "课程详情"
 }

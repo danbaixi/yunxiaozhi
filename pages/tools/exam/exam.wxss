@@ -1,7 +1,6 @@
 .header{
   width: 100%;
   background: #6ed4e6;
-  color: #fff;
   position: fixed;
   top: 0;
 }
@@ -96,8 +95,8 @@
 } 
 .course{
   position: relative;
-  width: 86%;
-  margin: 20rpx 3% 40rpx;
+  width: 90%;
+  margin: 20rpx auto;
   border-radius: 20rpx;
   color: #fff;
   font-size: 32rpx;
@@ -123,15 +122,14 @@
 }
 .add{
   position: absolute;
-  bottom: 20rpx;
-  width: 90%;
-  margin: -10rpx 5% 10rpx;
-  background: linear-gradient(to left, #0cebeb, #20e3b2, #29ffc6);
-  color: #fff;
-  font-size: 16px;
-}
-button::after{
-  border: 0;
+  left: 50%;
+  bottom: 160rpx;
+  height: 24px;
+  width: 24px;
+  margin-left: -12px;
+  border-radius: 100%;
+  font-size: 30px;
+  line-height: 30px;
 }
 .copy{
   background: rgba(0, 0, 0, 0.5);
@@ -146,8 +144,7 @@ button::after{
   padding: 12rpx 20rpx;
 }
 .exam{
-  padding: 8rpx 20rpx;
-  background: #fff;
+  padding: 0 20rpx;
   border-bottom: 1px solid #f1f1f1;
   margin-top: 10rpx;
 }
@@ -174,4 +171,17 @@ button::after{
 .examed{
   font-size: 26rpx;
   color: #999;
+}
+.myexam_item{
+  position: relative;
+  padding: 32rpx 26rpx;
+  margin-bottom: 20rpx;
+  height: 200px;
+}
+.myexam_item .text-white{
+  margin-bottom: 20rpx;
+}
+.myexam_item .day{
+  position: absolute;
+  bottom: 60rpx;
 }

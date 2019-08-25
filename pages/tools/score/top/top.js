@@ -1,6 +1,5 @@
 var app = getApp();
 var md5 = require('../../../../utils/md5.js');
-const { $Toast } = require('../../../../dist/base/index');
 Page({
 
   /**
@@ -14,7 +13,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    $Toast({ content: '加载中', type: 'loading', duration: 0 });
     var that = this;
     var user_id = wx.getStorageSync('user_id');
     var course = options.course;
@@ -37,7 +35,6 @@ Page({
         sign: sign,
       },
       success: function(res) {
-        $Toast.hide()
         if(res.data.status == 1001){
           //排名颜色
           var top = res.data.data.top;
@@ -58,7 +55,7 @@ Page({
             top: top,
           })
         }else{
-          $Toast({ content: '获取失败', type: 'error' });
+          app.msg('获取失败')
           wx.navigateBack({});
         }
 

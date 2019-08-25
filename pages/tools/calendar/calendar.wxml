@@ -1,15 +1,19 @@
+<cu-custom bgColor="bg-theme" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">校历</view>
+</cu-custom>
 <view class='calendar'>
-  <view class='head'>
+  <view class='head' style="top:{{CustomBar}}px">
     <view class='left'>
-      <image src='../../assets/imgs/other/left.png' data-set="reduce" bindtap="alterMonth"></image>
+      <text class="icon-back text-theme text-lg" data-set="reduce" bindtap="alterMonth"></text>
     </view>
      <view class='now_month'>{{now_year}}年{{now_month}}月</view> 
     <view class='right'>
-      <image src='../../assets/imgs/other/right.png' data-set="add" bindtap="alterMonth"></image>
+      <text class="icon-right text-theme text-lg" data-set="add" bindtap="alterMonth"></text>
     </view>
   </view>
 
-  <view class='data' style='height:{{30+51.2*hangshu}}px'>
+  <view class='data' style='height:{{30+51.2*hangshu}}px;top:{{CustomBar+40}}px'>
 
     <view class='title'>
       <view class='week'>周次</view>

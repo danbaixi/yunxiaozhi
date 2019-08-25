@@ -1,3 +1,7 @@
+<cu-custom bgColor="bg-theme" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">成绩详情</view>
+</cu-custom>
 <view class='content'>
   <view class='head'>
     <view class='left'>
@@ -30,4 +34,3 @@
   </view> 
   <view class='ad'><ad unit-id="adunit-3eba2eaa58f27073"></ad></view>
 </view>
-<i-toast id="toast" />

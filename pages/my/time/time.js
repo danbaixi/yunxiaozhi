@@ -1,6 +1,5 @@
 var md5 = require('../../../utils/md5.js');
 var util = require('../../../utils/util.js');
-const { $Toast } = require('../../../dist/base/index');
 var app = getApp();
 Page({
 
@@ -19,9 +18,11 @@ Page({
     totalnum: 4,  //总共页面数
     starty: 0,  //开始的位置x
     endy: 0, //结束的位置y
-    critical: 100, //触发翻页的临界值
+    critical: 50, //触发翻页的临界值
     margintop: 0,  //滑动下拉距离
-    rotating: ''
+    music: false,
+    tips:"此功能需要登录后才能使用",
+    modalDisplay:false
   },
 
   /**
@@ -34,11 +35,16 @@ Page({
       that.setData({
         login:true
       })
-      if (JSON.stringify(wx.getStorageSync('time_data')) == "{}"){
+      var data = wx.getStorageSync('time_data')
+      if (data != ""){
         that.makeData();
       }else{
         that.getData();
       }
+    }else{
+      this.setData({
+        modalDisplay:true
+      })
     }
 
   },
@@ -53,20 +59,19 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-    var user_id = wx.getStorageSync('user_id');
-    if (user_id) {
+  onShow: function (e) {
+    if(!this.data.music){
       this.audio = wx.createInnerAudioContext()
       this.audio.autoplay = true
       this.audio.loop = true
       this.audio.src = 'http://yunxiaozhi-1251388077.cosgz.myqcloud.com/audio/time_music.mp3'
       this.audio.onPlay(() => {
         this.setData({
-          rotating: 'rotating'
+          music: true
         })
       })
       this.audio.onError((res) => {
-        $Toast({ 'content': '音乐加载失败', 'type': 'error' })
+        app.msg("音乐加载失败")
       })
     }
   },
@@ -83,65 +88,27 @@ Page({
       title: '点击查看你的白云倒计时',
     }
   },
-  //更新数据
-  updateData:function(){
-    var that = this;
-    var cookie;
-    wx.request({
-      url: app.globalData.domain + 'login/getLoginCookie',
-      success: function (res) {
-        cookie = res.data.data.cookie;
-      }
-    });
-    var user_id = wx.getStorageSync('user_id');
-    var password = wx.getStorageSync('user_password');
-    var encoded = util.encodeInp(user_id) + "%%%" + util.encodeInp(password);
-    wx.request({
-      url: app.globalData.domain + 'login/Login',
-      data: {
-        stu_id: user_id,
-        password: password,
-        cookie: cookie,
-        encoded: encoded,
-      },
-      method: "POST",
-      header: {
-        'content-type': 'application/x-www-form-urlencoded'
-      },
-      success: function (res) {
-        $Toast.hide();
-        if (res.data.status == 1002) {
-          return true;
-        }else {
-          return false;
-        }
-      }
-    })
-  },
+  
   //获取数据
   getData:function(){
     var that = this;
     var time_data = wx.getStorageSync("time_data");
-    if (time_data){
-      that.makeData();
-    }else{
+    if (time_data == '' || time_data == null){
       var stu_id = wx.getStorageSync('user_id');
       var str = app.globalData.key + stu_id;
       var sign = md5.hexMD5(str);
-      wx.request({
-        url: app.globalData.domain + 'time/getData',
+      app.httpRequest({
+        url: 'time/getData',
         data: {
           stu_id: stu_id,
           sign: sign
         },
         success: function (res) {
           if (res.data.status == 1002) {
-            var update = that.updateData();
-            if (update) {
-              that.getData;
-            } else {
-              $Toast({ content: '获取数据失败，请联系客服', type: 'error' });
-            }
+            that.setData({
+              modalDisplay: true,
+              tips: "无法获取个人信息，请重新登录"
+            })
           } else {
             var data = res.data.data;
             wx.setStorageSync('time_data', data);
@@ -149,6 +116,8 @@ Page({
           }
         }
       })
+    }else{
+      that.makeData()
     }
   },
   //生成数据
@@ -246,21 +215,25 @@ Page({
   },
   //播放背景音乐
   playBG:function(){
-    if(this.data.rotating == ""){
+    if (!this.data.music){
       this.audio.play();
       this.setData({
-        rotating:'rotating'
+        music:true
       })
     }else{
       this.audio.stop();
       this.setData({
-        rotating: ''
+        music: false
       })
     }
   },
   login:function(){
-    wx.navigateTo({
-      url: '../../bind/bind',
+    this.audio.stop();
+    app.goLogin(this.route)
+  },
+  back:function(){
+    wx.switchTab({
+      url: '/pages/index/index',
     })
   }
 })

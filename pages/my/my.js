@@ -96,7 +96,7 @@ Page({
         sign: app.getSign()
       },
       success: function (res) {
-        if (res.data.status == 0) {
+        if (res.data.status == 1001) {
           //处理班级，去掉括号后的
           var stu_class = res.data.data.stu_class.split('（')[0];
           //时间戳转换

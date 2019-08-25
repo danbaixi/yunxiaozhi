@@ -1,3 +1,7 @@
+<cu-custom bgColor="bg-theme" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">个人信息</view>
+</cu-custom>
 <view class='content'>
   <view class="cu-list menu">
     <view class="cu-item arrow" bindtap="updateImg">
@@ -21,21 +25,6 @@
       </view>
     </view>
   </view>
-  <!-- <view class='list'>
-    <view class='li' bindtap='头像'>
-      <text class='title'>头像</text>
-      <image src='{{img_pre+user_img}}' class="png" mode="aspectFit"></image>
-      <text class='info none' wx:if="{{user_img==null}}">未设置</text>
-    </view>
-  </view>
-  <view class='list' bindtap='openUpdateName'>
-    <view class='li'>
-      <text class='title'>昵称</text>
-      <image class='rightArrow' src='../../assets/imgs/other/right.png'></image>
-      <text class='info none' wx:if="{{user_name==null}}">未设置</text>
-      <text class='info' wx:else>{{user_name}}</text>
-    </view>
-  </view> -->
   <view class="cu-bar bg-white solid-bottom margin-top">
     <view class="action">
       学籍信息

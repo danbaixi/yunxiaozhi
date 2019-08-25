@@ -1,5 +1,4 @@
 var app = getApp();
-const { $Toast } = require('../../dist/base/index');
 Page({
 
   /**
@@ -77,7 +76,9 @@ Page({
   /** 获取新闻列表 */
   getList: function (type,num) {
     var that = this;
-    $Toast({ content: "加载中···", type: 'loading' })
+    wx.showLoading({
+      title:'加载中···'
+    })
     if(type != 'yunxiaozhi'){
       wx.request({
         url: app.globalData.domain + 'news/getNews',
@@ -86,14 +87,14 @@ Page({
           num: num,
         },
         success: function (res) {
-          $Toast.hide();
+          wx.hideLoading();
           if (res.data.status == 1001) {
             var data = {};
             var key = type + "_list";
             data[key] = res.data.data;
             that.setData(data);
           } else {
-            $Toast({ content: "获取资讯失败", type: 'error' })
+            app.msg("获取资讯失败")
           }
         }
       })
@@ -105,13 +106,13 @@ Page({
           limit: 20,
         },
         success: function (res) {
-          $Toast.hide();
+          wx.hideLoading()
           if (res.data.status == 1001) {
             that.setData({
               article:res.data.data
             })
           } else {
-            $Toast({ content: "获取推文失败，请关注云小智公众号查看", type: 'error' })
+            app.msg("获取推文失败，请关注云小智公众号查看")
           }
         }
       })

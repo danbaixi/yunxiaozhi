@@ -1,25 +1,23 @@
-<view class="mask" bindtap="hideMask" style='height:{{winHeight-32}}px' wx:if="{{list_is_display}}"></view>
-<view class='select_week'>
-  <view class='train' data-id="{{train_course_id}}" bindtap='train' wx:if="{{train_course_id!=0}}">实训周</view>
-  <picker  class='week_num' mode="selector" range="{{zhou_num}}" bindchange="select" value="{{now_week-1}}">
-    <text>第 {{now_week}} 周 </text>
-    <text class="icon-unfold lg text-white"></text>
-  </picker> 
-  <view class='update' bindtap='listDisplay'>
-    <text style="font-size:26px;" class="icon-add lg text-white {{list_is_display == 0 ? '' : 'rotateRight'}}"></text>
+<view class="diy-nav" style="height:{{CustomBar}}px;">
+  <view class='select_week' style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;">
+    <picker class='week_num' mode="selector" range="{{zhou_num}}" bindchange="select" value="{{now_week-1}}">
+      <text class="text-white text-lg">第 {{now_week}} 周 </text>
+      <text class="icon-unfold lg text-white"></text>
+    </picker>
+    <view class="text-white text-lg settings" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;" bindtap='listDisplay'>
+    更新
+    </view> 
   </view>
 </view>
-<!-- <i-notice-bar wx:if="{{course_notice_display}}" icon="systemprompt" loop closable>
-    {{course_notice}}
-</i-notice-bar> -->
-<view class='list' style='top:{{list_is_display?32:-180}}px'>
+<view class="mask" bindtap="hideMask" style='height:{{winHeight-32}}px' wx:if="{{list_is_display}}"></view>
+<view class='list' style='top:{{list_is_display?CustomBar:-180}}px'>
   <view bindtap='updateCourse' class='li'>
     更新课表
-    <image class='right' src='../assets/imgs/other/grey_right.png'></image>
+    <text class="right icon-right text-theme text-lg"></text>
   </view>
   <view bindtap='selectImg' class='li'>
     <text class='text_left'>课表背景</text>
-    <image class='right' src='../assets/imgs/other/grey_right.png'></image>
+    <text class="right icon-right text-theme text-lg"></text>
     <text class='text_right'>{{imageUrl!=''?'已设置':'未设置'}}</text>
   </view>
   <view class='li'>
@@ -66,20 +64,19 @@
       </view>
 
       <view wx:for="{{course}}" wx:key="key">
-        <!-- 收集formId -->
-         <form bindsubmit="collectFormid" report-submit>
-          <button class='form-btn flex-item kcb-item' data-num="{{item.indexNum}}" form-type="submit" style="margin-left:{{(item.week-1)*104}}rpx;margin-top:{{(item.jie-1)*100+6}}rpx;height:{{item.jieshu==2?196:396}}rpx;background-color:rgba({{colorArrays[item.num]}},{{(100-Copacity)/100}});"> 
-          <!-- 课表 -->
-           <view class="smalltext" style="font-size:{{fontSize}}pt" >{{item.name}}@{{item.address}}</view>
-          </button>
-        </form>
+        <view class='form-btn flex-item kcb-item' bindtap="displayCourseInfo" data-num="{{item.indexNum}}" form-type="submit" style="margin-left:{{(item.week-1)*104}}rpx;margin-top:{{(item.jie-1)*100+6}}rpx;height:{{item.jieshu==2?196:396}}rpx;background-color:rgba({{colorArrays[item.num]}},{{(100-Copacity)/100}});"> 
+        <!-- 课表 -->
+          <view class="smalltext" style="font-size:{{fontSize}}pt" >{{item.name}}@{{item.address}}</view>
+        </view>
       </view>
+
+      <view class='train' data-id="{{train_course_id}}" bindtap='train' wx:if="{{train_course_id!=0}}">本周是实训周</view>
     </view>
     
   </scroll-view>
 
   <!--更新课表输入验证码弹窗-->
-  <view class="modal-mask" bindtap="hideModal" style='height:{{winHeight-32}}px;top:32px' catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
+  <view class="modal-mask" bindtap="hideModal" style='height:{{winHeight}}px;' catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
   <view class="modal-dialog" wx:if="{{showModal}}" class="{{input_focus == 1?'modal-dialog input_focus':'modal-dialog'}}">
     <view class="modal-title">更新课表</view>
       <view class="modal-content">
@@ -94,4 +91,3 @@
         <view class="btn-confirm" bindtap="update" data-status="confirm">确定</view>
       </view>
 </view>
-<i-toast id="toast" />

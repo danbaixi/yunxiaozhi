@@ -25,11 +25,11 @@ page{
 }
 .header{
   width: 100%;
-  height: 460rpx;
-  background: linear-gradient(to bottom, #6ed4e6 , #7be1fa);
+  height: 540rpx;
+  background: linear-gradient(to bottom, #6ed4e6, #5fdbff); 
 }
 .userinfo{
-  padding: 20rpx 0 180rpx;
+  padding: 120rpx 0 180rpx;
 }
 .avatar {
   width: 180rpx;
@@ -49,7 +49,7 @@ page{
 }
 .infoContent{
   position: absolute;
-  top: 320rpx;
+  top: 400rpx;
   left: 5%;
   width: 90%;
   height: 60%;

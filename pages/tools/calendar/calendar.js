@@ -18,6 +18,7 @@ Page({
       "#800000",
     ],
     jilu:[],
+    CustomBar: app.globalData.CustomBar
   },
 
   /**
@@ -25,8 +26,9 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-    wx.request({
-      url: app.globalData.domain + 'calendar/getList',
+    app.httpRequest({
+      url: 'calendar/getList',
+      needLogin: false,
       success: function (res) {
         var data = res.data.data.calendar;
         var semester = res.data.data.semester;
@@ -36,7 +38,7 @@ Page({
           var etemp = data[i].endDate.split('-');
           var end = new Array(parseInt(etemp[0]), parseInt(etemp[1]), parseInt(etemp[2]));
           var calendar = {
-            semester:data[i].semester,
+            semester: data[i].semester,
             title: data[i].title,
             start: start,
             end: end,
@@ -50,7 +52,7 @@ Page({
         that.setData({
           now_year: now_year,
           now_month: now_month,
-          semester:semester,
+          semester: semester,
         })
         that.getDayData(now_year, now_month);
         that.zhouci();
@@ -168,9 +170,13 @@ Page({
       //颜色组成新的数组
       colorOfShijian:colorOfShijian
     })
+    wx.hideLoading()
   },
   //上个月、下个月的实现
   alterMonth:function(e){
+    wx.showLoading({
+      title: '加载中',
+    })
     var now_year = this.data.now_year;
     var now_month = this.data.now_month;
     if(e.target.dataset.set == 'add'){
@@ -213,7 +219,7 @@ Page({
     for(var a=0;a<semester.length;a++){
       for(var b=0;b<calendar.length;b++){
         if(calendar[b].semester == semester[a].semester){
-          if (calendar[b].title == '正式上课'){
+          if (calendar[b].title == '正式上课' || calendar[b].title == '老生正式上课'){
             start[a] = calendar[b].start;
           } else if (calendar[b].title == '考试周'){
             end[a] = calendar[b].end;

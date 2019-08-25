@@ -1,6 +1,5 @@
 var md5 = require('../../../utils/md5.js');
 var util = require('../../../utils/util.js');
-const { $Toast } = require('../../../dist/base/index');
 var app = getApp();
 Page({
 
@@ -20,6 +19,16 @@ Page({
     tab_title: ['期末考试', '等级考试'],
     courseExamIsNull:false,
     myExamIsNull:false,
+    CustomBar: app.globalData.CustomBar,
+    colors:[
+      'orange',
+      'green',
+      'cyan',
+      'blue',
+      'purple',
+      'pink',
+      'red',
+    ]
   },
 
   /**
@@ -47,7 +56,7 @@ Page({
         url: '../../bind/bind',
       })
     } else {
-      $Toast({ content: '加载中', type: 'loading', duration: 0 });
+      wx.showLoading({title:"加载中"})
       that.getCourseExam();
       that.getMyExam();
     }
@@ -60,7 +69,7 @@ Page({
     var that = this;
     var isFresh = that.data.isFresh;
     if (isFresh) {
-      that.onPullDownRefresh();
+      that.getMyExam();
       that.setData({
         isFresh: false,
       })
@@ -70,11 +79,7 @@ Page({
   * 页面相关事件处理函数--监听用户下拉动作
   */
   onPullDownRefresh: function () {
-    var that = this;
-    that.getMyExam();
-    setTimeout(function(){
-      wx.stopPullDownRefresh();
-    },2000)
+
   },
   /**
    * 用户点击右上角分享
@@ -118,7 +123,7 @@ Page({
         stu_id: user_id
       },
       success: function (res) {
-        $Toast.hide();
+        wx.hideLoading()
         if (res.data.status == 1001) {
           that.setData({
             course_exam: res.data.data.data,
@@ -129,7 +134,7 @@ Page({
             courseExamIsNull: true,
           });
         } else {
-          $Toast({ content: '获取失败' })
+          app.msg("获取失败")
         }
       },
     })
@@ -137,8 +142,8 @@ Page({
   getMyExam:function(e){
     var that = this;
     var my_exams = wx.getStorageSync("my_exams");
-    if (my_exams) {
-      $Toast.hide();
+    if (my_exams != '') {
+      wx.hideLoading()
       that.setData({
         my_exam: my_exams,
         myExamIsNull: false,
@@ -148,14 +153,14 @@ Page({
     var user_id = wx.getStorageSync('user_id');
     var str = app.globalData.key + user_id;
     var sign = md5.hexMD5(str);
-    wx.request({
-      url: app.globalData.domain + 'exam/getmylist',
+    app.httpRequest({
+      url: 'exam/getmylist',
       data: {
         sign: sign,
         stu_id: user_id
       },
       success: function (res) {
-        $Toast.hide();
+        wx.hideLoading()
         if (res.data.status == 1001) {
           var now = util.formatTime2(new Date());
           var data = res.data.data;

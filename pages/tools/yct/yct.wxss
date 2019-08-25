@@ -1,3 +1,6 @@
+page{
+  background: #fff;
+}
 .yct{
   width: 100%;
   margin: 10px auto;
@@ -80,10 +83,6 @@
   margin: 10px 4px 0 0;
   width: 20px;
   height: 20px;
-}
-.btn{
-  width: 90%;
-  margin: 0 auto;
 }
 .result{
   width: 90%;

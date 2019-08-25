@@ -1,6 +1,5 @@
 var md5 = require('../../../utils/md5.js');
 var util = require('../../../utils/util.js');
-const { $Toast } = require('../../../dist/base/index');
 var app = getApp();
 Page({
 
@@ -15,7 +14,10 @@ Page({
     currentTab: 0, 
     isNull:false,
     maxUpdateTime:2,
-    refreshAnimation:""
+    refreshAnimation:"",
+    StatusBar: app.globalData.StatusBar,
+    CustomBar: app.globalData.CustomBar,
+    Custom: app.globalData.Custom
   },
 
   /**
@@ -25,6 +27,7 @@ Page({
     var that = this;
     var winHeight = wx.getSystemInfoSync().windowHeight;
     that.setData({
+      from: options.from,
       winHeight: winHeight
     })
     //检查是否登录
@@ -56,53 +59,6 @@ Page({
       return
     }
     that.updateScore()
-    // var time = (new Date()).getTime();
-    // if (wx.getStorageInfoSync('score_update_time') != ""){
-    //   var update_time = wx.getStorageSync('score_update_time');
-    //   var cha = time - update_time;
-    //   var second = Math.floor(cha / 24 / 60);
-    // }else{
-    //   var second = that.data.maxUpdateTime*60;
-    // }
-    // if (second >= that.data.maxUpdateTime*60){
-    //   wx.showNavigationBarLoading();
-    //   $Toast({ content: '更新中', type: 'loading', duration: 0 });
-    //   var user_id = wx.getStorageSync('user_id');
-    //   var user_password = wx.getStorageSync('user_new_password');
-    //   var str = app.globalData.key + user_id;
-    //   var sign = md5.hexMD5(str);
-    //   var encoded = util.encodeInp(user_id) + "%%%" + util.encodeInp(user_password);
-    //   wx.request({
-    //     url: app.globalData.domain + 'score/updateScore',
-    //     data: {
-    //       stu_id: user_id,
-    //       password: user_password,
-    //       encoded: encoded,
-    //       sign: sign
-    //     },
-    //     success: function (res) {
-    //       $Toast.hide();
-    //       wx.hideNavigationBarLoading();
-    //       wx.setStorageSync('score_update_time', time);
-    //       if (res.data.status == 1001) {
-    //         $Toast({ content: '更新了' + res.data.data + '条记录', type: 'success' });
-    //         if(res.data.data>0){
-    //           that.setData({
-    //             isNull: false
-    //           })
-    //           setTimeout(function () {
-    //             that.getScore(true);
-    //           }, 1000)
-    //         }
-    //       } else {
-    //         $Toast({content:res.data.message, type: 'error' });
-    //       }
-    //     }
-    //   })
-    // }else{
-    //   wx.hideNavigationBarLoading();
-    //   $Toast({ content: (that.data.maxUpdateTime*60-second)+'秒后可更新', type: 'error' });
-    // }
   },
 
   /**
@@ -153,27 +109,27 @@ Page({
   //获取成绩
   getScore:function(update){
     var that = this;
-    $Toast({ content: '加载中', type: 'loading', duration: 0 });
+    wx.showLoading({title:"加载中"})
     var scores = wx.getStorageSync('scores');
-    if(scores.length>0 && !update){
+    if(scores!=''&& scores.score.length>0 && !update){
       that.setData({
         avg: scores.avg,
         score: scores.score,
         term: scores.term
       })
-      $Toast.hide()
+      wx.hideLoading()
     }else{
       var user_id = wx.getStorageSync('user_id');
       var str = app.globalData.key + user_id;
       var sign = md5.hexMD5(str);
-      wx.request({
-        url: app.globalData.domain + 'score/getscorelist',
+      app.httpRequest({
+        url: 'score/getscorelist',
         data: {
           sign: sign,
           stu_id: user_id
         },
         success: function (res) {
-          $Toast.hide()
+          wx.hideLoading()
           if (res.data.status == 1001) {
             wx.setStorageSync('scores', res.data.data);
             that.setData({
@@ -182,7 +138,7 @@ Page({
               term: res.data.data.term
             })
           } else if (res.data.status == 1002) {
-            $Toast({ content: '获取失败', type: 'error' });
+            app.msg('获取失败')
           } else if (res.data.status == 1003) {
             that.setData({
               isNull: true
@@ -241,7 +197,7 @@ Page({
     var that = this;
     var system_type = wx.getStorageSync('system_type');
     if (system_type != 2) {
-      $Toast({ content: "请使用旧教务系统账号登录后更新成绩", type: "warning" });
+      app.msg("请使用旧教务系统账号登录后更新成绩")
       setTimeout(function () {
         wx.redirectTo({
           url: '/pages/bind/bind',
@@ -253,8 +209,9 @@ Page({
       showModal: true
     });
     /**获取验证码 */
-    wx.request({
-      url: app.globalData.domain + 'login/getLoginInitData',
+    app.httpRequest({
+      url: 'login/getLoginInitData',
+      needLogin:false,
       success: function (res) {
         that.setData({
           cookie: res.data.data['cookie'],
@@ -296,30 +253,30 @@ Page({
     that.setData({ list_is_display: false })
     var user_id = wx.getStorageSync('user_id');
     if (!user_id) {
-      $Toast({ content: "请先登录", type: "warning" });
+      app.msg("请先登录")
       return;
     }
     var time = (new Date()).getTime();
     if (wx.getStorageInfoSync('score_update_time') != "") {
       var update_time = wx.getStorageSync('score_update_time');
       var cha = time - update_time;
-      var minutes = Math.floor(cha / 24 / 3600);
+      var season = Math.floor(cha / 24);
     } else {
-      var minutes = 10;
+      var season = 0;
     }
-    if (minutes >= 10) {
-      $Toast({ content: '更新中', type: 'loading', duration: 0 })
+    if (season > 0) {
+      wx.showLoading({title:"更新中"})
       var user_id = wx.getStorageSync('user_id');
-      var user_password = wx.getStorageSync('user_old_password');
+      var user_password = wx.getStorageSync('user_password');
       var yzm = that.data.yzm;
       var cookie = that.data.cookie;
       var str = app.globalData.key + user_id;
       var sign = md5.hexMD5(str);
       if (yzm == "") {
-        $Toast({ content: '请输入验证码', type: 'warning' })
+        app.msg("请输入验证码")
       } else {
-        wx.request({
-          url: app.globalData.domain + 'score/updateScoreV0',
+        app.httpRequest({
+          url: 'score/updateScoreV0',
           data: {
             stu_id: user_id,
             password: user_password,
@@ -329,11 +286,11 @@ Page({
             sign: sign
           },
           success: function (res) {
-            $Toast.hide();
+            wx.hideLoading()
             that.hideModal();
             wx.hideNavigationBarLoading()
             if (res.data.status == 1001) {
-              $Toast({ content: '更新了' + res.data.data + '条记录', type: 'success' });
+              app.msg('更新了' + res.data.data + '条记录')
               if (res.data.data > 0) {
                 that.setData({
                   isNull: false
@@ -344,13 +301,31 @@ Page({
               }
               wx.setStorageSync('score_update_time', time);
             } else {
-              $Toast({ content: res.data.message, type: 'error' });
+              if (res.data.status == 1002) {
+                that.freshYzm()
+              } else if (res.data.status == 1006) {
+                that.setData({
+                  showModal: false
+                })
+              }
+              app.msg(res.data.message)
             }
           }
         })
       }
     } else {
-      $Toast({ content: (10 - minutes) + '分钟后可更新', type: 'error' });
+      app.msg(season + '秒后可更新')
+    }
+  },
+  backPage:function(){
+    if(this.data.from == 'index'){
+      wx.navigateBack({
+        delta: 1
+      });
+    }else{
+      wx.reLaunch({
+        url: '/pages/index/index',
+      })
     }
   }
 })

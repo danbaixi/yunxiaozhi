@@ -9,38 +9,34 @@ App({
     }
   },
   onLaunch: function () {
-    //调用API从本地缓存中获取数据
-    var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs);
-  },
-  getUserInfo:function(cb){
-    var that = this
-    if(this.globalData.userInfo){
-      typeof cb == "function" && cb(this.globalData.userInfo)
-    }else{
-      //调用登录接口
-      wx.login({
-        success: function () {
-          wx.getUserInfo({
-            success: function (res) {
-              that.globalData.userInfo = res.userInfo
-              typeof cb == "function" && cb(that.globalData.userInfo)
-            }
-          })
-        }
-      })
-    }
+    //自定义导航栏
+    wx.getSystemInfo({
+      success: e => {
+        this.globalData.StatusBar = e.statusBarHeight;
+        let custom = wx.getMenuButtonBoundingClientRect();
+        this.globalData.Custom = custom;
+        this.globalData.CustomBar = custom.bottom + custom.top - e.statusBarHeight;
+      }
+    })
+    //获取当前学期开学日期
   },
   /** 全局变量 */
   globalData:{
     isDebug:false,
-    xdebug:"?XDEBUG_SESSION_START=10885",
+    xdebug:"?XDEBUG_SESSION_START=15308",
     domain:'https://www.yunxiaozhi.cn/v1/public/api/',
     key:'ihzoaixnuy4f8835032505e8a45ac102c52d58593e',
     start_year: 2019,
-    start_month: 2,
-    start_day: 25,
+    start_month: 9,
+    start_day: 1,
+    amap_key: "67c20c2c7db08923379123500b656adf",
+    markers_json: "https://www.yunxiaozhi.cn/v1/resource/markers.json",
+  },
+
+  goLogin:function(url){
+    wx.navigateTo({
+      url: '/pages/bind/bind?url=/'+ url,
+    })
   },
 
   /**
@@ -60,11 +56,11 @@ App({
   /**
    *  封装request 
    */
-  httpRequest:function(datas){
-    if(datas.page != 'bind'){
+  httpRequest: function (datas){
+    if (datas.needLogin == undefined || datas.needLogin == true){
       var uid = wx.getStorageSync('user_id')
       if(uid == ""){
-        app.msg('请先登录')
+        this.msg('请先登录')
         return
       }else{
         datas.data.stu_id = uid
@@ -104,26 +100,16 @@ App({
     })
   },
 
-  //自定义Toast
-  showToast: function (text, o, count) {
-    var _this = o;
-    count = parseInt(count) ? parseInt(count) : 2000;
-    _this.setData({
-      toastText: text,
-      isShowToast: true,
-    });
-    setTimeout(function () {
-      _this.setData({
-        isShowToast: false
-      });
-    }, count);
-  },
-
   //toast
-  msg:function(text){
+  msg:function(text,type){
+    var type = typeof type === "undefined" ? '' : type
+    var icon = 'none'
+    if(type != ''){
+      icon = type
+    }
     wx.showToast({
       title: text,
-      icon:'none',
+      icon: icon,
       duration:2000
     })
   }

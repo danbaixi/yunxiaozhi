@@ -7,8 +7,8 @@ page{
 }
 .scores{
   width: 92%;
-  height: 92%;
-  margin: 4% auto;
+  height: 96%;
+  margin: 2% auto;
   background: #fff;
   border-radius: 20rpx;
   padding-bottom: 40rpx;
@@ -23,7 +23,7 @@ page{
 }
 .scores .avg{
   display: inline-block;
-  margin: 20rpx 0;
+  margin: 10rpx 0 20rpx;
   font-size: 28rpx;
   padding: 8rpx 30rpx;
   background: #6ed4e6;

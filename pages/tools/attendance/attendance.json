@@ -1,7 +1,4 @@
 {
   "navigationBarTitleText": "考勤记录",
-  "usingComponents": {
-    "i-toast": "../../../dist/toast/index"
-  },
   "enablePullDownRefresh": true
 }

@@ -1,3 +1,7 @@
+<cu-custom bgColor="bg-theme" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">羊城通</view>
+</cu-custom>
 <view class='yct'>
   <view class='list'>
     <view class='none' wx:if="{{isExit == 0}}">未添加任何卡，请点击下方按钮添加</view>
@@ -8,7 +12,9 @@
         <view class='num'>{{item.account}}</view>
       </view>
     </view>
-    <button class='btn' bindtap='add'>添加卡号</button>
+    <view class="padding flex flex-direction">
+      <button class="cu-btn bg-theme lg" bindtap='add'>添加卡号</button>
+    </view>
   </view>
   <view class='result' wx:if='{{display == 1}}'>
     <view class='info center'>{{history}}</view>
@@ -20,4 +26,3 @@
     </view>
   </view>
 </view>
-<i-toast id="toast" />

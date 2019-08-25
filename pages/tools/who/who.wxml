@@ -1,5 +1,9 @@
+<cu-custom bgColor="bg-theme" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content"></view>
+</cu-custom>
 <view class='who'>
-  <view class='info'>戳下面的数字，等待命运的安排</view>
+  <view class='info'>用力戳下面的数字</view>
     <view class='num' bindtap='click' data-num='{{num}}'>
       <text>{{num}}</text>
     </view>
@@ -16,4 +20,3 @@
     </view>
   </view>
 </view>
-<ad unit-id="adunit-e67cddfbc6eaebf3"></ad>

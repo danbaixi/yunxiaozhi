@@ -1,6 +1,6 @@
 var util = require('../../utils/util.js');
 var md5 = require('../../utils/md5.js');
-var app = getApp();
+const app = getApp()
 Page({
 
   /**
@@ -25,14 +25,17 @@ Page({
    * 生命周期函数--监听页面 加载
    */
   onLoad: function(options) {
+    var that = this;
+    that.setData({
+      url: options.url ? options.url : ''
+    })
+    that.getNotice();
+    that.loginInitV1();
     if (wx.getStorageSync('user_id')) {
       wx.redirectTo({
         url: '../course/course',
       })
     }
-    var that = this;
-    that.getNotice();
-    that.loginInitV1();
 
     //新教务系统获取cookie，暂时隐藏
     // app.httpRequest({
@@ -80,6 +83,7 @@ Page({
       var encoded = util.encodeInp(user_id) + "%%%" + util.encodeInp(password);
       app.httpRequest({
         url: app.globalData.domain + 'login/Login',
+        needLogin:false,
         data: {
           stu_id: user_id,
           password: password,
@@ -102,10 +106,7 @@ Page({
                 if (res.data.status == 1001) {
                   wx.setStorageSync('course', res.data.data.course);
                 } else {
-                  $Toast({
-                    content: '获取课表失败',
-                    type: 'error'
-                  });
+                  app.msg("获取课表失败")
                 }
               },
             });
@@ -115,31 +116,28 @@ Page({
             wx.setStorageSync('user_new_password', password);
             wx.setStorageSync('system_type', that.data.systemType);
             setTimeout(function () {
+              if(that.data.url !=''){
+                wx.redirectTo({
+                  url: that.data.url,
+                })
+                return
+              }
               wx.switchTab({
-                url: '../index/index'
+                url: '/pages/index/index'
               })
             }, 1000);
-            $Toast({
-              content: '登录成功',
-              type: 'success'
-            });
+            app.msg("登录成功","success")
           } else if (res.data.status == 1003) {
-            $Toast({
-              content: '学号或密码有误',
-              type: 'error'
-            });
+            app.msg("学号或密码有误")
           } else {
-            $Toast({
-              content: '登录失败',
-              type: 'error'
-            });
+            app.msg("登录失败")
           }
         }
       })
     } else {
       app.httpRequest({
         url: 'login/LoginV1',
-        page:'bind',
+        needLogin: false,
         data: {
           stu_id: user_id,
           password: password,
@@ -158,11 +156,17 @@ Page({
             wx.setStorageSync('user_id', user_id);
             wx.setStorageSync('user_password', password);
             wx.setStorageSync('system_type', that.data.systemType);
-            setTimeout(function(){
+            setTimeout(function () {
+              if (that.data.url != '') {
+                wx.redirectTo({
+                  url: that.data.url,
+                })
+                return
+              }
               wx.switchTab({
-                url: '../index/index'
+                url: '/pages/index/index'
               })
-            },1000)
+            }, 1000);
           } else {
             app.msg(res.data.message);
             if(res.data.status == 1001){
@@ -279,7 +283,7 @@ Page({
     var that = this
     app.httpRequest({
       url: 'login/getLoginInitData',
-      page: 'bind',
+      needLogin:false,
       success: function (res) {
         that.setData({
           cookie_2: res.data.data.cookie,

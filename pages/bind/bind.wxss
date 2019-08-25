@@ -1,11 +1,8 @@
-page{
-  background: #f1f1f1;
-}
 .header{
     position: relative;
     align-items: center;
-    min-height: 200rpx;
-    background-color: #f1f1f1;
+    min-height: 460rpx;
+    background-color:var(--backgroud);
     overflow: hidden;
     z-index: -100;
 }
@@ -50,7 +47,7 @@ page{
 
 .banner{
   width: 50%;
-  margin: 40rpx 25%;
+  margin: 160rpx 25%;
 }
 
 .login{

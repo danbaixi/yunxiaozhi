@@ -1,29 +1,34 @@
+<cu-custom bgColor="bg-theme" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">应用列表</view>
+</cu-custom>
 <view class="content">
   <view class='top'>
     <text class='title'>学业查询</text>
   </view>
-  <view class="weui-grids">
-    <form class='weui-grid' bindsubmit="collectFormid" wx:for="{{study}}" wx:key="name" report-submit>
-     <button class='form-btn' data-url="{{item.url}}" form-type="submit">
-      <view class="weui-grid__icon">  
-        <image src=" {{item.icon}}" mode="scaleToFill" />  
-      </view>  
-      <text class="weui-grid__label">{{item.name}}</text>  
-      </button>
-    </form>
+
+  <view class="cu-list grid col-{{gridCol}}">
+    <view class="cu-item" wx:for="{{study}}" wx:key data-url="{{item.url}}" data-needLogin="{{item.needLogin}}" data-appid="{{item.appid}}" data-path="{{item.path}}" bindtap='openTool'>
+      <view class="icon-{{item.icon}} text-{{item.color}}">
+        <view class="cu-tag badge" wx:if="{{item.badge!=0}}">
+          <block wx:if="{{item.badge!=1}}">{{item.badge>99?"99+":item.badge}}</block>
+        </view>
+      </view>
+      <text>{{item.name}}</text>
+    </view>
   </view>
 
   <view class='top'>
     <text class='title'>生活服务</text>
   </view>
-  <view class="weui-grids">  
-    <form class='weui-grid' bindsubmit="collectFormid" wx:for="{{life}}" wx:key="name" report-submit>
-     <button class='form-btn' data-url="{{item.url}}" form-type="submit">
-      <view class="weui-grid__icon">  
-        <image src=" {{item.icon}}" mode="scaleToFill" />  
-      </view>  
-      <text class="weui-grid__label">{{item.name}}</text>  
-      </button>
-    </form>
+  <view class="cu-list grid col-{{gridCol}}">
+    <view class="cu-item" wx:for="{{life}}" wx:key data-url="{{item.url}}" data-needLogin="{{item.needLogin}}" data-appid="{{item.appid}}" data-path="{{item.path}}" bindtap='openTool'>
+      <view class="icon-{{item.icon}} text-{{item.color}}">
+        <view class="cu-tag badge" wx:if="{{item.badge!=0}}">
+          <block wx:if="{{item.badge!=1}}">{{item.badge>99?"99+":item.badge}}</block>
+        </view>
+      </view>
+      <text>{{item.name}}</text>
+    </view>
   </view>
 </view>  

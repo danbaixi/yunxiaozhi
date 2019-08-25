@@ -1,31 +1,34 @@
-<view class='content'>
-  <form bindsubmit="formSubmit">
-    <view class='form-group'>
-      <label>考试科目</label>
-      <input name='name' placeholder='请输入科目名称' value='{{name}}'></input>
-    </view>
-    <view class='form-group'>
-      <label>考试日期</label>
-      <picker mode="date" value="{{date}}" start="2018-09-03" bindchange="bindDateChange">
-        <view class="picker">
-          <input name='date' placeholder='点击选择日期' value='{{date}}'></input>
-        </view>
-      </picker>
-    </view>
-    <view class='form-group'>
-      <label>考试地点</label>
-      <input name='address' placeholder='请输入考试地点(选填)' value='{{address}}'></input>
-    </view>
-    <view class='form-group'>
-      <label>准考证</label>
-      <input name='num' placeholder='请输入准考证(选填)' value='{{num}}'></input>
-    </view>
-    <view class='form-group'>
-      <label>座位号</label>
-      <input name='position' placeholder='请输入座位号(选填)' value='{{position}}'></input>
-    </view>
-    <button  formType="submit" class='add'>{{action}}</button>
-    <view wx:if="{{action=='修改'}}" class='del' bindtap='del'>删除</view>
-  </form>
-</view>
-<i-toast id="toast" />
+<cu-custom bgColor="bg-theme" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">添加考试</view>
+</cu-custom>
+<form bindsubmit="formSubmit">
+  <view class="cu-form-group">
+    <view class="title">考试科目</view>
+    <input name='name' placeholder='请输入科目名称' value='{{name}}'></input>
+  </view>
+  <view class="cu-form-group">
+    <view class="title">考试日期</view>
+    <picker mode="date" value="{{date}}" name="date" bindchange="bindDateChange">
+      <view class="picker">
+        {{date}}
+      </view>
+    </picker>
+  </view>
+  <view class="cu-form-group">
+    <view class="title">考试地点</view>
+    <input name='address' placeholder='请输入考试地点(选填)' value='{{address}}'></input>
+  </view>
+  <view class="cu-form-group">
+    <view class="title">准考证</view>
+    <input name='num' placeholder='请输入准考证(选填)' value='{{num}}'></input>
+  </view>
+  <view class="cu-form-group">
+    <view class="title">座位号</view>
+    <input name='position' placeholder='请输入座位号(选填)' value='{{position}}'></input>
+  </view>
+  <view class="padding flex flex-direction">
+    <button formType="submit" class='cu-btn bg-theme lg'>{{action}}</button>
+  </view>
+  <view wx:if="{{action=='修改'}}" class='del' bindtap='del'>删除</view>
+</form>

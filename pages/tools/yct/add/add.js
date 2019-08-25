@@ -1,6 +1,5 @@
 var md5 = require('../../../../utils/md5.js');
 var util = require('../../../../utils/util.js');
-const { $Toast } = require('../../../../dist/base/index');
 var app = getApp();
 Page({
 
@@ -31,7 +30,7 @@ Page({
     }else if(e.detail.value['remark']==""){
       wx.showToast({ title: '卡号不能为空', icon: 'loading', })
     }else{
-      $Toast({ content: '加载中', type: 'loding',duration:0 })
+      wx.showLoading({title:"加载中"})
       var user_id = wx.getStorageSync('user_id');
       var str = app.globalData.key + user_id;
       var sign = md5.hexMD5(str);
@@ -44,9 +43,9 @@ Page({
           remark: null,
         },
         success: function (res) {
-          $Toast.hide();
+          wx.hideLoading()
           if(res.data.status == 1001){
-            $Toast({ content: '添加成功',type:'success'})
+            app.msg("添加成功","success")
             setTimeout(function(){
               wx.hideToast();
               //返回后刷新
@@ -61,7 +60,7 @@ Page({
               })
             },1000)
           }else{
-            $Toast({ content: '添加失败', type: 'error' })
+            app.msg("添加失败")
           }
         }
       });
