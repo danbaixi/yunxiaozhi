@@ -205,9 +205,9 @@ Page({
       }, 2000)
       return;
     }
-    that.setData({
-      showModal: true
-    });
+    // that.setData({
+    //   showModal: true
+    // });
     /**获取验证码 */
     app.httpRequest({
       url: 'login/getLoginInitData',
@@ -217,7 +217,8 @@ Page({
           cookie: res.data.data['cookie'],
           __VIEWSTATE: res.data.data['__VIEWSTATE'],
         })
-        that.freshYzm();
+        that.update()
+        // that.freshYzm();
       }
     });
   },
@@ -260,62 +261,62 @@ Page({
     if (wx.getStorageInfoSync('score_update_time') != "") {
       var update_time = wx.getStorageSync('score_update_time');
       var cha = time - update_time;
-      var season = Math.floor(cha / 24);
+      var season = 60 - Math.floor(cha / 1000);
     } else {
       var season = 0;
     }
     if (season > 0) {
-      wx.showLoading({title:"更新中"})
-      var user_id = wx.getStorageSync('user_id');
-      var user_password = wx.getStorageSync('user_password');
-      var yzm = that.data.yzm;
-      var cookie = that.data.cookie;
-      var str = app.globalData.key + user_id;
-      var sign = md5.hexMD5(str);
-      if (yzm == "") {
-        app.msg("请输入验证码")
-      } else {
-        app.httpRequest({
-          url: 'score/updateScoreV0',
-          data: {
-            stu_id: user_id,
-            password: user_password,
-            code: yzm,
-            cookie: cookie,
-            __VIEWSTATE: that.data.__VIEWSTATE,
-            sign: sign
-          },
-          success: function (res) {
-            wx.hideLoading()
-            that.hideModal();
-            wx.hideNavigationBarLoading()
-            if (res.data.status == 1001) {
-              app.msg('更新了' + res.data.data + '条记录')
-              if (res.data.data > 0) {
-                that.setData({
-                  isNull: false
-                })
-                setTimeout(function () {
-                  that.getScore(true);
-                }, 1000)
-              }
-              wx.setStorageSync('score_update_time', time);
-            } else {
-              if (res.data.status == 1002) {
-                that.freshYzm()
-              } else if (res.data.status == 1006) {
-                that.setData({
-                  showModal: false
-                })
-              }
-              app.msg(res.data.message)
-            }
-          }
-        })
-      }
-    } else {
-      app.msg(season + '秒后可更新')
+      app.msg('请在'+season + '秒后更新')
+      return
     }
+    wx.showLoading({ title: "更新中" })
+    var user_id = wx.getStorageSync('user_id');
+    var user_password = wx.getStorageSync('user_password');
+    var yzm = that.data.yzm;
+    var cookie = that.data.cookie;
+    var str = app.globalData.key + user_id;
+    var sign = md5.hexMD5(str);
+    // if (yzm == "") {
+    //   app.msg("请输入验证码")
+    //   return
+    // }
+    app.httpRequest({
+      url: 'score/updateScoreV0',
+      data: {
+        stu_id: user_id,
+        password: user_password,
+        code: yzm,
+        cookie: cookie,
+        __VIEWSTATE: that.data.__VIEWSTATE,
+        sign: sign
+      },
+      success: function (res) {
+        wx.hideLoading()
+        that.hideModal();
+        wx.hideNavigationBarLoading()
+        if (res.data.status == 1001) {
+          app.msg('更新了' + res.data.data + '条记录')
+          if (res.data.data > 0) {
+            that.setData({
+              isNull: false
+            })
+            setTimeout(function () {
+              that.getScore(true);
+            }, 1000)
+          }
+          wx.setStorageSync('score_update_time', time);
+        } else {
+          if (res.data.status == 1002) {
+            that.freshYzm()
+          } else if (res.data.status == 1006) {
+            that.setData({
+              showModal: false
+            })
+          }
+          app.msg(res.data.message)
+        }
+      }
+    })
   },
   backPage:function(){
     if(this.data.from == 'index'){

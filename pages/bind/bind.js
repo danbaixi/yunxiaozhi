@@ -11,8 +11,8 @@ Page({
     cookie: "",
     cookie_2: "",
     __VIEWSTATE: "",
-    user_id: "",
-    user_password: "",
+    user_id: "15230203124",
+    user_password: "jiangjixi",
     code: "",
     password_display: false,
     loading: false,
@@ -30,7 +30,7 @@ Page({
       url: options.url ? options.url : ''
     })
     that.getNotice();
-    that.loginInitV1();
+    // that.loginInitV1();
     if (wx.getStorageSync('user_id')) {
       wx.redirectTo({
         url: '../course/course',
@@ -71,10 +71,10 @@ Page({
       app.msg('请输入密码')
       return
     }
-    if (that.data.systemType == 2 && code == "") {
-      app.msg('请输入验证码')
-      return
-    }
+    // if (that.data.systemType == 2 && code == "") {
+    //   app.msg('请输入验证码')
+    //   return
+    // }
     wx.showLoading({
       title: '登陆中...',
     })
@@ -141,9 +141,9 @@ Page({
         data: {
           stu_id: user_id,
           password: password,
-          cookie: that.data.cookie_2,
-          __VIEWSTATE: that.data.__VIEWSTATE,
-          code: that.data.code,
+          // cookie: that.data.cookie_2,
+          // __VIEWSTATE: that.data.__VIEWSTATE,
+          // code: that.data.code,
         },
         method: "POST",
         success: function(res) {
@@ -289,7 +289,7 @@ Page({
           cookie_2: res.data.data.cookie,
           __VIEWSTATE: res.data.data.__VIEWSTATE,
         })
-        that.freshYzm();
+        // that.freshYzm();
       }
     })
   }

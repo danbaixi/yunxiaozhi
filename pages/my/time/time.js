@@ -124,6 +124,13 @@ Page({
   makeData:function(){
     var that = this;
     var data = wx.getStorageSync('time_data');
+    if (data.entry_date == '0000-00-00'){
+      that.setData({
+        modalDisplay: true,
+        tips: "无法获取个人信息，请重新登录"
+      })
+      return
+    }
     //计算离校日期
     var tmp = data.entry_date.split("-");
     var end_date = (Number(tmp[0]) + Number(data.year - 1)) + '-07-01'; 
@@ -229,6 +236,7 @@ Page({
   },
   login:function(){
     this.audio.stop();
+    wx.setStorageSync('time_data', '')
     app.goLogin(this.route)
   },
   back:function(){

@@ -70,7 +70,7 @@ Page({
    * 下拉刷新
    */
   onPullDownRefresh:function(){
-
+    this.showDialogBtn()
   },
   /**
    * 用户点击右上角分享
