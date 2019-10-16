@@ -1,8 +1,0 @@
-.item{
-  margin: 10px;
-  text-align: justify;
-}
-.jilu{
-  margin-top: 20rpx;
-  display: block;
-}

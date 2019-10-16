@@ -5,7 +5,7 @@
   color: #000;
 }
 .section-text{
-  padding: 100rpx 0 40rpx;
+  padding: 60rpx 0 40rpx;
   line-height: 60rpx;
 }
 .countdown{

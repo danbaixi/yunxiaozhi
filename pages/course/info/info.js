@@ -63,5 +63,10 @@ Page({
    */
   onShareAppMessage: function () {
   
+  },
+  rest:function(){
+    wx.navigateTo({
+      url: '../../article/article?src=' + encodeURIComponent('http://mp.weixin.qq.com/s?__biz=MzI1NTUwNDIzNQ==&mid=100000581&idx=1&sn=6ef90448df9ac2d4930fa3b15aa8399e&chksm=6a35b9415d423057df293f498fe3027b2ede3fe46000e69fc1a713a90eb7f894aabe416d7fa2#rd'),
+    })
   }
 })

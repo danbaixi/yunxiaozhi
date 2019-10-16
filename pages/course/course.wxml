@@ -1,4 +1,4 @@
-<view class="diy-nav" style="height:{{CustomBar}}px;">
+<!-- <view class="diy-nav" style="height:{{CustomBar}}px;">
   <view class='select_week' style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;">
     <picker class='week_num' mode="selector" range="{{zhou_num}}" bindchange="select" value="{{now_week-1}}">
       <text class="text-white text-lg">第 {{now_week}} 周 </text>
@@ -8,10 +8,19 @@
     更新
     </view> 
   </view>
+</view> -->
+<view class="diy-nav">
+  <view class='select_week'>
+    <picker class='week_num' mode="selector" range="{{zhou_num}}" bindchange="select" value="{{now_week-1}}">
+      <text class="text-white text-lg">第 {{now_week}} 周 </text>
+      <text class="icon-unfold lg text-white"></text>
+    </picker>
+    <text class="text-white text-lg settings" bindtap='listDisplay'>设置</text> 
+  </view>
 </view>
 <view class="mask" bindtap="hideMask" style='height:{{winHeight-32}}px' wx:if="{{list_is_display}}"></view>
-<view class='list' style='top:{{list_is_display?CustomBar:-180}}px'>
-  <view bindtap='updateCourse' class='li'>
+<view class='list' style='top:{{list_is_display?32:-180}}px'>
+  <view bindtap='update' class='li'>
     更新课表
     <text class="right icon-right text-theme text-lg"></text>
   </view>
@@ -66,15 +75,21 @@
       <view wx:for="{{course}}" wx:key="key">
         <view class='form-btn flex-item kcb-item' bindtap="displayCourseInfo" data-num="{{item.indexNum}}" form-type="submit" style="margin-left:{{(item.week-1)*104}}rpx;margin-top:{{(item.jie-1)*100+6}}rpx;height:{{item.jieshu==2?196:396}}rpx;background-color:rgba({{colorArrays[item.num]}},{{(100-Copacity)/100}});"> 
         <!-- 课表 -->
-          <view class="smalltext" style="font-size:{{fontSize}}pt" >{{item.name}}@{{item.address}}</view>
+          <view class="smalltext" style="font-size:{{fontSize}}pt;color:{{color}}" >{{item.name}}@{{item.address}}</view>
+        </view>
+      </view>
+
+      <view wx:if="{{ad.display}}" bindtap="goAd">
+        <view class='form-btn flex-item kcb-item ad' style="margin-left:{{(ad.week-1)*104 - (ad.week==7?14:0)}}rpx;margin-top:{{(ad.jie-1)*100+6}}rpx;height:{{ad.jieshu==1?196:396}}rpx;background-color:{{ad.background}}">
+          <view class="smalltext" style="margin-bottom: 14px;color:{{ad.color}};font-size:{{ad.fontSize}}pt" >{{ad.title}}</view>
+          <view bindtap="closeAd" class="ad-close icon-roundclose text-center text-grey"></view>
         </view>
       </view>
 
       <view class='train' data-id="{{train_course_id}}" bindtap='train' wx:if="{{train_course_id!=0}}">本周是实训周</view>
-    </view>
-    
-  </scroll-view>
 
+    </view>
+  </scroll-view>
   <!--更新课表输入验证码弹窗-->
   <view class="modal-mask" bindtap="hideModal" style='height:{{winHeight}}px;' catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
   <view class="modal-dialog" wx:if="{{showModal}}" class="{{input_focus == 1?'modal-dialog input_focus':'modal-dialog'}}">

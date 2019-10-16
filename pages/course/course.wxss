@@ -28,12 +28,12 @@ page{
 }
 .select_week{
   position: relative;
-  background: #6ed4e6; 
+  background: #6ed4e6;
   color: #fff;
   height: 32px;
   z-index: 1000;
-  font-size:16px;
-
+  font-size: 16px;
+  line-height: 28px;
 }
 .xiala{
   width: 20px;
@@ -45,14 +45,13 @@ page{
   justify-content: center;
   display: flex;
   height: 100%;
-  line-height:3;
 }
 .settings{
-  position: absolute; 
+  position: absolute;
   justify-content: center;
-  top:0;
-  line-height: 3;
-  padding-left: 20px;
+  top: 0;
+  left: 30rpx;
+  font-size: 16px;
 }
 .train{
   position: fixed;
@@ -319,4 +318,14 @@ input-holder {
   height: 40px;
   float: right;
   margin-top: -9px;
+}
+.add{
+  position: absolute;
+  right: 40rpx;
+  bottom: 100rpx;
+  z-index: 100;
+}
+.ad-close{
+  position: absolute;
+  bottom: 4rpx;
 }

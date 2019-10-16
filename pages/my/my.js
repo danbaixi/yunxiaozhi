@@ -66,6 +66,9 @@ Page({
     }
     
   },
+  onShareAppMessage:function () {
+    return app.share()
+  },
   /**
    * 解绑帐号
    */

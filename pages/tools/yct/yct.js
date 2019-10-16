@@ -48,11 +48,7 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-    return {
-      title: '出门之前查查羊城通',
-      path: 'pages/tools/yct/yct',
-      imageUrl: 'http://yunxiaozhi-1251388077.cosgz.myqcloud.com/wx_share/yct.jpg'
-    };
+    return app.share('点击查询羊城通余额','yct.png',this.route)
   },
   /**
  * 生命周期函数--监听页面显示

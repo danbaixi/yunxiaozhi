@@ -6,6 +6,7 @@ page{
   background: linear-gradient(to bottom, #6ed4e6, #379ff7);
 }
 .scores{
+  position: relative;
   width: 92%;
   height: 96%;
   margin: 2% auto;
@@ -77,4 +78,10 @@ page{
   position: absolute;
   right: 40rpx;
   top: 12rpx;
+}
+.update{
+  position: absolute;
+  top: 16rpx;
+  right: 22px;
+  font-size: 24px!important;
 }

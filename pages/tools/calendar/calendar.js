@@ -58,17 +58,21 @@ Page({
         that.zhouci();
       }
     })
-
+    var time = (new Date).getTime()
+    var ad = wx.getStorageSync('calendar_ad_display');
+    if (ad == '' || (ad != '' && Math.floor((time - ad) / 1000) > app.globalData.adTime * 24 * 60)) {
+      var interstitialAd = wx.createInterstitialAd({
+        adUnitId: 'adunit-08243d9ade5de071'
+      })
+      interstitialAd.show()
+      wx.setStorageSync('calendar_ad_display', time)
+    }
   },
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-    return {
-      title: '最新出炉的白云校历',
-      path: 'pages/tools/calendar/calendar',
-      imageUrl: 'http://yunxiaozhi-1251388077.cosgz.myqcloud.com/wx_share/calendar.jpg'
-    };
+    return app.share('最新出炉的白云校历', 'calendar.png', this.route)
   },
   // 计算每月有多少天
   getThisMonthDays(year, month) {
@@ -280,8 +284,6 @@ Page({
           var date2 = startTime[0] + '-' + startTime[1] + '-' + startTime[2];
           var oDate1 = new Date(now_year,now_month,firstSat);
           var oDate2 = new Date(startTime[0], startTime[1], startTime[2]);
-          console.log(oDate1);
-          console.log(oDate2);
           var a = parseInt(oDate1 - oDate2);
           var iDays = parseInt(oDate1 - oDate2) / 1000 / 60 / 60 / 24;
           var firstWeek = Math.ceil(iDays / 7);

@@ -12,8 +12,6 @@ Page({
     now_week:1,
     now_day:[],
     now_month:0,
-    AdIsDisplay:0,
-    AdClose:0,
     colorArrays: [
       "93,113,213",
       "133,93,213",
@@ -40,7 +38,20 @@ Page({
     sheet_visible: false,
     StatusBar: app.globalData.StatusBar,
     CustomBar: app.globalData.CustomBar,
-    Custom: app.globalData.Custom
+    Custom: app.globalData.Custom,
+    ad:{
+      display:false,
+      week:7,
+      jie:1,
+      jieshu:1,
+      background:"#6ed4e6",
+      color:"#fff",
+      title:"",
+      fontSize:10,
+      type:1,
+      url:"",
+      content:""
+    }
   },
 
   /**
@@ -58,7 +69,6 @@ Page({
     if (wx.getStorageSync('fontSize') == '') {
       wx.setStorageSync('fontSize', 9)
     }
-    wx.setStorageSync('ADclose', 0);
     var winHeight = wx.getSystemInfoSync().windowHeight;
     that.setData({
       imageUrl:wx.getStorageSync('bg_img'),
@@ -99,7 +109,8 @@ Page({
       //获取课表
       that.getCourse(week);
       //获取公告
-      that.getNotice();
+      // that.getNotice();
+      that.getAd()
     }
   },
 
@@ -107,15 +118,7 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-    var that = this;
-    var src = "http://yunxiaozhi-1251388077.cosgz.myqcloud.com/wx_share/course_";
-    var num = parseInt(Math.random() * 3)+1;
-    var imageUrl = src+num+'.jpg';
-    return {
-      title:'白云帅哥美女都在用的小程序！',
-      path:'pages/course/course',
-      imageUrl: imageUrl,
-    }
+    return app.share('看课表，一个云小智就够了！','course.png',this.route)
   },
   /**
    * 获取第几周后的月份
@@ -417,28 +420,41 @@ Page({
       app.msg("请先登录")
       return;
     }
+    var time = (new Date()).getTime();
+    if (wx.getStorageInfoSync('course_update_time') != "") {
+      var update_time = wx.getStorageSync('course_update_time');
+      var cha = time - update_time;
+      var season = 120 - Math.floor(cha / 1000);
+    } else {
+      var season = 0;
+    }
+    if (season > 0) {
+      app.msg('请在' + season + '秒后更新')
+      return
+    }
+
     wx.showLoading({
       title: '更新中',
     })
     var user_id = wx.getStorageSync('user_id');
     var user_password = wx.getStorageSync('user_password');
-    var yzm = that.data.yzm;
-    var cookie = that.data.cookie;
+    // var yzm = that.data.yzm;
+    // var cookie = that.data.cookie;
     var str = app.globalData.key + user_id;
     var sign = md5.hexMD5(str);
-    if (yzm == "") {
-      app.msg("请输入验证码")
-      return
-    }
+    // if (yzm == "") {
+    //   app.msg("请输入验证码")
+    //   return
+    // }
     app.httpRequest({
       url: 'course/updateV1',
       data: {
         stu_id: user_id,
         password: user_password,
         // encoded: encoded,
-        code: yzm,
-        cookie: cookie,
-        __VIEWSTATE: that.data.__VIEWSTATE,
+        // code: yzm,
+        // cookie: cookie,
+        // __VIEWSTATE: that.data.__VIEWSTATE,
         sign: sign
       },
       success: function (res) {
@@ -456,6 +472,7 @@ Page({
                 wx.showToast({
                   title: '更新成功',
                 })
+                wx.setStorageSync('course_update_time', time);
                 app.msg("更新成功", 'success')
                 wx.setStorageSync('course', res.data.data.course);
                 wx.setStorageSync('train', res.data.data.train_course);
@@ -602,34 +619,27 @@ Page({
       todayDay:day
     });
   },
-  //关闭广告
-  closeAD:function(){
-    wx.setStorageSync('ADclose',1);
-    this.setData({
-      AdClose:1
+  getNotice:function(){
+    var that = this;
+    wx.request({
+      url: app.globalData.domain + 'notice/getnotice',
+      data:{
+        page:'course'
+      },
+      success:function(res){
+        if(res.data.status == 1001){
+          that.setData({
+          course_notice_display : res.data.data.display==1?true:false,
+            course_notice: res.data.data.content
+          })
+        }else{
+          that.setData({
+            course_notice_display: false
+          })
+        }
+      }
     })
   },
-   getNotice:function(){
-     var that = this;
-     wx.request({
-       url: app.globalData.domain + 'notice/getnotice',
-       data:{
-         page:'course'
-       },
-       success:function(res){
-         if(res.data.status == 1001){
-           that.setData({
-            course_notice_display : res.data.data.display==1?true:false,
-             course_notice: res.data.data.content
-           })
-         }else{
-           that.setData({
-             course_notice_display: false
-           })
-         }
-       }
-     })
-   },
   hideMask:function(){
     this.setData({
       list_is_display: false
@@ -653,6 +663,42 @@ Page({
           app.msg(res.data.message)
         }
       },
+    })
+  },
+
+  closeAd:function(){
+    var ad = this.data.ad
+    ad.display = false
+    this.setData({
+      ad:ad
+    })
+  },
+  goAd:function(){
+    var ad = this.data.ad
+    var self = this
+    ad.url = encodeURIComponent(ad.url)
+    wx.navigateTo({
+      url: '/pages/ad/ad?ad=' + JSON.stringify(this.data.ad),
+      success:function(){
+        ad.url = decodeURIComponent(ad.url)
+        self.setData({
+          ad: ad
+        })
+      }
+    })
+  },
+  getAd:function(){
+    var self = this
+    app.httpRequest({
+      url:"ad/getAd",
+      needLogin:false,
+      success:function(res){
+        if(res.data.status == 0){
+          self.setData({
+            ad:res.data.data
+          })
+        }
+      }
     })
   }
 })

@@ -41,7 +41,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
+			"current": 22,
 			"list": [
 				{
 					"id": -1,
@@ -169,6 +169,20 @@
 					"id": 21,
 					"name": "更多应用",
 					"pathName": "pages/tool/tool",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 21,
+					"name": "空教室",
+					"pathName": "pages/tools/emptyroom/emptyroom",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "表白墙",
+					"pathName": "pages/tools/confession/confession",
 					"query": "",
 					"scene": null
 				}

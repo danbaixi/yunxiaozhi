@@ -1,7 +1,7 @@
-<cu-custom bgColor="bg-theme" isBack="true">
+<!-- <cu-custom bgColor="bg-theme" isBack="true">
   <view slot="back">返回</view>
 	<view slot="content">个人信息</view>
-</cu-custom>
+</cu-custom> -->
 <view class='content'>
   <view class="cu-list menu">
     <view class="cu-item arrow" bindtap="updateImg">
@@ -10,7 +10,7 @@
       </view>
       <view class="action">
         <view class="cu-avatar-group">
-          <view class="cu-avatar round sm" style="background-image:url({{img_pre+user_img}});"></view>
+          <view class="cu-avatar round sm" style="background-image:url({{img_pre}}{{user_img}});"></view>
         </view>
       </view>
     </view>

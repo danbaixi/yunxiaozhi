@@ -22,11 +22,7 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-    return {
-      title:'是时候展现真正的人品了',
-      path:'pages/tools/who/who',
-      imageUrl:'http://yunxiaozhi-1251388077.file.myqcloud.com/wx_share/who.jpg',
-    }
+    return app.share()
   },
   //产生随机数
   random:function(min,max){

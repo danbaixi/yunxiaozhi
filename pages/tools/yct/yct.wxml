@@ -1,7 +1,7 @@
-<cu-custom bgColor="bg-theme" isBack="true">
+<!-- <cu-custom bgColor="bg-theme" isBack="true">
   <view slot="back">返回</view>
 	<view slot="content">羊城通</view>
-</cu-custom>
+</cu-custom> -->
 <view class='yct'>
   <view class='list'>
     <view class='none' wx:if="{{isExit == 0}}">未添加任何卡，请点击下方按钮添加</view>

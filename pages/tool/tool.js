@@ -47,9 +47,17 @@ Page({
     ],
     life:[
       {
+        icon: 'search',
+        color: 'olive',
+        badge: 0,
+        name: '空教室',
+        needLogin: false,
+        url: '../tools/emptyroom/emptyroom?from=index',
+      },
+      {
         icon: 'delete',
         color: 'yellow',
-        badge: 1,
+        badge: 0,
         name: '垃圾分类',
         needLogin: false,
         appid: "wx4a10dd9594992a0d",
@@ -59,10 +67,18 @@ Page({
       {
         icon: 'home',
         color: 'theme',
-        badge: 1,
+        badge: 0,
         name: '校园导览',
         needLogin: false,
         url: '../tools/guide/index?from=index',
+      },
+      {
+        icon: 'countdown',
+        color: 'olive',
+        badge: 0,
+        name: '作息表',
+        needLogin: false,
+        url: '../article/article?src=' + encodeURIComponent('http://mp.weixin.qq.com/s?__biz=MzI1NTUwNDIzNQ==&mid=100000581&idx=1&sn=6ef90448df9ac2d4930fa3b15aa8399e&chksm=6a35b9415d423057df293f498fe3027b2ede3fe46000e69fc1a713a90eb7f894aabe416d7fa2#rd'),
       },
       {
         icon: 'calendar',
@@ -107,7 +123,7 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-  
+    return app.share()
   },
   /** 打开应用 */
   openTool: function (e) {

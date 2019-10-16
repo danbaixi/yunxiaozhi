@@ -1,8 +1,11 @@
-<image src='/pages/assets/imgs/other/bgImage.jpg' mode='widthFix' class='png' style='width:100%;height:400rpx'></image>
-
+<image src='/pages/assets/imgs/other/bgImage.jpg' mode='widthFix' class='png' style='width:100%;height:320rpx'></image>
+<view class="add_tips shadow" wx:if="{{add_tips}}">
+  点击<text class="icon-more"></text>添加到"我的小程序"，随时随地看课表
+  <text class="icon-close" bindtap="close_tips"></text>
+</view>
 <view class="index">
   <view class="cu-list grid col-{{gridCol}} no-border">
-    <view class="cu-item" wx:for="{{tools}}" wx:key data-url="{{item.url}}" bindtap='openTool'>
+    <view class="cu-item" wx:for="{{tools}}" wx:key data-url="{{item.url}}" data-needLogin="{{item.needLogin}}" bindtap='openTool'>
       <view class="icon-{{item.icon}} text-{{item.color}}">
         <view class="cu-tag badge" wx:if="{{item.badge!=0}}">
           <block wx:if="{{item.badge!=1}}">{{item.badge>99?"99+":item.badge}}</block>
@@ -22,7 +25,7 @@
       </view>
       <view class="cu-list menu" wx:if="{{user_id!=''&&course.length>0}}">
         <view class="cu-item" wx:for="{{course}}" wx:key bindtap='displayCourseInfo' data-num='{{item.indexNum}}'>
-          <view class="content">
+          <view class="content text-cut">
             <text class="text-grey">{{item.jie}}-{{item.jie_end}} </text>
             <text class="text-black">{{item.name}}</text>
           </view>

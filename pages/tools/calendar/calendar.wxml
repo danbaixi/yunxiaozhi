@@ -1,9 +1,9 @@
-<cu-custom bgColor="bg-theme" isBack="true">
+<!-- <cu-custom bgColor="bg-theme" isBack="true">
   <view slot="back">返回</view>
 	<view slot="content">校历</view>
-</cu-custom>
+</cu-custom> -->
 <view class='calendar'>
-  <view class='head' style="top:{{CustomBar}}px">
+  <view class='head'>
     <view class='left'>
       <text class="icon-back text-theme text-lg" data-set="reduce" bindtap="alterMonth"></text>
     </view>
@@ -13,7 +13,7 @@
     </view>
   </view>
 
-  <view class='data' style='height:{{30+51.2*hangshu}}px;top:{{CustomBar+40}}px'>
+  <view class='data' style='height:{{30+51.2*hangshu}}px;top:{{40}}px'>
 
     <view class='title'>
       <view class='week'>周次</view>

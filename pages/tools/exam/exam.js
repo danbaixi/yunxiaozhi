@@ -85,11 +85,7 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-    return {
-      title: '期末考试安排新鲜出炉',
-      path: 'pages/tools/exam/exam',
-      imageUrl: 'http://yunxiaozhi-1251388077.cosgz.myqcloud.com/wx_share/exam.jpg'
-    };
+    return app.share('期末考试安排，请查收','exam.png',this.route)
   },
   /** 
  * 滑动切换tab 
@@ -125,8 +121,12 @@ Page({
       success: function (res) {
         wx.hideLoading()
         if (res.data.status == 1001) {
+          var course_exam =  res.data.data.data
+          for (var i = 0; i < course_exam;i++){
+            course_exam[i].open = 0
+          }
           that.setData({
-            course_exam: res.data.data.data,
+            course_exam: course_exam,
             term: res.data.data.term
           });
         } else if (res.data.status == 1003) {
@@ -213,4 +213,13 @@ Page({
     var day = parseInt(days / (1000 * 60 * 60 * 24));
     return day;
   },
+  //伸缩
+  open:function(e){
+    var index = e.currentTarget.dataset.index
+    var exams = this.data.course_exam
+    exams[index].open = (exams[index].open == 1 ? 0 : 1)
+    this.setData({
+      course_exam:exams
+    })
+  }
 })

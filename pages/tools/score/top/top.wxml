@@ -1,7 +1,7 @@
-<cu-custom bgColor="bg-theme" isBack="true">
+<!-- <cu-custom bgColor="bg-theme" isBack="true">
   <view slot="back">返回</view>
 	<view slot="content">成绩详情</view>
-</cu-custom>
+</cu-custom> -->
 <view class='content'>
   <view class='head'>
     <view class='left'>

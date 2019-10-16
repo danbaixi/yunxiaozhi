@@ -1,19 +1,20 @@
-<view class="cu-custom" style="height:{{CustomBar}}px">
+<!-- <view class="cu-custom" style="height:{{CustomBar}}px">
   <view class="cu-bar fixed bg-theme" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px">
     <view class="action border-custom" style="width:{{Custom.width}}px;height:{{Custom.height}}px;margin-left:calc(750rpx - {{Custom.right}}px)">
       <text class="icon-back" bindtap="backPage"></text>
-      <text class="icon-refresh" bindtap="refresh"></text>
+      <text class="icon-refresh" bindtap="update"></text>
     </view>
     <view class="content" style="top:{{StatusBar}}px">成绩</view>
   </view>
-</view>
-<swiper current="{{currentTab}}" style='height:{{winHeight-CustomBar}}px' class="swiper-box" duration="300" bindchange="bindChange">
+</view> -->
+<swiper current="{{currentTab}}" style='height:{{winHeight}}px' class="swiper-box" duration="300" bindchange="bindChange">
     <swiper-item  wx:if="{{!isNull}}" scroll-y="true" wx:for="{{term}}" wx:key="key">  
       <view class='scores'>
         <view class='head'>
           <view class='term'>{{item.name}}</view>
           <view class='avg' bindtap='analysis'>平均分：{{avg[index].avg}}分</view>
         </view>
+        <text class="update text-theme icon-refresh" bindtap="update"></text>
         <scroll-view  scroll-y='true' class='list'>
           <view class='li' wx:for="{{score[index]}}" wx:for-item="score" wx:key="key" bindtap='itemData' data-course='{{score.name}}' data-score='{{score.score}}' data-credit='{{score.credit}}' data-gpa='{{score.gpa}}'>
             <view class='name'>{{score.name}}</view>
@@ -50,4 +51,3 @@
         <view class="btn-confirm" bindtap="update" data-status="confirm">确定</view>
       </view>
 </view>
-<ad unit-id="adunit-fa394b5b086dc048"></ad>

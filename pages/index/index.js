@@ -11,66 +11,75 @@ Page({
       name: '成绩',
       needLogin:true,
       url: '../tools/score/score?from=index',
-    }, {
+    }, 
+    {
       icon: 'rank',
       color: 'green',
       badge: 0,
       name: '报告',
       needLogin: true,
       url: '../tools/score/ana/ana?from=index',
-    }, {
+    }, 
+    {
       icon: 'list',
       color: 'orange',
       badge: 0,
       name: '考勤',
       needLogin: true,
       url: '../tools/attendance/attendance?from=index',
-    }, {
+    }, 
+    {
       icon: 'remind',
       color: 'olive',
       badge: 0,
       name: '考试',
       needLogin: true,
       url: '../tools/exam/exam?from=index',
-    }, {
+    }, 
+    {
       icon: 'evaluate',
       color: 'red',
       badge: 0,
       name: '评教',
       needLogin: true,
       url: '../tools/assess/assess?from=index',
-    }, {
+    }, 
+    {
       icon: 'calendar',
       color: 'cyan',
       badge: 0,
       name: '校历',
       needLogin: false,
       url: '../tools/calendar/calendar?from=index',
-    }, {
+    }, 
+    {
       icon: 'vipcard',
       color: 'purple',
       badge: 0,
       name: '羊城通',
       needLogin: true,
       url: '../tools/yct/yct?from=index',
-    }, {
+    }, 
+    {
       icon: 'time',
       color: 'pink',
       badge: 0,
       name: '时光',
       needLogin: true,
       url: '../my/time/time?from=index',
-    }, {
-      icon: 'emoji',
-      color: 'mauve',
+    }, 
+    {
+      icon: 'search',
+      color: 'yellow',
       badge: 0,
-      name: '新生必看',
+      name: '空教室',
       needLogin: false,
-      url: '../tools/guide/index?from=index',
-    }, {
+      url: '../tools/emptyroom/emptyroom?from=index',
+    },
+    {
       icon: 'apps',
       color: 'theme',
-      badge: 0,
+      badge: 1,
       needLogin: false,
       name: '更多',
       url: '../tool/tool?from=index',
@@ -83,7 +92,8 @@ Page({
     indicatorDots: true,
     autoplay: true,
     interval: 5000,
-    duration: 10001
+    duration: 10001,
+    displayExam:false
   },
 
   onLoad: function () {
@@ -93,20 +103,28 @@ Page({
     updateManager.onUpdateReady(function () {
       wx.showModal({
         title: '更新提示',
-        content: '新版本已经准备好，是否重启应用？',
+        content: '新版本已经准备好，请重启应用',
         success: function (res) {
           if (res.confirm) {
             updateManager.applyUpdate()
           }
         }
       })
-
     })
+
     if(wx.getStorageSync('showRedDot') != 1){
       wx.showTabBarRedDot({
         index: 2
       })
     }
+    var add_tips = wx.getStorageSync('add_my_tips')
+    var time = (new Date).getTime()
+    if ((time - add_tips) / 1000 >= 7 * 24 * 60 * 60){
+      this.setData({
+        add_tips: true
+      })
+    }
+
   },
   onShow:function(){
     var that = this;
@@ -119,7 +137,7 @@ Page({
         news_list: wx.getStorageSync('news')
       })
     }
-    that.getBanner();//获取Banner
+    // that.getBanner();//获取Banner
     // that.getMessage();//获取公告
     that.getNowWeek();//获取第几周
     that.getWeekday();//获取星期几
@@ -151,22 +169,14 @@ Page({
     })
   },
   onShareAppMessage: function () {
-    var that = this;
-    var src = "http://yunxiaozhi-1251388077.cosgz.myqcloud.com/wx_share/course_";
-    var num = parseInt(Math.random() * 3) + 1;
-    var imageUrl = src + num + '.jpg';
-    return {
-      title: '白云帅哥美女都在用的小程序！',
-      path: 'pages/course/course',
-      imageUrl: imageUrl,
-    }
+    return app.share('课表成绩考勤校历都在这里','index.png',this.route)
   },
   /** 打开应用 */
   openTool:function(e){
     var that = this;
-    var url = e.currentTarget.dataset.url;
+    var url = e.currentTarget.dataset.url
+    var needLogin = e.currentTarget.dataset.needlogin
     var user_id = wx.getStorageSync('user_id');
-    var needLogin = e.currentTarget.dataset.needLogin
     if (!user_id && needLogin) {
       app.msg("请先登录")
       return;
@@ -300,7 +310,7 @@ Page({
       }
     }
     for (var j = 0; j < result.length; j++) {
-      if (week == result[j]) {
+      if (week == ("第" + result[j]+"周")) {
         return true;
       } else if (j == result.length - 1) {
         return false;
@@ -419,16 +429,20 @@ Page({
     var that = this;
     var my_exams = wx.getStorageSync("my_exams");
     if(my_exams){
-      wx.hideLoading()
-      that.setData({
-        my_exam: my_exams,
-        myExamIsNull: false,
-      });
-    }else{
-      that.setData({
-        myExamIsNull: true,
-      });
+      for(let i =0;i<my_exams.length;i++){
+        if(my_exams[i].days >= 0){
+          that.setData({
+            my_exam: my_exams,
+            displayExam: true,
+          });
+          break;
+        }
+      }
+      return
     }
+    that.setData({
+      displayExam: false,
+    });
   },
   //计算两个日期的天数
   dateDiff: function (date1, date2) {
@@ -443,4 +457,11 @@ Page({
       url: '../tools/exam/exam?currentTab=1',
     })
   },
+  close_tips(){
+    var time = (new Date).getTime()
+    this.setData({
+      add_tips:false
+    })
+    wx.setStorageSync('add_my_tips', time)
+  }
 })

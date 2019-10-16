@@ -185,3 +185,27 @@
   position: absolute;
   bottom: 60rpx;
 }
+.image{
+  position: absolute;
+  width: 130rpx;
+  top: 30rpx;
+  right: 40rpx;
+}
+.close{
+  height: 150rpx;
+}
+.open{
+  height: 100%;
+}
+.open-status{
+  position: absolute;
+  padding: 30rpx;
+  right:-40rpx;
+  top: 10rpx;
+}
+.split{
+  border-bottom: 4px solid var(--theme)
+}
+.split:last-child{
+  border-bottom: none
+}

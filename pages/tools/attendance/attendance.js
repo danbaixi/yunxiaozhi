@@ -70,17 +70,13 @@ Page({
    * 下拉刷新
    */
   onPullDownRefresh:function(){
-    this.showDialogBtn()
+    this.update()
   },
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-    return {
-      title: '快来查查有没有被记旷课啦~',
-      path: 'pages/tools/attendance/attendance',
-      imageUrl: 'http://yunxiaozhi-1251388077.cosgz.myqcloud.com/wx_share/attendance.jpg'
-    };
+    return app.share('点击查询个人考勤记录', 'attendance.png', this.route)
   },
   /**
 * 弹窗
@@ -132,51 +128,61 @@ Page({
   /**
    * 对话框确认按钮点击事件
    */
-  onConfirm: function (e) {
-    wx.showNavigationBarLoading();
+  update: function (e) {
     var that = this;
     var user_id = wx.getStorageSync('user_id');
     var user_password = wx.getStorageSync('user_password');
-    var yzm = that.data.yzm;
-    var cookie = that.data.cookie;
-    var __VIEWSTATE = that.data.__VIEWSTATE;
-    if (yzm == "") {
-      app.msg("请输入验证码")
-      wx.hideNavigationBarLoading();
+    // var yzm = that.data.yzm;
+    // var cookie = that.data.cookie;
+    // var __VIEWSTATE = that.data.__VIEWSTATE;
+    // if (yzm == "") {
+    //   app.msg("请输入验证码")
+    //   return
+    // }
+    var time = (new Date()).getTime();
+    if (wx.getStorageInfoSync('attendance_update_time') != "") {
+      var update_time = wx.getStorageSync('attendance_update_time');
+      var cha = time - update_time;
+      var season = 60 - Math.floor(cha / 1000);
     } else {
-      that.inputBlur();
-      wx.showLoading({title:"加载中"})
-      var str = app.globalData.key + user_id;
-      var sign = md5.hexMD5(str);
-      wx.request({
-        url: app.globalData.domain + 'attendance/update',
-        data: {
-          stu_id: user_id,
-          password: user_password,
-          code: yzm,
-          cookie: cookie,
-          __VIEWSTATE: __VIEWSTATE,
-          sign:sign
-        },
-        success: function (res) {
-          wx.hideLoading()
-          wx.hideNavigationBarLoading();
-          wx.stopPullDownRefresh();
-          if(res.data.status == 1001){
-            app.msg('更新了'+res.data.data+'条记录')
-            setTimeout(function(){
-              that.onLoad();
-              that.hideModal();
-            },2000)
-          }else if(res.data.status == 1003){
-            app.msg("验证码错误")
-            that.freshYzm();
-          }else{
-            app.msg("更新失败")
-          }
-        }
-      })
+      var season = 0;
     }
+    if (season > 0) {
+      app.msg('请在' + season + '秒后更新')
+      return
+    }
+    wx.showLoading({ title: "更新中" })
+    var str = app.globalData.key + user_id;
+    var sign = md5.hexMD5(str);
+    app.httpRequest({
+      url: 'attendance/update',
+      data: {
+        stu_id: user_id,
+        password: user_password,
+        // code: yzm,
+        // cookie: cookie,
+        // __VIEWSTATE: __VIEWSTATE,
+        sign: sign
+      },
+      success: function (res) {
+        wx.hideLoading()
+        wx.hideNavigationBarLoading();
+        wx.stopPullDownRefresh();
+        if (res.data.status == 1001) {
+          app.msg('更新了' + res.data.data + '条记录')
+          wx.setStorageSync('attendance_update_time', time);
+          setTimeout(function () {
+            that.onLoad();
+            that.hideModal();
+          }, 2000)
+        } else if (res.data.status == 1003) {
+          app.msg("验证码错误")
+          that.freshYzm();
+        } else {
+          app.msg("更新失败")
+        }
+      }
+    })
   },
   /** 刷新验证码 */
   freshYzm: function () {
@@ -207,5 +213,5 @@ Page({
         url: '/pages/index/index',
       })
     }
-  }
+  },
 })

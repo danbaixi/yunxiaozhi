@@ -42,12 +42,15 @@
         <text class="icon-close text-red"></text>
       </view>
     </view>
-    <view class="padding-xl">
+    <view class="padding-sm">
       <view class='help-info'>
-        <text class='question'>Q:登录账号和密码？\n</text>
-        <text class='answer'>A:白云教务管理系统账号密码\n</text>
-        <text class='question'>Q:忘记密码怎么办？\n</text>
-        <text class='answer'>A:请到教务系统找回\n</text>　
+        <view class='question'>1、登录账号和密码？</view>
+        <view class='answer'>教务管理系统账号密码</view>
+        <view class='question'>2、忘记密码怎么办？</view>
+        <view class='answer'>请到教务系统找回</view>
+        <view class='question'>3、新生要怎么登陆？</view>
+        <view class='answer'>使用初始密码登录教务系统后，修改密码再登录云小智</view>　
+        <view class='text-red padding-xl' style="padding-top:0">其他问题请关注“云小智”公众号联系客服</view>　
       </view>
     </view>
   </view>

@@ -1,6 +1,6 @@
-<cu-custom bgColor="bg-theme">
+<!-- <cu-custom bgColor="bg-theme">
 	<view slot="content">资讯</view>
-</cu-custom>
+</cu-custom> -->
 <scroll-view scroll-x class="bg-white nav text-center">
   <view class="cu-item {{index==current?'text-theme cur':''}}" wx:for="{{tabs}}" wx:key data-index="{{index}}" bindtap='tabChange'>
     {{item}}

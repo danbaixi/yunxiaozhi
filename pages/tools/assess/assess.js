@@ -40,29 +40,7 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-    var that = this;
-    return {
-      title:'网上评教只需要3秒钟！',
-      path:'pages/tools/assess/assess',
-      imageUrl:'http://yunxiaozhi-1251388077.cosgz.myqcloud.com/wx_share/assess.jpg',
-      success:function(res){
-        that.setData({
-          share:true,
-        })
-        wx.showToast({
-          title: '分享成功',
-          icon:'success',
-          duration:1000,
-        })
-      },
-      fail: function (res) {
-        wx.showToast({
-          title: '分享失败',
-          icon: 'loading',
-          duration: 1000,
-        })
-      }
-    }
+    return app.share()
   },
 
   getList:function(){

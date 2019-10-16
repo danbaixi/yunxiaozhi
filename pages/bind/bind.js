@@ -11,8 +11,8 @@ Page({
     cookie: "",
     cookie_2: "",
     __VIEWSTATE: "",
-    user_id: "15230203124",
-    user_password: "jiangjixi",
+    user_id: "",
+    user_password: "",
     code: "",
     password_display: false,
     loading: false,
@@ -149,24 +149,39 @@ Page({
         success: function(res) {
           wx.hideLoading()
           if (res.data.status == 0) {
-            wx.showToast({
-              title: '登录成功',
-              icon:'success'
-            })
-            wx.setStorageSync('user_id', user_id);
-            wx.setStorageSync('user_password', password);
-            wx.setStorageSync('system_type', that.data.systemType);
-            setTimeout(function () {
-              if (that.data.url != '') {
-                wx.redirectTo({
-                  url: that.data.url,
-                })
-                return
-              }
-              wx.switchTab({
-                url: '/pages/index/index'
-              })
-            }, 1000);
+            var str = app.globalData.key + user_id;
+            var sign = md5.hexMD5(str);
+            app.httpRequest({
+              url: 'course/getList',
+              needLogin:false,
+              data: {
+                stu_id: user_id,
+                sign: sign,
+              },
+              success: function (res) {
+                wx.setStorageSync('user_id', user_id);
+                wx.setStorageSync('user_password', password);
+                wx.setStorageSync('system_type', that.data.systemType);
+                if (res.data.status == 1001) {
+                  wx.setStorageSync('course', res.data.data.course);
+                  wx.showToast({
+                    title: '登录成功',
+                    icon: 'success'
+                  })
+                }
+                setTimeout(function () {
+                  if (that.data.url != '') {
+                    wx.redirectTo({
+                      url: that.data.url,
+                    })
+                    return
+                  }
+                  wx.switchTab({
+                    url: '/pages/index/index'
+                  })
+                }, 1000);
+              },
+            });
           } else {
             app.msg(res.data.message);
             if(res.data.status == 1001){
@@ -246,8 +261,9 @@ Page({
   //获取公告
   getNotice: function() {
     var that = this;
-    wx.request({
-      url: app.globalData.domain + 'notice/getnotice',
+    app.httpRequest({
+      url: 'notice/getnotice',
+      needLogin:false,
       data: {
         page: 'login'
       },

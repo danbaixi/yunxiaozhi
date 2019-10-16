@@ -11,7 +11,7 @@ page{
   width: 100%;
 }
 .column{
-  height: 600rpx;
+  height: 500rpx;
   width: 100%;
   margin: 0 auto;
 }
@@ -28,4 +28,5 @@ page{
 .tip{
   font-size: 12px;
   color: #f4e;
+  margin-top: 0;
 }

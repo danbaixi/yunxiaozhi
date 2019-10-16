@@ -1,7 +1,7 @@
 .header{
     position: relative;
     align-items: center;
-    min-height: 460rpx;
+    min-height: 360rpx;
     background-color:var(--backgroud);
     overflow: hidden;
     z-index: -100;
@@ -47,7 +47,7 @@
 
 .banner{
   width: 50%;
-  margin: 160rpx 25%;
+  margin: 60rpx 25%;
 }
 
 .login{
@@ -131,10 +131,13 @@ button::after{
   font-size: 32rpx;
 }
 .question{
-  color: #6ed4e6
+  color: #6ed4e6;
+  font-size: 36rpx;
+  margin-top: 20rpx;
 }
 .answer{
-  color: #333
+  color: #333;
+  padding-left: 50rpx;
 }
 .select{
   height: 80rpx;

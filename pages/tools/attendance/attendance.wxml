@@ -1,14 +1,17 @@
-<view class="cu-custom" style="height:{{CustomBar}}px">
+<!-- <view class="cu-custom" style="height:{{CustomBar}}px">
   <view class="cu-bar fixed bg-theme" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px">
     <view class="action border-custom" style="width:{{Custom.width}}px;height:{{Custom.height}}px;margin-left:calc(750rpx - {{Custom.right}}px)">
       <text class="icon-back" bindtap="backPage"></text>
-      <text class="icon-refresh" bindtap="showDialogBtn"></text>
+      <text class="icon-refresh" bindtap="update"></text>
     </view>
     <view class="content" style="top:{{StatusBar}}px">考勤</view>
   </view>
-</view>
+</view> -->
 <view class='attendance'>
   <view class='content' wx:if="{{!isNull}}">
+    <view class="padding flex flex-direction">
+      <button class="cu-btn bg-theme lg" bindtap="update">更新</button>
+    </view>
    <block wx:for="{{term}}" wx:key="key" wx:for-item="xueqi" wx:for-index="index">   
     <view class="season">
       <view class='xueqi'>{{xueqi.term}}</view>
@@ -35,8 +38,12 @@
     </view>  
     </block>
   </view>
-<view wx:if="{{isNull}}">
-  <view style="margin-top:50px;text-align:center">没有记录，请点击左上角更新按钮</view>
+<view style="margin-top:40%" wx:if="{{isNull}}">
+  <view class="text-center padding">没有记录，请点击更新记录</view>
+  <view class="text-center">若还是没有，那你很优秀哦</view>
+  <view class="text-center margin-top">
+    <button class="cu-btn round bg-theme" bindtap="update">更新记录</button> 
+  </view>
 </view>
 
   <!--更新考勤输入验证码弹窗-->
@@ -52,7 +59,7 @@
       </view>
       <view class="modal-footer">
         <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
-        <view class="btn-confirm" bindtap="onConfirm" data-status="confirm">确定</view>
+        <view class="btn-confirm" bindtap="update" data-status="confirm">确定</view>
       </view>
   </view>
 </view>

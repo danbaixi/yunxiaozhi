@@ -1,7 +1,7 @@
-<cu-custom bgColor="bg-theme" isBack="true">
+<!-- <cu-custom bgColor="bg-theme" isBack="true">
   <view slot="back">返回</view>
 	<view slot="content">一键评教</view>
-</cu-custom>
+</cu-custom> -->
 <view class='access'>
   <view class='content' style="padding: 20rpx;">  
       <view class="tr bg-w" wx:if="{{assesses}}">

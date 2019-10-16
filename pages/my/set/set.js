@@ -16,6 +16,9 @@ Page({
     var user_id = wx.getStorageSync('user_id');
     that.getUserConfig(user_id);
   },
+  onShareAppMessage: function () {
+    return app.share()
+  },
   getUserConfig:function(user_id){
     var that = this;
     var user_id = wx.getStorageSync('user_id');

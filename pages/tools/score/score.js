@@ -38,7 +38,17 @@ Page({
     }else{
       this.getScore(false);
       this.getNotice()
-    } 
+    }
+    var time = (new Date).getTime()
+    var score_ad = wx.getStorageSync('score_ad_display');
+    if(score_ad == '' || (score_ad!=''&& Math.floor((time-score_ad)/1000)>app.globalData.adTime*24*60)){
+      var interstitialAd = wx.createInterstitialAd({
+        adUnitId: 'adunit-fa394b5b086dc048'
+      })
+      interstitialAd.show()
+      wx.setStorageSync('score_ad_display', time)
+    }
+
   },
 
   /**
@@ -58,18 +68,14 @@ Page({
       })
       return
     }
-    that.updateScore()
+    that.update()
   },
 
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-    return {
-      title: '期末成绩还是这里查得最快！',
-      path: 'pages/tools/score/score',
-      imageUrl:'http://yunxiaozhi-1251388077.cosgz.myqcloud.com/wx_share/score.jpg'
-    };
+    return app.share('您有一份期末成绩单待查收','score.png',this.route)
   },
   /** 
  * 滑动切换tab 
@@ -217,8 +223,7 @@ Page({
           cookie: res.data.data['cookie'],
           __VIEWSTATE: res.data.data['__VIEWSTATE'],
         })
-        that.update()
-        // that.freshYzm();
+        that.freshYzm();
       }
     });
   },
@@ -285,9 +290,9 @@ Page({
       data: {
         stu_id: user_id,
         password: user_password,
-        code: yzm,
-        cookie: cookie,
-        __VIEWSTATE: that.data.__VIEWSTATE,
+        // code: yzm,
+        // cookie: cookie,
+        // __VIEWSTATE: that.data.__VIEWSTATE,
         sign: sign
       },
       success: function (res) {
@@ -300,9 +305,8 @@ Page({
             that.setData({
               isNull: false
             })
-            setTimeout(function () {
-              that.getScore(true);
-            }, 1000)
+            wx.setStorageSync('scores', '')
+            that.getScore(true);
           }
           wx.setStorageSync('score_update_time', time);
         } else {

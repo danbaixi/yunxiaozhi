@@ -84,9 +84,7 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-    return {
-      title: '点击查看你的白云倒计时',
-    }
+    return app.share('点击查看你剩余的白云时光','time.png',this.route)
   },
   
   //获取数据

@@ -24,8 +24,6 @@
     "pages/community/item/item",
     "pages/cropper/cropper",
     "pages/tools/certificate/certificate",
-    "pages/tools/dangjian/dangjian",
-    "pages/tools/dangjian/item/item",
     "pages/tools/who/who",
     "pages/index/more_news/more_news",
     "pages/index/message/message",
@@ -35,10 +33,15 @@
     "pages/course/info/students/students",
     "pages/news/news",
     "pages/news/item/item",
-    "pages/tools/guide/index"
+    "pages/tools/guide/index",
+    "pages/tools/emptyroom/emptyroom",
+    "pages/tools/emptyroom/list/list",
+    "pages/tools/guide/item/item",
+    "pages/tools/confession/confession",
+    "pages/ad/ad"
   ],
   "window": {
-    "navigationStyle":"custom",
+    "navigationStyle": "default",
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#6ed4e6",
     "backgroundColor": "#6ed4e6",
@@ -81,7 +84,7 @@
     ]
   },
   "sitemapLocation": "sitemap.json",
-  "navigateToMiniProgramAppIdList":[
+  "navigateToMiniProgramAppIdList": [
     "wx4a10dd9594992a0d",
     "wx18a2ac992306a5a4"
   ]

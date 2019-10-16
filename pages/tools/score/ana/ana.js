@@ -89,7 +89,7 @@ Page({
             }],
             yAxis: {
               format: function (val) {
-                return val + '科';
+                return val;
               }
             },
             width: windowWidth,
@@ -109,11 +109,7 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-    return {
-      title: '挂科这些事我和你同一档',
-      path: 'pages/tools/score/ana/ana',
-      imageUrl: 'http://yunxiaozhi-1251388077.cosgz.myqcloud.com/wx_share/ana.jpg'
-    };
+    return app.share('您有一份期末成绩单待查收', 'score.png', this.route)
   },
   /** 曲线图点击事件 */
   lineTouchHandler: function (e) {

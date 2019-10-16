@@ -1,8 +1,8 @@
-<cu-custom bgColor="bg-theme" isBack="true">
+<!-- <cu-custom bgColor="bg-theme" isBack="true">
   <view slot="back">返回</view>
 	<view slot="content">资讯详情
   </view>
-</cu-custom>
+</cu-custom> -->
 <view class='news'>
   <view class='head'>
     <text class='title'>{{title}}</text>

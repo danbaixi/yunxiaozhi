@@ -22,15 +22,17 @@ App({
   },
   /** 全局变量 */
   globalData:{
-    isDebug:true,
-    xdebug:"?XDEBUG_SESSION_START=13955",
+    isDebug:false,
+    xdebug:"?XDEBUG_SESSION_START=11936",
     domain:'https://www.yunxiaozhi.cn/v1/public/api/',
     key:'ihzoaixnuy4f8835032505e8a45ac102c52d58593e',
     start_year: 2019,
     start_month: 9,
-    start_day: 1,
+    start_day: 2,
     amap_key: "67c20c2c7db08923379123500b656adf",
     markers_json: "https://www.yunxiaozhi.cn/v1/resource/markers.json",
+    adTime:1,//小时出现一次
+    fileDomain:"http://file.yunxiaozhi.cn/mini/"
   },
 
   goLogin:function(url){
@@ -112,5 +114,21 @@ App({
       icon: icon,
       duration:2000
     })
+  },
+
+  //分享
+  share: function (title, img, path){
+    if(typeof title == "undefined"){
+      return {
+        title:"课表成绩考勤校历都在这里",
+        imageUrl: this.globalData.fileDomain + 'share/v1/index.png',
+        path: 'pages/index/index'
+      }
+    }
+    return {
+      title: title,
+      path: typeof path === "undefined" ? 'pages/index/index' : path,
+      imageUrl: this.globalData.fileDomain + 'share/v1/' + img,
+    }
   }
 })

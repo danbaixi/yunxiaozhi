@@ -16,7 +16,7 @@ page{
 }
 .my{
   background: #fff;
-  line-height: 30px;
+  line-height: 50rpx;
   margin: 30rpx 0 0;
   padding: 12rpx 15px;
 }
@@ -29,7 +29,7 @@ page{
   background: linear-gradient(to bottom, #6ed4e6, #5fdbff); 
 }
 .userinfo{
-  padding: 120rpx 0 180rpx;
+  padding: 40rpx 0 120rpx;
 }
 .avatar {
   width: 180rpx;
@@ -49,7 +49,7 @@ page{
 }
 .infoContent{
   position: absolute;
-  top: 400rpx;
+  top: 320rpx;
   left: 5%;
   width: 90%;
   height: 60%;

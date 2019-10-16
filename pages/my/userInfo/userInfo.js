@@ -7,6 +7,7 @@ Page({
    */
   data: { 
     img_pre:'http://yunxiaozhi-1251388077.cosgz.myqcloud.com/user_imgs/',
+    user_img:'defalut.png'
   },
 
   /**
@@ -22,6 +23,9 @@ Page({
       user_name: name,
       xueji: xueji
     });
+  },
+  onShareAppMessage: function () {
+    return app.share()
   },
   //更新头像
   updateImg:function(){
