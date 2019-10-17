@@ -15,7 +15,7 @@
       <text class="text-white text-lg">第 {{now_week}} 周 </text>
       <text class="icon-unfold lg text-white"></text>
     </picker>
-    <text class="text-white text-lg settings" bindtap='listDisplay'>设置</text> 
+    <text class=" icon-add text-white settings" style="transform:rotate({{list_is_display?135:0}}deg)" bindtap='listDisplay'></text> 
   </view>
 </view>
 <view class="mask" bindtap="hideMask" style='height:{{winHeight-32}}px' wx:if="{{list_is_display}}"></view>

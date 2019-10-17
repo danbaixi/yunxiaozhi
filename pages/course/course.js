@@ -190,7 +190,8 @@ Page({
             week: data[a]['course_week'],
             jie: jie,
             jieshu: jieshu,
-            name: data[a]['course_name'],
+            name: that.fiterCourseTitle(data[a]['course_name'],jieshu),
+            fullName: data[a]['course_name'],
             address: address,
             num: data[a]['num'],
             zhoushu: data[a]['course_weekly'],
@@ -246,7 +247,7 @@ Page({
     }
     var jieshu = week + ' ' + jieshu;
     wx.navigateTo({
-      url: "info/info?name=" + data[indexNum]['name'] + "&zhoushu=" + data[indexNum]['zhoushu'] + "&jieshu=" + jieshu + "&teacher=" + data[indexNum]['teacher'] + "&xuefen=" + data[indexNum]['credit'] +"&category="+data[indexNum]['category']+"&method="+data[indexNum]['method']+"&address="+data[indexNum]['address'],
+      url: "info/info?name=" + data[indexNum]['fullName'] + "&zhoushu=" + data[indexNum]['zhoushu'] + "&jieshu=" + jieshu + "&teacher=" + data[indexNum]['teacher'] + "&xuefen=" + data[indexNum]['credit'] +"&category="+data[indexNum]['category']+"&method="+data[indexNum]['method']+"&address="+data[indexNum]['address'],
     })
   },
   /**
@@ -711,5 +712,15 @@ Page({
         toggleDelay: false
       })
     }, 1000)
+  },
+
+  //处理课程名称过长
+  fiterCourseTitle:function(title,jieshu){
+    var length = 10
+    if(title.length > length && jieshu < 4){
+      return title.substr(0,length) + '...'
+    }else{
+      return title
+    }
   }
 })

@@ -50,9 +50,10 @@ page{
   position: absolute;
   justify-content: center;
   top: 0;
-  right: 30rpx;
-  font-size: 16px;
+  right: 14rpx;
+  font-size: 46rpx!important;
   padding: 4rpx 10rpx;
+  transition: 0.5s;
 }
 .train{
   position: fixed;
