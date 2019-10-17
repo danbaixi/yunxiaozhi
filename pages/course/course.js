@@ -39,14 +39,15 @@ Page({
     StatusBar: app.globalData.StatusBar,
     CustomBar: app.globalData.CustomBar,
     Custom: app.globalData.Custom,
+    toggleDelay:false,//延迟加载
     ad:{
       display:false,
       week:7,
       jie:1,
-      jieshu:1,
+      jieshu:2,
       background:"#6ed4e6",
       color:"#fff",
-      title:"",
+      title:"这是广告位置欢迎投放广告",
       fontSize:10,
       type:1,
       url:"",
@@ -61,13 +62,10 @@ Page({
     var that = this;
     //设置默认参数
     if(wx.getStorageSync('Kopacity') == ''){
-      wx.setStorageSync('Kopacity', 70)
+      wx.setStorageSync('Kopacity', 90)
     }
     if (wx.getStorageSync('Copacity') == '') {
       wx.setStorageSync('Copacity', 12)
-    }
-    if (wx.getStorageSync('fontSize') == '') {
-      wx.setStorageSync('fontSize', 9)
     }
     var winHeight = wx.getSystemInfoSync().windowHeight;
     that.setData({
@@ -107,7 +105,7 @@ Page({
       //获取当前日期
       that.getTodayDate();
       //获取课表
-      that.getCourse(week);
+      that.getCourse(week,true);
       //获取公告
       // that.getNotice();
       that.getAd()
@@ -167,8 +165,9 @@ Page({
   /**
    * 获取课表
    */
-  getCourse:function(week){
+  getCourse:function(week,first){
     var that = this;
+    if(first === false && week == that.data.now_week) return
     var data = wx.getStorageSync('course');
     //将之前的课表清空
     that.setData({ course: [] });
@@ -207,13 +206,14 @@ Page({
       that.setData({ course: null });
     }
     that.getTrain(week);
+    that.toggleDelay()
   },
   /**
    * 选择周数
    */
   select:function(e){
     var week = parseInt(e.detail.value)+1;
-    this.getCourse(week);
+    this.getCourse(week,false);
     this.getTrain(week);
     var month = this.getMonth((week - 1) * 7);
     this.setData({
@@ -700,5 +700,16 @@ Page({
         }
       }
     })
+  },
+  toggleDelay() {
+    var that = this;
+    that.setData({
+      toggleDelay: true
+    })
+    setTimeout(function () {
+      that.setData({
+        toggleDelay: false
+      })
+    }, 1000)
   }
 })

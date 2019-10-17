@@ -32,13 +32,7 @@
     "pages/my/pwd/pwd",
     "pages/course/info/students/students",
     "pages/news/news",
-    "pages/news/item/item",
-    "pages/tools/guide/index",
-    "pages/tools/emptyroom/emptyroom",
-    "pages/tools/emptyroom/list/list",
-    "pages/tools/guide/item/item",
-    "pages/tools/confession/confession",
-    "pages/ad/ad"
+    "pages/news/item/item"
   ],
   "window": {
     "navigationStyle": "default",

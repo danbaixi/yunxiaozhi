@@ -56,38 +56,39 @@
 </view>
 
 <view class="top" style="background-color:rgba(220,220,220,{{(100-Kopacity)/100}})">
-    <view class='top-text month'>{{now_month}}</view>
-    <view wx:for="{{zhou}}" wx:key="key" class="top-text">周{{item}}</view>
-  </view>
-  <view class="top" style="background-color:rgba(220,220,220,{{(100-Kopacity)/100}})">
-    <view class='top-text month'>月</view>
-    <view wx:for="{{now_day}}" wx:key="key" class="top-text {{(todayMonth==now_month&&todayDay==item)?'todayDate':''}}">{{item}}日</view>
-  </view>
+    <view class='jie month'>
+      <view>{{now_month}}</view>
+      <view>月</view>
+    </view>
+    <view class="date">
+      <view class="course-table week {{(todayMonth==now_month&&todayDay==item)?'todayDate':''}}" wx:for="{{now_day}}" wx:key="key" wx:index="index">
+        <view class="week-item">周{{zhou[index]}}</view>
+        <view class="date-item">{{now_day[index] == 1? now_month+1+'月' : now_day[index]+'日'}}</view>
+      </view>
+    </view>
+</view>
 
   <scroll-view scroll-y="true" class="scroll">
-    <view class='course'>
+    <view class='course-content'>
       <view class='jie' style="background-color:rgba(220,220,220,{{(100-Kopacity)/100}})">
         <view wx:for="{{jie}}" wx:key="key" class="left">
           {{item}}
         </view>
       </view>
 
-      <view wx:for="{{course}}" wx:key="key">
-        <view class='form-btn flex-item kcb-item' bindtap="displayCourseInfo" data-num="{{item.indexNum}}" form-type="submit" style="margin-left:{{(item.week-1)*104}}rpx;margin-top:{{(item.jie-1)*100+6}}rpx;height:{{item.jieshu==2?196:396}}rpx;background-color:rgba({{colorArrays[item.num]}},{{(100-Copacity)/100}});"> 
-        <!-- 课表 -->
-          <view class="smalltext" style="font-size:{{fontSize}}pt;color:{{color}}" >{{item.name}}@{{item.address}}</view>
+      <view class="course">
+        <view class="{{toggleDelay?'animation-scale-up':''}} kcb-item" wx:for="{{course}}" wx:key="key" bindtap="displayCourseInfo" data-num="{{item.indexNum}}" form-type="submit" style="animation-delay: {{(index%2==0?(index/2):(index-1)/2+1)*0.1}}s;margin-left:{{(item.week-1)*(92/7)}}%;margin-top:{{(item.jie-1)*110+4}}rpx;height:{{item.jieshu*110 - 4}}rpx">
+        <view class="smalltext" style="background-color:rgba({{colorArrays[item.num]}},{{(100-Copacity)/100}});" >{{item.name}}@{{item.address}}</view>
         </view>
-      </view>
 
-      <view wx:if="{{ad.display}}" bindtap="goAd">
-        <view class='form-btn flex-item kcb-item ad' style="margin-left:{{(ad.week-1)*104 - (ad.week==7?14:0)}}rpx;margin-top:{{(ad.jie-1)*100+6}}rpx;height:{{ad.jieshu==1?196:396}}rpx;background-color:{{ad.background}}">
-          <view class="smalltext" style="margin-bottom: 14px;color:{{ad.color}};font-size:{{ad.fontSize}}pt" >{{ad.title}}</view>
+        <view wx:if="{{ad.display}}" bindtap="goAd" class='kcb-item' style="margin-left:{{(ad.week-1)*(92/7)}}%;margin-top:{{(ad.jie-1)*110+4}}rpx;height:{{ad.jieshu*110 - 4}}rpx">
+          <view class="smalltext" style="background:{{ad.background}};color:{{ad.color}};" >{{ad.title}}</view>
           <view bindtap="closeAd" class="ad-close icon-roundclose text-center text-grey"></view>
         </view>
+
+        <view class='train' data-id="{{train_course_id}}" bindtap='train' wx:if="{{train_course_id!=0}}">本周是实训周</view>
+
       </view>
-
-      <view class='train' data-id="{{train_course_id}}" bindtap='train' wx:if="{{train_course_id!=0}}">本周是实训周</view>
-
     </view>
   </scroll-view>
   <!--更新课表输入验证码弹窗-->

@@ -1,5 +1,6 @@
 @import "pages/assets/colorui/main.wxss";
 @import "pages/assets/colorui/icon.wxss";
+@import "pages/assets/colorui/animation.wxss";
 
 /*toast start*/
 .wxapp-toast-mask{
