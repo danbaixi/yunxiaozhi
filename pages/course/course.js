@@ -108,7 +108,7 @@ Page({
       that.getCourse(week,true);
       //获取公告
       // that.getNotice();
-      that.getAd()
+      // that.getAd()
     }
     // ad
     var time = (new Date).getTime()
