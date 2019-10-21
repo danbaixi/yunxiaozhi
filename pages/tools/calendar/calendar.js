@@ -1,4 +1,6 @@
 var app = getApp();
+var ccFile = require('../../../utils/calendar-converter.js')
+var calendarConverter = new ccFile.CalendarConverter();
 Page({
 
   /**
@@ -18,6 +20,8 @@ Page({
       "#800000",
     ],
     jilu:[],
+    clickButton:'',
+    loading: true,
     CustomBar: app.globalData.CustomBar
   },
 
@@ -26,6 +30,17 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
+    var date = new Date();
+    var now_year = date.getFullYear();
+    var now_month = date.getMonth() + 1;
+    var now_day = date.getDate()
+    that.setData({
+      now_year: now_year,
+      now_month: now_month,
+      year: now_year,
+      month: now_month,
+      now_day: now_day
+    })
     app.httpRequest({
       url: 'calendar/getList',
       needLogin: false,
@@ -45,14 +60,9 @@ Page({
           }
           that.setData({ jilu: that.data.jilu.concat(calendar) });
         }
-        //获取当前日期
-        var date = new Date();
-        var now_year = date.getFullYear();
-        var now_month = date.getMonth() + 1;
         that.setData({
-          now_year: now_year,
-          now_month: now_month,
           semester: semester,
+          loading: false
         })
         that.getDayData(now_year, now_month);
         that.zhouci();
@@ -114,12 +124,42 @@ Page({
     }
     var nextMonth = hangshu * 7 - dayNum - that.data.empytGrids;
     for(var i=0;i<dayNum;i++){
-      day.push(i+1);
+      var d = new Date(year, month-1, i+1);
+      var dEx = calendarConverter.solar2lunar(d);
+      var ext = ""
+      if (dEx.lunarFestival != "") {
+        ext = dEx.lunarFestival;
+      }
+      else if (dEx.lunarDay === "初一") {
+        ext = dEx.lunarMonth + "月";
+      }
+      else {
+        ext = dEx.lunarDay
+      }
+      day.push({
+        day: i + 1,
+        ext: ext
+      });
       //设置默认每一天都没有事件
       shijian.push(false);
     }
     for (var i=0;i<nextMonth;i++){
-      day.push(i+1);
+      var d = new Date(year, month, i + 1);
+      var dEx = calendarConverter.solar2lunar(d);
+      var ext = ""
+      if (dEx.lunarFestival != "") {
+        ext = dEx.lunarFestival;
+      }
+      else if (dEx.lunarDay === "初一") {
+        ext = dEx.lunarMonth + "月";
+      }
+      else {
+        ext = dEx.lunarDay
+      }
+      day.push({
+        day: i + 1, 
+        ext:ext
+      });
     }
     that.setData({
       hangshu: hangshu,//设置行数
@@ -178,36 +218,41 @@ Page({
   },
   //上个月、下个月的实现
   alterMonth:function(e){
-    wx.showLoading({
-      title: '加载中',
-    })
     var now_year = this.data.now_year;
     var now_month = this.data.now_month;
-    if(e.target.dataset.set == 'add'){
+    var type = e.currentTarget.dataset.type
+
+    var month = now_month
+    var year = now_year
+    var clickButton = ''
+    if (type == 'add'){
+      clickButton = 'right'
+      month = now_month + 1
       if (now_month == 12) {
-        this.setData({
-          now_year: now_year + 1,
-          now_month: 1,
-        });
-      } else {
-        this.setData({
-          now_month: now_month + 1,
-        });
+        month = 1
+        year = now_year + 1
       }
-    } else if (e.target.dataset.set  == 'reduce'){
+    } else if (type  == 'reduce'){
+      clickButton = 'left'
+      month = now_month - 1
       if (now_month == 1) {
-        this.setData({
-          now_year: now_year - 1,
-          now_month: 12,
-        });
-      } else {
-        this.setData({
-          now_month: now_month - 1,
-        });
+        month = 12
+        year = now_year - 1
       }
     }
+    this.setData({
+      now_month:month,
+      now_year:year,
+      clickButton:clickButton
+    })
     this.getDayData(this.data.now_year, this.data.now_month);
     this.zhouci();
+    var that = this
+    setTimeout(function(){
+      that.setData({
+        clickButton:''
+      })
+    },500)
   },
   /**
    * 计算出周次

@@ -180,6 +180,7 @@ Page({
     if(first === false && week == that.data.now_week) return
     var data = wx.getStorageSync('course');
     //将之前的课表清空
+    that.toggleDelay()
     that.setData({ course: [] });
     if (data.length > 0) {
       var i = 0;
@@ -216,8 +217,7 @@ Page({
     } else {
       that.setData({ course: null });
     }
-    that.getTrain(week);
-    that.toggleDelay()
+    that.getTrain(week)
   },
   /**
    * 选择周数

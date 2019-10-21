@@ -66,7 +66,7 @@ image{
  height: 50px;
  color: #0099CC;
  line-height: 50px;
- border-bottom: 1px solid #eee;
+ border-bottom: 1px solid #f2f4f5;
 }
 .riqi{
   position: relative;
@@ -81,15 +81,23 @@ image{
   width: 14.28%; 
   line-height: 50px;
   float: left;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #f2f4f5;
 }
 .num{
   height: 50px;
-  line-height: 50px;
+}
+.num .text-df{
+  padding-top: 4px;
+  height: 26px;
+  line-height: 26px;
+}
+.num .text-xs{
+  height: 14px;
+  line-height: 14px;
 }
 .spotAll{
   height: 5px;
-  margin: -12px auto;
+  margin: -8px auto;
 }
 .spot{
   width: 5px;
@@ -103,7 +111,7 @@ image{
 .empyt{
   height: 50px;
   float: left;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #f2f4f5;
 }
 .shijianAll{
   width: 100%;
@@ -113,7 +121,7 @@ image{
   height: 50px;
   width: 100%;
   line-height: 50px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #f2f4f5;
   float: left;
   z-index: -10;
 }
@@ -123,4 +131,27 @@ image{
   overflow: hidden;
   white-space: nowrap;
   text-overflow:ellipsis;
+}
+.click-btn{
+  animation-name: click;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-in-out;
+}
+.icon-back,.icon-right{
+  border-radius: 100%;
+  padding: 16rpx;
+}
+.thisDay{
+  background: #f1f1f1;
+}
+@keyframes click{
+  0%{
+    background: #fff;
+  }
+  50%{
+    background: #f1f1f1;
+  }
+  100%{
+    background: #fff;
+  }
 }

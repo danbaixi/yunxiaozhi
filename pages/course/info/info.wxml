@@ -3,7 +3,7 @@
 	<view slot="content">课程详情</view>
 </cu-custom> -->
 <view class="cu-bar bg-white solid-bottom">
-  <view class="action">
+  <view class="text-black action">
     {{name}}
   </view>
 </view>
