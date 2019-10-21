@@ -1,0 +1,52 @@
+<view class="cu-card">
+  <view class="cu-item shadow">
+    <form>
+      <view class="cu-form-group">
+        <view class="title">校区</view>
+        <picker bindchange="selectArea" value="{{area}}" range="{{areas}}">
+          <view class="picker">
+            {{areas[area]}}
+          </view>
+        </picker>
+      </view>
+      <view class="cu-form-group">
+        <view class="title">教学楼</view>
+        <picker bindchange="selectFloor" value="{{floor}}" range="{{floors}}" range-key="name">
+          <view class="picker">
+            {{floors[floor]['name']}}
+          </view>
+        </picker>
+      </view>
+      <view class="cu-form-group">
+        <view class="title">周数</view>
+        <picker bindchange="selectWeekly" value="{{weekly}}" range="{{weeklys}}">
+          <view class="picker">
+            {{weekly?'第' + weeklys[weekly] + '周':'请选择'}}
+          </view>
+        </picker>
+      </view>
+      <view class="cu-form-group">
+        <view class="title">星期</view>
+        <picker bindchange="selectWeek" value="{{index}}" range="{{weeks}}">
+          <view class="picker">
+            {{weeks[week]}}
+          </view>
+        </picker>
+      </view>
+      <view class="cu-form-group">
+        <view class="title">节数</view>
+        <picker bindchange="selectSection" value="{{index}}" range="{{sections}}">
+          <view class="picker">
+            {{sections[section]}}
+          </view>
+        </picker>
+      </view>
+    </form>
+  </view>
+  <view class="padding flex flex-direction" style="padding-top:0">
+    <button bindtap="getList" class="cu-btn bg-theme margin-tb-sm lg">查询</button>
+  </view>
+  <view class="padding">
+    <ad unit-id="adunit-e67cddfbc6eaebf3"></ad>
+  </view>
+</view>

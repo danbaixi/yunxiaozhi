@@ -110,6 +110,16 @@ Page({
       // that.getNotice();
       that.getAd()
     }
+    // ad
+    var time = (new Date).getTime()
+    var score_ad = wx.getStorageSync('score_ad_display');
+    if (score_ad == '' || (Math.floor((time - score_ad)/1000) > app.globalData.adTime * 24 * 60)) {
+      var interstitialAd = wx.createInterstitialAd({
+        adUnitId: 'adunit-fa394b5b086dc048'
+      })
+      interstitialAd.show()
+      wx.setStorageSync('score_ad_display', time)
+    }
   },
 
   /**
@@ -714,8 +724,10 @@ Page({
     }, 1000)
   },
 
-  //处理课程名称过长
+  //处理中文标点符号，课程名称过长
   fiterCourseTitle:function(title,jieshu){
+    title = title.replace(/\uff08/,'(')
+    title = title.replace(/\uff09/,')')
     var length = 10
     if(title.length > length && jieshu < 4){
       return title.substr(0,length) + '...'

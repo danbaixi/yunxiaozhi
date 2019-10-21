@@ -9,6 +9,20 @@ App({
     }
   },
   onLaunch: function () {
+    const updateManager = wx.getUpdateManager()
+    updateManager.onCheckForUpdate(function (res) {
+    })
+    updateManager.onUpdateReady(function () {
+      wx.showModal({
+        title: '更新提示',
+        content: '新版本已经准备好，请重启应用',
+        success: function (res) {
+          if (res.confirm) {
+            updateManager.applyUpdate()
+          }
+        }
+      })
+    })
     //自定义导航栏
     wx.getSystemInfo({
       success: e => {
@@ -22,7 +36,7 @@ App({
   },
   /** 全局变量 */
   globalData:{
-    isDebug:false,
+    isDebug:true,
     xdebug:"?XDEBUG_SESSION_START=11936",
     domain:'https://www.yunxiaozhi.cn/v1/public/api/',
     key:'ihzoaixnuy4f8835032505e8a45ac102c52d58593e',
@@ -31,7 +45,7 @@ App({
     start_day: 2,
     amap_key: "67c20c2c7db08923379123500b656adf",
     markers_json: "https://www.yunxiaozhi.cn/v1/resource/markers.json",
-    adTime:1,//小时出现一次
+    adTime: 24,//小时出现一次
     fileDomain:"http://file.yunxiaozhi.cn/mini/"
   },
 

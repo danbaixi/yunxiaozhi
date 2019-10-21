@@ -1,0 +1,7 @@
+<view class="cu-list menu">
+  <view class="cu-item" wx:for="{{rooms}}" wx:key="key">
+    <view class="content">
+      <text class="text-grey">{{item}}</text>
+    </view>
+  </view>
+</view>

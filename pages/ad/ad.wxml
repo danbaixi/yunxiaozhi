@@ -1,0 +1,1 @@
+<web-view wx:if="{{ad.type == 1}}" src="{{ad.url}}"></web-view>

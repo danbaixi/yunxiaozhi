@@ -39,15 +39,6 @@ Page({
       this.getScore(false);
       this.getNotice()
     }
-    var time = (new Date).getTime()
-    var score_ad = wx.getStorageSync('score_ad_display');
-    if(score_ad == '' || (score_ad!=''&& Math.floor((time-score_ad)/1000)>app.globalData.adTime*24*60)){
-      var interstitialAd = wx.createInterstitialAd({
-        adUnitId: 'adunit-fa394b5b086dc048'
-      })
-      interstitialAd.show()
-      wx.setStorageSync('score_ad_display', time)
-    }
 
   },
 

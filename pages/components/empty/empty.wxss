@@ -1,0 +1,13 @@
+.container{
+  text-align: center;
+  margin-top: 80rpx;
+  padding: 30rpx;
+}
+.img{
+  width: 240rpx;
+}
+.title{
+  margin-top: 40rpx;
+  font-size: 30rpx;
+  color: #333;
+}
