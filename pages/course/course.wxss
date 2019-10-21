@@ -159,7 +159,7 @@ page{
   align-items: center;
   z-index: 0;
 }
-.content{
+.bg-content{
   width: 100%;
   height: 100%;
   z-index: -10; 
@@ -311,35 +311,14 @@ input-holder {
 /**下拉列表**/
 .list{
   width: 100%;
-  height:210px;
+  height:220px;
   position: absolute;
   top:-180px; 
   background: #fff;
   z-index: 101;
   overflow: hidden;
   transition: all .4s;
-}
-.li{
-  padding-left: 10px;
-  height:40px;
-  font-size: 16px;
-  line-height: 40px;
-  border-bottom: 1px #ddd solid;
-}
-.right{
-  height: 40px;
-  width: 20px;
-  float: right;
-}
-.text_right{
-  float: right;
-  margin-right: 10px;
-  font-size: 14px;
-  line-height: 40px;
-  color: #ccc;
-}
-.rotateRight{
-  transform: rotate(135deg);
+  border-radius: 0 0 20rpx 20rpx;
 }
 .text_left{
   float: left;

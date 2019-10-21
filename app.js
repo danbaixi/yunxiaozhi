@@ -45,7 +45,7 @@ App({
    * 获取请求domain
    */
   getDomain:function(){
-    return this.globalData.isDebug ? 'https://danbaixi.utools.club/yxz_v1/public/api/' : 'https://www.yunxiaozhi.cn/v1/public/api/'
+    return this.globalData.isDebug ? 'http://127.0.0.1/yunxiaozhi/public/index.php/api/' : 'https://www.yunxiaozhi.cn/v1/public/api/'
   },
 
   getSign:function(){

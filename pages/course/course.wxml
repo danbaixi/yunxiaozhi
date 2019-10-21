@@ -19,39 +19,40 @@
   </view>
 </view>
 <view class="mask" bindtap="hideMask" style='height:{{winHeight-32}}px' wx:if="{{list_is_display}}"></view>
-<view class='list' style='top:{{list_is_display?32:-180}}px'>
-  <view bindtap='update' class='li'>
-    更新课表
-    <text class="right icon-right text-theme text-lg"></text>
-  </view>
-  <view bindtap='selectImg' class='li'>
-    <text class='text_left'>课表背景</text>
-    <text class="right icon-right text-theme text-lg"></text>
-    <text class='text_right'>{{imageUrl!=''?'已设置':'未设置'}}</text>
-  </view>
-  <view class='li'>
-    <text class='text_left'>边框透明度</text>
-    <view class="slider">
-      <slider data-type='frime' bindchange="sliderchange" activeColor="#6ed4e6" value='{{Kopacity}}' min="0" max="100" show-value/>
+<view class="list cu-list menu sm-border" style='top:{{list_is_display?32:-220}}px'>
+  <view class="cu-item arrow" bindtap='update'>
+    <view class="content">
+      <text class="text-grey">更新课表</text>
     </view>
   </view>
-  <view class='li'>
-    <text class='text_left'>课表透明度</text>
-    <view class="slider">
-      <slider data-type='course' bindchange="sliderchange" activeColor="#6ed4e6" value='{{Copacity}}' min="0" max="100" show-value/>
+  <view class="cu-item arrow" bindtap='selectImg'>
+    <view class="content">
+      <text class="text-grey">课表背景</text>
+    </view>
+    <view class="action">
+      <text class="text-grey text-sm">{{imageUrl!=''?'已设置':'未设置'}}</text>
     </view>
   </view>
-  <view class='li'>
-    <text class='text_left'>字体大小</text>
-    <view class="slider">
-      <slider data-type='font' bindchange="sliderchange" activeColor="#6ed4e6" value='{{fontSize}}' min="6" max="12" show-value/>
+  <view class="cu-item">
+    <view class="content">
+      <text class="text-grey">边框透明度</text>
+      <view class="slider">
+        <slider data-type='frime' bindchange="sliderchange" activeColor="#6ed4e6" value='{{Kopacity}}' min="0" max="100" show-value/>
+      </view>
     </view>
   </view>
-
+  <view class="cu-item">
+    <view class="content">
+      <text class="text-grey">课表透明度</text>
+      <view class="slider">
+        <slider data-type='course' bindchange="sliderchange" activeColor="#6ed4e6" value='{{Copacity}}' min="0" max="100" show-value/>
+      </view>
+    </view>
+  </view>
 </view>
 
 <!-- 背景图片 -->
-<view class='content'>
+<view class='bg-content'>
   <image class="course_bg" src="{{imageUrl}}" mode="aspectFill"> </image>
 </view>
 
