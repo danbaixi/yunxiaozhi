@@ -52,7 +52,9 @@ Page({
       type:1,
       url:"",
       content:""
-    }
+    },
+    login:true,
+    tmpClass:''
   },
 
   /**
@@ -60,6 +62,7 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
+    var animation = typeof options.animation == 'undefined' || !options.animation ? false : true
     //设置默认参数
     if(wx.getStorageSync('Kopacity') == ''){
       wx.setStorageSync('Kopacity', 90)
@@ -98,18 +101,20 @@ Page({
       })
     }
     var user_id = wx.getStorageSync('user_id');
-    if(!user_id){
-      app.msg("请先登录")
-    }else{
-      // that.getCourseList()
-      //获取当前日期
-      that.getTodayDate();
-      //获取课表
-      that.getCourse(week,true);
+    var tmpClass = wx.getStorageSync('tmp_class');//临时设置班级
+    that.setData({
+      login: !user_id?false:true,
+      tmpClass:tmpClass
+    })
+    // that.getCourseList()
+    //获取当前日期
+    that.getTodayDate();
+    //获取课表
+    that.getCourse(week, true,animation);
       //获取公告
       // that.getNotice();
       // that.getAd()
-    }
+
     // ad
     var time = (new Date).getTime()
     var score_ad = wx.getStorageSync('score_ad_display');
@@ -121,7 +126,9 @@ Page({
       wx.setStorageSync('score_ad_display', time)
     }
   },
-
+  onShow:function(){
+    this.onLoad({animation:false})
+  },
   /**
    * 用户点击右上角分享
    */
@@ -175,12 +182,14 @@ Page({
   /**
    * 获取课表
    */
-  getCourse:function(week,first){
+  getCourse:function(week,first,animation){
     var that = this;
     if(first === false && week == that.data.now_week) return
     var data = wx.getStorageSync('course');
     //将之前的课表清空
-    that.toggleDelay()
+    if(animation){
+      that.toggleDelay()
+    }
     that.setData({ course: [] });
     if (data.length > 0) {
       var i = 0;
@@ -224,7 +233,7 @@ Page({
    */
   select:function(e){
     var week = parseInt(e.detail.value)+1;
-    this.getCourse(week,false);
+    this.getCourse(week,false,true);
     this.getTrain(week);
     var month = this.getMonth((week - 1) * 7);
     this.setData({
@@ -734,5 +743,16 @@ Page({
     }else{
       return title
     }
+  },
+
+  loginTips:function(){
+    wx.navigateTo({
+      url: '/pages/loginTips/loginTips',
+    })
+  },
+  setClass:function(){
+    wx.navigateTo({
+      url: '/pages/setClass/setClass',
+    })
   }
 })

@@ -308,5 +308,10 @@ Page({
         // that.freshYzm();
       }
     })
+  },
+  loginTips:function(){
+    wx.navigateTo({
+      url: '/pages/loginTips/loginTips',
+    })
   }
 })

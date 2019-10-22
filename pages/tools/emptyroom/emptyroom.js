@@ -125,6 +125,7 @@ Page({
       data:{
         area: Number(area)+1
       },
+      needLogin:false,
       success:function(res){
         if(res.data.status == 0){
           callback(res.data.data)

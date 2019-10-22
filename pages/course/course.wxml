@@ -19,10 +19,18 @@
   </view>
 </view>
 <view class="mask" bindtap="hideMask" style='height:{{winHeight-32}}px' wx:if="{{list_is_display}}"></view>
-<view class="list cu-list menu sm-border" style='top:{{list_is_display?32:-220}}px'>
+<view class="list cu-list menu sm-border" style='height:{{!login?5*55:4*55}}px;top:{{list_is_display?32:-(!login?5*55:4*55)}}px'>
   <view class="cu-item arrow" bindtap='update'>
     <view class="content">
       <text class="text-grey">更新课表</text>
+    </view>
+  </view>
+  <view class="cu-item arrow" bindtap='setClass'>
+    <view class="content">
+      <text class="text-grey">设置班级</text>
+    </view>
+    <view class="action">
+      <text class="text-grey text-sm">{{tmpClass.name}}</text>
     </view>
   </view>
   <view class="cu-item arrow" bindtap='selectImg'>
@@ -107,4 +115,8 @@
         <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
         <view class="btn-confirm" bindtap="update" data-status="confirm">确定</view>
       </view>
+</view>
+
+<view class="padding flex flex-direction newStudentTips" wx:if="{{!login&&tmpClass==''}}">
+  <button class="cu-btn round bg-orange" bindtap="loginTips">无法登录，如何看课表？</button>
 </view>

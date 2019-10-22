@@ -40,6 +40,10 @@
 			"current": -1,
 			"list": []
 		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
 		"miniprogram": {
 			"current": 22,
 			"list": [
@@ -184,6 +188,12 @@
 					"name": "表白墙",
 					"pathName": "pages/tools/confession/confession",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "手动设置班级",
+					"pathName": "pages/setClass/setClass",
 					"scene": null
 				}
 			]

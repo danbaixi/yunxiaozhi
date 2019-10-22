@@ -311,7 +311,6 @@ input-holder {
 /**下拉列表**/
 .list{
   width: 100%;
-  height:220px;
   position: absolute;
   top:-180px; 
   background: #fff;
@@ -340,4 +339,11 @@ input-holder {
 .ad-close{
   position: absolute;
   bottom: 4rpx;
+}
+.newStudentTips{
+  width: 70%;
+  position: absolute;
+  top: 500rpx;
+  left: 15%;
+  z-index: 99999;
 }

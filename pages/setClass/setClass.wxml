@@ -1,0 +1,19 @@
+<view class="container">
+  <view class="cu-bar bg-white search">
+    <view class="search-form radius">
+      <text class="icon-search"></text>
+      <input type="text" value="{{search}}" placeholder="输入班级，如计算机" bindinput="searchInput" confirm-type="search"></input>
+    </view>
+    <view class="action">
+      <button class="cu-btn bg-theme shadow-blur round" bindtap="search">搜索</button>
+    </view>
+  </view>
+  <view class="cu-list menu">
+    <view class="cu-item arrow" wx:for="{{classes}}" wx:key="key" data-name="{{item.name}}" data-number="{{item.number}}" bindtap="select">
+      <view class="content">
+        <text class="text-grey">{{item.name}}</text>
+      </view>
+    </view>
+  </view>
+  <view wx:if="{{loading}}" class="cu-load {{!finish?'loading':'over'}}"></view>
+</view>

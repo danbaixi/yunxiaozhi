@@ -32,7 +32,11 @@
 
   <button class='btn' bindtap='login'>登录</button>
 
-  <view class='help' bindtap='help'>帮助<text class="icon-question lg text-black"></text></view>
+  <view class='margin-top text-sm padding-sm text-center' bindtap="loginTips">
+    <text class="icon-info text-red"></text>新生若无法登录，请点击这里
+    <!-- <text class='text-right' bindtap='help'>帮助</text><text class="icon-question lg text-black"></text> -->
+  </view>
+  
 
 <view class="cu-modal {{modal_visible?'show':''}}">
   <view class="cu-dialog">
