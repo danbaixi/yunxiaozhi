@@ -45,14 +45,15 @@ page{
   justify-content: center;
   display: flex;
   height: 100%;
+  line-height: 32px;
 }
 .settings{
   position: absolute;
   justify-content: center;
   top: 0;
   right: 14rpx;
-  font-size: 46rpx!important;
-  padding: 4rpx 10rpx;
+  font-size: 56rpx!important;
+  line-height: 32px;
   transition: 0.5s;
 }
 .train{
@@ -72,8 +73,10 @@ page{
 }
 
 .smalltext {
+  height: 100%;
   margin: 0 2rpx;
   font-size: 26rpx;
+  line-height: 36rpx;
   text-align: center;
   color: #fff;
   border-radius: 8rpx;

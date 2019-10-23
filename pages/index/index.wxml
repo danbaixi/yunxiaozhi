@@ -18,7 +18,10 @@
   <view class='page-content'>
     <view class='course'>
       <view class="cu-bar bg-white solid-bottom arrow" bindtap='goCourse'>
-        <view class="action">今日课表</view>
+        <view class="action">
+          今日课表
+          <text class="text-sm">{{tmpClass == '' ? '' : '('+ tmpClass.name +')'}}</text>
+        </view>
         <view class="action">
           {{now_week}} 周{{WEEKDAY}}
         </view>
@@ -34,10 +37,10 @@
           </view>
         </view>
       </view>
-      <!-- <view wx:if="{{user_id==''}}" class='course_list unlogin'>
+      <view wx:if="{{tmpClass == '' && user_id==''}}" class='course_list unlogin'>
           <text bindtap='goLogin'>登录后可查看，点击登录</text>
-      </view>  -->
-      <view wx:if="{{(course.length<=0 || course == null)}}" class='course_list unlogin'>
+      </view> 
+      <view wx:if="{{user_id!='' && (course.length<=0 || course == null)}}" class='course_list unlogin'>
         <text>今天没课，做点别的充实自己</text>
       </view>
     </view>

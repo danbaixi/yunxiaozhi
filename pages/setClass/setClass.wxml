@@ -9,6 +9,11 @@
     </view>
   </view>
   <view class="cu-list menu">
+    <view class="cu-item arrow" wx:if="{{tmpClass!=''}}" bindtap="restore">
+      <view class="content">
+        <text class="text-orange">切换回个人课表</text>
+      </view>
+    </view>
     <view class="cu-item arrow" wx:for="{{classes}}" wx:key="key" data-name="{{item.name}}" data-number="{{item.number}}" bindtap="select">
       <view class="content">
         <text class="text-grey">{{item.name}}</text>

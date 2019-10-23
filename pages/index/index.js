@@ -93,7 +93,8 @@ Page({
     autoplay: true,
     interval: 5000,
     duration: 10001,
-    displayExam:false
+    displayExam:false,
+    tmpClass:''
   },
 
   onLoad: function () {
@@ -109,8 +110,8 @@ Page({
         add_tips: true
       })
     }
-
   },
+
   onShow:function(){
     var that = this;
     var user_id = wx.getStorageSync('user_id');
@@ -129,6 +130,12 @@ Page({
     that.getCourse(that.data.now_week);//获取课表
     // that.getNewsList();//获取新闻
     that.getMyExam();//获取我的考试
+
+    //判断是否为本班课表
+    var tmpClass = wx.getStorageSync('tmp_class')
+    this.setData({
+      tmpClass: tmpClass
+    })
   },
 
   /** 下拉刷新 */
@@ -205,6 +212,7 @@ Page({
           var jie = data[a]['course_section'].split("-")[0];
           var jieshu = data[a]['course_section'].split("-")[1] - data[a]['course_section'].split("-")[0] + 1;
           //格式化上课地点
+          data[a]['course_address'] = data[a]['course_address'].replace('-', '_')//把-换成_
           var temp = data[a]['course_address'].split('_');
           var address;
           if (temp.length > 1) {

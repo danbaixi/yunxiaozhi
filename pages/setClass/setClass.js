@@ -1,4 +1,5 @@
 const app = getApp()
+var md5 = require('../../utils/md5.js');
 Page({
 
   /**
@@ -10,7 +11,8 @@ Page({
     length:20,
     search:'',
     loading:true,
-    finish:false
+    finish:false,
+    tmpClass:''
   },
 
   /**
@@ -18,6 +20,12 @@ Page({
    */
   onLoad: function (options) {
     this.getClass()
+    var tmp_class = wx.getStorageSync('tmp_class')
+    var user_id = wx.getStorageSync('user_id')
+    this.setData({
+      tmpClass: tmp_class,
+      userId:user_id
+    })
   },
 
   /**
@@ -148,5 +156,38 @@ Page({
       }
     })
     
+  },
+  restore:function(){
+    var user_id = wx.getStorageSync('user_id')
+    if(user_id == ''){
+      app.msg('请先登陆')
+      return
+    }
+    wx.showLoading({
+      title: '正在加载',
+    })
+    wx.removeStorageSync('tmp_class')
+
+    var str = app.globalData.key + user_id;
+    var sign = md5.hexMD5(str);
+    app.httpRequest({
+      url: 'course/getList',
+      data: {
+        stu_id: user_id,
+        sign: sign
+      },
+      success: function (res) {
+        wx.hideLoading()
+        if (res.data.status == 1001) {
+          wx.setStorageSync('course', res.data.data.course);
+          wx.setStorageSync('train', res.data.data.train_course);
+          wx.switchTab({
+            url: '/pages/course/course'
+          })
+        } else {
+          app.msg(res.data.message)
+        }
+      },
+    })
   }
 })

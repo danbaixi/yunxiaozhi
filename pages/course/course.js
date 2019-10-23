@@ -100,10 +100,8 @@ Page({
         now_day: day,
       })
     }
-    var user_id = wx.getStorageSync('user_id');
     var tmpClass = wx.getStorageSync('tmp_class');//临时设置班级
     that.setData({
-      login: !user_id?false:true,
       tmpClass:tmpClass
     })
     // that.getCourseList()
@@ -198,6 +196,8 @@ Page({
           var jie = data[a]['course_section'].split("-")[0];
           var jieshu = data[a]['course_section'].split("-")[1] - data[a]['course_section'].split("-")[0] +1;
           //格式化上课地点
+          
+          data[a]['course_address'] = data[a]['course_address'].replace('-', '_')//把-换成_
           var temp = data[a]['course_address'].split('_');
           var address;
           if(temp.length>1){
@@ -456,6 +456,7 @@ Page({
     wx.showLoading({
       title: '更新中',
     })
+    wx.removeStorageSync('tmp_class')
     var user_id = wx.getStorageSync('user_id');
     var user_password = wx.getStorageSync('user_password');
     // var yzm = that.data.yzm;
@@ -496,7 +497,7 @@ Page({
                 app.msg("更新成功", 'success')
                 wx.setStorageSync('course', res.data.data.course);
                 wx.setStorageSync('train', res.data.data.train_course);
-                that.onLoad();
+                that.onLoad({animation:true});
               } else {
                 app.msg(res.data.message)
               }
