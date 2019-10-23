@@ -7,6 +7,11 @@ Page({
   data: {
     tabs: ['云小智','热点新闻', '校园快讯','学校通知'],
     current:0,
+    loading:true,
+    finish:false,
+    p:1,
+    length:10,
+    article:[],
     types: ['yunxiaozhi','baiyunxinwen', 'xykx','xinxigonggao']
   },
 
@@ -63,7 +68,12 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    if (this.data.current == 0 && !this.data.finish){
+      this.setData({
+        p: this.data.p + 1
+      })
+      this.getList('yunxiaozhi')
+    }
   },
 
   /**
@@ -74,17 +84,14 @@ Page({
   },
 
   /** 获取新闻列表 */
-  getList: function (type,num) {
+  getList: function (type) {
     var that = this;
-    wx.showLoading({
-      title:'加载中···'
-    })
     if(type != 'yunxiaozhi'){
-      wx.request({
-        url: app.globalData.domain + 'news/getNews',
+      app.httpRequest({
+        url: 'news/getNews',
         data: {
           type: type,
-          num: num,
+          num: 20,
         },
         success: function (res) {
           wx.hideLoading();
@@ -98,25 +105,31 @@ Page({
           }
         }
       })
-    }else{
-      wx.request({
-        url: app.globalData.domain + 'article/getList',
-        data: {
-          start: 0,
-          limit: 20,
-        },
-        success: function (res) {
-          wx.hideLoading()
-          if (res.data.status == 1001) {
-            that.setData({
-              article:res.data.data
-            })
-          } else {
-            app.msg("获取推文失败，请关注云小智公众号查看")
-          }
-        }
-      })
     }
+    app.httpRequest({
+      url: 'article/getList',
+      data: {
+        p: that.data.p,
+        length: that.data.length,
+      },
+      success: function (res) {
+        wx.hideLoading()
+        if (res.data.status == 1001) {
+          var data = that.data.article
+          data = data.concat(res.data.data)
+          var finish = false
+          if(res.data.data.length < that.data.length){
+            finish = true
+          }
+          that.setData({
+            article: data,
+            finish:finish
+          })
+        } else {
+          app.msg("获取推文失败，请关注云小智公众号查看")
+        }
+      }
+    })
     
   },
   /** 打开新闻 */

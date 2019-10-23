@@ -164,6 +164,7 @@ Page({
                 wx.setStorageSync('system_type', that.data.systemType);
                 if (res.data.status == 1001) {
                   wx.setStorageSync('course', res.data.data.course);
+                  wx.removeStorageSync('tmp_class')
                   wx.showToast({
                     title: '登录成功',
                     icon: 'success'

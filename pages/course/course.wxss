@@ -51,8 +51,8 @@ page{
   position: absolute;
   justify-content: center;
   top: 0;
-  right: 14rpx;
-  font-size: 56rpx!important;
+  right: 22rpx;
+  font-size: 58rpx!important;
   line-height: 32px;
   transition: 0.5s;
 }

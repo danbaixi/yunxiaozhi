@@ -15,6 +15,7 @@
       <view class='desc'>{{item.desc}}</view>
       <view style='clear:both'></view>
     </view>
+    <view wx:if="{{loading}}" class="cu-load {{!finish?'loading':'over'}}"></view>
   </view>
 
   <view class='section' wx:if="{{current==1}}">
