@@ -94,7 +94,8 @@ Page({
     interval: 5000,
     duration: 10001,
     displayExam:false,
-    tmpClass:''
+    tmpClass:'',
+    imgDomain:app.globalData.fileDomain
   },
 
   onLoad: function () {
@@ -123,7 +124,7 @@ Page({
         news_list: wx.getStorageSync('news')
       })
     }
-    // that.getBanner();//获取Banner
+    that.getBanner();//获取Banner
     // that.getMessage();//获取公告
     that.getNowWeek();//获取第几周
     that.getWeekday();//获取星期几
@@ -381,8 +382,8 @@ Page({
   /** 获取banner信息 */
   getBanner:function(){
     var that = this;
-    wx.request({
-      url: app.globalData.domain + 'banner/getListByBid',
+    app.httpRequest({
+      url: 'banner/getListByBid',
       data:{
         bid:1
       },

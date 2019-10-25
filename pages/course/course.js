@@ -48,7 +48,7 @@ Page({
       background:"#6ed4e6",
       color:"#fff",
       title:"这是广告位置欢迎投放广告",
-      fontSize:10,
+      font_size:10,
       type:1,
       url:"",
       content:""
@@ -111,7 +111,10 @@ Page({
     that.getCourse(week, true,animation);
       //获取公告
       // that.getNotice();
-      // that.getAd()
+    if (typeof options.ad == "undefined" || options.ad){
+      that.getAd()
+    }
+
 
     // ad
     var time = (new Date).getTime()
@@ -125,7 +128,7 @@ Page({
     }
   },
   onShow:function(){
-    this.onLoad({animation:false})
+    this.onLoad({animation:false,ad:false})
   },
   /**
    * 用户点击右上角分享
@@ -693,6 +696,8 @@ Page({
     this.setData({
       ad:ad
     })
+    //记录时间，24小时内不再显示广告
+    wx.setStorageSync('close_ad_time', (new Date()).getTime())
   },
   goAd:function(){
     var ad = this.data.ad
@@ -710,17 +715,26 @@ Page({
   },
   getAd:function(){
     var self = this
-    app.httpRequest({
-      url:"ad/getAd",
-      needLogin:false,
-      success:function(res){
-        if(res.data.status == 0){
-          self.setData({
-            ad:res.data.data
-          })
+    var time = (new Date()).getTime()
+    var close_ad_time = wx.getStorageSync('close_ad_time')
+    var user_id = wx.getStorageSync('user_id')
+    if (close_ad_time == '' || Math.floor((time - close_ad_time) / 1000) > 24 * 60 *60){
+      wx.removeStorageSync('close_ad_time')
+      app.httpRequest({
+        url: "ad/getAd",
+        needLogin: false,
+        data:{
+          user_id:user_id
+        },
+        success: function (res) {
+          if (res.data.status == 0) {
+            self.setData({
+              ad: res.data.data
+            })
+          }
         }
-      }
-    })
+      })
+    }
   },
   toggleDelay() {
     var that = this;
@@ -754,6 +768,11 @@ Page({
   setClass:function(){
     wx.navigateTo({
       url: '/pages/setClass/setClass',
+    })
+  },
+  setTime:function(){
+    wx.navigateTo({
+      url: '/pages/couse/setTime/setTime',
     })
   }
 })

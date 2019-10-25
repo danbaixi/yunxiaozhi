@@ -37,7 +37,7 @@ App({
   /** 全局变量 */
   globalData:{
     isDebug:true,
-    xdebug:"?XDEBUG_SESSION_START=11936",
+    xdebug:"?XDEBUG_SESSION_START=14638",
     domain:'https://www.yunxiaozhi.cn/v1/public/api/',
     key:'ihzoaixnuy4f8835032505e8a45ac102c52d58593e',
     start_year: 2019,

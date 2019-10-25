@@ -19,7 +19,7 @@
   </view>
 </view>
 <view class="mask" bindtap="hideMask" style='height:{{winHeight-32}}px' wx:if="{{list_is_display}}"></view>
-<view class="list cu-list menu sm-border" style='height:{{5*55}}px;top:{{list_is_display?32:-(5*55)}}px'>
+<view class="list cu-list menu sm-border" style='height:{{6*55}}px;top:{{list_is_display?32:-(6*55)}}px'>
   <view class="cu-item arrow" bindtap='update'>
     <view class="content">
       <text class="text-grey">更新课表</text>
@@ -39,6 +39,14 @@
     </view>
     <view class="action">
       <text class="text-grey text-sm">{{tmpClass==''?'本班':tmpClass.name}}</text>
+    </view>
+  </view>
+  <view class="cu-item arrow" bindtap='setTime'>
+    <view class="content">
+      <text class="text-grey">设置上课时间</text>
+    </view>
+    <view class="action">
+      <text class="text-grey text-sm"></text>
     </view>
   </view>
   <view class="cu-item">
@@ -90,8 +98,8 @@
         <view class="smalltext" style="background-color:rgba({{colorArrays[item.num]}},{{(100-Copacity)/100}});" >{{item.name}}@{{item.address}}</view>
         </view>
 
-        <view wx:if="{{ad.display}}" bindtap="goAd" class='kcb-item' style="margin-left:{{(ad.week-1)*(92/7)}}%;margin-top:{{(ad.jie-1)*110+4}}rpx;height:{{ad.jieshu*110 - 4}}rpx">
-          <view class="smalltext" style="background:{{ad.background}};color:{{ad.color}};" >{{ad.title}}</view>
+        <view wx:if="{{ad.display}}" class='kcb-item' style="margin-left:{{(ad.week-1)*(92/7)}}%;margin-top:{{(ad.jie-1)*110+4}}rpx;height:{{ad.jieshu*110 - 4}}rpx">
+          <view class="smalltext" bindtap="goAd" style="background:{{ad.background}};color:{{ad.color}};" >{{ad.title}}</view>
           <view bindtap="closeAd" class="ad-close icon-roundclose text-center text-grey"></view>
         </view>
 
