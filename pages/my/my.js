@@ -33,14 +33,7 @@ Page({
     }
   },
   onShow:function(){
-    var that = this;
-    var isFresh = that.data.isFresh;
-    if (isFresh) {
-      that.onPullDownRefresh();
-      that.setData({
-        isFresh: false,
-      })
-    }
+    this.onPullDownRefresh();
   },
   onPullDownRefresh: function () {
     var that = this;

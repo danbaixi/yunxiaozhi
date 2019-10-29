@@ -1,0 +1,24 @@
+<view class="cu-form-group margin-top">
+  <view class="title">设置校区</view>
+  <picker bindchange="setArea" value="{{area>0?area-1:area}}" range="{{areas}}">
+    <view class="picker">
+      {{area?areas[area-1]:'未设置'}}
+    </view>
+  </picker>
+</view>
+
+<view class="cu-form-group">
+  <view class="title">显示上课时间</view>
+  <switch class="theme sm" checked="{{status}}" bindchange="switchStatus"></switch>
+</view>
+
+<view class='margin-sm bg-white padding-xl radius shadow-lg'>
+  <view class='text-center margin-bottom text-lg  text-black'>关于西校区上课时间的问题</view>
+  <view class='text-content'>
+    <view class='margin-top-sm text-bold'>西校区考虑下课时楼梯拥挤，设计不同教学楼下课时间不同，因此上课时间也有所不同。北校区上课时间比较统一，不做介绍，请看作息表。</view>
+    <view class='margin-top-sm'>第1-2节，思齐楼、至善楼、信达楼2-4层教室课间不休息连上。</view>
+    <view class='margin-top-sm'>第3-4节，博雅楼、德艺楼、躬行楼所有教室课间不休息连上；思齐楼、至善楼、信达楼2-4层教室课间只休息五分钟。</view>
+    <view class='margin-top-sm'>下午与晚上，任何课室的课程，课间都不休息连上。</view>
+    <view class='margin-top-sm text-bold'>以上的内容你都不要去记，因为云小智会根据当天的课去判断上课时间。当然也有可能有些老师是不按照作息表来安排，所以具体情况具体分析。</view>
+  </view>
+</view>

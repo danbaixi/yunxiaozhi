@@ -156,11 +156,15 @@ page{
 .left {
   width: 100%;
   height: 110rpx;
-  font-size: 24rpx;
   justify-content: center;
   display: flex;
+  position: relative;
   align-items: center;
   z-index: 0;
+}
+.left .number{
+  font-size: 24rpx;
+  line-height: 110rpx;
 }
 .bg-content{
   width: 100%;
@@ -349,4 +353,17 @@ input-holder {
   top: 500rpx;
   left: 15%;
   z-index: 99999;
+}
+.course-time{
+  height: 110rpx;
+  width: 100%;
+  position: absolute;
+  text-align: center;
+  top: 0;
+  right: 0;
+}
+.course-time .time-start,
+.course-time .time-end{
+  height: 55rpx;
+  line-height: 55rpx;
 }

@@ -46,7 +46,7 @@
       <text class="text-grey">设置上课时间</text>
     </view>
     <view class="action">
-      <text class="text-grey text-sm"></text>
+      <text class="text-grey text-sm">{{display_course_time>0?'显示':'不显示'}}</text>
     </view>
   </view>
   <view class="cu-item">
@@ -88,8 +88,16 @@
   <scroll-view scroll-y="true" class="scroll">
     <view class='course-content'>
       <view class='jie' style="background-color:rgba(220,220,220,{{(100-Kopacity)/100}})">
-        <view wx:for="{{jie}}" wx:key="key" class="left">
-          {{item}}
+        <view wx:for="{{jie}}" wx:key="key" wx:index="index" class="left">
+          <view class="number">{{item}}</view>
+          <view class="course-time" wx:if="{{display_course_time == 1}}">
+            <view class="text-grey text-xs time-start" style="line-height:{{course_time[index][0]==''?'10rpx':'50rpx'}}">
+              {{course_time[index][0] != "" ? course_time[index][0] : '|'}}
+            </view>
+            <view class="text-grey text-xs time-end" style="line-height:{{course_time[index][1]==''?'90rpx':'55rpx'}}">
+              {{course_time[index][1] != "" ? course_time[index][1] : '|'}}
+            </view>
+          </view>
         </view>
       </view>
 

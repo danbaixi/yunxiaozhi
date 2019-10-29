@@ -194,6 +194,13 @@
 					"id": -1,
 					"name": "手动设置班级",
 					"pathName": "pages/setClass/setClass",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "设置上课时间",
+					"pathName": "pages/course/setTime/setTime",
 					"scene": null
 				}
 			]

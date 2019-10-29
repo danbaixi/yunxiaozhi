@@ -1,6 +1,14 @@
 var util = require('../../utils/util.js');
 var md5 = require('../../utils/md5.js');
 var app = getApp();
+const TIMES = [
+  [
+    ["08:20", "09:05"], ["09:10", "09:55"], ["10:20", "11:05"], ["11:15", "12:00"], ["13:50", ""], ["", "15:20"], ["15:40", ""], ["", "17:10"], ["17:50", ""], ["", "19:20"], ["19:20", ""], ["", "20:50"]
+  ],
+  [
+    ["08:30", "09:15"], ["09:20", "10:05"], ["10:20", "11:05"], ["11:10", "11:55"], ["13:45", "14:30"], ["14:35", "15:20"], ["15:35", "16:20"], ["16:25", "17:10"], ["17:45", "18:30"], ["18:35", "19:20"], ["19:25", "20:10"], ["20:15", "21:00"]
+  ]
+]
 Page({
   /**
    * 页面的初始数据
@@ -54,7 +62,10 @@ Page({
       content:""
     },
     login:true,
-    tmpClass:''
+    tmpClass:'',
+    display_course_time:0,
+    area:0,
+    course_time:[]
   },
 
   /**
@@ -62,7 +73,7 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-    var animation = typeof options.animation == 'undefined' || !options.animation ? false : true
+    var animation = (typeof options.animation == 'undefined' || !options.animation ? false : true)
     //设置默认参数
     if(wx.getStorageSync('Kopacity') == ''){
       wx.setStorageSync('Kopacity', 90)
@@ -112,7 +123,7 @@ Page({
       //获取公告
       // that.getNotice();
     if (typeof options.ad == "undefined" || options.ad){
-      that.getAd()
+      // that.getAd()
     }
 
 
@@ -129,6 +140,8 @@ Page({
   },
   onShow:function(){
     this.onLoad({animation:false,ad:false})
+    //获取设置
+    this.getConfigData()
   },
   /**
    * 用户点击右上角分享
@@ -188,13 +201,16 @@ Page({
     if(first === false && week == that.data.now_week) return
     var data = wx.getStorageSync('course');
     //将之前的课表清空
-    if(animation){
+    if (typeof animation != "undefined" && animation){
       that.toggleDelay()
     }
     that.setData({ course: [] });
     if (data.length > 0) {
       var i = 0;
       for(var a=0;a<data.length;a++){
+        if (typeof data[a].course_weekly == "undefined") {
+          continue
+        }
         if(that.ana_week(week,data[a]['course_weekly'],data[a]['course_danshuang'])){
           var jie = data[a]['course_section'].split("-")[0];
           var jieshu = data[a]['course_section'].split("-")[1] - data[a]['course_section'].split("-")[0] +1;
@@ -319,6 +335,7 @@ Page({
         return false;
       }
     }
+    return false
   },
   /**
    * 是否为实训周
@@ -772,7 +789,127 @@ Page({
   },
   setTime:function(){
     wx.navigateTo({
-      url: '/pages/couse/setTime/setTime',
+      url: '/pages/course/setTime/setTime',
+    })
+  },
+  
+  getConfigData:function(){
+    var that = this
+    var display_course_time = wx.getStorageSync('display_course_time')
+    var area = wx.getStorageSync('user_area')
+    if(display_course_time == '' || area === ''){
+      var user_id = wx.getStorageSync('user_id');
+      var str = app.globalData.key + user_id;
+      var sign = md5.hexMD5(str);
+      app.httpRequest({
+        url: 'user/getareainfo',
+        data: {
+          sign: sign,
+          stu_id: user_id
+        },
+        success: function (res) {
+          if (res.data.status != 0) {
+            app.msg(res.data.message)
+            return
+          }
+          that.setData({
+            area:res.data.data.area,
+            display_course_time: res.data.data.display
+          })
+          wx.setStorageSync('display_course_time',res.data.data.display)
+          wx.setStorageSync('user_area',res.data.data.area)
+          that.displayTime()
+        }
+      })
+    }else{
+      that.setData({
+        display_course_time: display_course_time,
+        area: area
+      })
+      that.displayTime()
+    }
+  },
+
+  //显示上课时间
+  displayTime:function(){
+    if(this.data.display_course_time == 0){
+      return
+    }
+    if(this.data.area == '' || this.data.area == 0){
+      app.msg("您未设置校区，无法显示上课时间")
+      return
+    }
+    //北校区不需要处理
+    if(this.data.area == 2){
+      this.setData({
+        course_time : TIMES[1]
+      })
+      return
+    }
+    //西校区要根据教学楼和是否连上处理
+    //先判断今天是否有课，没课显示默认的
+    var week = (new Date()).getDay()
+    if(week == 0 || week == 6){
+      this.setData({
+        course_time : TIMES[0]
+      })
+    }
+    var courses = wx.getStorageSync('course');
+    var todayCourse = []
+    var times = TIMES
+    for(var i=0;i<courses.length;i++){
+      if (typeof courses[i].course_weekly == "undefined"){
+        continue
+      }
+      var tmp = this.ana_week(this.data.now_week, courses[i].course_weekly, courses[i].course_danshuang)
+      if (tmp && courses[i]['course_week'] == week){
+        var jie = courses[i]['course_section'].split("-")[0];
+        var jieshu = courses[i]['course_section'].split("-")[1] - courses[i]['course_section'].split("-")[0] + 1;
+        //格式化上课地点
+        courses[i]['course_address'] = courses[i]['course_address'].replace('-', '_')//把-换成_
+        var temp = courses[i]['course_address'].split('_');
+        var address;
+        if (temp.length > 1) {
+          address = temp[0] + temp[1];
+        } else {
+          address = temp[0];
+        }
+        var course = {
+          week: courses[i]['course_week'],
+          jie: jie,
+          jieshu: jieshu,
+          name: courses[i]['course_name'],
+          address: address,
+          zhoushu: courses[i]['course_weekly'],
+        };
+        var tmpName = course.address.split("楼")
+        if (tmpName.length == 1) {
+          continue
+        }
+        var floor = tmpName[0]
+        var floorNum = tmpName[1].substr(0, 1)
+        if (course.jie == 1 && (floor == '思齐' || floor == '至善' || floor == '信达') && (floorNum >= 2 && floorNum <= 4)) {
+          //1-2节连上
+          times[0][0][1] = ""
+          times[0][1][0] = ""
+          times[0][1][1] = "09:50"
+        } else if (course.jie == 3) {
+          if (floor == '博雅' || floor == '德艺' || floor == '躬行') {
+            //3-4节连上
+            times[0][2][1] = ""
+            times[0][3][0] = ""
+            times[0][3][1] = "11:50"
+          } else if ((floor == '思齐' || floor == '至善' || floor == '信达') && (floorNum >= 2 && floorNum <= 4)) {
+            //课间只休息五分钟，提前五分钟放学
+            times[0][2][1] = "11:05"
+            times[0][3][0] = "11:10"
+            times[0][3][1] = "11:55"
+          }
+        }
+      }
+    }
+    this.setData({
+      course_time: times[0]
     })
   }
 })

@@ -209,6 +209,9 @@ Page({
       var i = 0;
       var courses = new Array();
       for (var a = 0; a < data.length; a++) {
+        if (typeof data[a]['course_weekly'] == "undefined" || typeof data[a]['course_danshuang'] == "undefined") {
+          continue
+        }
         if (that.ana_week(week, data[a]['course_weekly'], data[a]['course_danshuang']) && data[a]['course_week'] == that.data.weekday) {
           var jie = data[a]['course_section'].split("-")[0];
           var jieshu = data[a]['course_section'].split("-")[1] - data[a]['course_section'].split("-")[0] + 1;
@@ -384,6 +387,7 @@ Page({
     var that = this;
     app.httpRequest({
       url: 'banner/getListByBid',
+      needLogin:false,
       data:{
         bid:1
       },
