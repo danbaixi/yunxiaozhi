@@ -93,6 +93,7 @@ Page({
           type: type,
           num: 20,
         },
+        needLogin:false,
         success: function (res) {
           wx.hideLoading();
           if (res.data.status == 1001) {
@@ -112,6 +113,7 @@ Page({
         p: that.data.p,
         length: that.data.length,
       },
+      needLogin: false,
       success: function (res) {
         wx.hideLoading()
         if (res.data.status == 1001) {

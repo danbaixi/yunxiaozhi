@@ -131,10 +131,14 @@ Page({
     var time = (new Date).getTime()
     var score_ad = wx.getStorageSync('score_ad_display');
     if (score_ad == '' || (Math.floor((time - score_ad)/1000) > app.globalData.adTime * 24 * 60)) {
-      var interstitialAd = wx.createInterstitialAd({
-        adUnitId: 'adunit-fa394b5b086dc048'
-      })
-      interstitialAd.show()
+      if (wx.createInterstitialAd){
+        var interstitialAd = wx.createInterstitialAd({
+          adUnitId: 'adunit-fa394b5b086dc048'
+        })
+        interstitialAd.show()
+      }else{
+        app.msg("您当前微信版本较低，建议升级到最新版本")
+      }
       wx.setStorageSync('score_ad_display', time)
     }
   },
@@ -620,7 +624,7 @@ Page({
       success: function (res) {
         if (res.tapIndex == 1){
           wx.setStorageSync('bg_img', '');
-          that.onLoad();
+          that.onLoad({ animation: true });
         }else{
           wx.chooseImage({
             count: 1,
@@ -633,7 +637,7 @@ Page({
                 title: '设置成功',
                 icon: 'success'
               })
-              that.onLoad();
+              that.onLoad({ animation: true });
             },
           })
         }
@@ -797,7 +801,7 @@ Page({
     var that = this
     var display_course_time = wx.getStorageSync('display_course_time')
     var area = wx.getStorageSync('user_area')
-    if(display_course_time == '' || area === ''){
+    if(display_course_time === '' || area === ''){
       var user_id = wx.getStorageSync('user_id');
       var str = app.globalData.key + user_id;
       var sign = md5.hexMD5(str);

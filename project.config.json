@@ -7,7 +7,9 @@
 		"postcss": true,
 		"minified": true,
 		"newFeature": true,
+		"coverView": true,
 		"autoAudits": true,
+		"uglifyFileName": true,
 		"checkInvalidKey": true,
 		"checkSiteMap": true,
 		"uploadWithSourceMap": true,
@@ -18,7 +20,7 @@
 		}
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.8.0",
+	"libVersion": "2.8.3",
 	"appid": "wxe0f03cdec8ab9416",
 	"projectname": "%E4%BA%91%E5%B0%8F%E6%99%BA",
 	"simulatorType": "wechat",
