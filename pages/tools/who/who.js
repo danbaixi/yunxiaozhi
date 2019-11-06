@@ -1,3 +1,4 @@
+const app = getApp()
 Page({
 
   /**
@@ -22,7 +23,7 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-    return app.share()
+    return app.share("谁输谁就去拿外卖", 'who.png',this.route)
   },
   //产生随机数
   random:function(min,max){

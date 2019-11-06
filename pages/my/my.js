@@ -71,7 +71,11 @@ Page({
       content: '确定退出此账号吗？',
       success: function (res) {
         if (res.confirm) {
+          var bg = wx.getStorageSync('bg_img')
           wx.clearStorage();
+          if(bg != ''){
+            wx.setStorageSync('bg_img', bg)
+          }
           wx.reLaunch({url: '../bind/bind'});
         }
       }
