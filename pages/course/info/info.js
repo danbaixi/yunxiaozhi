@@ -1,46 +1,71 @@
+const TIMES = [
+  [
+    ["08:20", "09:05"], ["09:10", "09:55"], ["10:20", "11:05"], ["11:15", "12:00"], ["13:50", ""], ["", "15:20"], ["15:40", ""], ["", "17:10"], ["17:50", ""], ["", "19:20"], ["19:20", ""], ["", "20:50"]
+  ],
+  [
+    ["08:30", "09:15"], ["09:20", "10:05"], ["10:20", "11:05"], ["11:10", "11:55"], ["13:45", "14:30"], ["14:35", "15:20"], ["15:35", "16:20"], ["16:25", "17:10"], ["17:45", "18:30"], ["18:35", "19:20"], ["19:25", "20:10"], ["20:15", "21:00"]
+  ]
+]
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var area = wx.getStorageSync('user_area')
     var temp = options.jieshu.split(" ");
     var time,jieshu;
-    switch(temp[1]){
-      case "1-2节":time = "8:20-9:50";jieshu="1-2";break;
-      case "3-4节": time = "10:20-11:50"; jieshu = "3-4"; break;
-      case "5-6节": time = "13:50-15:20"; jieshu = "5-6"; break;
-      case "7-8节": time = "15:40-17:10"; jieshu = "7-8";break;
-      case "9-10节": time = "17:50-19:20"; jieshu = "9-10"; break;
-      case "11-12节": time = "19:20-20:50"; jieshu = "11-12"; break;
-      case "1-4节": time = "8:20-9:50(休息)10:20-11:50"; jieshu = "1-4"; break;
-      case "5-8节": time = "14:00-15:30(休息)15:40-17:10"; jieshu = "5-8"; break;
-      case "9-12节": time = "17:50-19:20(休息时间看老师)19:20-20:50"; jieshu = "9-12"; break;
+    options.jie = parseInt(options.jie)
+    options.jieshu = parseInt(options.jieshu)
+
+    if(area == 1){
+      //正常情况
+      if(options.jie < 5){
+        if (options.jieshu == 2) {
+          time = TIMES[0][options.jie - 1][0] + '~' + TIMES[0][options.jie - 1][1] + ',' + TIMES[0][options.jie][0] + '~' + TIMES[0][options.jie][1]
+        } else if (options.jieshu == 4) {
+          time = TIMES[0][options.jie - 1][0] + '~' + TIMES[0][options.jie - 1][1] + ',' + TIMES[0][options.jie][0] + '~' + TIMES[0][options.jie][1] + '、' + TIMES[0][options.jie + 1][0] + '~' + TIMES[0][options.jie + 1][1] + ',' + TIMES[0][options.jie + 2][0] + '~' + TIMES[0][options.jie + 2][1]
+        } else {
+          time = "获取失败"
+        }
+      }else{
+        time = TIMES[0][options.jie - 1][0] + '~' + TIMES[0][options.jie + options.jieshu - 2][1]
+      }
+      
+
+    }else if(area == 2){
+      time = options.jieshu == 2 ? (TIMES[1][options.jie - 1][0] + '~' + TIMES[1][options.jie - 1][1] + ',' + TIMES[1][options.jie][0] + '~' + TIMES[1][options.jie][1]) : (TIMES[1][options.jie - 1][0] + "~" + TIMES[1][options.jie + options.jieshu - 2][1])
     }
-    var isPE = false;
-    var patt = /体育/;
-    if(options.name.match(patt)){
-      isPE:true;
+    
+    jieshu = options.jie + '-' + (options.jie + options.jieshu - 1) + '节';
+    var week;
+    switch (parseInt(options.week)) {
+      case 1: week = '周一'; break;
+      case 2: week = '周二'; break;
+      case 3: week = '周三'; break;
+      case 4: week = '周四'; break;
+      case 5: week = '周五'; break;
     }
+    var jieshu = week + ' ' + jieshu;
+
     this.setData({
+      area:area,
       name:options.name,
       zhoushu:options.zhoushu,
-      jieshu:options.jieshu,
+      jieshu:jieshu,
       teacher:options.teacher,
       xuefen:options.xuefen,
       category: options.category,
       method: options.method,
       address:options.address,
-      time:time,
-      jie:jieshu,
-      isPE:isPE
+      time:time
     })
   },
 
@@ -67,6 +92,12 @@ Page({
   rest:function(){
     wx.navigateTo({
       url: '../../article/article?src=' + encodeURIComponent('http://mp.weixin.qq.com/s?__biz=MzI1NTUwNDIzNQ==&mid=100000581&idx=1&sn=6ef90448df9ac2d4930fa3b15aa8399e&chksm=6a35b9415d423057df293f498fe3027b2ede3fe46000e69fc1a713a90eb7f894aabe416d7fa2#rd'),
+    })
+  },
+
+  setTime:function(){
+    wx.navigateTo({
+      url: '../setTime/setTime',
     })
   }
 })

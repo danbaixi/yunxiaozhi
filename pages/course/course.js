@@ -278,18 +278,8 @@ Page({
   displayCourseInfo:function(e){
     var indexNum = e.currentTarget.dataset.num;
     var data = this.data.course;
-    var jieshu = data[indexNum]['jie'] + '-' + (parseInt(data[indexNum]['jie']) + parseInt(data[indexNum]['jieshu']) - 1)+'节';
-    var week;
-    switch (parseInt(data[indexNum]['week'])){
-      case 1: week = '周一';break;
-      case 2: week = '周二'; break;
-      case 3: week = '周三'; break;
-      case 4: week = '周四'; break;
-      case 5: week = '周五'; break;
-    }
-    var jieshu = week + ' ' + jieshu;
     wx.navigateTo({
-      url: "info/info?name=" + data[indexNum]['fullName'] + "&zhoushu=" + data[indexNum]['zhoushu'] + "&jieshu=" + jieshu + "&teacher=" + data[indexNum]['teacher'] + "&xuefen=" + data[indexNum]['credit'] +"&category="+data[indexNum]['category']+"&method="+data[indexNum]['method']+"&address="+data[indexNum]['address'],
+      url: "info/info?name=" + data[indexNum]['fullName'] + "&zhoushu=" + data[indexNum]['zhoushu'] + "&jie=" + data[indexNum]['jie'] + "&jieshu=" + data[indexNum]['jieshu'] + "&week=" + data[indexNum]['week'] + "&teacher=" + data[indexNum]['teacher'] + "&xuefen=" + data[indexNum]['credit'] +"&category="+data[indexNum]['category']+"&method="+data[indexNum]['method']+"&address="+data[indexNum]['address'],
     })
   },
   /**

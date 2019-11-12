@@ -24,14 +24,14 @@ App({
       })
     })
     //自定义导航栏
-    wx.getSystemInfo({
-      success: e => {
-        this.globalData.StatusBar = e.statusBarHeight;
-        let custom = wx.getMenuButtonBoundingClientRect();
-        this.globalData.Custom = custom;
-        this.globalData.CustomBar = custom.bottom + custom.top - e.statusBarHeight;
-      }
-    })
+    // wx.getSystemInfo({
+    //   success: e => {
+    //     this.globalData.StatusBar = e.statusBarHeight;
+    //     let custom = wx.getMenuButtonBoundingClientRect();
+    //     this.globalData.Custom = custom;
+    //     this.globalData.CustomBar = custom.bottom + custom.top - e.statusBarHeight;
+    //   }
+    // })
     //获取当前学期开学日期
   },
   /** 全局变量 */
