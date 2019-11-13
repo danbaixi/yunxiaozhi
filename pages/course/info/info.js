@@ -1,6 +1,6 @@
 const TIMES = [
   [
-    ["08:20", "09:05"], ["09:10", "09:55"], ["10:20", "11:05"], ["11:15", "12:00"], ["13:50", ""], ["", "15:20"], ["15:40", ""], ["", "17:10"], ["17:50", ""], ["", "19:20"], ["19:20", ""], ["", "20:50"]
+    ["08:20", "09:05"], ["09:10", "09:55"], ["10:20", "11:05"], ["11:15", "12:00"], ["13:50", "14:35"], ["14:35", "15:20"], ["15:40", "16:25"], ["16:25", "17:10"], ["17:50", "18:35"], ["18:35", "19:20"], ["19:20", "20:05"], ["20:05", "20:50"]
   ],
   [
     ["08:30", "09:15"], ["09:20", "10:05"], ["10:20", "11:05"], ["11:10", "11:55"], ["13:45", "14:30"], ["14:35", "15:20"], ["15:35", "16:20"], ["16:25", "17:10"], ["17:45", "18:30"], ["18:35", "19:20"], ["19:25", "20:10"], ["20:15", "21:00"]
@@ -19,6 +19,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.table(options)
     var area = wx.getStorageSync('user_area')
     var temp = options.jieshu.split(" ");
     var time,jieshu;
@@ -27,18 +28,25 @@ Page({
 
     if(area == 1){
       //正常情况
-      if(options.jie < 5){
-        if (options.jieshu == 2) {
+      if (options.jieshu == 2) {
+        if(options.jie < 5) {
           time = TIMES[0][options.jie - 1][0] + '~' + TIMES[0][options.jie - 1][1] + ',' + TIMES[0][options.jie][0] + '~' + TIMES[0][options.jie][1]
-        } else if (options.jieshu == 4) {
-          time = TIMES[0][options.jie - 1][0] + '~' + TIMES[0][options.jie - 1][1] + ',' + TIMES[0][options.jie][0] + '~' + TIMES[0][options.jie][1] + '、' + TIMES[0][options.jie + 1][0] + '~' + TIMES[0][options.jie + 1][1] + ',' + TIMES[0][options.jie + 2][0] + '~' + TIMES[0][options.jie + 2][1]
-        } else {
-          time = "获取失败"
+        }else{
+          time = TIMES[0][options.jie - 1][0] + '~' + TIMES[0][options.jie][1]
         }
-      }else{
-        time = TIMES[0][options.jie - 1][0] + '~' + TIMES[0][options.jie + options.jieshu - 2][1]
+        
+      } else if (options.jieshu == 4) {
+        if(options.jie < 5){
+          time = TIMES[0][options.jie - 1][0] + '~' + TIMES[0][options.jie - 1][1] + ',' + TIMES[0][options.jie][0] + '~' + TIMES[0][options.jie][1] + '、' + TIMES[0][options.jie + 1][0] + '~' + TIMES[0][options.jie + 1][1] + ',' + TIMES[0][options.jie + 2][0] + '~' + TIMES[0][options.jie + 2][1]
+        }else{
+          time = TIMES[0][options.jie - 1][0] + '~' + TIMES[0][options.jie][1] + '、' + TIMES[0][options.jie + 1][0] + '~' + TIMES[0][options.jie + 2][1]
+        }
+        
+      } else if (options.jieshu == 1) {
+        time = TIMES[0][options.jie - 1][0] + '~' + TIMES[0][options.jie - 1][1]
+      } else {
+        time = "获取失败"
       }
-      
 
     }else if(area == 2){
       time = options.jieshu == 2 ? (TIMES[1][options.jie - 1][0] + '~' + TIMES[1][options.jie - 1][1] + ',' + TIMES[1][options.jie][0] + '~' + TIMES[1][options.jie][1]) : (TIMES[1][options.jie - 1][0] + "~" + TIMES[1][options.jie + options.jieshu - 2][1])

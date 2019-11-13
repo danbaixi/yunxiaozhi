@@ -1,6 +1,6 @@
 var util = require('../../utils/util.js');
 var md5 = require('../../utils/md5.js');
-var app = getApp();
+const app = getApp();
 const TIMES = [
   [
     ["08:20", "09:05"], ["09:10", "09:55"], ["10:20", "11:05"], ["11:15", "12:00"], ["13:50", ""], ["", "15:20"], ["15:40", ""], ["", "17:10"], ["17:50", ""], ["", "19:20"], ["19:20", ""], ["", "20:50"]
@@ -74,8 +74,9 @@ Page({
   onLoad: function (options) {
     var that = this;
     var animation = (typeof options.animation == 'undefined' || !options.animation ? false : true)
+
     //设置默认参数
-    if(wx.getStorageSync('Kopacity') == ''){
+    if (wx.getStorageSync('Kopacity') == '') {
       wx.setStorageSync('Kopacity', 90)
     }
     if (wx.getStorageSync('Copacity') == '') {
@@ -83,13 +84,14 @@ Page({
     }
     var winHeight = wx.getSystemInfoSync().windowHeight;
     that.setData({
-      imageUrl:wx.getStorageSync('bg_img'),
-      list_is_display:false,
+      imageUrl: wx.getStorageSync('bg_img'),
+      list_is_display: false,
       Kopacity: wx.getStorageSync('Kopacity'),
       Copacity: wx.getStorageSync('Copacity'),
       fontSize: wx.getStorageSync('fontSize'),
       winHeight: winHeight
     });
+
     var week = that.getNowWeek();
     var zhou_num = that.data.zhou_num;
     var n = zhou_num[week - 1].search(/(本周)/i);
@@ -111,39 +113,35 @@ Page({
         now_day: day,
       })
     }
-    var tmpClass = wx.getStorageSync('tmp_class');//临时设置班级
-    that.setData({
-      tmpClass:tmpClass
-    })
-    // that.getCourseList()
-    //获取当前日期
-    that.getTodayDate();
-    //获取课表
-    that.getCourse(week, true,animation);
-      //获取公告
-      // that.getNotice();
-    if (typeof options.ad == "undefined" || options.ad){
-      // that.getAd()
-    }
 
-
-    // ad
-    var time = (new Date).getTime()
-    var score_ad = wx.getStorageSync('score_ad_display');
-    if (score_ad == '' || (Math.floor((time - score_ad)/1000) > app.globalData.adTime * 24 * 60)) {
-      if (wx.createInterstitialAd){
-        var interstitialAd = wx.createInterstitialAd({
-          adUnitId: 'adunit-fa394b5b086dc048'
-        })
-        interstitialAd.show()
-      }else{
-        app.msg("您当前微信版本较低，建议升级到最新版本")
-      }
-      wx.setStorageSync('score_ad_display', time)
-    }
+    // var tmpClass = wx.getStorageSync('tmp_class');//临时设置班级
+    // that.setData({
+    //   tmpClass:tmpClass
+    // })
+    // // that.getCourseList()
+    // //获取当前日期
+    // that.getTodayDate();
+    // //获取课表
+    // that.getCourse(week, true,animation);
+    // //获取公告
+    // // that.getNotice();
+    // if (typeof options.ad == "undefined" || options.ad){
+    //   // that.getAd()
+    // }
+    // that.displayAd()
   },
+
   onShow:function(){
-    this.onLoad({animation:false,ad:false})
+    // this.onLoad({animation:false,ad:false})
+    var tmpClass = wx.getStorageSync('tmp_class');//临时设置班级
+    this.setData({
+      list_is_display: false,
+      tmpClass: tmpClass
+    })
+    //获取当前日期
+    this.getTodayDate();
+    //获取课表
+    this.getCourse(this.data.now_week, true, false);
     //获取设置
     this.getConfigData()
   },
@@ -216,8 +214,14 @@ Page({
           continue
         }
         if(that.ana_week(week,data[a]['course_weekly'],data[a]['course_danshuang'])){
-          var jie = data[a]['course_section'].split("-")[0];
-          var jieshu = data[a]['course_section'].split("-")[1] - data[a]['course_section'].split("-")[0] +1;
+          var tmp = data[a]['course_section'].split("-")
+          var jie = tmp[0];
+          if(tmp.length == 1){
+            var jieshu = 1
+          }else{
+            var jieshu = tmp[1] - tmp[0] + 1;
+          }
+         
           //格式化上课地点
           
           data[a]['course_address'] = data[a]['course_address'].replace('-', '_')//把-换成_
@@ -905,5 +909,21 @@ Page({
     this.setData({
       course_time: times[0]
     })
+  },
+  displayAd:function(){
+    // ad
+    var time = (new Date).getTime()
+    var score_ad = wx.getStorageSync('score_ad_display');
+    if (score_ad == '' || (Math.floor((time - score_ad) / 1000) > app.globalData.adTime * 24 * 60)) {
+      if (wx.createInterstitialAd) {
+        var interstitialAd = wx.createInterstitialAd({
+          adUnitId: 'adunit-fa394b5b086dc048'
+        })
+        interstitialAd.show()
+      } else {
+        app.msg("您当前微信版本较低，建议升级到最新版本")
+      }
+      wx.setStorageSync('score_ad_display', time)
+    }
   }
 })

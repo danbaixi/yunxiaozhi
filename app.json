@@ -2,8 +2,6 @@
   "pages": [
     "pages/index/index",
     "pages/course/course",
-    "pages/community/community",
-    "pages/community/home/home",
     "pages/my/my",
     "pages/my/userInfo/userInfo",
     "pages/tool/tool",
@@ -20,8 +18,6 @@
     "pages/tools/score/top/top",
     "pages/my/set/set",
     "pages/course/info/info",
-    "pages/community/new/new",
-    "pages/community/item/item",
     "pages/cropper/cropper",
     "pages/tools/certificate/certificate",
     "pages/tools/who/who",
@@ -65,12 +61,6 @@
         "iconPath": "pages/assets/imgs/index_icon/course.png",
         "pagePath": "pages/course/course",
         "text": "课表"
-      },
-      {
-        "selectedIconPath": "pages/assets/imgs/index_icon/news_press.png",
-        "iconPath": "pages/assets/imgs/index_icon/news.png",
-        "pagePath": "pages/news/news",
-        "text": "资讯"
       },
       {
         "selectedIconPath": "pages/assets/imgs/index_icon/my_press.png",
