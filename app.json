@@ -27,8 +27,6 @@
     "pages/my/time/time",
     "pages/my/pwd/pwd",
     "pages/course/info/students/students",
-    "pages/news/news",
-    "pages/news/item/item",
     "pages/setClass/setClass",
     "pages/loginTips/loginTips",
     "pages/course/setTime/setTime"
