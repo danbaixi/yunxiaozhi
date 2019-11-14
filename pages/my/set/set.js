@@ -71,5 +71,10 @@ Page({
         }
       }
     })
+  },
+  setTime:function(){
+    wx.navigateTo({
+      url: '/pages/course/setTime/setTime',
+    })
   }
 })

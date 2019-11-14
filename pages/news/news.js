@@ -27,6 +27,7 @@ Page({
       })
       wx.setStorageSync('showRedDot', 1)
     }
+    that.showModal()
   },
 
   /**

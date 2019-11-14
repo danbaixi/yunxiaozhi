@@ -19,7 +19,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.table(options)
     var area = wx.getStorageSync('user_area')
     var temp = options.jieshu.split(" ");
     var time,jieshu;
@@ -48,7 +47,7 @@ Page({
         time = "获取失败"
       }
 
-    }else if(area == 2){
+    }else if(area == 2 && options.jie > 0){
       time = options.jieshu == 2 ? (TIMES[1][options.jie - 1][0] + '~' + TIMES[1][options.jie - 1][1] + ',' + TIMES[1][options.jie][0] + '~' + TIMES[1][options.jie][1]) : (TIMES[1][options.jie - 1][0] + "~" + TIMES[1][options.jie + options.jieshu - 2][1])
     }
     
