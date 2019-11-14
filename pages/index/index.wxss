@@ -182,7 +182,7 @@ page{
 }
 .unlogin{
   text-align: center;
-  padding: 40rpx 0;
+  padding: 40rpx 20rpx;
 }
 
 .banner {

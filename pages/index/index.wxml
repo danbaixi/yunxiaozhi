@@ -46,7 +46,7 @@
           <text bindtap='goLogin'>登录后可查看，点击登录</text>
       </view> 
       <view wx:if="{{user_id!='' && (course.length<=0 || course == null)}}" class='course_list unlogin'>
-        <text>今天没课，做点别的充实自己</text>
+        <text>{{soul}}</text>
       </view>
     </view>
 

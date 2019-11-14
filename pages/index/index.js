@@ -1,6 +1,7 @@
 var app = getApp()
 var md5 = require('../../utils/md5.js');
 var util = require('../../utils/util.js');
+var soul = require('../../pages/assets/resources/soul.js')
 Page({
   data: {
     tools: [
@@ -95,7 +96,8 @@ Page({
     duration: 10001,
     displayExam:false,
     tmpClass:'',
-    imgDomain:app.globalData.fileDomain
+    imgDomain:app.globalData.fileDomain,
+    soul:"今天没课，做点别的充实自己"
   },
 
   onLoad: function () {
@@ -111,6 +113,7 @@ Page({
         add_tips: true
       })
     }
+    this.getSoul()
   },
 
   onShow:function(){
@@ -461,5 +464,11 @@ Page({
       add_tips:false
     })
     wx.setStorageSync('add_my_tips', time)
+  },
+  getSoul:function(){
+    var todaySoul = soul[Math.floor(Math.random()*soul.length)]
+    this.setData({
+      soul:todaySoul
+    })
   }
 })
