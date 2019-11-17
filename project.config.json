@@ -203,6 +203,13 @@
 					"id": -1,
 					"name": "设置上课时间",
 					"pathName": "pages/course/setTime/setTime",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "毒鸡汤",
+					"pathName": "pages/soul/soul",
 					"scene": null
 				}
 			]

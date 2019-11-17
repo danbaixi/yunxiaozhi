@@ -182,7 +182,7 @@ page{
 }
 .unlogin{
   text-align: center;
-  padding: 40rpx 20rpx;
+  padding: 40rpx 30rpx;
 }
 
 .banner {
@@ -236,4 +236,11 @@ page{
   border-style: solid;
   border-color: transparent #fff transparent transparent;
   transform: rotate(90deg);
+}
+.like{
+  padding: 10rpx 20rpx;
+}
+.soul{
+  line-height: 1.5;
+  letter-spacing: 2rpx;
 }

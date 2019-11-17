@@ -46,7 +46,18 @@
           <text bindtap='goLogin'>登录后可查看，点击登录</text>
       </view> 
       <view wx:if="{{user_id!='' && (course.length<=0 || course == null)}}" class='course_list unlogin'>
-        <text>{{soul}}</text>
+        <view wx:if="{{soul}}" class="text-left">
+          <view bindtap="goSoul" class="soul">{{soul.title}}</view>
+          <view class="like margin-top-sm text-right">
+            <view bindtap="likeSoul" data-id="{{soul.id}}">
+              <text class="icon-{{likeSoul?'likefill':'like'}} text-pink"></text>
+              <text class="text-pink"> {{soul.like_count}}</text>
+            </view>
+          </view>
+        </view>
+        <view wx:else>
+          今天没课，去充实一下自己呗
+        </view>
       </view>
     </view>
 

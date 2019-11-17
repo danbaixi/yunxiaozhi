@@ -1,7 +1,6 @@
 var app = getApp()
 var md5 = require('../../utils/md5.js');
 var util = require('../../utils/util.js');
-var soul = require('../../pages/assets/resources/soul.js')
 Page({
   data: {
     tools: [
@@ -97,7 +96,7 @@ Page({
     displayExam:false,
     tmpClass:'',
     imgDomain:app.globalData.fileDomain,
-    soul:"今天没课，做点别的充实自己"
+    likeSoul:false
   },
 
   onLoad: function () {
@@ -466,9 +465,67 @@ Page({
     wx.setStorageSync('add_my_tips', time)
   },
   getSoul:function(){
-    var todaySoul = soul[Math.floor(Math.random()*soul.length)]
-    this.setData({
-      soul:todaySoul
+    var list = wx.getStorageSync('souls')
+    var soulsUpdate = wx.getStorageSync('soul_update')
+    var that = this
+    var soul = false
+    var soul = false
+    var time = Math.floor((new Date).getTime() / 1000)
+    if (!list || list == '' || list.length == 0 || time > soulsUpdate + 60 * 60) {
+      app.httpRequest({
+        url: 'soul/getList',
+        needLogin: false,
+        success: function (res) {
+          if (res.data.status == 0) {
+            list = res.data.data
+            wx.setStorageSync('souls', list)
+            wx.setStorageSync('soul_update', time)
+            soul = list[Math.floor(Math.random() * list.length)]
+            that.setData({
+              soul:soul
+            })
+          }
+        }
+      })
+    } else {
+      soul = list[Math.floor(Math.random() * list.length)]
+      that.setData({
+        soul: soul
+      })
+    }
+  },
+  likeSoul:function(e){
+    var that = this
+    if(this.data.likeSoul){
+      app.msg("你已经点过赞啦")
+      return
+    }
+    var id = e.currentTarget.dataset.id
+    var stu_id = wx.getStorageSync('user_id')
+    app.httpRequest({
+      url: 'soul/like',
+      needLogin: false,
+      data: {
+        id: id,
+        stu_id: stu_id
+      },
+      success: function (res) {
+        if (res.data.status == 0) {
+          var soul = that.data.soul
+          soul.like_count = soul.like_count + 1;
+          that.setData({
+            likeSoul: true,
+            soul: soul
+          })
+        }else{
+          app.msg(res.data.message)
+        }
+      }
+    })
+  },
+  goSoul:function(){
+    wx.navigateTo({
+      url: '/pages/soul/soul',
     })
   }
 })

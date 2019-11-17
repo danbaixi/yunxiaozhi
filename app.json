@@ -31,7 +31,8 @@
     "pages/news/item/item",
     "pages/setClass/setClass",
     "pages/loginTips/loginTips",
-    "pages/course/setTime/setTime"
+    "pages/course/setTime/setTime",
+    "pages/soul/soul"
   ],
   "window": {
     "navigationStyle": "default",
