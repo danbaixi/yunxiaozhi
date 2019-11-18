@@ -113,7 +113,21 @@ Page({
         now_day: day,
       })
     }
-
+    // ad
+    var time = (new Date).getTime()
+    var score_ad = wx.getStorageSync('score_ad_display');
+    if (score_ad == '' || (Math.floor((time - score_ad) / 1000) > app.globalData.adTime * 24 * 60)) {
+      if (wx.createInterstitialAd) {
+        var interstitialAd = wx.createInterstitialAd({
+          adUnitId: 'adunit-fa394b5b086dc048'
+        })
+        interstitialAd.show()
+      } else {
+        app.msg("您当前微信版本较低，建议升级到最新版本")
+      }
+      wx.setStorageSync('score_ad_display', time)
+    }
+    
     // var tmpClass = wx.getStorageSync('tmp_class');//临时设置班级
     // that.setData({
     //   tmpClass:tmpClass
@@ -128,7 +142,7 @@ Page({
     // if (typeof options.ad == "undefined" || options.ad){
     //   // that.getAd()
     // }
-    // that.displayAd()
+    
   },
 
   onShow:function(){
@@ -910,20 +924,4 @@ Page({
       course_time: times[0]
     })
   },
-  displayAd:function(){
-    // ad
-    var time = (new Date).getTime()
-    var score_ad = wx.getStorageSync('score_ad_display');
-    if (score_ad == '' || (Math.floor((time - score_ad) / 1000) > app.globalData.adTime * 24 * 60)) {
-      if (wx.createInterstitialAd) {
-        var interstitialAd = wx.createInterstitialAd({
-          adUnitId: 'adunit-fa394b5b086dc048'
-        })
-        interstitialAd.show()
-      } else {
-        app.msg("您当前微信版本较低，建议升级到最新版本")
-      }
-      wx.setStorageSync('score_ad_display', time)
-    }
-  }
 })

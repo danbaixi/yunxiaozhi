@@ -2,7 +2,7 @@ page{
   background: #fff;
 }
 .container{
-  padding: 200rpx 40rpx;
+  padding: 180rpx 40rpx;
 }
 .soul{
   text-align: left;

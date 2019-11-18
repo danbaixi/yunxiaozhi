@@ -96,7 +96,16 @@ Page({
     displayExam:false,
     tmpClass:'',
     imgDomain:app.globalData.fileDomain,
-    likeSoul:false
+    likeSoul:false,
+    soul:'',
+    banner:[
+      {
+        img_src:'/pages/assets/imgs/other/bgImage.jpg',
+        display:1,
+        type:0
+      }
+    ],
+    soulLock:false
   },
 
   onLoad: function () {
@@ -112,7 +121,6 @@ Page({
         add_tips: true
       })
     }
-    this.getSoul()
   },
 
   onShow:function(){
@@ -139,6 +147,29 @@ Page({
     this.setData({
       tmpClass: tmpClass
     })
+    //监听摇一摇
+    wx.onAccelerometerChange(function (res) {
+      if (!that.data.soulLock && (res.x >= 1 || res.y >= 1)) {
+        that.setData({
+          soulLock:true
+        })
+        wx.stopAccelerometer({})
+        wx.showLoading({
+          title: '玩命加载中',
+        })
+        setTimeout(function(){
+          wx.hideLoading()
+          wx.navigateTo({
+            url: '/pages/soul/soul?egg=1',
+            success:function(){
+              that.setData({
+                soulLock: false
+              })
+            }
+          })
+        },1200)
+      }
+    });
   },
 
   /** 下拉刷新 */
@@ -151,8 +182,6 @@ Page({
     wx.removeStorageSync('news');
     that.getBanner();
     that.getMyExam();
-    // that.getMessage();
-    // that.getNewsList();
     var user_id = wx.getStorageSync('user_id');
     that.setData({
       user_id: user_id,
@@ -268,6 +297,10 @@ Page({
     } else {
       that.setData({ course: null });
     }
+    //获取毒鸡汤
+    if(that.data.course == null || that.data.course.length == 0){
+      that.getSoul()
+    }
     // that.getTrain(week);
   },
   /** 解析周数 */
@@ -363,25 +396,8 @@ Page({
   displayCourseInfo: function (e) {
     var indexNum = e.currentTarget.dataset.num;
     var data = this.data.course;
-    var index;
-    for(var i=0;i<data.length;i++){
-      if(data[i]['indexNum'] == indexNum){
-        index = i;
-        break;
-      }
-    }
-    var jieshu = data[index]['jie'] + '-' + (parseInt(data[index]['jie']) + parseInt(data[index]['jieshu']) - 1) + '节';
-    var week;
-    switch (parseInt(data[index]['week'])) {
-      case 1: week = '周一'; break;
-      case 2: week = '周二'; break;
-      case 3: week = '周三'; break;
-      case 4: week = '周四'; break;
-      case 5: week = '周五'; break;
-    }
-    var jieshu = week + ' ' + jieshu;
     wx.navigateTo({
-      url: "../course/info/info?name=" + data[index]['name'] + "&zhoushu=" + data[index]['zhoushu'] + "&jieshu=" + jieshu + "&teacher=" + data[index]['teacher'] + "&xuefen=" + data[index]['credit'] + "&category=" + data[index]['category'] + "&method=" + data[index]['method'] + "&address=" + data[index]['address'],
+      url: "/pages/course/info/info?name=" + data[indexNum]['name'] + "&zhoushu=" + data[indexNum]['zhoushu'] + "&jie=" + data[indexNum]['jie'] + "&jieshu=" + data[indexNum]['jieshu'] + "&week=" + data[indexNum]['week'] + "&teacher=" + data[indexNum]['teacher'] + "&xuefen=" + data[indexNum]['credit'] + "&category=" + data[indexNum]['category'] + "&method=" + data[indexNum]['method'] + "&address=" + data[indexNum]['address'],
     })
   },
   /** 获取banner信息 */
@@ -399,14 +415,13 @@ Page({
           if (res.data.data.data.length<=1){
             indicatorDots = false;
           }
+          var banner = res.data.data.data
+          for(var i=0;i<banner.length;i++){
+            banner[i].img_src = that.data.imgDomain + banner[i].img_src
+          }
           that.setData({
-            banner_display:res.data.data.status==1?true:false,
-            banner:res.data.data.data,
+            banner:banner,
             indicatorDots: indicatorDots
-          })
-        }else{
-          that.setData({
-            banner_display: false,
           })
         }
       }
@@ -468,8 +483,10 @@ Page({
     var list = wx.getStorageSync('souls')
     var soulsUpdate = wx.getStorageSync('soul_update')
     var that = this
-    var soul = false
-    var soul = false
+    var soul = that.data.soul
+    if(soul != ''){
+      return
+    }
     var time = Math.floor((new Date).getTime() / 1000)
     if (!list || list == '' || list.length == 0 || time > soulsUpdate + 60 * 60) {
       app.httpRequest({
@@ -525,7 +542,7 @@ Page({
   },
   goSoul:function(){
     wx.navigateTo({
-      url: '/pages/soul/soul',
+      url: '/pages/soul/soul?egg=0',
     })
   }
 })

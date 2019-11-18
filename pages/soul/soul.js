@@ -6,13 +6,21 @@ Page({
    */
   data: {
     soul:[],
-    likeSoul:false
+    likeSoul:false,
+    displayEgg:false
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var egg = wx.getStorageSync('egg')
+    if(options.egg == 1 && (egg == '' || egg == 0)){
+      this.setData({
+        displayEgg:true
+      })
+      wx.setStorageSync('egg',1)
+    }
     this.getSoul()
   },
 
@@ -166,6 +174,11 @@ Page({
           modalName: ''
         })
       }
+    })
+  },
+  hideEgg:function(){
+    this.setData({
+      displayEgg:false
     })
   }
 })

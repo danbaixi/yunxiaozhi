@@ -207,9 +207,10 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 25,
 					"name": "毒鸡汤",
 					"pathName": "pages/soul/soul",
+					"query": "egg=1",
 					"scene": null
 				}
 			]

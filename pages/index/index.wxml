@@ -1,7 +1,7 @@
 <!-- <image src='/pages/assets/imgs/other/bgImage.jpg' mode='widthFix' class='png' style='width:100%;height:320rpx'></image> -->
-<swiper wx:if="{{banner_display}}" class="screen-swiper square-dot" indicator-dots="true" circular="true" autoplay="true" interval="4000" duration="500">
+<swiper class="screen-swiper square-dot" indicator-dots="true" circular="true" autoplay="true" interval="4000" duration="500">
   <swiper-item wx:for="{{banner}}" wx:key="key">
-    <image src="{{imgDomain + item.img_src}}" data-index="{{item.index}}" mode="aspectFill"></image>
+    <image src="{{item.img_src}}" data-index="{{item.index}}" mode="aspectFill"></image>
   </swiper-item>
 </swiper>
 <view class="add_tips shadow" wx:if="{{add_tips}}">
