@@ -136,44 +136,8 @@ Page({
     })
   },
   create:function(){
-    this.setData({
-      modalName:'create'
-    })
-  },
-  hideModal:function(){
-    this.setData({
-      modalName:''
-    })
-  },
-  textareaAInput(e) {
-    this.setData({
-      textareaAValue: e.detail.value
-    })
-  },
-  submitForm:function(e){
-    var title = e.detail.value.title
-    var name = e.detail.value.name
-    var that = this
-    if(title == ""){
-      app.msg("空的毒鸡汤？")
-      return
-    }
-    app.httpRequest({
-      url:'soul/create',
-      needLogin:false,
-      data:{
-        title:title,
-        name:name
-      },
-      success:function(res){
-        app.msg(res.data.message)
-        if(res.data.status != 0){
-          return
-        }
-        that.setData({
-          modalName: ''
-        })
-      }
+    wx.navigateTo({
+      url: 'submit/submit',
     })
   },
   hideEgg:function(){

@@ -7,7 +7,10 @@
   </view>
 </scroll-view> -->
 
-<view class='list margin-top'>
+<view class="padding-sm text-center">
+  <text class="text-red">关注云小智公众号，更多精彩内容等着你</text>
+</view>
+<view class='list'>
   <view class='section' wx:if="{{current==0}}">
     <view class='article' wx:for="{{article}}" wx:key="key" bindtap='viewArticle' data-src='{{item.src}}'>
       <image mode='aspectFill' src='{{item.img}}'></image>

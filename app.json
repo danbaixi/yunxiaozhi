@@ -32,7 +32,8 @@
     "pages/setClass/setClass",
     "pages/loginTips/loginTips",
     "pages/course/setTime/setTime",
-    "pages/soul/soul"
+    "pages/soul/soul",
+    "pages/soul/submit/submit"
   ],
   "window": {
     "navigationStyle": "default",

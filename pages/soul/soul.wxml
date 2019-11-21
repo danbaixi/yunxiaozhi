@@ -11,33 +11,10 @@
   <button bindtap="getSoul" class="cu-btn bg-theme">再来一碗</button>
 </view>
 <view class="create">
-  <text>来源{{soul.source == null?"网络": soul.source}}，</text>
+  <text>来源{{soul.source == null || soul.source == ''?"网络": soul.source}}，</text>
   <text class="text-blue" bindtap="create">我也要贡献</text>
 </view>
 
-<view class="cu-modal {{modalName=='create'?'show':''}}">
-  <view class="cu-dialog">
-    <view class="cu-bar bg-white justify-end">
-      <view class="content">贡献毒鸡汤</view>
-      <view class="action" bindtap="hideModal">
-        <text class="icon-close text-red"></text>
-      </view>
-    </view>
-    <view class="padding-sm text-left">
-      <form bindsubmit="submitForm">
-        <view class="cu-form-group">
-          <input placeholder="输入毒鸡汤" name="title"></input>
-        </view>
-        <view class="cu-form-group margin-top-sm" style="border-top:0">
-          <input placeholder="留下你的大名" maxlength="12" name="name"></input>
-        </view>
-        <view class="margin-top-lg text-right">
-          <button formType="submit" class="cu-btn bg-theme">提交</button>
-        </view>
-      </form>
-    </view>
-  </view>
-</view>
 <view class="cu-modal {{displayEgg?'show':''}}" bindtap="hideEgg">
   <view class="cu-dialog" style="background-color:transparent;margin-top:-200rpx">
     <image mode="widthFix" style="width:480rpx" src="/pages/assets/imgs/other/caidan.png"></image>
