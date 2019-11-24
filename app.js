@@ -145,31 +145,4 @@ App({
       imageUrl: this.globalData.fileDomain + 'share/v1/' + img,
     }
   },
-
-  //获取毒鸡汤
-  getSoul:function(){
-    var list = wx.getStorageSync('souls')
-    var that = this
-    var soul = false
-    if(!list || list == '' || list.length == 0){
-      that.httpRequest({
-        url:'soul/getList',
-        needLogin:false,
-        success:function(res){
-          if(res.data.status == 0){
-            list = res.data.data
-            wx.setStorageSync('souls', list)
-            soul = list[Math.floor(Math.random() * list.length)]
-          }
-        }
-      })
-    }else{
-      soul = list[Math.floor(Math.random() * list.length)]
-    }
-    return soul
-  },
-
-  likeSoul:function(id){
-    
-  }
 })

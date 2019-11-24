@@ -28,8 +28,8 @@ Page({
     var user_id = wx.getStorageSync('user_id');
     var str = app.globalData.key + user_id;
     var sign = md5.hexMD5(str);
-    wx.request({
-      url: app.globalData.domain + 'score/getscoreanalysis',
+    app.httpRequest({
+      url: 'score/getscoreanalysis',
       data: {
         stu_id: user_id,
         sign:sign

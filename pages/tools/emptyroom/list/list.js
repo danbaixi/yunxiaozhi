@@ -14,6 +14,9 @@ Page({
   onLoad: function (options) {
     var that = this
     var area = Number(options.area) + 1
+    if(area == 2){
+      area = 3
+    }
     var floor = options.floor
     var weekly = options.weekly
     var week = Number(options.week) + 1

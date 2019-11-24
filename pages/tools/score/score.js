@@ -108,7 +108,7 @@ Page({
     var that = this;
     wx.showLoading({title:"加载中"})
     var scores = wx.getStorageSync('scores');
-    if(scores!=''&& scores.score.length>0 && !update){
+    if (scores != '' && JSON.stringify(scores) != "{}" && scores.score.length>0 && !update){
       that.setData({
         avg: scores.avg,
         score: scores.score,
