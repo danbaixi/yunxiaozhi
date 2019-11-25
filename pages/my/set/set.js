@@ -36,11 +36,13 @@ Page({
         if(res.data.status == 1001){
           if(res.data.data == null){
             that.setData({
-              display_name:'0',
+              display_name:0,
+              hide_soul:0
             })
           }else{
             that.setData({
-              display_name: res.data.data.is_display_name == null ? '0' : res.data.data.is_display_name,
+              display_name: res.data.data.is_display_name == null ? 0 : res.data.data.is_display_name,
+              hide_soul: res.data.data.hide_soul == null ? 0 : res.data.data.hide_soul,
             })
           }
         }
@@ -50,7 +52,7 @@ Page({
   //设置是否隐藏名字
   is_display_name: function (e) {
     var user_id = wx.getStorageSync('user_id');
-    var value = e.detail.value?'1':'0';
+    var value = e.detail.value?1:0;
     var str = app.globalData.key + user_id;
     var sign = md5.hexMD5(str);
     app.httpRequest({
@@ -77,7 +79,7 @@ Page({
   },
   hideSoul:function(e){
     var user_id = wx.getStorageSync('user_id');
-    var value = e.detail.value ? '1' : '0';
+    var value = e.detail.value ? 1 : 0;
     var str = app.globalData.key + user_id;
     var sign = md5.hexMD5(str);
     app.httpRequest({
@@ -91,6 +93,7 @@ Page({
       success: function (res) {
         if (res.data.status == 1001) {
           app.msg("设置成功", "success")
+          wx.setStorageSync("hide_soul", value)
         } else {
           app.msg("设置失败")
         }

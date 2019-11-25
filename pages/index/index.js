@@ -97,6 +97,7 @@ Page({
     tmpClass:'',
     imgDomain:app.globalData.fileDomain,
     likeSoul:false,
+    hideSoul:1,
     soul:'',
     banner:[
       {
@@ -109,6 +110,7 @@ Page({
   },
 
   onLoad: function () {
+    var that = this
     if(wx.getStorageSync('showRedDot') != 1){
       wx.showTabBarRedDot({
         index: 2
@@ -121,6 +123,7 @@ Page({
         add_tips: true
       })
     }
+
   },
 
   onShow:function(){
@@ -134,6 +137,34 @@ Page({
         news_list: wx.getStorageSync('news')
       })
     }
+    //是否隐藏毒鸡汤
+    var hide_soul = wx.getStorageSync('hide_soul')
+    var user_id = wx.getStorageSync('user_id')
+    if (hide_soul == '' && user_id != "") {
+      app.httpRequest({
+        url: 'user/isHideSoul',
+        data: {
+          stu_id: user_id
+        },
+        success: function (res) {
+          if (res.data.status == 0) {
+            that.setData({
+              hideSoul: res.data.data
+            })
+            wx.setStorageSync('hide_soul', res.data.data)
+            return
+          }
+          that.setData({
+            hideSoul: 1
+          })
+        }
+      })
+    } else {
+      that.setData({
+        hideSoul: hide_soul
+      })
+    }
+    
     that.getBanner();//获取Banner
     // that.getMessage();//获取公告
     that.getNowWeek();//获取第几周
@@ -147,9 +178,10 @@ Page({
     this.setData({
       tmpClass: tmpClass
     })
+
     //监听摇一摇
     wx.onAccelerometerChange(function (res) {
-      if (!that.data.soulLock && (res.x >= 1 || res.y >= 1)) {
+      if (that.data.hideSoul == 0 && !that.data.soulLock && (res.x >= 1 || res.y >= 1)) {
         that.setData({
           soulLock:true
         })
@@ -298,7 +330,7 @@ Page({
       that.setData({ course: null });
     }
     //获取毒鸡汤
-    if(that.data.course == null || that.data.course.length == 0){
+    if (that.data.hideSoul == 0 && (that.data.course == null || that.data.course.length == 0)){
       that.getSoul()
     }
     // that.getTrain(week);
