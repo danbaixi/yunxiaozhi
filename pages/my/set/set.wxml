@@ -24,6 +24,15 @@
   </view>
 </view>
 <view class="cu-list menu sm-border">
+  <view class="cu-item">
+    <view class="content">
+      <text class="cuIcon-circlefill text-grey"></text>
+      <text class="text-grey">隐藏毒鸡汤</text>
+    </view>
+    <view class="action">
+      <switch class="theme sm" checked="{{hide_soul=='1'}}" bindchange="hideSoul"></switch>
+    </view>
+  </view>
   <view class="cu-item arrow" bindtap="setTime">
     <view class="content">
       <text class="cuIcon-circlefill text-grey"></text>

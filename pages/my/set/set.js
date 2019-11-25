@@ -49,10 +49,8 @@ Page({
   },
   //设置是否隐藏名字
   is_display_name: function (e) {
-    var set = '';
     var user_id = wx.getStorageSync('user_id');
-    if (e.detail.value) set = '1';
-    else set = '0';
+    var value = e.detail.value?'1':'0';
     var str = app.globalData.key + user_id;
     var sign = md5.hexMD5(str);
     app.httpRequest({
@@ -61,7 +59,7 @@ Page({
         sign : sign,
         stu_id: user_id,
         field:'is_display_name',
-        value:set
+        value: value
       },
       success: function (res) {
         if(res.data.status == 1001){
@@ -75,6 +73,28 @@ Page({
   setTime:function(){
     wx.navigateTo({
       url: '/pages/course/setTime/setTime',
+    })
+  },
+  hideSoul:function(e){
+    var user_id = wx.getStorageSync('user_id');
+    var value = e.detail.value ? '1' : '0';
+    var str = app.globalData.key + user_id;
+    var sign = md5.hexMD5(str);
+    app.httpRequest({
+      url: 'user/setParamConfig',
+      data: {
+        sign: sign,
+        stu_id: user_id,
+        field: 'hide_soul',
+        value: value
+      },
+      success: function (res) {
+        if (res.data.status == 1001) {
+          app.msg("设置成功", "success")
+        } else {
+          app.msg("设置失败")
+        }
+      }
     })
   }
 })

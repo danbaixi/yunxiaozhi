@@ -36,7 +36,7 @@ App({
   },
   /** 全局变量 */
   globalData:{
-    isDebug:false,
+    isDebug:true,
     xdebug:"?XDEBUG_SESSION_START=16944",
     domain:'https://www.yunxiaozhi.cn/v1/public/api/',
     key:'ihzoaixnuy4f8835032505e8a45ac102c52d58593e',
@@ -59,7 +59,7 @@ App({
    * 获取请求domain
    */
   getDomain:function(){
-    return this.globalData.isDebug ? 'http://127.0.0.1/yxz_v1/public/index.php/api/' : 'https://www.yunxiaozhi.cn/v1/public/api/'
+    return this.globalData.isDebug ? 'http://127.0.0.1/yunxiaozhi/public/index.php/api/' : 'https://www.yunxiaozhi.cn/v1/public/api/'
   },
 
   getSign:function(){
