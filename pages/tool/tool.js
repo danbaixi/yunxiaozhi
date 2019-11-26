@@ -44,6 +44,16 @@ Page({
         needLogin: true,
         url: '../tools/assess/assess?from=index',
       }, 
+      {
+        icon: 'question',
+        color: 'cyan',
+        badge: 0,
+        name: '找答案',
+        needLogin: false,
+        appid: "wxea8b994be0abb105",
+        path: "pages/index/index",
+        url: "",
+      },
     ],
     life:[
       {
