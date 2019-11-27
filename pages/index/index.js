@@ -428,8 +428,18 @@ Page({
   displayCourseInfo: function (e) {
     var indexNum = e.currentTarget.dataset.num;
     var data = this.data.course;
+    var course = null
+    for(let i=0;i<data.length;i++){
+      if(data[i].indexNum == indexNum){
+        course = data[i]
+      }
+    }
+    if(course == null){
+      app.msg("获取信息失败")
+      return
+    }
     wx.navigateTo({
-      url: "/pages/course/info/info?name=" + data[indexNum]['name'] + "&zhoushu=" + data[indexNum]['zhoushu'] + "&jie=" + data[indexNum]['jie'] + "&jieshu=" + data[indexNum]['jieshu'] + "&week=" + data[indexNum]['week'] + "&teacher=" + data[indexNum]['teacher'] + "&xuefen=" + data[indexNum]['credit'] + "&category=" + data[indexNum]['category'] + "&method=" + data[indexNum]['method'] + "&address=" + data[indexNum]['address'],
+      url: "/pages/course/info/info?name=" + course['name'] + "&zhoushu=" + course['zhoushu'] + "&jie=" + course['jie'] + "&jieshu=" + course['jieshu'] + "&week=" + course['week'] + "&teacher=" + course['teacher'] + "&xuefen=" + course['credit'] + "&category=" + course['category'] + "&method=" + course['method'] + "&address=" + course['address'],
     })
   },
   /** 获取banner信息 */

@@ -8,6 +8,7 @@
 		"minified": true,
 		"newFeature": true,
 		"coverView": true,
+		"nodeModules": false,
 		"autoAudits": true,
 		"uglifyFileName": true,
 		"checkInvalidKey": true,
@@ -20,7 +21,7 @@
 		}
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.8.3",
+	"libVersion": "2.8.0",
 	"appid": "wxe0f03cdec8ab9416",
 	"projectname": "%E4%BA%91%E5%B0%8F%E6%99%BA",
 	"simulatorType": "wechat",
