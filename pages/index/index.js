@@ -180,28 +180,28 @@ Page({
     })
 
     //监听摇一摇
-    wx.onAccelerometerChange(function (res) {
-      if (that.data.hideSoul == 0 && !that.data.soulLock && (res.x >= 1 || res.y >= 1)) {
-        that.setData({
-          soulLock:true
-        })
-        wx.stopAccelerometer({})
-        wx.showLoading({
-          title: '玩命加载中',
-        })
-        setTimeout(function(){
-          wx.hideLoading()
-          wx.navigateTo({
-            url: '/pages/soul/soul?egg=1',
-            success:function(){
-              that.setData({
-                soulLock: false
-              })
-            }
-          })
-        },1200)
-      }
-    });
+    // wx.onAccelerometerChange(function (res) {
+    //   if (that.data.hideSoul == 0 && !that.data.soulLock && (res.x >= 1 || res.y >= 1)) {
+    //     that.setData({
+    //       soulLock:true
+    //     })
+    //     wx.stopAccelerometer({})
+    //     wx.showLoading({
+    //       title: '玩命加载中',
+    //     })
+    //     setTimeout(function(){
+    //       wx.hideLoading()
+    //       wx.navigateTo({
+    //         url: '/pages/soul/soul?egg=1',
+    //         success:function(){
+    //           that.setData({
+    //             soulLock: false
+    //           })
+    //         }
+    //       })
+    //     },1200)
+    //   }
+    // });
   },
 
   /** 下拉刷新 */
@@ -471,6 +471,7 @@ Page({
   },
   /** 点击banner */
   bannerClick:function(e){
+    console.log(e)
     var that = this;
     var index = e.currentTarget.dataset.index;
     var banner_type = that.data.banner[index].type;
