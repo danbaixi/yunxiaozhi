@@ -4,7 +4,7 @@
 </cu-custom> -->
 <view class="cu-bar bg-white solid-bottom">
   <view class="text-black action">
-    {{course.fullName}}
+    {{course.fullName || course.name}}
   </view>
 </view>
 <view class="cu-list menu sm-border">
@@ -67,7 +67,7 @@
   </view>
 </view>
 
-<view class="cu-list menu sm-border">
+<view class="cu-list menu sm-border" wx:if="{{showStudent}}">
   <view class="cu-item arrow" bindtap="goStudents">
     <view class="content">
       <text class="icon-peoplelist text-theme"></text>

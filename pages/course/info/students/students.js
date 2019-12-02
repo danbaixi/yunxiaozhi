@@ -87,7 +87,7 @@ Page({
     app.httpRequest({
       url: "course/getSameCourseStudent",
       data: {
-        name: data.fullName,
+        name: (data.fullName || data.name),
         weekly: data.zhoushu,
         section: section,
         teacher: data.teacher,

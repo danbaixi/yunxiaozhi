@@ -13,7 +13,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    sameCount:0
+    sameCount:0,
+    showStudent:false
   },
 
   /**
@@ -21,7 +22,14 @@ Page({
    */
   onLoad: function (options) {
     var data = JSON.parse(decodeURIComponent(options.data))
-    this.getStudent(data)
+    //判断是否是本班课程
+    var tmp_class = wx.getStorageSync('tmp_class')
+    if(tmp_class == ""){
+      this.setData({
+        showStudent:true
+      })
+      this.getStudent(data)
+    }
     var area = wx.getStorageSync('user_area')
     var time,week
     var jie = parseInt(data.jie)
@@ -111,7 +119,7 @@ Page({
     app.httpRequest({
       url: "course/getSameCourseStudent",
       data:{
-        name:data.fullName,
+        name:(data.fullName || data.name),
         weekly:data.zhoushu,
         section:section,
         teacher:data.teacher,
