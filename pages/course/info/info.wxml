@@ -4,7 +4,7 @@
 </cu-custom> -->
 <view class="cu-bar bg-white solid-bottom">
   <view class="text-black action">
-    {{name}}
+    {{course.fullName}}
   </view>
 </view>
 <view class="cu-list menu sm-border">
@@ -12,21 +12,21 @@
     <view class="content">
       <text class="icon-calendar text-theme"></text>
       <text class="text-theme">周数　</text>
-      <text class="text-black">{{zhoushu}}</text>
+      <text class="text-black">{{course.zhoushu}}</text>
     </view>
   </view>
   <view class="cu-item">
     <view class="content">
       <text class="icon-list text-theme"></text>
       <text class="text-theme">节数　</text>
-      <text class="text-black">{{jieshu}}</text>
+      <text class="text-black">{{course.section}}</text>
     </view>
   </view>
   <view class="cu-item">
     <view class="content">
       <text class="icon-time text-theme"></text>
       <text class="text-theme">时间　</text>
-      <text wx:if="{{area!=''}}" class="text-black">{{time}}</text>
+      <text wx:if="{{area!=''}}" class="text-black">{{course.time}}</text>
       <text wx:else bindtap="setTime" class="text-black">设置校区后可查看 <text class="text-blue">点击设置</text></text>
     </view>
   </view>
@@ -34,38 +34,51 @@
     <view class="content">
       <text class="icon-location text-theme"></text>
       <text class="text-theme">地点　</text>
-      <text class="text-black">{{address}}</text>
+      <text class="text-black">{{course.address}}</text>
     </view>
   </view>
   <view class="cu-item">
     <view class="content">
       <text class="icon-people text-theme"></text>
       <text class="text-theme">老师　</text>
-      <text class="text-black">{{teacher}}</text>
+      <text class="text-black">{{course.teacher}}</text>
     </view>
   </view>
   <view class="cu-item">
     <view class="content">
       <text class="icon-tag text-theme"></text>
       <text class="text-theme">学分　</text>
-      <text class="text-black">{{xuefen}}</text>
+      <text class="text-black">{{course.credit}}</text>
     </view>
   </view>
   <view class="cu-item">
     <view class="content">
       <text class="icon-apps text-theme"></text>
       <text class="text-theme">类型　</text>
-      <text class="text-black">{{category}}</text>
+      <text class="text-black">{{course.category}}</text>
     </view>
   </view>
   <view class="cu-item">
     <view class="content">
       <text class="icon-post text-theme"></text>
       <text class="text-theme">考查　</text>
-      <text class="text-black">{{method}}</text>
+      <text class="text-black">{{course.method}}</text>
     </view>
   </view>
 </view>
+
+<view class="cu-list menu sm-border">
+  <view class="cu-item arrow" bindtap="goStudents">
+    <view class="content">
+      <text class="icon-peoplelist text-theme"></text>
+      <text class="text-theme">同堂同学</text>
+    </view>
+    <view class="action">
+      <text class="text-grey text-sm">{{sameCount > 0?sameCount + ' 人' :''}}</text>
+    </view>
+  </view>
+</view>
+
 <view class='margin-top text-sm text-center'>
   <text class="icon-info text-red"></text>上课时间与校区和教学楼有关，具体上课时间请看
   <text bindtap="rest" class="text-blue">白云作息表</text>

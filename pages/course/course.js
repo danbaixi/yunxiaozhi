@@ -237,7 +237,7 @@ Page({
           }
          
           //格式化上课地点
-          
+          data[a]['full_address'] = data[a]['course_address']
           data[a]['course_address'] = data[a]['course_address'].replace('-', '_')//把-换成_
           var temp = data[a]['course_address'].split('_');
           var address;
@@ -254,6 +254,7 @@ Page({
             name: that.fiterCourseTitle(data[a]['course_name'],jieshu),
             fullName: data[a]['course_name'],
             address: address,
+            fullAddress:data[a]['full_address'],
             num: data[a]['num'],
             zhoushu: data[a]['course_weekly'],
             teacher: data[a]['course_teacher'],
@@ -297,7 +298,7 @@ Page({
     var indexNum = e.currentTarget.dataset.num;
     var data = this.data.course;
     wx.navigateTo({
-      url: "info/info?name=" + data[indexNum]['fullName'] + "&zhoushu=" + data[indexNum]['zhoushu'] + "&jie=" + data[indexNum]['jie'] + "&jieshu=" + data[indexNum]['jieshu'] + "&week=" + data[indexNum]['week'] + "&teacher=" + data[indexNum]['teacher'] + "&xuefen=" + data[indexNum]['credit'] +"&category="+data[indexNum]['category']+"&method="+data[indexNum]['method']+"&address="+data[indexNum]['address'],
+      url: "info/info?data=" + encodeURIComponent(JSON.stringify(data[indexNum])),
     })
   },
   /**
