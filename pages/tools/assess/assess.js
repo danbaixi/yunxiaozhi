@@ -7,9 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    btn:"一键评教",
-    count:0,
-    type:1,
+    
   },
 
   /**
@@ -17,11 +15,9 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-    that.setData({
-      user_id: wx.getStorageSync('user_id'),
-      user_password: wx.getStorageSync('user_password')
-    });
-    if (!that.data.user_id) {
+    var user_id = wx.getStorageSync('user_id')
+
+    if (user_id == "") {
       wx.showToast({
         title: '请登录',
         icon: 'loading'
@@ -31,9 +27,19 @@ Page({
       })
       return;
     }
-    var assess = wx.getStorageSync('assess');
-    that.setData({
-      assesses: assess
+
+    app.httpRequest({
+      url: "access/getItem",
+      data:{
+        stu_id: user_id,
+      },
+      success:function(res){
+        that.setData({
+          assess:res.data.data.assess,
+          term:res.data.data.term,
+          item:res.data.data.item
+        })
+      }
     })
   },
   /**
@@ -279,5 +285,5 @@ Page({
       }
     }
     return true
-  }
+  },
 })
