@@ -24,14 +24,14 @@ Page({
     var data = JSON.parse(decodeURIComponent(options.data))
     //判断是否是本班课程
     var tmp_class = wx.getStorageSync('tmp_class')
-    if(tmp_class == ""){
+    if (tmp_class == "") {
       this.setData({
-        showStudent:true
+        showStudent: true
       })
       this.getStudent(data)
     }
     var area = wx.getStorageSync('user_area')
-    var time,week
+    var time, week
     var jie = parseInt(data.jie)
     var jieshu = parseInt(data.jieshu)
 

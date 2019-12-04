@@ -446,9 +446,6 @@ Page({
     wx.navigateTo({
       url: "/pages/course/info/info?data=" + encodeURIComponent(JSON.stringify(course)),
     })
-    wx.navigateTo({
-      url: "/pages/course/info/info?name=" + course['name'] + "&zhoushu=" + course['zhoushu'] + "&jie=" + course['jie'] + "&jieshu=" + course['jieshu'] + "&week=" + course['week'] + "&teacher=" + course['teacher'] + "&xuefen=" + course['credit'] + "&category=" + course['category'] + "&method=" + course['method'] + "&address=" + course['address'],
-    })
   },
   /** 获取banner信息 */
   getBanner:function(){
