@@ -6,11 +6,11 @@ Page({
    */
   data: {
     img_pre: 'http://yunxiaozhi-1251388077.cosgz.myqcloud.com/user_imgs/',
-    p:1,
-    length:15,
-    list:[],
-    loading:false,
-    finish:false
+    p: 1,
+    length: 15,
+    list: [],
+    loading: false,
+    finish: false
   },
 
   /**
@@ -19,7 +19,7 @@ Page({
   onLoad: function (options) {
     var data = JSON.parse(decodeURIComponent(options.data))
     this.setData({
-      data:data
+      data: data
     })
     this.getList(data)
   },
@@ -78,11 +78,11 @@ Page({
 
   },
 
-  getList:function(data){
+  getList: function (data) {
     var that = this
     var section = data.jie + '-' + (parseInt(data.jie) + parseInt(data.jieshu) - 1)
     that.setData({
-      loading:true
+      loading: true
     })
     app.httpRequest({
       url: "course/getSameCourseStudent",
@@ -94,21 +94,21 @@ Page({
         address: data.fullAddress,
         week: data.week,
         category: data.category,
-        p:that.data.p,
-        length:that.data.length,
-        count:0
+        p: that.data.p,
+        length: that.data.length,
+        count: 0
       },
       success: function (res) {
         if (res.data.status == 0) {
           var list = that.data.list
           var finish = false
           list = list.concat(res.data.data)
-          if(res.data.data.length < that.data.length){
-            finish =true
+          if (res.data.data.length < that.data.length) {
+            finish = true
           }
           that.setData({
-            list:list,
-            finish:finish
+            list: list,
+            finish: finish
           })
         }
       }
