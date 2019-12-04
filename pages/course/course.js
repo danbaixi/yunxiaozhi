@@ -203,11 +203,14 @@ Page({
     var left_time = parseInt((date.getTime()-start.getTime())/1000);
     var days = parseInt(left_time/3600/24);
     var week = Math.floor(days / 7) + 1;
+    var result = week
     if(week>20 || week <= 0){
-      return 1;
-    }else{
-      return week;
+      result = 1;
     }
+    this.setData({
+      nowWeek : result
+    })
+    return result
   },
   /**
    * 获取课表
