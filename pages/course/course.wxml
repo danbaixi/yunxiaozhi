@@ -78,9 +78,9 @@
       <view>月</view>
     </view>
     <view class="date">
-      <view class="course-table week {{(todayMonth==now_month&&todayDay==item)?'todayDate':''}}" wx:for="{{now_day}}" wx:key="key" wx:index="index">
+      <view class="course-table week {{(now_week==nowWeek&&todayDay==item)?'todayDate':''}}" wx:for="{{now_day}}" wx:key="key" wx:index="index">
         <view class="week-item">周{{zhou[index]}}</view>
-        <view class="date-item">{{now_day[index] == 1? now_month+1+'月' : now_day[index]+'日'}}</view>
+        <view class="date-item">{{now_day[index] == 1? (now_month<12?now_month+1:1)+'月' : now_day[index]+'日'}}</view>
       </view>
     </view>
 </view>

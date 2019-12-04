@@ -984,7 +984,7 @@ button.icon.lg {
 }
 
 .cu-load.over::after {
-  content: "没有更多了";
+  content: "我也是有底线的~";
 }
 
 .cu-load.erro::before {

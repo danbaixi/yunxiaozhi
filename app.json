@@ -66,10 +66,10 @@
         "text": "课表"
       },
       {
-        "selectedIconPath": "pages/assets/imgs/index_icon/news_press.png",
-        "iconPath": "pages/assets/imgs/index_icon/news.png",
-        "pagePath": "pages/news/news",
-        "text": "推文"
+        "selectedIconPath": "pages/assets/imgs/index_icon/app_press.png",
+        "iconPath": "pages/assets/imgs/index_icon/app.png",
+        "pagePath": "pages/tool/tool",
+        "text": "应用"
       },
       {
         "selectedIconPath": "pages/assets/imgs/index_icon/my_press.png",

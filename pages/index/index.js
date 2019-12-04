@@ -81,6 +81,7 @@ Page({
       color: 'theme',
       badge: 1,
       needLogin: false,
+      tab:true,
       name: '更多',
       url: '../tool/tool?from=index',
     }],
@@ -111,11 +112,6 @@ Page({
 
   onLoad: function () {
     var that = this
-    if(wx.getStorageSync('showRedDot') != 1){
-      wx.showTabBarRedDot({
-        index: 2
-      })
-    }
     var add_tips = wx.getStorageSync('add_my_tips')
     var time = (new Date).getTime()
     if ((time - add_tips) / 1000 >= 7 * 24 * 60 * 60){
@@ -232,10 +228,17 @@ Page({
     var that = this;
     var url = e.currentTarget.dataset.url
     var needLogin = e.currentTarget.dataset.needlogin
+    var tab = e.currentTarget.dataset.tab
     var user_id = wx.getStorageSync('user_id');
     if (!user_id && needLogin) {
       app.msg("请先登录")
       return;
+    }
+    if(tab === true){
+      wx.switchTab({
+        url: url,
+      })
+      return
     }
     wx.navigateTo({
       url: url,
@@ -279,6 +282,7 @@ Page({
           var jie = data[a]['course_section'].split("-")[0];
           var jieshu = data[a]['course_section'].split("-")[1] - data[a]['course_section'].split("-")[0] + 1;
           //格式化上课地点
+          data[a]['full_address'] = data[a]['course_address']
           data[a]['course_address'] = data[a]['course_address'].replace('-', '_')//把-换成_
           var temp = data[a]['course_address'].split('_');
           var address;
@@ -295,6 +299,7 @@ Page({
             jie_end:parseInt(jie) + parseInt(jieshu) -1,
             name: data[a]['course_name'],
             address: address,
+            fullAddress:data[a]['full_address'],
             num: data[a]['num'],
             zhoushu: data[a]['course_weekly'],
             teacher: data[a]['course_teacher'],
@@ -439,6 +444,9 @@ Page({
       return
     }
     wx.navigateTo({
+      url: "/pages/course/info/info?data=" + encodeURIComponent(JSON.stringify(course)),
+    })
+    wx.navigateTo({
       url: "/pages/course/info/info?name=" + course['name'] + "&zhoushu=" + course['zhoushu'] + "&jie=" + course['jie'] + "&jieshu=" + course['jieshu'] + "&week=" + course['week'] + "&teacher=" + course['teacher'] + "&xuefen=" + course['credit'] + "&category=" + course['category'] + "&method=" + course['method'] + "&address=" + course['address'],
     })
   },
@@ -471,7 +479,6 @@ Page({
   },
   /** 点击banner */
   bannerClick:function(e){
-    console.log(e)
     var that = this;
     var index = e.currentTarget.dataset.index;
     var banner_type = that.data.banner[index].type;

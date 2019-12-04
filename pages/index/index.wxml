@@ -10,7 +10,7 @@
 </view>
 <view class="index">
   <view class="cu-list grid col-{{gridCol}} no-border">
-    <view class="cu-item" wx:for="{{tools}}" wx:key="key" data-url="{{item.url}}" data-needLogin="{{item.needLogin}}" bindtap='openTool'>
+    <view class="cu-item" wx:for="{{tools}}" wx:key="key" data-tab="{{item.tab}}" data-url="{{item.url}}" data-needLogin="{{item.needLogin}}" bindtap='openTool'>
       <view class="icon-{{item.icon}} text-{{item.color}}">
         <view class="cu-tag badge" wx:if="{{item.badge!=0}}">
           <block wx:if="{{item.badge!=1}}">{{item.badge>99?"99+":item.badge}}</block>
