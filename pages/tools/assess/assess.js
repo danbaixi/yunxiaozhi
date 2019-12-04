@@ -37,7 +37,7 @@ Page({
         that.setData({
           assess:res.data.data.assess,
           term:res.data.data.term,
-          item:res.data.data.item
+          list:res.data.data.list
         })
       }
     })

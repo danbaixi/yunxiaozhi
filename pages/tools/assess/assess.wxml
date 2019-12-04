@@ -2,45 +2,37 @@
   <view slot="back">返回</view>
 	<view slot="content">一键评教</view>
 </cu-custom> -->
-<view class='access'>
-  <view class='content' style="padding: 20rpx;">  
-      <view class="tr bg-w" wx:if="{{assesses}}">
-        <view class="th" style='width:60%'>课程</view>
+<view class="term">
+  <view class="cu-bar bg-white">
+    <view class="action sub-title">
+      <text class="text-xl text-bold text-green">当前学期</text>
+      <text class="bg-green"></text>
+    </view>
+  </view>
+  <view style="margin:0 30rpx">
+    <view class="text-lg">{{term}}</view>
+    <view class="text-sm text-grey margin-top-xs" wx:if="{{assess!=null}}">截止时间：{{assess.start}} 至 {{assess.end}}</view>
+  </view>
+</view>
+<view class="assess">
+  <view class="null text-grey">
+    <view wx:if="{{assess==null}}">
+      <view>本学期的评教工作暂未开始</view>
+      <view>请留意云小智公众号的通知</view>
+    </view>
+  </view>
+  <view class="content" wx:if="{{item}}">
+    <view class="tr bg-w">
+      <view class="th" style='width:60%'>课程</view>
         <view class="th" style='width:25%'>教师</view>
         <view class="th" style='width:15%'>状态</view>
       </view>
-      <block wx:if="{{assesses}}" wx:for="{{assesses}}" wx:key="key" wx:for-index="index">
+      <block wx:if="{{list}}" wx:for="{{list}}" wx:key="key" wx:for-index="index">
         <view class="tr">
           <view class="td" style='width:60%'>{{item.name}}</view>
           <view class="td" style='width:25%'>{{item.teacher}}</view>
           <view class="td" style="width:15%;color:{{item.status=='已评'?'#6ed4e6':'#666'}}">{{item.status}}</view>
         </view>
       </block>
-      <view wx:if="{{!assesses}}" class='null'>
-        <view>当前没有评教信息</view>
-        <view>请先点击刷新状态</view>
-      </view>
-  </view>
-</view>
-<view wx:if="{{isNull}}">
-  <view style="margin-top:50px;text-align:center">当前学期评教已结束</view>
-</view>
-<button bindtap='updateScore' data-type='1'>刷新状态</button>
-<button bindtap='updateScore' data-type='2' type='primary'>{{btn}}</button>
-<!-- <view class='ana'>已为{{count}}个同学完成评教，节省了{{count*146}}秒时间</view> -->
-  <!--查询评教输入验证码弹窗-->
-  <view class="modal-mask" bindtap="hideModal" style='height:{{winHeight}}px' catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
-  <view class="modal-dialog" wx:if="{{showModal}}" class="{{input_focus == 1?'modal-dialog input_focus':'modal-dialog'}}">
-    <view class="modal-title">请输入验证码</view>
-      <view class="modal-content">
-        <view class="modal-input">
-          <input placeholder-class="input-holder" bindfocus="inputFocus" bindblur="inputBlur" bindinput="yzmInput" maxlength="4" class="input">
-          </input>
-          <image bindtap='freshYzm' class="img_yzm" src="{{yzmUrl}}"></image>
-        </view>  
-      </view>
-      <view class="modal-footer">
-        <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
-        <view class="btn-confirm" bindtap="assessV0" data-status="confirm">确定</view>
-      </view>
+    </view>
 </view>
