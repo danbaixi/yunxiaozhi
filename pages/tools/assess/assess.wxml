@@ -14,6 +14,18 @@
     <view class="text-sm text-grey margin-top-xs" wx:if="{{assess!=null}}">截止时间：{{assess.start}} 至 {{assess.end}}</view>
   </view>
 </view>
+<!-- <view class="status">
+  <view class="cu-bar bg-white">
+    <view class="action sub-title">
+      <text class="text-xl text-bold text-green">状态</text>
+      <text class="bg-green"></text>
+    </view>
+  </view>
+  <view style="margin:0 30rpx">
+    <view class="text-lg">{{}}</view>
+    <view class="text-sm text-grey margin-top-xs" wx:if="{{assess!=null}}">截止时间：{{assess.start}} 至 {{assess.end}}</view>
+  </view>
+</view> -->
 <view class="assess">
   <view class="null text-grey">
     <view wx:if="{{assess==null}}">

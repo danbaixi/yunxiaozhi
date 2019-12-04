@@ -16,7 +16,7 @@ Page({
   onLoad: function (options) {
     var that = this;
     var user_id = wx.getStorageSync('user_id')
-
+    var password = wx.getStorageSync('user_password')
     if (user_id == "") {
       wx.showToast({
         title: '请登录',
@@ -30,8 +30,10 @@ Page({
 
     app.httpRequest({
       url: "access/getItem",
+      method:"POST",
       data:{
         stu_id: user_id,
+        password:password
       },
       success:function(res){
         that.setData({
