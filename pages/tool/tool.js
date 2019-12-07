@@ -118,6 +118,13 @@ Page({
         name: '拿外卖',
         needLogin: false,
         url: '../tools/who/who?from=index',
+      }, {
+        icon: 'bad',
+        color: 'red',
+        badge: 999,
+        name: '毒鸡汤',
+        needLogin: false,
+        url: '/pages/soul/soul',
       }, 
     ],
   },

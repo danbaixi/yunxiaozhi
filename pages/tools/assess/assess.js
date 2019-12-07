@@ -27,22 +27,7 @@ Page({
       })
       return;
     }
-
-    app.httpRequest({
-      url: "access/getItem",
-      method:"POST",
-      data:{
-        stu_id: user_id,
-        password:password
-      },
-      success:function(res){
-        that.setData({
-          assess:res.data.data.assess,
-          term:res.data.data.term,
-          list:res.data.data.list
-        })
-      }
-    })
+    that.getList()
   },
   /**
    * 用户点击右上角分享
@@ -52,92 +37,77 @@ Page({
   },
 
   getList:function(){
+    wx.showLoading({
+      title: '正在加载...',
+    })
     var that = this;
-    var user_id = wx.getStorageSync('user_id');
-    if (!user_id) {
-      app.msg("请先登录")
-      return;
-    }
-    wx.showLoading({title:"加载中"})
-    var user_id = wx.getStorageSync('user_id');
-    var user_password = wx.getStorageSync('user_password');
-    var str = app.globalData.key + user_id;
-    var sign = md5.hexMD5(str);
-    var encoded = util.encodeInp(user_id) + "%%%" + util.encodeInp(user_password);
-    wx.request({
-      url: app.globalData.domain + 'access/getlist',
+    var user_id = wx.getStorageSync('user_id')
+    var password = wx.getStorageSync('user_password')
+    app.httpRequest({
+      url: "access/getItem",
+      method: "POST",
       data: {
         stu_id: user_id,
-        password: user_password,
-        encoded: encoded,
-        sign: sign
+        password: password
       },
       success: function (res) {
         wx.hideLoading()
-        if (res.data.status == 1001) {
-          var accesses = res.data.data.data;
+        if(res.data.status == 0){
           that.setData({
-            accesses: accesses,
-            count:res.data.data.count
+            assess: res.data.data.assess,
+            term: res.data.data.term,
+            list: res.data.data.list,
+            finish: res.data.data.finish,
+            totalCount: res.data.data.totalCount
           })
-          var is_accessed = true;
-          for (var i = 0; i < accesses.length ; i++){
-            if(accesses[i].is_access == "否"){
-              is_accessed = false;
-              break;
-            }
-          }
-          if(is_accessed){
-            that.setData({
-              is_accessed:true,
-              btn:"你已完成所有评教"
-            })
-          }
         }else{
+          that.setData({
+            assess: res.data.data.assess,
+            term: res.data.data.term,
+            list: res.data.data.list,
+            totalCount: res.data.data.totalCount
+          })
           app.msg(res.data.message)
         }
       }
     })
   },
-  access: function () {
+  assess: function () {
     var that = this;
     var user_id = wx.getStorageSync('user_id');
     if (!user_id) {
       app.msg("请先登录")
       return;
     }
-    if(!that.data.is_accessed){
-      wx.showLoading({
-        title: '加载中',
-      })
-      var user_id = wx.getStorageSync('user_id');
-      var user_password = wx.getStorageSync('user_password');
-      var str = app.globalData.key + user_id;
-      var sign = md5.hexMD5(str);
-      var encoded = util.encodeInp(user_id) + "%%%" + util.encodeInp(user_password);
-      wx.request({
-        url: app.globalData.domain + 'access/accessing',
-        data: {
-          stu_id: user_id,
-          password: user_password,
-          encoded: encoded,
-          sign: sign
-        },
-        success: function (res) {
-          wx.hideLoading()
-          if (res.data.status == 1001) {
-            app.msg("评教成功！","success")
-            setTimeout(function(){
-              that.getList();
-            },1000);
-          }else{
-            app.msg(res.data.message)
-          }
-        }
-      })
-    }else{
-      app.msg("你已经评教完啦！")
+    if(that.data.finish){
+      app.msg("你已经完成评教啦！")
+      return
     }
+    wx.showLoading({
+      title: '努力评教中...',
+    })
+    var user_id = wx.getStorageSync('user_id');
+    var user_password = wx.getStorageSync('user_password');
+    app.httpRequest({
+      url: 'access/accessing',
+      data: {
+        aid:that.data.assess.id,
+        stu_id: user_id,
+        password: user_password,
+      },
+      method:"POST",
+      success: function (res) {
+        wx.hideLoading()
+        if (res.data.status == 1001) {
+          app.msg("评教成功！", "success")
+          setTimeout(function () {
+            that.getList();
+          }, 1000);
+        } else {
+          app.msg(res.data.message)
+        }
+      }
+    })
    
   },
   /** 刷新验证码 */

@@ -7,7 +7,7 @@ page{
   justify-content: center;
   height: 3rem;
   align-items: center;
-  border-bottom: 1px solid #f2f4f7;
+  border-bottom: 1px solid #f4f5f7;
 }
 .td {
   display: block;
@@ -62,4 +62,12 @@ page{
 }
 button{
   margin:20rpx 20rpx;
+}
+.assess{
+  padding: 30rpx 20rpx;
+}
+.assessing{
+  position: absolute;
+  top: 0;
+  right: 0;
 }

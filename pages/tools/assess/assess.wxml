@@ -9,42 +9,36 @@
       <text class="bg-green"></text>
     </view>
   </view>
-  <view style="margin:0 30rpx">
+  <view style="margin:0 30rpx;position:relative">
     <view class="text-lg">{{term}}</view>
-    <view class="text-sm text-grey margin-top-xs" wx:if="{{assess!=null}}">截止时间：{{assess.start}} 至 {{assess.end}}</view>
+    <view class="text-sm text-grey margin-top-xs" wx:if="{{assess!=null}}">截止时间：{{assess.start}}至{{assess.end}}</view>
+    <button class="cu-btn bg-theme assessing" wx:if="{{assess!=null}}" bindtap="assess">点击一键评教</button>
   </view>
 </view>
-<!-- <view class="status">
-  <view class="cu-bar bg-white">
-    <view class="action sub-title">
-      <text class="text-xl text-bold text-green">状态</text>
-      <text class="bg-green"></text>
-    </view>
-  </view>
-  <view style="margin:0 30rpx">
-    <view class="text-lg">{{}}</view>
-    <view class="text-sm text-grey margin-top-xs" wx:if="{{assess!=null}}">截止时间：{{assess.start}} 至 {{assess.end}}</view>
-  </view>
-</view> -->
 <view class="assess">
-  <view class="null text-grey">
-    <view wx:if="{{assess==null}}">
-      <view>本学期的评教工作暂未开始</view>
-      <view>请留意云小智公众号的通知</view>
-    </view>
+  <view class="null text-grey" wx:if="{{assess==null}}">
+    <view>本学期的评教工作暂未开始</view>
+    <view>请留意云小智公众号的通知</view>
   </view>
-  <view class="content" wx:if="{{item}}">
+  <view class="content" wx:if="{{assess!=null}}">
     <view class="tr bg-w">
       <view class="th" style='width:60%'>课程</view>
         <view class="th" style='width:25%'>教师</view>
         <view class="th" style='width:15%'>状态</view>
       </view>
-      <block wx:if="{{list}}" wx:for="{{list}}" wx:key="key" wx:for-index="index">
+      <block wx:if="{{list.length>0}}" wx:for="{{list}}" wx:key="key" wx:for-index="index">
         <view class="tr">
-          <view class="td" style='width:60%'>{{item.name}}</view>
+          <view class="td" style='width:60%'>{{item.course}}</view>
           <view class="td" style='width:25%'>{{item.teacher}}</view>
-          <view class="td" style="width:15%;color:{{item.status=='已评'?'#6ed4e6':'#666'}}">{{item.status}}</view>
+          <view class="td" style="width:15%;color:{{item.status==1?'#6ed4e6':'#666'}}">{{item.status?'已评':'未评'}}</view>
         </view>
       </block>
+      <view class="text-grey text-center padding" wx:if="{{list.length==0}}">没有相关数据</view>
     </view>
+</view>
+<view class="text-grey text-center">
+  已帮助 <text class="text-bold text-theme">{{totalCount}}</text> 个同学完成了评教工作
+</view>
+<view class="ad">
+  <ad unit-id="adunit-062cb277a5a5b3b4"></ad>
 </view>
