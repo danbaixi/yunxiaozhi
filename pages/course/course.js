@@ -105,10 +105,10 @@ Page({
     });
     var month = that.getMonth((that.data.now_week - 1) * 7);
     that.setData({ now_month: month });
+    var day = [];
     //第一天按周日算起
     for (var i = -1; i < 6; i++) {
       var days = (that.data.now_week - 1) * 7 + i;
-      var day = that.data.now_day;
       day.push(that.getDay(days))
     }
     that.setData({
