@@ -91,18 +91,14 @@
         <view wx:for="{{jie}}" wx:key="key" wx:index="index" class="left">
           <view class="number">{{item}}</view>
           <view class="course-time" wx:if="{{display_course_time == 1}}">
-            <view class="text-grey text-xs time-start" style="line-height:{{course_time[index][0]==''?'10rpx':'50rpx'}}">
-              {{course_time[index][0] != "" ? course_time[index][0] : '|'}}
-            </view>
-            <view class="text-grey text-xs time-end" style="line-height:{{course_time[index][1]==''?'90rpx':'55rpx'}}">
-              {{course_time[index][1] != "" ? course_time[index][1] : '|'}}
-            </view>
+            <view class="text-grey text-xs time-start">{{course_time[index][0] != "" ? course_time[index][0] : '堂'}}</view>
+            <view class="text-grey text-xs time-end">{{course_time[index][1] != "" ? course_time[index][1] : '连'}}</view>
           </view>
         </view>
       </view>
 
       <view class="course">
-        <view class="{{toggleDelay?'animation-scale-up':''}} kcb-item" wx:for="{{course}}" wx:key="key" bindtap="displayCourseInfo" data-num="{{item.indexNum}}" form-type="submit" style="animation-delay: {{(index%2==0?(index/2):(index-1)/2+1)*0.1}}s;margin-left:{{(item.week-1)*(92/7)}}%;margin-top:{{(item.jie-1)*110+4}}rpx;height:{{item.jieshu*110 - 4}}rpx">
+        <view class="{{toggleDelay?'animation-scale-up':''}} kcb-item" wx:for="{{course}}" wx:key="key" bindtap="displayCourseInfo" data-num="{{item.indexNum}}" form-type="submit" style="animation-delay: {{(index%2==0?(index/2):(index-1)/2+1)*0.1}}s;margin-left:{{(item.week)*(92/7)}}%;margin-top:{{(item.jie-1)*110+4}}rpx;height:{{item.jieshu*110 - 4}}rpx">
         <view class="smalltext" style="background-color:rgba({{colorArrays[item.num]}},{{(100-Copacity)/100}});" >{{item.name}}@{{item.address}}</view>
         </view>
 

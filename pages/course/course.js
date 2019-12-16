@@ -14,7 +14,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    zhou: ['一', '二', '三', '四', '五', '六', '日'],
+    zhou: ['日','一', '二', '三', '四', '五', '六'],
     jie: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
     zhou_num: ['第1周', '第2周', '第3周', '第4周', '第5周', '第6周', '第7周', '第8周', '第9周', '第10周', '第11周', '第12周', '第13周', '第14周', '第15周', '第16周', '第17周', '第18周', '第19周', '第20周'],
     now_week:1,
@@ -105,14 +105,15 @@ Page({
     });
     var month = that.getMonth((that.data.now_week - 1) * 7);
     that.setData({ now_month: month });
-    for (var i = 0; i < 7; i++) {
+    //第一天按周日算起
+    for (var i = -1; i < 6; i++) {
       var days = (that.data.now_week - 1) * 7 + i;
       var day = that.data.now_day;
-      day[i] = that.getDay(days);
-      that.setData({
-        now_day: day,
-      })
+      day.push(that.getDay(days))
     }
+    that.setData({
+      now_day: day,
+    })
     // ad
     var time = (new Date).getTime()
     var score_ad = wx.getStorageSync('score_ad_display');
@@ -285,14 +286,15 @@ Page({
       now_week: week,
       now_month: month,
     });
-    for (var i = 0; i < 7; i++) {
+    var day = []
+    //周日算起
+    for (var i = -1; i < 6; i++) {
       var days = (week - 1) * 7 + i;
-      var day = this.data.now_day;
-      day[i] = this.getDay(days);
-      this.setData({
-        now_day: day,
-      })
+      day.push(this.getDay(days))
     }
+    this.setData({
+      now_day: day,
+    })
   },
   /**
    * 显示课表详细内容

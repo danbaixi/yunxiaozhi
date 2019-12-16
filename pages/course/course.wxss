@@ -364,6 +364,14 @@ input-holder {
 }
 .course-time .time-start,
 .course-time .time-end{
-  height: 55rpx;
-  line-height: 55rpx;
+  position: absolute;
+  width: 100%;
+  left: 0;
+}
+
+.course-time .time-start{
+  top: 12rpx;
+}
+.course-time .time-end{
+  bottom: 12rpx;
 }

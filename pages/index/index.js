@@ -136,7 +136,7 @@ Page({
     //是否隐藏毒鸡汤
     var hide_soul = wx.getStorageSync('hide_soul')
     var user_id = wx.getStorageSync('user_id')
-    if (hide_soul == '' && user_id != "") {
+    if (hide_soul === '' && user_id != "") {
       app.httpRequest({
         url: 'user/isHideSoul',
         data: {
