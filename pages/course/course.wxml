@@ -19,7 +19,7 @@
   </view>
 </view>
 <view class="mask" bindtap="hideMask" style='height:{{winHeight-32}}px' wx:if="{{list_is_display}}"></view>
-<view class="list cu-list menu sm-border" style='height:{{6*55}}px;top:{{list_is_display?32:-(6*55)}}px'>
+<view class="list cu-list menu sm-border" style='height:{{7*55}}px;top:{{list_is_display?32:-(7*55)}}px'>
   <view class="cu-item arrow" bindtap='update'>
     <view class="content">
       <text class="text-grey">更新课表</text>
@@ -49,6 +49,14 @@
       <text class="text-grey text-sm">{{display_course_time>0?'显示':'不显示'}}</text>
     </view>
   </view>
+  <view class="cu-form-group cu-item">
+		<view class="text-grey">每周起始日</view>
+		<picker bindchange="setStartDay" value="{{startDay}}" range="{{startDays}}">
+			<view class="picker text-grey">
+				{{startDay?startDays[startDay]:'周一'}}
+			</view>
+		</picker>
+	</view>
   <view class="cu-item">
     <view class="content">
       <text class="text-grey">边框透明度</text>
@@ -98,7 +106,7 @@
       </view>
 
       <view class="course">
-        <view class="{{toggleDelay?'animation-scale-up':''}} kcb-item" wx:for="{{course}}" wx:key="key" bindtap="displayCourseInfo" data-num="{{item.indexNum}}" form-type="submit" style="animation-delay: {{(index%2==0?(index/2):(index-1)/2+1)*0.1}}s;margin-left:{{(item.week)*(92/7)}}%;margin-top:{{(item.jie-1)*110+4}}rpx;height:{{item.jieshu*110 - 4}}rpx">
+        <view class="{{toggleDelay?'animation-scale-up':''}} kcb-item" wx:for="{{course}}" wx:key="key" bindtap="displayCourseInfo" data-num="{{item.indexNum}}" form-type="submit" style="animation-delay: {{(index%2==0?(index/2):(index-1)/2+1)*0.1}}s;margin-left:{{(item.week - startDay)*(92/7)}}%;margin-top:{{(item.jie-1)*110+4}}rpx;height:{{item.jieshu*110 - 4}}rpx">
         <view class="smalltext" style="background-color:rgba({{colorArrays[item.num]}},{{(100-Copacity)/100}});" >{{item.name}}@{{item.address}}</view>
         </view>
 

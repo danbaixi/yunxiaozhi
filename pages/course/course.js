@@ -14,7 +14,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    zhou: ['日','一', '二', '三', '四', '五', '六'],
+    zhou: ['一', '二', '三', '四', '五', '六','日'],
     jie: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
     zhou_num: ['第1周', '第2周', '第3周', '第4周', '第5周', '第6周', '第7周', '第8周', '第9周', '第10周', '第11周', '第12周', '第13周', '第14周', '第15周', '第16周', '第17周', '第18周', '第19周', '第20周'],
     now_week:1,
@@ -65,7 +65,8 @@ Page({
     tmpClass:'',
     display_course_time:0,
     area:0,
-    course_time:[]
+    course_time:[],
+    startDays:['周日','周一']
   },
 
   /**
@@ -99,20 +100,18 @@ Page({
       zhou_num[week - 1] = zhou_num[week - 1] + "(本周)";
     }
 
+    var month = that.getMonth((that.data.now_week - 1) * 7);
+
+    //每周起始日
+    var startDay = wx.getStorageSync('start_day') || 1
+    var day = that.getDayOfWeek(week,startDay)
+
     that.setData({
       now_week: week,
-      zhou_num: zhou_num
-    });
-    var month = that.getMonth((that.data.now_week - 1) * 7);
-    that.setData({ now_month: month });
-    var day = [];
-    //第一天按周日算起
-    for (var i = -1; i < 6; i++) {
-      var days = (that.data.now_week - 1) * 7 + i;
-      day.push(that.getDay(days))
-    }
-    that.setData({
+      zhou_num: zhou_num,
+      now_month: month,
       now_day: day,
+      startDay:startDay
     })
     // ad
     var time = (new Date).getTime()
@@ -286,12 +285,8 @@ Page({
       now_week: week,
       now_month: month,
     });
-    var day = []
-    //周日算起
-    for (var i = -1; i < 6; i++) {
-      var days = (week - 1) * 7 + i;
-      day.push(this.getDay(days))
-    }
+    var startDay = wx.getStorageSync('start_day')
+    var day = this.getDayOfWeek(week,startDay)
     this.setData({
       now_day: day,
     })
@@ -930,4 +925,39 @@ Page({
       course_time: times[0]
     })
   },
+
+  //获取一周的日期
+  getDayOfWeek:function(week,startDay){
+    var day = []
+    if(startDay === "0"){
+      for (var i = -1; i < 6; i++) {
+        var days = (week - 1) * 7 + i;
+        day.push(this.getDay(days))
+      }
+      this.setData({
+        zhou:['日','一', '二', '三', '四', '五', '六']
+      })
+    }else{
+      for (var i = 0; i < 7; i++) {
+        var days = (week - 1) * 7 + i;
+        day.push(this.getDay(days))
+      }
+      this.setData({
+        zhou:['一', '二', '三', '四', '五', '六','日']
+      })
+    }
+    return day
+  },
+
+  //设置起始日
+  setStartDay:function(e){
+    var val = e.detail.value
+    var week = this.getNowWeek()
+    var day = this.getDayOfWeek(week,val)
+    this.setData({
+      startDay:val,
+      now_day:day
+    })
+    wx.setStorageSync('start_day',val)
+  }
 })
