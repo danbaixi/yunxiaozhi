@@ -27,8 +27,8 @@ Page({
     });
     var str = app.globalData.key + user_id;
     var sign = md5.hexMD5(str);
-    wx.request({
-      url: app.globalData.domain + 'score/getCourseScoreData',
+    app.httpRequest({
+      url: 'score/getCourseScoreData',
       data: {
         stu_id : user_id,
         course : course,

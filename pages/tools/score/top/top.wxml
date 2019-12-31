@@ -6,7 +6,7 @@
   <view class='head'>
     <view class='left'>
       <view class='course'>《{{course}}》</view>
-       <view class='xuefen'>学分：{{credit}}　绩点：{{gpa}}</view> 
+       <view class='xuefen'>学分：{{credit}}　绩点：{{gpa >= 0 ? gpa : '未知'}}</view> 
     </view>
     <view class='right'>
       <view>综合成绩</view>
