@@ -273,6 +273,9 @@ Page({
   //青果教务系统登录
   bindQingGuo:function(){
     let _this = this
+    let user_info = wx.getStorageInfoSync('user_info')
+    let nickname = user_info['nickname']
+    let avatar = user_info['avatarUrl']
     return new Promise((resolve => {
       app.httpRequest({
         url: 'login/bindQingGuoAccount',
@@ -283,7 +286,9 @@ Page({
           cookie: _this.data.cookie_2,
           __VIEWSTATE: _this.data.__VIEWSTATE,
           code: _this.data.code,
-          session: app.getLoginStatus()
+          session: app.getLoginStatus(),
+          nickname: nickname,
+          avatar: avatar,
         },
         method: "POST",
         success: function(res) {
