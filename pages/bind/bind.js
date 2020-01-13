@@ -11,8 +11,8 @@ Page({
     cookie: "",
     cookie_2: "",
     __VIEWSTATE: "",
-    user_id: "",
-    user_password: "",
+    user_id: "15230203124",
+    user_password: "jiangjixi",
     code: "",
     password_display: false,
     loading: false,
@@ -25,12 +25,17 @@ Page({
    * 生命周期函数--监听页面 加载
    */
   onLoad: function(options) {
-    var that = this;
-    that.setData({
+    let that = this;
+    app.isLogin().then((resolve) =>{
+      if(!resolve){
+        return
+      }
+    })
+    this.setData({
       url: options.url ? options.url : ''
     })
-    that.getNotice();
-    // that.loginInitV1();
+    // this.getNotice();
+    this.loginInitV1();
     if (wx.getStorageSync('user_id')) {
       wx.redirectTo({
         url: '../course/course',
@@ -71,12 +76,12 @@ Page({
       app.msg('请输入密码')
       return
     }
-    // if (that.data.systemType == 2 && code == "") {
-    //   app.msg('请输入验证码')
-    //   return
-    // }
+    if (that.data.systemType == 2 && code == "") {
+      app.msg('请输入验证码')
+      return
+    }
     wx.showLoading({
-      title: '登陆中...',
+      title: '正在绑定...',
     })
     if (that.data.systemType == 1) {
       var cookie = that.data.cookie;
@@ -134,65 +139,14 @@ Page({
           }
         }
       })
-    } else {
-      app.httpRequest({
-        url: 'login/LoginV1',
-        needLogin: false,
-        data: {
-          stu_id: user_id,
-          password: password,
-          // cookie: that.data.cookie_2,
-          // __VIEWSTATE: that.data.__VIEWSTATE,
-          // code: that.data.code,
-        },
-        method: "POST",
-        success: function(res) {
-          wx.hideLoading()
-          if (res.data.status == 0) {
-            var str = app.globalData.key + user_id;
-            var sign = md5.hexMD5(str);
-            app.httpRequest({
-              url: 'course/getList',
-              needLogin:false,
-              data: {
-                stu_id: user_id,
-                sign: sign,
-              },
-              success: function (res) {
-                wx.setStorageSync('user_id', user_id);
-                wx.setStorageSync('user_password', password);
-                wx.setStorageSync('system_type', that.data.systemType);
-                if (res.data.status == 1001) {
-                  wx.setStorageSync('course', res.data.data.course);
-                  wx.removeStorageSync('tmp_class')
-                  wx.showToast({
-                    title: '登录成功',
-                    icon: 'success'
-                  })
-                }
-                setTimeout(function () {
-                  if (that.data.url != '') {
-                    wx.redirectTo({
-                      url: that.data.url,
-                    })
-                    return
-                  }
-                  wx.switchTab({
-                    url: '/pages/index/index'
-                  })
-                }, 1000);
-              },
-            });
-          } else {
-            app.msg(res.data.message);
-            if(res.data.status == 1001){
-              that.freshYzm();
-            }
-          }
-        }
-      })
+      return
     }
 
+    that.bindQingGuo().then((resolve) =>{
+      console.log(resolve)
+    }).catch((error) => {
+      app.msg(error.message)
+    })
 
   },
   /** 刷新验证码 */
@@ -306,7 +260,7 @@ Page({
           cookie_2: res.data.data.cookie,
           __VIEWSTATE: res.data.data.__VIEWSTATE,
         })
-        // that.freshYzm();
+        that.freshYzm();
       }
     })
   },
@@ -315,127 +269,36 @@ Page({
       url: '/pages/loginTips/loginTips',
     })
   },
-  
-  //微信登录
-  wechatLogin:function(code){
-    return new Promise((resolve) => {
-      app.httpRequest({
-        url: 'user/wechatLogin',
-        data: {
-          code:code
-        },
-        needLogin:false,
-        success:function(res){
-          resolve(res.data)
-        }
-      })
-    })
-  },
 
-  //获取授权用户信息
-  getUserInfo:function(code,res){
-    return new Promise((resolve) => {
-      app.httpRequest({
-        url: 'user/getWechatUserInfo',
-        data: {
-          code: code,
-          encryptedData:res.encryptedData,
-          iv:res.iv,
-        },
-        needLogin:false,
-        success:function(res){
-          resolve(res.data)
-        }
-      })
-    })
-  },
-
-  //执行登录
-  doWechatLogin:function(){
+  //青果教务系统登录
+  bindQingGuo:function(){
     let _this = this
-    wx.getUserInfo({
-      success: (userInfo) => {
-        wx.login({
-          success:function(res){
-            if(res.code){
-              _this.wechatLogin(res.code).then((resolve) => {
-                if(resolve.status == 0){
-                  return _this.getUserInfo(res.code,userInfo)
-                }
-                throw new Error(resolve.message)
-              }).then((resolve) => {
-                if(resolve.status == 0){
-                  app.msg('登录成功','success')
-                  wx.setStorageSync('login_session', resolve.data.session)
-                  wx.setStorageSync('user_id', resolve.data.stu_id)
-                  wx.switchTab({
-                    url: '/pages/index/index',
-                  })
-                }
-                throw new Error(resolve.message)
-              }).catch((error) => {
-                app.msg(error.message)
-              })
-            }
+    return new Promise((resolve => {
+      app.httpRequest({
+        url: 'login/bindQingGuoAccount',
+        needLogin: false,
+        data: {
+          stu_id: _this.data.user_id,
+          password: _this.data.user_password,
+          cookie: _this.data.cookie_2,
+          __VIEWSTATE: _this.data.__VIEWSTATE,
+          code: _this.data.code,
+          session: app.getLoginStatus()
+        },
+        method: "POST",
+        success: function(res) {
+          wx.hideLoading({
+            complete: (res) => {},
+          })
+          if (res.data.status == 0) {
+            return resolve(res.data)
           }
-        })
-      },
-    })
-  },
-
-  //微信登录
-  doWechatLogin1:function(){
-    wx.getUserInfo({
-      success: function(userInfo) {
-        wx.login({
-          success (res) {
-            if (res.code) {
-              app.httpRequest({
-                url: 'user/wechatLogin',
-                data: {
-                  code:code
-                },
-                needLogin:false,
-                success:function(res){
-                  wx.hideLoading({
-                    complete: (res) => {},
-                  })
-                  if(res.data.status == 0){
-                    app.httpRequest({
-                      url: 'user/getWechatUserInfo',
-                      data: {
-                        data:res
-                      },
-                      needLogin:false,
-                      success:function(res){
-                        wx.hideLoading({
-                          complete: (res) => {},
-                        })
-                        if(res.data.status == 0){
-                          app.msg('登录成功','success')
-                          wx.setStorageSync('session', res.data.data.session)
-                          wx.setStorageSync('stu_info', res.data.data.info)
-                          wx.switchTab({
-                            url: '/pages/index/index',
-                          })
-                        }
-                      }
-                    })
-                    return
-                  }
-                  app.msg(res.data.message)
-                }
-              })
-            } else {
-              console.log('登录失败，请重试' + res.errMsg)
-            }
+          if(res.data.status == 1001){
+            that.freshYzm();
           }
-        })
-      },
-      fail:(res) => {
-        app.msg("获取用户信息失败，请重试")
-        return
-      }
-    })
+          throw new Error(res.data.message)
+        }
+      })
+    }))
   }
 })

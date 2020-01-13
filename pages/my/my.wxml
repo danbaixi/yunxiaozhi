@@ -1,7 +1,7 @@
 <view class='header' data-page='userInfo' bindtap="goPage">
   <view class="userinfo" bindtap="{{bind==1?'toUserInfo':'bind'}}">
-    <image mode='aspectFill' class="avatar" src="{{img_pre}}{{user_img}}" background-size="cover"  ></image>
-    <view class="nickname">{{bind==1?user_name:'未登录'}}</view>
+    <image mode='aspectFill' class="avatar" src="{{user_img}}" background-size="cover"  ></image>
+    <view class="nickname">{{user_name}}</view>
   </view>
 </view>
 <view class='infoContent'>

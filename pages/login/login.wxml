@@ -1,0 +1,10 @@
+<view class='header'>
+  <image class='banner' mode='widthFix' src='../assets/imgs/other/banner.png'></image> 
+</view>
+<view class='login'>
+  <view class="margin-top padding flex flex-direction">
+    <button open-type="getUserInfo" bindgetuserinfo='doWechatLogin' class="cu-btn bg-green lg text-white">
+      <text class="icon-weixin" style="margin-right:10px;font-size:44rpx"></text> 微信登录
+    </button>
+  </view>
+</view>

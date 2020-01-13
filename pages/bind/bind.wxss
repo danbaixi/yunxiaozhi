@@ -51,6 +51,111 @@
 }
 
 .login{
-  margin-top: 240rpx;
+  width: 94%;
+  margin: 60rpx auto;
 }
-
+.input{
+  width: 100%;
+  height: 100rpx;
+  background: #fff;
+  border-radius: 10rpx;
+  margin: 40rpx 0;
+}
+.title{
+  float: left;
+  height: 60rpx;
+  color: #d4d4d4;
+  font-size: 38rpx;
+  line-height: 60rpx;
+  margin: 20rpx 40rpx;
+  letter-spacing: 4rpx;
+} 
+.content{
+  width: 400rpx;
+  float: left;
+  margin: 20rpx 0;
+  padding: 4rpx 0;
+  height: 60rpx;
+  color: #666;
+  font-size: 38rpx;
+}
+.clear{
+  height: 50rpx;
+  width: 50rpx;
+  float: right;
+  padding: 25rpx 20rpx;
+}
+.code{
+  width: 100px;
+}
+.bind_yzm{
+  height: 80rpx;
+  width: 200rpx;
+  float: right;
+  margin: 10rpx 20rpx;
+}
+.btn{
+  background: linear-gradient(to right, #4cdbfd , #6ed4e6);
+  letter-spacing: 10rpx;
+  border: 0;
+  color: #fff;
+  margin-top: 10rpx;
+}
+button::after{
+  border: 0;
+}
+.loading{
+  height: 40rpx;
+  width: 40rpx;
+  float: right;
+  margin: -66rpx 60rpx;
+}
+.help{
+  float: right;
+  color: #bfbfbf;
+  font-size: 30rpx;
+  margin-top: 40rpx;
+  margin-right: 20rpx;
+}
+.what{
+  height: 38rpx;
+  width: 38rpx;
+  float: right;
+  margin: 4rpx 10rpx;
+}
+.help-info{
+  text-align: left;
+}
+.help-info text{
+  line-height: 48rpx;
+  font-size: 32rpx;
+}
+.question{
+  color: #6ed4e6;
+  font-size: 36rpx;
+  margin-top: 20rpx;
+}
+.answer{
+  color: #333;
+  padding-left: 50rpx;
+}
+.select{
+  height: 80rpx;
+  width: 100%;
+  margin: 40rpx auto 0;
+}
+.select .li{
+  display: inline-block;
+  width: 42%;
+  margin: 0 3%;
+  padding: 0 1%;
+  line-height: 80rpx;
+  text-align: center;
+  background: #fff;
+  border-radius: 10rpx;
+  color: #666;
+}
+.select .active{
+  background: #6ed4e6;
+  color: #fff;
+}

@@ -88,10 +88,11 @@
 					"query": ""
 				},
 				{
-					"id": -1,
-					"name": "登录",
+					"id": 6,
+					"name": "绑定教务系统",
 					"pathName": "pages/bind/bind",
-					"query": ""
+					"query": "",
+					"scene": null
 				},
 				{
 					"id": -1,
@@ -213,6 +214,13 @@
 					"name": "毒鸡汤",
 					"pathName": "pages/soul/soul",
 					"query": "egg=1",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "登录",
+					"pathName": "pages/login/login",
+					"query": "",
 					"scene": null
 				}
 			]

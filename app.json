@@ -34,7 +34,8 @@
     "pages/course/setTime/setTime",
     "pages/soul/soul",
     "pages/soul/submit/submit",
-    "pages/tools/emptyroom/emptyroom"
+    "pages/tools/emptyroom/emptyroom",
+    "pages/login/login"
   ],
   "window": {
     "navigationStyle": "default",

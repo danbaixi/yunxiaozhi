@@ -2,9 +2,61 @@
   <image class='banner' mode='widthFix' src='../assets/imgs/other/banner.png'></image> 
 </view>
 <view class='login'>
-  <view class="margin-top padding flex flex-direction">
-    <button open-type="getUserInfo" bindgetuserinfo='doWechatLogin' class="cu-btn bg-green lg text-white">
-      <text class="icon-weixin" style="margin-right:10px;font-size:44rpx"></text> 微信登录
-    </button>
+  <!-- <i-notice-bar wx:if="{{hasNotice}}" icon="systemprompt" loop closable>
+   {{notice}}
+  </i-notice-bar> -->
+  <!-- <view class='select'>
+    <view class="li {{systemType==1?'active':''}}" data-type="1" bindtap='changeLoginType'>新教务系统账号</view>
+    <view class="li {{systemType==2?'active':''}}" data-type="2" bindtap='changeLoginType'>旧教务系统账号</view>
+  </view> -->
+  <view class='input'>
+    <view class='title'>学号 |</view>
+    <input class='content' bindinput='inputUserId' name='user_id' placeholder-style='color:#ddd' placeholder='请输入学号' type='number' value='{{user_id}}'></input>
+    <image class='clear' bindtap='clearUserId' wx:if="{{user_id!=''}}" src='../assets/imgs/other/clear.png'></image>
   </view>
+
+  <view class='input'>
+    <view class='title'>密码 |</view>
+    <input wx:if="{{!display_password}}" class='content' value='{{user_password}}' bindinput='inputPwd' placeholder-style='color:#ddd' placeholder='请输入密码' type="password"></input>
+    <input wx:else class='content' value='{{user_password}}' bindinput='inputPwd' placeholder-style='color:#ddd' placeholder='请输入密码' type="text"></input>
+    <image wx:if="{{!display_password}}" class='clear' src='../assets/imgs/other/eye_close.png' bindtap='displayPwd'></image>
+    <image wx:else class='clear' src='../assets/imgs/other/eye_open.png' bindtap='hidePwd'></image>
+  </view>
+
+  <view class='input' wx:if="{{systemType==2}}">
+    <view class='title'>验证 |</view>
+    <input class='content code' value='{{code}}' bindinput='inputCode' type='text'></input>
+    <image bindtap='freshYzm' bindload='imageLoad' class="bind_yzm" src="{{yzmUrl}}"></image> 
+    <i-spin i-class='loading' wx:if="{{loading}}"></i-spin>
+  </view>
+
+  <button class='btn' bindtap='login'>登录</button>
+
+  <view class='margin-top text-sm padding-sm text-right'>
+    <!-- <text class="icon-info text-red"></text>新生若无法登录，请点击这里 -->
+    <text class='text-right' bindtap='help'>帮助</text><text class="icon-question lg text-black"></text>
+  </view>
+  
+
+<view class="cu-modal {{modal_visible?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">帮助</view>
+      <view class="action" bindtap="handleClose">
+        <text class="icon-close text-red"></text>
+      </view>
+    </view>
+    <view class="padding-sm">
+      <view class='help-info'>
+        <view class='question'>1、登录账号和密码？</view>
+        <view class='answer'>教务管理系统账号密码</view>
+        <view class='question'>2、忘记密码怎么办？</view>
+        <view class='answer'>请到教务系统找回</view>
+        <view class='question'>3、新生要怎么登陆？</view>
+        <view class='answer'>使用初始密码登录教务系统后，修改密码再登录云小智</view>　
+        <view class='text-red padding-xl' style="padding-top:0">其他问题请关注“云小智”公众号联系客服</view>　
+      </view>
+    </view>
+  </view>
+</view>
 </view>

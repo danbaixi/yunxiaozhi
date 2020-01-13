@@ -234,6 +234,10 @@ Page({
       app.msg("请先登录")
       return;
     }
+    if (needLogin && !app.getUserId()) {
+      app.msg("请先绑定教务系统账号")
+      return;
+    }
     if(tab === true){
       wx.switchTab({
         url: url,
@@ -408,9 +412,17 @@ Page({
   /** 跳转登录页面 */
   goLogin:function(){
     wx.navigateTo({
+      url: '../login/login',
+    })
+  },
+
+  goBind:function(){
+    wx.navigateTo({
       url: '../bind/bind',
     })
   },
+
+
   /** 跳转课表页面 */
   goCourse: function () {
     wx.switchTab({

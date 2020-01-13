@@ -73,14 +73,14 @@ App({
    *  封装request 
    */
   httpRequest: function (datas){
+    let _this = this
     if (datas.needLogin == undefined || datas.needLogin == true){
-      var uid = wx.getStorageSync('user_id')
-      if(uid == ""){
+      let session = _this.getLoginStatus()
+      if(session == ""){
         this.msg('请先登录')
         return
-      }else{
-        datas.data.stu_id = uid
       }
+      datas.data.session = session
     }
     var that = this,
         isDebug = this.globalData.isDebug,
@@ -146,16 +146,21 @@ App({
     }
   },
 
-  //判断是否登录
+  //强制需要登录
   isLogin:function(){
-    let session = wx.getStorageSync('login_session')
-    if(session == ''){
-      this.tip('请先登录')
-      wx.navigateTo({
-        url: '/pages/login/login',
-      })
-      return
-    }
+    let _this = this
+    return new Promise((resolve) => {
+      let session = wx.getStorageSync('login_session')
+      if(session == ''){
+        _this.msg('请先登录')
+        wx.redirectTo({
+          url: '/pages/login/login',
+        })
+        return resolve(false)
+      }
+      return resolve(true)
+    })
+    
   },
 
   //获取登录状态
@@ -168,5 +173,17 @@ App({
   getUserId:function(){
     let user_id = wx.getStorageSync('user_id')
     return user_id == '' ? false : user_id
+  },
+
+  //获取课表
+  getCourse:function(stu_id){
+    return new Promise((resolve) => {
+      app.httpRequest({
+        url: 'course/getList',
+        success: function (res) {
+          resolve(res.data)
+        },
+      });
+    })
   }
 })
