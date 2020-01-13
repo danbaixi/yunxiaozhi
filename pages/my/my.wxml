@@ -5,7 +5,7 @@
   </view>
 </view>
 <view class='infoContent'>
-  <view class='my' bindtap="{{bind==1?'exit':'bind'}}">
+  <view class='my' bindtap="bind">
     <view>教务信息</view>
     <view>帐号：{{user_id}}</view>
   </view>

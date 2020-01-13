@@ -32,7 +32,7 @@ Page({
       }
     })
     this.setData({
-      url: options.url ? options.url : ''
+      url: options.url ? options.url : '/pages/index/index'
     })
     // this.getNotice();
     this.loginInitV1();
@@ -143,9 +143,17 @@ Page({
     }
 
     that.bindQingGuo().then((resolve) =>{
-      console.log(resolve)
-    }).catch((error) => {
-      app.msg(error.message)
+      wx.hideLoading()
+      if(resolve.status == 0){
+        app.msg("绑定成功","success")
+        wx.setStorageSync('user_id', that.data.user_id)
+        wx.switchTab({
+          url: '/pages/index/index',
+        })
+        return
+      }
+      that.freshYzm()
+      app.msg(resolve.message)
     })
 
   },
@@ -273,8 +281,8 @@ Page({
   //青果教务系统登录
   bindQingGuo:function(){
     let _this = this
-    let user_info = wx.getStorageInfoSync('user_info')
-    let nickname = user_info['nickname']
+    let user_info = wx.getStorageSync('user_info')
+    let nickname = user_info['nickName']
     let avatar = user_info['avatarUrl']
     return new Promise((resolve => {
       app.httpRequest({
@@ -292,16 +300,7 @@ Page({
         },
         method: "POST",
         success: function(res) {
-          wx.hideLoading({
-            complete: (res) => {},
-          })
-          if (res.data.status == 0) {
-            return resolve(res.data)
-          }
-          if(res.data.status == 1001){
-            that.freshYzm();
-          }
-          throw new Error(res.data.message)
+          return resolve(res.data)
         }
       })
     }))

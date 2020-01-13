@@ -8,7 +8,6 @@ Page({
    */
   data: {
     user_id:"未绑定",
-    bind:0,
     userInfo: null,
     user_name:"",
     user_img:"http://yunxiaozhi-1251388077.cosgz.myqcloud.com/user_imgs/defalut.png",
@@ -42,30 +41,24 @@ Page({
     return app.share()
   },
 
-  /**
-   * 解绑帐号
-   */
-  exit:function(){
-    wx.showModal({
-      title: '提示',
-      content: '确定退出此账号吗？',
-      success: function (res) {
-        if (res.confirm) {
-          var bg = wx.getStorageSync('bg_img')
-          wx.clearStorage();
-          if(bg != ''){
-            wx.setStorageSync('bg_img', bg)
-          }
-          wx.reLaunch({url: '../bind/bind'});
-        }
-      }
-    })
-  },
-
   bind:function(){
-    wx.navigateTo({
-      url: '../bind/bind',
-    })
+    if(!app.getLoginStatus()){
+      app.msg('请先登录')
+      wx.navigateTo({
+        url: '/pages/login/login',
+      })
+      return
+    }
+
+    if (!app.getUserId()){
+      wx.navigateTo({
+        url: '/pages/bind/bind',
+      })
+      return
+    }
+
+    app.msg("暂不支持解绑")
+
   },
 
 
@@ -121,10 +114,6 @@ Page({
             xueji: xueji,
             xj: JSON.stringify(xueji)
           });
-          //存储昵称
-          wx.setStorageSync('user_nickName', res.data.data.user_name);
-          //存储头像，更改头像可以获取文件名
-          wx.setStorageSync('user_headImg', res.data.data.user_img);
         } else {
           app.msg('获取个人信息失败')
         }
@@ -132,30 +121,38 @@ Page({
     })
 
   },
+
   showModal(e) {
     this.setData({
       modalName: 'kefu'
     })
   },
+
   hideModal(e) {
     this.setData({
       modalName: null
     })
   },
+
   handleClose:function(){
     this.setData({
       visible: false
     });
   },
+
   goPage:function(e){
+    if(!app.getLoginStatus()){
+      app.msg("请先登录")
+      return
+    }
+    if (!app.getUserId()) {
+      app.msg("请先绑定账号")
+      return
+    }
     var page = e.currentTarget.dataset.page
     var param = "";
     if(page == 'userInfo'){
       param = '?img=' + this.data.user_img + '&name=' + this.data.user_name+'&xueji='+ this.data.xj
-    }
-    if(this.data.bind != 1){
-      this.pleaseLogin()
-      return
     }
     wx.navigateTo({
       url: '/pages/my/' + page + '/' + page + param,
