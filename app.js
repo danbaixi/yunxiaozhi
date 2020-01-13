@@ -36,7 +36,7 @@ App({
   },
   /** 全局变量 */
   globalData:{
-    isDebug:false,
+    isDebug:true,
     xdebug:"?XDEBUG_SESSION_START=18446",
     domain:'https://www.yunxiaozhi.cn/v1/public/api/',
     key:'ihzoaixnuy4f8835032505e8a45ac102c52d58593e',
@@ -145,4 +145,28 @@ App({
       imageUrl: this.globalData.fileDomain + 'share/v1/' + img,
     }
   },
+
+  //判断是否登录
+  isLogin:function(){
+    let session = wx.getStorageSync('login_session')
+    if(session == ''){
+      this.tip('请先登录')
+      wx.navigateTo({
+        url: '/pages/login/login',
+      })
+      return
+    }
+  },
+
+  //获取登录状态
+  getLoginStatus:function(){
+    let session = wx.getStorageSync('login_session')
+    return session == '' ? false : session
+  },
+
+  //获取绑定状态
+  getUserId:function(){
+    let user_id = wx.getStorageSync('user_id')
+    return user_id == '' ? false : user_id
+  }
 })

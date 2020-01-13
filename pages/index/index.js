@@ -124,9 +124,11 @@ Page({
 
   onShow:function(){
     var that = this;
-    var user_id = wx.getStorageSync('user_id');
+    let session = app.getLoginStatus()
+    let user_id = app.getUserId()
     that.setData({
-      user_id: user_id,
+      session: session,
+      user_id: user_id
     })
     if (wx.getStorageSync('news')) {
       that.setData({
@@ -135,7 +137,6 @@ Page({
     }
     //是否隐藏毒鸡汤
     var hide_soul = wx.getStorageSync('hide_soul')
-    var user_id = wx.getStorageSync('user_id')
     if (hide_soul === '' && user_id != "") {
       app.httpRequest({
         url: 'user/isHideSoul',
@@ -229,8 +230,7 @@ Page({
     var url = e.currentTarget.dataset.url
     var needLogin = e.currentTarget.dataset.needlogin
     var tab = e.currentTarget.dataset.tab
-    var user_id = wx.getStorageSync('user_id');
-    if (!user_id && needLogin) {
+    if (needLogin && !app.getLoginStatus()) {
       app.msg("请先登录")
       return;
     }

@@ -31,7 +31,7 @@ Page({
       winHeight: winHeight
     })
     //检查是否登录
-    if (!wx.getStorageSync('user_id')){
+    if (!app.getLoginStatus()){
       wx.reLaunch({
         url: '../../bind/bind',
       })

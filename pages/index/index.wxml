@@ -42,10 +42,13 @@
           </view>
         </view>
       </view>
-      <view wx:if="{{tmpClass == '' && user_id==''}}" class='course_list unlogin'>
-          <text bindtap='goLogin'>登录后可查看，点击登录</text>
+      <view wx:if="{{tmpClass == '' && !session}}" class='course_list unlogin'>
+        <text bindtap='goLogin'>登录后可查看，点击登录</text>
       </view> 
-      <view wx:if="{{user_id!='' && (course.length<=0 || course == null)}}" class='course_list unlogin'>
+      <view wx:if="{{tmpClass == '' && session && !user_id}}" class='course_list unlogin'>
+        <text bindtap='goLogin'>请先绑定教务系统账号</text>
+      </view> 
+      <view wx:if="{{session && user_id && (course.length<=0 || course == null)}}" class='course_list unlogin'>
         <view wx:if="{{soul && hideSoul == 0}}" class="text-left">
           <view bindtap="goSoul" class="soul">{{soul.title}}</view>
           <view class="like margin-top-sm text-right">
