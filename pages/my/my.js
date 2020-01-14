@@ -9,7 +9,7 @@ Page({
   data: {
     user_id:"未绑定",
     userInfo: null,
-    user_name:"",
+    user_name:"未登录",
     user_img:"http://yunxiaozhi-1251388077.cosgz.myqcloud.com/user_imgs/defalut.png",
     visible:false
   },
@@ -95,11 +95,6 @@ Page({
           //时间戳转换
           var date = new Date(parseInt(res.data.data.user_regTime) * 1000);
           var regTime = util.formatTime2(date);
-          //如果头像为空，设为默认头像
-          var user_img = "defalut.png";
-          if (res.data.data.user_img != null && res.data.data.user_img != "") {
-            user_img = res.data.data.user_img;
-          }
           var xueji = [
             { 'title': '姓名', 'data': res.data.data.name },
             { 'title': '年级', 'data': res.data.data.stu_schoolday },
@@ -109,7 +104,7 @@ Page({
             { 'title': '注册时间', 'data': regTime },
           ];
           that.setData({
-            user_img: user_img,
+            user_img: that.data.user_img,
             user_name: res.data.data.user_name,
             xueji: xueji,
             xj: JSON.stringify(xueji)
@@ -158,4 +153,20 @@ Page({
       url: '/pages/my/' + page + '/' + page + param,
     })
   },
+
+  //退出登录
+  exit:function(){
+    wx.showModal({
+      title:'温馨提示',
+      content: '确定要退出账号吗？',
+      success:function(res){
+        if(res.confirm){
+          wx.clearStorageSync()
+          wx.navigateTo({
+            url: '/pages/login/login',
+          })
+        }
+      }
+    })
+  }
 })

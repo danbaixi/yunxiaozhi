@@ -4,13 +4,13 @@
 </cu-custom> -->
 <view class='content'>
   <view class="cu-list menu">
-    <view class="cu-item arrow" bindtap="updateImg">
+    <view class="cu-item">
       <view class="content">
         <text class="text-black">头像</text>
       </view>
       <view class="action">
         <view class="cu-avatar-group">
-          <view class="cu-avatar round sm" style="background-image:url({{img_pre}}{{user_img}});"></view>
+          <view class="cu-avatar round sm" style="background-image:url({{user_img}});"></view>
         </view>
       </view>
     </view>

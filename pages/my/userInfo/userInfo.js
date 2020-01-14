@@ -6,8 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: { 
-    img_pre:'http://yunxiaozhi-1251388077.cosgz.myqcloud.com/user_imgs/',
-    user_img:'defalut.png'
+    user_img:'http://yunxiaozhi-1251388077.cosgz.myqcloud.com/user_imgs/defalut.png'
   },
 
   /**

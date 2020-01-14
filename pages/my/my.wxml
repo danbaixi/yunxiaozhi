@@ -1,5 +1,5 @@
-<view class='header' data-page='userInfo' bindtap="goPage">
-  <view class="userinfo" bindtap="{{bind==1?'toUserInfo':'bind'}}">
+<view class='header'>
+  <view class="userinfo" bindtap="bind">
     <image mode='aspectFill' class="avatar" src="{{user_img}}" background-size="cover"  ></image>
     <view class="nickname">{{user_name}}</view>
   </view>
