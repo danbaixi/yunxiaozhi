@@ -143,11 +143,16 @@ Page({
     if (wx.getStorageInfoSync('attendance_update_time') != "") {
       var update_time = wx.getStorageSync('attendance_update_time');
       var cha = time - update_time;
-      var season = 60 - Math.floor(cha / 1000);
+      var season = 60 * 15 - Math.floor(cha / 1000);
     } else {
       var season = 0;
     }
     if (season > 0) {
+      let minute = Math.floor(season / 60)
+      if(minute > 0 ){
+        app.msg('请在'+ minute + '分钟后更新')
+        return
+      }
       app.msg('请在' + season + '秒后更新')
       return
     }

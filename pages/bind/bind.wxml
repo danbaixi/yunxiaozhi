@@ -60,3 +60,22 @@
   </view>
 </view>
 </view>
+
+<view class="cu-modal {{tips_show?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">请认真阅读以下内容</view>
+      <view class="action" bindtap="closeTips">
+        <text class="icon-close text-red"></text>
+      </view>
+    </view>
+    <view class="padding-sm">
+      <view class="padding-top-sm">由于大家频繁刷成绩，教务系统已限制IP访问</view>
+      <view class="padding-top-sm">为了能让云小智正常运行</view>
+      <view class="padding-top-sm">我们限制了15分钟更新一次</view>
+      <view class="padding-top-sm">如果出现“登录失败，请重试”</view>
+      <view class="padding-top-sm">说明被限制了，请过几分钟后再试</view>
+      <view class="padding-top-sm text-red">希望大家谅解，谢谢你们的支持配合！</view>
+    </view>
+  </view>
+</view>

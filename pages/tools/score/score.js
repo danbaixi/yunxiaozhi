@@ -257,12 +257,17 @@ Page({
     if (wx.getStorageInfoSync('score_update_time') != "") {
       var update_time = wx.getStorageSync('score_update_time');
       var cha = time - update_time;
-      var season = 60 - Math.floor(cha / 1000);
+      var season = 60 * 15 - Math.floor(cha / 1000);
     } else {
       var season = 0;
     }
     if (season > 0) {
-      app.msg('请在'+season + '秒后更新')
+      let minute = Math.floor(season / 60)
+      if(minute > 0 ){
+        app.msg('请在'+ minute + '分钟后更新')
+        return
+      }
+      app.msg('请在' + season + '秒后更新')
       return
     }
     wx.showLoading({ title: "更新中" })

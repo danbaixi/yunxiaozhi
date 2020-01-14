@@ -18,7 +18,8 @@ Page({
     loading: false,
     modal_visible: false,
     hasNotice: false,
-    systemType: 2
+    systemType: 2,
+    tips_show:true
   },
 
   /**
@@ -59,6 +60,24 @@ Page({
    * 绑定教务系统
    */
   login: function(e) {
+    var time = (new Date()).getTime()
+    if (wx.getStorageInfoSync('login_time') != "") {
+      var update_time = wx.getStorageSync('login_time');
+      var cha = time - update_time;
+      var season = 60 * 5 - Math.floor(cha / 1000);
+    } else {
+      var season = 0;
+    }
+    if (season > 0) {
+      let minute = Math.floor(season / 60)
+      if(minute > 0 ){
+        app.msg('目前使用人数较多，请在'+ minute + '分钟后登录，谢谢你的谅解')
+        return
+      }
+      app.msg('目前使用人数较多，请在' + season + '秒后登录，谢谢你的谅解')
+      return
+    }
+
     var that = this;
     var user_id = that.data.user_id;
     var password = that.data.user_password;
@@ -188,6 +207,9 @@ Page({
             if(res.data.status == 1001){
               that.freshYzm();
             }
+            if(res.data.status == -1000){
+              wx.setStorageSync('login_time', time)
+            }
           }
         }
       })
@@ -313,6 +335,11 @@ Page({
   loginTips:function(){
     wx.navigateTo({
       url: '/pages/loginTips/loginTips',
+    })
+  },
+  closeTips:function(){
+    this.setData({
+      tips_show:false
     })
   }
 })

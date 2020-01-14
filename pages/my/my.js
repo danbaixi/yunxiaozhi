@@ -66,6 +66,8 @@ Page({
    * 解绑帐号
    */
   exit:function(){
+    app.msg("暂不支持更换账号")
+    return
     wx.showModal({
       title: '提示',
       content: '确定退出此账号吗？',
