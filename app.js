@@ -153,9 +153,11 @@ App({
       let session = wx.getStorageSync('login_session')
       if(session == ''){
         _this.msg('请先登录')
-        wx.redirectTo({
-          url: '/pages/login/login',
-        })
+        setTimeout(() => {
+          wx.reLaunch({
+            url: '/pages/login/login',
+          })
+        }, 1000);
         return resolve(false)
       }
       return resolve(true)
@@ -184,6 +186,76 @@ App({
           resolve(res.data)
         },
       });
+    })
+  },
+
+  //promise封装请求
+  promiseRequest: function (datas){
+    datas.data = datas.data == undefined ? {} : datas.data
+    if (datas.needLogin == undefined || datas.needLogin == true){
+      let session = this.getLoginStatus()
+      if(session == ""){
+        this.msg('请先登录')
+        return
+      }
+      datas.data.session = session
+    }
+    var that = this,
+        isDebug = this.globalData.isDebug,
+        domain = this.getDomain(),
+        contentType = 'application/json'
+
+    if (typeof datas.method == undefined){
+      datas.method = "GET"
+    }
+    if(datas.method == "POST"){
+      contentType = 'application/x-www-form-urlencoded'
+    }
+    let promise = new Promise((resolve,reject) => {
+      wx.request({
+        url: domain + datas.url + (isDebug?this.globalData.xdebug:""),
+        data: typeof datas.data == undefined ? '': datas.data,
+        method: datas.method,
+        header: {
+          'content-type': contentType
+        },
+        success:function(res){
+          if(res.data.status == -1){
+            reject(res.data.message)
+          }else{
+            resolve(res.data)
+          }
+        },
+        fail:function(res){
+          wx.showToast({
+            title: '请求超时，请重试',
+            icon:'none',
+            duration:2000
+          })
+        }
+      })
+    })
+    
+    return promise
+  },
+
+  //更新毒鸡汤
+  requestSouls: function(){
+    return this.promiseRequest({
+      url: 'soul/getList',
+      needLogin: false
+    })
+  }, 
+
+  //点赞毒鸡汤
+  likeSoul: function(id,stu_id){
+    return this.promiseRequest({
+      url: 'soul/like',
+      needLogin: false,
+      data: {
+        id: id,
+        stu_id: stu_id
+      }
     })
   }
 })

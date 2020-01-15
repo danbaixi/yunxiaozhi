@@ -1,7 +1,7 @@
 page{
   background: #fff;
 }
-.container{
+.content{
   padding: 180rpx 40rpx;
 }
 .soul{

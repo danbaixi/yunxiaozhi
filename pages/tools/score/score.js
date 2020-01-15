@@ -24,42 +24,22 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    app.isLogin()
     var that = this;
     var winHeight = wx.getSystemInfoSync().windowHeight;
     that.setData({
       from: options.from,
       winHeight: winHeight
     })
-    //检查是否登录
-    if (!app.getLoginStatus()){
-      wx.reLaunch({
-        url: '../../bind/bind',
-      })
-    }else{
-      this.getScore(false);
-      this.getNotice()
-    }
-
+    this.getScore(false);
+    // this.getNotice()
   },
 
   /**
    * 下拉刷新，更新成绩
    */
   onPullDownRefresh:function(){
-    var that = this;
-    wx.stopPullDownRefresh();
-    if (wx.getStorageSync('system_type') != 2){
-      wx.clearStorageSync('user_id');
-      wx.redirectTo({
-        url: '/pages/bind/bind',
-      })
-      wx.showToast({
-        title: '请使用旧的教务系统账号登录',
-        icon: 'none'
-      })
-      return
-    }
-    that.update()
+    this.update()
   },
 
   /**

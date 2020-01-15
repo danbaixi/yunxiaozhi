@@ -538,70 +538,61 @@ Page({
     })
     wx.setStorageSync('add_my_tips', time)
   },
-  getSoul:function(){
+
+  //获取毒鸡汤
+  getSoul: function () {
     var list = wx.getStorageSync('souls')
     var soulsUpdate = wx.getStorageSync('soul_update')
     var that = this
-    var soul = that.data.soul
-    if(soul != ''){
-      return
-    }
+    var soul = false
     var time = Math.floor((new Date).getTime() / 1000)
-    if (!list || list == '' || list.length == 0 || time > soulsUpdate + 60 * 60) {
-      app.httpRequest({
-        url: 'soul/getList',
-        needLogin: false,
-        success: function (res) {
-          if (res.data.status == 0) {
-            list = res.data.data
-            wx.setStorageSync('souls', list)
-            wx.setStorageSync('soul_update', time)
-            soul = list[Math.floor(Math.random() * list.length)]
-            that.setData({
-              soul:soul
-            })
-          }
-        }
+    that.setData({
+      likeSoul:false
+    })
+
+    if(!list || time > soulsUpdate + 60 * 60){
+      app.requestSouls().then((data) => {
+        list = data.data
+        wx.setStorageSync('souls', list)
+        wx.setStorageSync('soul_update', time)
+        soul = list[Math.floor(Math.random() * list.length)]
+        that.setData({
+          soul: soul
+        })
+      }).catch((message) => {
+        console.log('毒鸡汤' + message)
       })
-    } else {
+    }else{
       soul = list[Math.floor(Math.random() * list.length)]
       that.setData({
         soul: soul
       })
     }
   },
-  likeSoul:function(e){
-    var that = this
-    if(this.data.likeSoul){
+
+  likeSoul: function (e) {
+    let that = this
+    if (this.data.likeSoul) {
       app.msg("你已经点过赞啦")
       return
     }
-    var id = e.currentTarget.dataset.id
-    var stu_id = wx.getStorageSync('user_id')
-    app.httpRequest({
-      url: 'soul/like',
-      needLogin: false,
-      data: {
-        id: id,
-        stu_id: stu_id
-      },
-      success: function (res) {
-        if (res.data.status == 0) {
-          var soul = that.data.soul
-          soul.like_count = soul.like_count + 1;
-          that.setData({
-            likeSoul: true,
-            soul: soul
-          })
-        }else{
-          app.msg(res.data.message)
-        }
-      }
+    let id = e.currentTarget.dataset.id
+    let stu_id = wx.getStorageSync('user_id')
+    app.likeSoul(id,stu_id).then((data) => {
+      let soul = that.data.soul
+      soul.like_count = soul.like_count + 1;
+      that.setData({
+        likeSoul: true,
+        soul: soul
+      })
+    }).catch((message) => {
+      app.msg(res.data.message)
     })
   },
+
   goSoul:function(){
     wx.navigateTo({
-      url: '/pages/soul/soul?egg=0',
+      url: '/pages/soul/soul',
     })
   }
 })

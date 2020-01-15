@@ -1,22 +1,18 @@
-<view class="container text-center">
-  <view class="soul text-black">{{soul.title}}</view>
+<view class="container">
+  <view class="content text-center" wx:if="{{soul}}">
+    <view class="soul text-black">{{soul.title}}</view>
 
-  <view class="like margin-top-sm text-right" data-id="{{soul.id}}" bindtap="likeSoul">
-    <text class="icon-{{likeSoul?'likefill':'like'}} text-pink"></text>
-    <text class="text-pink"> {{soul.like_count}}</text>
+    <view class="like margin-top-sm text-right" data-id="{{soul.id}}" bindtap="likeSoul">
+      <text class="icon-{{likeSoul?'likefill':'like'}} text-pink"></text>
+      <text class="text-pink"> {{soul.like_count}}</text>
+    </view>
   </view>
-</view>
-<view class="options">
-  <button open-type="share" class="cu-btn bg-theme">分享</button>
-  <button bindtap="getSoul" class="cu-btn bg-theme">再来一碗</button>
-</view>
-<view class="create">
-  <text>来源<text class="text-bold">{{soul.source == null || soul.source == ''?"网络": soul.source}}</text>，</text>
-  <text class="text-blue" bindtap="create">我也要贡献</text>
-</view>
-
-<view class="cu-modal {{displayEgg?'show':''}}" bindtap="hideEgg">
-  <view class="cu-dialog" style="background-color:transparent;margin-top:-200rpx">
-    <image mode="widthFix" style="width:480rpx" src="/pages/assets/imgs/other/caidan.png"></image>
+  <view class="options">
+    <button open-type="share" class="cu-btn bg-theme">分享</button>
+    <button bindtap="getSoul" class="cu-btn bg-theme">再来一碗</button>
+  </view>
+  <view class="create">
+    <text>来源<text class="text-bold">{{soul.source == null || soul.source == ''?"网络": soul.source}}</text>，</text>
+    <text class="text-blue" bindtap="create">我也要贡献</text>
   </view>
 </view>

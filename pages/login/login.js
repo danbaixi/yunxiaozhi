@@ -125,6 +125,15 @@ Page({
               wx.setStorageSync('login_session', resolve.data.session)
               wx.setStorageSync('user_id', resolve.data.stu_id)
               wx.setStorageSync('user_info', resolve.data.info)
+              if(!resolve.data.stu_id){
+                wx.redirectTo({
+                  url: '/pages/bind/bind',
+                })
+                setTimeout(() => {
+                  app.msg('请绑定教务系统账号')
+                }, 500);
+                return
+              }
               wx.switchTab({
                 url: '/pages/index/index',
               })

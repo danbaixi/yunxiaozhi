@@ -156,6 +156,10 @@ Page({
 
   //退出登录
   exit:function(){
+    if(!app.getLoginStatus()){
+      app.msg("你还没有登录呢")
+      return
+    }
     wx.showModal({
       title:'温馨提示',
       content: '确定要退出账号吗？',
