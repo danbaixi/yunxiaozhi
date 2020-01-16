@@ -113,6 +113,9 @@ Page({
     let _this = this
     wx.getUserInfo({
       success: (userInfo) => {
+        wx.showLoading({
+          title: '正在登录'
+        })
         if(_this.data.code){
           _this.wechatLogin(_this.data.code).then((resolve) => {
             if(resolve.status == 0){
