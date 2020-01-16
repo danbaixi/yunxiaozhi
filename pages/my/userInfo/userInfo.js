@@ -90,40 +90,33 @@ Page({
     var that = this;
     var nickName = that.data.nickName;
     if(nickName == that.data.user_name){
-      wx.showToast({ title: '修改成功', icon: 'success' }); 
-    }else{
-      wx.showLoading({
-        title: '提交中',
-      })
-      app.httpRequest({
-        url: 'user/alternickname',
-        data: {
-          sign: app.getSign(),
-          nickname: nickName,
-        },
-        success: function (res) {
-          wx.hideLoading()
-          if (res.data.status == 0) {
-            that.hideModal();
-            wx.showToast({
-              title: '修改成功',
-            })
-            setTimeout(function () {
-              //返回后刷新
-              var pages = getCurrentPages();
-              var currPage = pages[pages.length - 1];  //当前页面
-              var prevPage = pages[pages.length - 2]; //上上一个页面
-              //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
-              prevPage.setData({
-                isFresh: true
-              });
-              wx.navigateBack({})
-            }, 1000)
-          } else{
-            app.msg(res.data.message)
-          }
-        }
-      })
+      return
     }
+    wx.showLoading({
+      title: '提交中',
+    })
+    app.promiseRequest({
+      url: 'user/alternickname',
+      method: 'POST',
+      data: {
+        nickname: nickName,
+      }
+    }).then((data) => {
+      that.hideModal();
+      app.msg(data.message)
+      if(data.status == 0){
+        setTimeout(function () {
+          var pages = getCurrentPages();
+          var currPage = pages[pages.length - 1];
+          var prevPage = pages[pages.length - 2];
+          prevPage.setData({
+            isFresh: true
+          });
+          wx.navigateBack({})
+        }, 1000)
+      }
+    }).catch((message) => {
+      app.msg(message)
+    })
   }
 })

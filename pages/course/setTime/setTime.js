@@ -1,13 +1,11 @@
 const app = getApp()
-var util = require('../../../utils/util.js');
-var md5 = require('../../../utils/md5.js');
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    area:0
+    areas:['西校区','北校区']
   },
 
   /**
@@ -68,26 +66,16 @@ Page({
 
   getData:function(){
     var that = this
-    var user_id = wx.getStorageSync('user_id');
-    var str = app.globalData.key + user_id;
-    var sign = md5.hexMD5(str);
-    app.httpRequest({
-      url:'user/getareainfo',
-      data:{
-        sign:sign,
-        stu_id:user_id
-      },
-      success:function(res){
-        if(res.data.status != 0){
-          app.msg(res.data.message)
-          return
-        }
-        that.setData({
-          area:res.data.data.area,
-          areas:res.data.data.areas,
-          status:res.data.data.display,
-        })
-      }
+    app.promiseRequest({
+      url:'user/getareainfo'
+    }).then((data) => {
+      that.setData({
+        area:data.data.area,
+        areas:data.data.areas,
+        status:data.data.display,
+      })
+    }).catch((message) => {
+      app.msg(message)
     })
   },
 
@@ -95,25 +83,20 @@ Page({
   setArea:function(e){
     var that = this
     var area = Number(e.detail.value) + 1
-    var user_id = wx.getStorageSync('user_id');
-    var str = app.globalData.key + user_id;
-    var sign = md5.hexMD5(str);
-    app.httpRequest({
+    app.promiseRequest({
       url: 'user/setArea',
       data: {
-        sign: sign,
-        stu_id: user_id,
         area: area
       },
-      success: function (res) {
-        app.msg(res.data.message)
-        if (res.data.status == 0) {
-          that.setData({
-            area: area
-          })
-          wx.setStorageSync('user_area', area)
-        }
-      }
+      method: 'POST'
+    }).then((data) =>{
+      app.msg(data.message,'success')
+      that.setData({
+        area: area
+      })
+      wx.setStorageSync('user_area', area)
+    }).catch((message) => {
+      app.msg(message)
     })
   },
 
@@ -127,25 +110,20 @@ Page({
       return
     }
     var status = e.detail.value ? 1 : 0
-    var user_id = wx.getStorageSync('user_id');
-    var str = app.globalData.key + user_id;
-    var sign = md5.hexMD5(str);
-    app.httpRequest({
+    app.promiseRequest({
       url: 'user/setCourseTimeStatus',
       data: {
-        sign: sign,
-        stu_id: user_id,
         status: status
       },
-      success: function (res) {
-        app.msg(res.data.message)
-        if (res.data.status == 0) {
-          that.setData({
-            status: status
-          })
-          wx.setStorageSync('display_course_time', status)
-        }
-      }
+      method: 'POST'
+    }).then((data) => {
+      app.msg(data.message,'success')
+      that.setData({
+        status: status
+      })
+      wx.setStorageSync('display_course_time', status)
+    }).catch((message) => {
+      app.msg(message)
     })
   }
 })

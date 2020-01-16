@@ -16,7 +16,7 @@
     </view>
   </view>
   <view class="cu-list menu">
-    <view class="cu-item arrow" bindtap="openUpdateName">
+    <view class="cu-item">
       <view class="content">
         <text class="text-black">昵称</text>
       </view>

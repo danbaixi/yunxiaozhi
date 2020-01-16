@@ -222,6 +222,12 @@
 					"pathName": "pages/login/login",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "个人设置",
+					"pathName": "pages/my/set/set",
+					"scene": null
 				}
 			]
 		}

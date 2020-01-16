@@ -14,7 +14,8 @@
       <text class="text-grey">成绩排名隐藏真实姓名</text>
     </view>
     <view class="action">
-      <switch class="theme sm" checked="{{display_name==1}}" bindchange="is_display_name"></switch>
+      <switch class="theme sm" checked="{{settings.is_display_name == 1}}" data-field="is_display_name" bindchange="displayName">
+      </switch>
     </view>
   </view>
 </view>
@@ -30,7 +31,7 @@
       <text class="text-grey">隐藏毒鸡汤</text>
     </view>
     <view class="action">
-      <switch class="theme sm" checked="{{hide_soul==1}}" bindchange="hideSoul"></switch>
+      <switch class="theme sm" checked="{{settings.hide_soul == 1}}" data-field="hide_soul" bindchange="hideSoul"></switch>
     </view>
   </view>
   <view class="cu-item arrow" bindtap="setTime">

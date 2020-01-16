@@ -137,25 +137,18 @@ Page({
     }
     //是否隐藏毒鸡汤
     var hide_soul = wx.getStorageSync('hide_soul')
-    if (hide_soul === '' && user_id != "") {
-      app.httpRequest({
-        url: 'user/isHideSoul',
-        data: {
-          stu_id: user_id
-        },
-        success: function (res) {
-          if (res.data.status == 0) {
-            that.setData({
-              hideSoul: res.data.data
-            })
-            wx.setStorageSync('hide_soul', res.data.data)
-            return
-          }
-          that.setData({
-            hideSoul: 1
-          })
-        }
+    if (session != "" && user_id != "" && !hide_soul) {
+      app.promiseRequest({
+        url: 'user/isHideSoul'
+      }).then((data) => {
+        that.setData({
+          hideSoul: data.data
+        })
+        wx.setStorageSync('hide_soul', data.data)
+      }).catch((message) => {
+        app.msg(message)
       })
+
     } else {
       that.setData({
         hideSoul: hide_soul

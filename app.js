@@ -220,10 +220,10 @@ App({
           'content-type': contentType
         },
         success:function(res){
-          if(res.data.status == -1){
-            reject(res.data.message)
-          }else{
+          if(res.data.status == 0){
             resolve(res.data)
+          }else{
+            reject(res.data.message || '服务器开小差了 ╯﹏╰')
           }
         },
         fail:function(res){
@@ -257,5 +257,18 @@ App({
         stu_id: stu_id
       }
     })
-  }
+  },
+
+  //修改设置
+  updateSetting:function(field,value){
+    return this.promiseRequest({
+      url: 'user/alterUserConfig',
+      method: 'POST',
+      data: {
+        field: field,
+        value: value
+      }
+    })
+  },
+
 })

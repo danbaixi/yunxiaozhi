@@ -86,33 +86,30 @@ Page({
       return
     }
     
-    app.httpRequest({
-      url: 'user/getInfo',
-      success: function (res) {
-        if (res.data.status == 1001) {
-          //处理班级，去掉括号后的
-          var stu_class = res.data.data.stu_class.split('（')[0];
-          //时间戳转换
-          var date = new Date(parseInt(res.data.data.user_regTime) * 1000);
-          var regTime = util.formatTime2(date);
-          var xueji = [
-            { 'title': '姓名', 'data': res.data.data.name },
-            { 'title': '年级', 'data': res.data.data.stu_schoolday },
-            { 'title': '学号', 'data': wx.getStorageSync('user_id') },
-            { 'title': '学院', 'data': res.data.data.stu_department },
-            { 'title': '班级', 'data': stu_class },
-            { 'title': '注册时间', 'data': regTime },
-          ];
-          that.setData({
-            user_img: that.data.user_img,
-            user_name: res.data.data.user_name,
-            xueji: xueji,
-            xj: JSON.stringify(xueji)
-          });
-        } else {
-          app.msg('获取个人信息失败')
-        }
-      }
+    app.promiseRequest({
+      url: 'user/getInfo'
+    }).then((data) => {
+      //处理班级，去掉括号后的
+      var stu_class = data.data.stu_class.split('（')[0];
+      //时间戳转换
+      var date = new Date(parseInt(data.data.user_regTime) * 1000);
+      var regTime = util.formatTime2(date);
+      var xueji = [
+        { 'title': '姓名', 'data': data.data.name },
+        { 'title': '年级', 'data': data.data.stu_schoolday },
+        { 'title': '学号', 'data': wx.getStorageSync('user_id') },
+        { 'title': '学院', 'data': data.data.stu_department },
+        { 'title': '班级', 'data': stu_class },
+        { 'title': '注册时间', 'data': regTime },
+      ];
+      that.setData({
+        user_img: that.data.user_img,
+        user_name: data.data.user_name,
+        xueji: xueji,
+        xj: JSON.stringify(xueji)
+      });
+    }).catch((message) => {
+      app.msg(message)
     })
 
   },
