@@ -1,28 +1,32 @@
-page{
-  width: 100%;
+.container{
+  box-sizing: border-box;
 }
-.tool{ 
-  display: block; 
+.box{
   width: 100%;
-  height: 410rpx;
-  overflow: hidden;
   background: #fff;
-} 
+  margin: 20rpx 0 20rpx;
+  padding: 0 3%;
+}
+.screen-swiper {
+  min-height: 320rpx;
+  border-radius:20rpx;
+  overflow: hidden;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
+}
+.cu-bar .action:first-child {
+  margin: 0;
+}
+.cu-bar .action:last-child {
+  margin: 0;
+}
+.cu-list.menu>.cu-item {
+  padding: 0;
+}
 .tools{
-  width: 100%;
-  height: 400rpx;
-  background: #fff;
-  position: relative;  
-  overflow: hidden;
+  padding: 6rpx 0!important;
 }
-.li{
-  position: relative;  
-  float: left;  
-  padding: 0;  
-  width: 20%;
-  box-sizing: border-box; 
-  margin:12rpx 0;
-}
+
 .icon{
   width: 80rpx;  
   height: 80rpx;  
@@ -65,7 +69,6 @@ page{
 }
 .page-content{
   width: 100%;
-  background: #f1f1f1;
   padding-top: 20rpx;
 }
 .message{
@@ -80,11 +83,6 @@ page{
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-.course{
-  width: 100%;
-  margin-bottom: 20rpx;
-  background: #fff;
 }
 .course_list{
   width: 100%;
@@ -210,19 +208,19 @@ page{
   color: #333;
 }
 .days{
-  font-size: 40rpx;
+  font-size: 36rpx;
   font-weight: bold;
-  color: #6ed4e6;
+  color: var(--theme);
   padding: 0 10rpx;
 }
 .add_tips{
   position: absolute;
-  top: 10px;
   right: 10px;
   padding: 4px 10px;
-  background: #fff;
-  color: var(--theme);
+  background: var(--theme);
+  color: #fff;
   border-radius: 4px;
+  z-index: 9999;
 }
 .add_tips .icon-close{
   padding: 10px 2px;
@@ -230,11 +228,11 @@ page{
 .add_tips::before{
   content: " ";
   position: absolute;
-  top: -20px;
+  top: -22px;
   right: 50px;
   border-width: 14px;
   border-style: solid;
-  border-color: transparent #fff transparent transparent;
+  border-color: transparent var(--theme) transparent transparent;
   transform: rotate(90deg);
 }
 .like{
@@ -243,4 +241,7 @@ page{
 .soul{
   line-height: 1.5;
   letter-spacing: 2rpx;
+}
+.cu-list.grid.no-border>.cu-item{
+  padding-bottom: 10rpx;
 }

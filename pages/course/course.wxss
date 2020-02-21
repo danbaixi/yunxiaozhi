@@ -28,8 +28,8 @@ page{
 }
 .select_week{
   position: relative;
-  background: #6ed4e6;
-  color: #fff;
+  background: #fff;
+  color: var(--black);
   height: 32px;
   z-index: 1000;
   font-size: 16px;

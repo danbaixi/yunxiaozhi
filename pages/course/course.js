@@ -15,7 +15,6 @@ Page({
    */
   data: {
     zhou: ['一', '二', '三', '四', '五', '六','日'],
-    jie: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
     zhou_num: ['第1周', '第2周', '第3周', '第4周', '第5周', '第6周', '第7周', '第8周', '第9周', '第10周', '第11周', '第12周', '第13周', '第14周', '第15周', '第16周', '第17周', '第18周', '第19周', '第20周'],
     now_week:1,
     now_day:[],
@@ -101,7 +100,6 @@ Page({
     }
 
     var month = that.getMonth((that.data.now_week - 1) * 7);
-
     //每周起始日
     var startDay = wx.getStorageSync('start_day') || 1
     var day = that.getDayOfWeek(week,startDay)
@@ -110,6 +108,7 @@ Page({
       now_week: week,
       zhou_num: zhou_num,
       now_month: month,
+      now_month_number: month / 1, // 当前月份数字类型，用于数字运算
       now_day: day,
       startDay:startDay
     })
@@ -169,9 +168,10 @@ Page({
    * 获取第几周后的月份
    */
   getMonth:function(days) {
-    var year = app.globalData.start_year;
-    var month = app.globalData.start_month;
-    var day = app.globalData.start_day;     
+    let configs = wx.getStorageSync('configs')
+    let termDate = configs.termDate
+    let data = termDate.split('-')
+    let [year,month,day] = [data[0],data[1],data[2]]  
     var date = new Date(year,month-1,day);    
     date.setDate(date.getDate() + days);//获取n天后的日期      
     var m = (date.getMonth() + 1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1);        
@@ -181,9 +181,11 @@ Page({
    * 获取第几周后的星期几的日期
    */
   getDay: function (days) {
-    var year = app.globalData.start_year;
-    var month = app.globalData.start_month;
-    var day = app.globalData.start_day;  
+    let configs = wx.getStorageSync('configs')
+    let termDate = configs.termDate
+    let data = termDate.split('-')
+    let [year, month, day] = [data[0], data[1], data[2]]
+
     var date = new Date(year, month-1, day);
     date.setDate(date.getDate() + days);//获取n天后的日期      
     var d = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();//获取当前几号，不足10补0    
@@ -194,9 +196,11 @@ Page({
    */
   getNowWeek:function(){
     var date = new Date();
-    var year = app.globalData.start_year;
-    var month = app.globalData.start_month;
-    var day = app.globalData.start_day;
+    let configs = wx.getStorageSync('configs')
+    let termDate = configs.termDate
+    let data = termDate.split('-')
+    let [year, month, day] = [data[0], data[1], data[2]]  
+
     //这里减1，不知道为什么输出的月份比原来的大1..
     var start = new Date(year, month-1, day);
     //计算时间差
@@ -284,6 +288,7 @@ Page({
     this.setData({
       now_week: week,
       now_month: month,
+      now_month_number: month / 1, // 当前月份数字类型，用于数字运算
     });
     var startDay = wx.getStorageSync('start_day')
     var day = this.getDayOfWeek(week,startDay)
@@ -490,39 +495,14 @@ Page({
       title: '更新中',
     })
     wx.removeStorageSync('tmp_class')
-    var user_id = wx.getStorageSync('user_id');
-    var user_password = wx.getStorageSync('user_password');
-    // var yzm = that.data.yzm;
-    // var cookie = that.data.cookie;
-    var str = app.globalData.key + user_id;
-    var sign = md5.hexMD5(str);
-    // if (yzm == "") {
-    //   app.msg("请输入验证码")
-    //   return
-    // }
     app.httpRequest({
       url: 'course/updateV1',
-      data: {
-        stu_id: user_id,
-        password: user_password,
-        // encoded: encoded,
-        // code: yzm,
-        // cookie: cookie,
-        // __VIEWSTATE: that.data.__VIEWSTATE,
-        sign: sign
-      },
       success: function (res) {
-        wx.hideLoading();
-        if (res.data.status == 1001) {
+        if (res.data.status == 0) {
           app.httpRequest({
             url: 'course/getList',
-            data: {
-              stu_id: user_id,
-              sign: sign
-            },
             success: function (res) {
-              that.hideModal()
-              if (res.data.status == 1001) {
+              if (res.data.status == 0) {
                 wx.showToast({
                   title: '更新成功',
                 })
@@ -530,7 +510,7 @@ Page({
                 app.msg("更新成功", 'success')
                 wx.setStorageSync('course', res.data.data.course);
                 wx.setStorageSync('train', res.data.data.train_course);
-                that.onLoad({animation:true});
+                that.onShow();
               } else {
                 app.msg(res.data.message)
               }
@@ -548,49 +528,6 @@ Page({
         }
       }
     })
-    // wx.request({
-    //   url: app.globalData.domain + 'course/updateV1',
-    //   data: {
-    //     stu_id: user_id,
-    //     password: user_password,
-    //     // encoded: encoded,
-    //     code: yzm,
-    //     cookie: cookie,
-    //     __VIEWSTATE: that.data.__VIEWSTATE,
-    //     sign: sign
-    //   },
-    //   success: function (res) {
-    //     wx.hideLoading();
-    //     if (res.data.status == 1001) {
-    //       wx.request({
-    //         url: app.globalData.domain + 'course/getList',
-    //         data: {
-    //           stu_id: user_id,
-    //           sign: sign
-    //         },
-    //         success: function (res) {
-    //           that.hideModal()
-    //           if (res.data.status == 1001) {
-    //             wx.showToast({
-    //               title: '更新成功',
-    //             })
-    //             app.msg("更新成功", 'success')
-    //             wx.setStorageSync('course', res.data.data.course);
-    //             wx.setStorageSync('train', res.data.data.train_course);
-    //             that.onLoad();
-    //           } else {
-    //             app.msg(res.data.message)
-    //           }
-    //         },
-    //       });
-    //     } else if (res.data.status == 1003) {
-    //       app.msg("验证码错误,如多次出现请尝试重新登录")
-    //       that.freshYzm();
-    //     } else {
-    //       app.msg("更新失败")
-    //     }
-    //   }
-    // })
   },
   /** 刷新验证码 */
   freshYzm: function () {
@@ -811,15 +748,8 @@ Page({
     var display_course_time = wx.getStorageSync('display_course_time')
     var area = wx.getStorageSync('user_area')
     if(display_course_time === '' || area === ''){
-      var user_id = wx.getStorageSync('user_id');
-      var str = app.globalData.key + user_id;
-      var sign = md5.hexMD5(str);
       app.httpRequest({
         url: 'user/getareainfo',
-        data: {
-          sign: sign,
-          stu_id: user_id
-        },
         success: function (res) {
           if (res.data.status != 0) {
             app.msg(res.data.message)

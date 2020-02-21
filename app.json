@@ -25,7 +25,6 @@
     "pages/index/message/message",
     "pages/tools/exam/add/add",
     "pages/my/time/time",
-    "pages/my/pwd/pwd",
     "pages/course/info/students/students",
     "pages/news/news",
     "pages/news/item/item",
@@ -38,19 +37,19 @@
     "pages/login/login"
   ],
   "window": {
-    "navigationStyle": "default",
+    "navigationStyle": "custom",
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#6ed4e6",
-    "backgroundColor": "#6ed4e6",
+    "navigationBarBackgroundColor": "#ffffff",
+    "backgroundColor": "#ffffff",
     "navigationBarTitleText": "云小智",
-    "navigationBarTextStyle": "white"
+    "navigationBarTextStyle": "black"
   },
   "usingComponents": {
     "cu-custom": "/pages/assets/colorui/components/cu-custom"
   },
   "tabBar": {
-    "color": "#515151",
-    "selectedColor": "#6ed4e6",
+    "color": "#cbcbcb",
+    "selectedColor": "#1380ff",
     "borderStyle": "white",
     "backgroundColor": "#fff",
     "list": [

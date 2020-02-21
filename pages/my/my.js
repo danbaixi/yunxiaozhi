@@ -162,7 +162,10 @@ Page({
       content: '确定要退出账号吗？',
       success:function(res){
         if(res.confirm){
+          let configs = wx.getStorageSync('configs')
           wx.clearStorageSync()
+          //保留配置信息
+          wx.setStorageSync('configs', configs)
           wx.navigateTo({
             url: '/pages/login/login',
           })

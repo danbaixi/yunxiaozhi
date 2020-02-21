@@ -12,10 +12,10 @@
 <view class="diy-nav">
   <view class='select_week'>
     <picker class='week_num' mode="selector" range="{{zhou_num}}" bindchange="select" value="{{now_week-1}}">
-      <text class="text-white text-lg">第 {{now_week}} 周 </text>
-      <text class="icon-unfold lg text-white"></text>
+      <text class="text-lg text-black">第 {{now_week}} 周 </text>
+      <text class="icon-unfold lg text-black"></text>
     </picker>
-    <text class=" icon-add text-white settings" style="transform:rotate({{list_is_display?135:0}}deg)" bindtap='listDisplay'></text> 
+    <text class=" icon-add settings text-black" style="transform:rotate({{list_is_display?135:0}}deg)" bindtap='listDisplay'></text> 
   </view>
 </view>
 <view class="mask" bindtap="hideMask" style='height:{{winHeight-32}}px' wx:if="{{list_is_display}}"></view>
@@ -61,7 +61,7 @@
     <view class="content">
       <text class="text-grey">边框透明度</text>
       <view class="slider">
-        <slider data-type='frime' bindchange="sliderchange" activeColor="#6ed4e6" value='{{Kopacity}}' min="0" max="100" show-value/>
+        <slider data-type='frime' bindchange="sliderchange" activeColor="#1380ff" value='{{Kopacity}}' min="0" max="100" show-value/>
       </view>
     </view>
   </view>
@@ -69,7 +69,7 @@
     <view class="content">
       <text class="text-grey">课表透明度</text>
       <view class="slider">
-        <slider data-type='course' bindchange="sliderchange" activeColor="#6ed4e6" value='{{Copacity}}' min="0" max="100" show-value/>
+        <slider data-type='course' bindchange="sliderchange" activeColor="#1380ff" value='{{Copacity}}' min="0" max="100" show-value/>
       </view>
     </view>
   </view>
@@ -88,7 +88,7 @@
     <view class="date">
       <view class="course-table week {{(now_week==nowWeek&&todayDay==item)?'todayDate':''}}" wx:for="{{now_day}}" wx:key="key" wx:index="index">
         <view class="week-item">周{{zhou[index]}}</view>
-        <view class="date-item">{{now_day[index] == 1? (now_month<12?now_month+1:1)+'月' : now_day[index]+'日'}}</view>
+        <view class="date-item">{{now_day[index] == 1? (now_month_number<12?(now_month_number+1):1)+'月' : now_day[index]+'日'}}</view>
       </view>
     </view>
 </view>
@@ -96,8 +96,8 @@
   <scroll-view scroll-y="true" class="scroll">
     <view class='course-content'>
       <view class='jie' style="background-color:rgba(220,220,220,{{(100-Kopacity)/100}})">
-        <view wx:for="{{jie}}" wx:key="key" wx:index="index" class="left">
-          <view class="number">{{item}}</view>
+        <view wx:for="{{12}}" wx:key="key" wx:index="index" class="left">
+          <view class="number">{{item+1}}</view>
           <view class="course-time" wx:if="{{display_course_time == 1}}">
             <view class="text-grey text-xs time-start">{{course_time[index][0] != "" ? course_time[index][0] : '堂'}}</view>
             <view class="text-grey text-xs time-end">{{course_time[index][1] != "" ? course_time[index][1] : '连'}}</view>

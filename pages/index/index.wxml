@@ -1,86 +1,83 @@
-<!-- <image src='/pages/assets/imgs/other/bgImage.jpg' mode='widthFix' class='png' style='width:100%;height:320rpx'></image> -->
-<swiper class="screen-swiper square-dot" indicator-dots="true" circular="true" autoplay="true" interval="4000" duration="500">
-  <swiper-item wx:for="{{banner}}" bindtap="bannerClick" data-index="{{index}}" wx:key="key">
-    <image src="{{item.img_src}}" mode="aspectFill"></image>
-  </swiper-item>
-</swiper>
-<view class="add_tips shadow" wx:if="{{add_tips}}">
+<view class="bg">
+  <image src='/pages/assets/imgs/other/bgImage.jpg' mode='widthFix' class='png' style='width:100%;height:320rpx'></image>
+</view>
+<view class="add_tips shadow" style="top:{{customBar + 8}}px" wx:if="{{add_tips}}">
   点击<text class="icon-more"></text>添加到"我的小程序"，随时随地看课表
   <text class="icon-close" bindtap="close_tips"></text>
 </view>
-<view class="index">
-  <view class="cu-list grid col-{{gridCol}} no-border">
+<view class="container">
+  <view class="cu-list grid col-{{gridCol}} no-border tools">
     <view class="cu-item" wx:for="{{tools}}" wx:key="key" data-tab="{{item.tab}}" data-url="{{item.url}}" data-needLogin="{{item.needLogin}}" bindtap='openTool'>
-      <view class="icon-{{item.icon}} text-{{item.color}}">
-        <view class="cu-tag badge" wx:if="{{item.badge!=0}}">
-          <block wx:if="{{item.badge!=1}}">{{item.badge>99?"99+":item.badge}}</block>
-        </view>
+      <view class="app-icon">
+        <image mode="widthFix" src="/pages/assets/imgs/app_icon/{{item.icon}}.png"></image>
       </view>
       <text>{{item.name}}</text>
     </view>
   </view>
 
-  <view class='page-content'>
-    <view class='course'>
-      <view class="cu-bar bg-white solid-bottom arrow" bindtap='goCourse'>
-        <view class="action">
-          今日课表
-          <text class="text-sm">{{tmpClass == '' ? '' : '('+ tmpClass.name +')'}}</text>
-        </view>
-        <view class="action">
-          {{now_week}} 周{{WEEKDAY}}
-        </view>
+  <view class='box'>
+    <view class="cu-bar bg-white arrow" bindtap='goCourse'>
+      <view class="action">
+        <text class="text-black text-xl text-bold">今日课表</text>
       </view>
-      <view class="cu-list menu" wx:if="{{course.length>0}}">
-        <view class="cu-item" wx:for="{{course}}" wx:key="key" bindtap='displayCourseInfo' data-num='{{item.indexNum}}'>
-          <view class="content text-cut">
-            <text class="text-grey">{{item.jie}}-{{item.jie_end}} </text>
-            <text class="text-black">{{item.name}}</text>
-          </view>
-          <view class="action">
-            <text class="text-black text-sm">{{item.address}}</text>
-          </view>
-        </view>
+      <view class="action">
+        {{now_week_text}} 周{{WEEKDAY}}
       </view>
-      <view wx:if="{{tmpClass == '' && !session}}" class='course_list unlogin'>
-        <text bindtap='goLogin'>登录后可查看，点击登录</text>
-      </view> 
-      <view wx:if="{{tmpClass == '' && session && !user_id}}" class='course_list unlogin'>
-        <text bindtap='goBind'>您未绑定教务系统账号，点击绑定</text>
-      </view> 
-      <view wx:if="{{session && user_id && (course.length<=0 || course == null)}}" class='course_list unlogin'>
-        <view wx:if="{{soul && hideSoul == 0}}" class="text-left">
-          <view bindtap="goSoul" class="soul">{{soul.title}}</view>
-          <view class="like margin-top-sm text-right">
-            <view bindtap="likeSoul" data-id="{{soul.id}}">
-              <text class="icon-{{likeSoul?'likefill':'like'}} text-pink"></text>
-              <text class="text-pink"> {{soul.like_count}}</text>
-            </view>
-          </view>
+    </view>
+    <view wx:if="{{tmpClass!=''}}" class="yxz-tips" bindtap="restore">
+      当前课表非本班课表，点击切换回本班课表
+    </view>
+    <view class="cu-list menu" wx:if="{{course.length>0}}">
+      <view class="cu-item" wx:for="{{course}}" wx:key="key" bindtap='displayCourseInfo' data-num='{{item.indexNum}}'>
+        <view class="content text-cut">
+          <text class="text-grey">{{item.jie}}-{{item.jie_end}} </text>
+          <text class="text-black">{{item.name}}</text>
         </view>
-        <view wx:else>
-          今天没课，去充实一下自己呗
+        <view class="action">
+          <text class="text-black text-sm">{{item.address}}</text>
         </view>
       </view>
     </view>
-
-    <view class='course' wx:if="{{my_exam.length>0}}">
-      <view class="cu-bar bg-white solid-bottom arrow" bindtap='goExam'>
-        <view class="action">考试安排</view>
-        <view class="action">
-          <text class="text-theme icon-right"></text>
+    <view wx:if="{{tmpClass == '' && !session}}" class='course_list unlogin'>
+      <text bindtap='goLogin'>登录后可查看，点击登录</text>
+    </view> 
+    <view wx:if="{{tmpClass == '' && session && !user_id}}" class='course_list unlogin'>
+      <text bindtap='goBind'>您未绑定教务系统账号，点击绑定</text>
+    </view> 
+    <view wx:if="{{session && user_id && (course.length<=0 || course == null)}}" class='course_list unlogin'>
+      <view wx:if="{{soul && hideSoul == 0}}" class="text-left">
+        <view bindtap="goSoul" class="soul">{{soul.title}}</view>
+        <view class="like margin-top-sm text-right">
+          <view bindtap="likeSoul" data-id="{{soul.id}}">
+            <text class="icon-{{likeSoul?'likefill':'like'}} text-pink"></text>
+            <text class="text-pink"> {{soul.like_count}}</text>
+          </view>
         </view>
       </view>
-      <view class="cu-list menu">
-        <view class="cu-item"  wx:if="{{item.days>=0}}" bindtap='goExam' wx:index="{{index}}" wx:for="{{my_exam}}" wx:key="key">
-          <view class="content">
-            <text class="text-black">{{item.exam_name}}</text>
-          </view>
-          <view class="action">
-            <text>剩余<text class='days'>{{item.days}}</text>天</text>
-          </view>
-        </view>
+      <view wx:else>
+        今天没课，去充实一下自己呗
+      </view>
     </view>
   </view>
+
+  <view class='box' wx:if="{{my_exam.length>0}}">
+    <view class="cu-bar bg-white solid-bottom arrow" bindtap='goExam'>
+      <view class="action">
+        <text class="text-black text-xl text-bold">考试安排</text>
+      </view>
+      <view class="action">
+        <button class="cu-btn sm round line-theme">查看全部</button>
+      </view>
+    </view>
+    <view class="cu-list menu">
+      <view class="cu-item"  wx:if="{{item.days>=0}}" bindtap='goExam' wx:index="{{index}}" wx:for="{{my_exam}}" wx:key="key">
+        <view class="content">
+          <text class="text-black">{{item.exam_name}}</text>
+        </view>
+        <view class="action">
+          <text>剩余<text class='days'>{{item.days}}</text>天</text>
+        </view>
+      </view>
+    </view>
   </view>
 </view>

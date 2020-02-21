@@ -2,6 +2,45 @@
 @import "pages/assets/colorui/icon.wxss";
 @import "pages/assets/colorui/animation.wxss";
 
+page{
+  --theme: #1380ff;
+  --yellow: #ffa807;
+  --gradualTheme: linear-gradient(45deg, #1380ff, #1cbbb4);
+}
+
+/** 扩展 */
+.text-theme, .line-theme, .lines-theme {
+  color: var(--theme)
+}
+.text-yellow, .line-yellow, .lines-yellow {
+  color: var(--ffa807)
+}
+.bg-theme{
+  background-color: var(--theme);
+}
+.cu-btn.bg-theme{
+  color: #fff;
+}
+
+.app-icon{
+  margin-top: 10rpx;
+  text-align: center;
+}
+.app-icon image{
+  width: 56rpx!important;
+}
+
+/* yxz-bar */
+.yxz-tips{
+  width: 100%;
+  border-radius: 8rpx;
+  min-height: 60rpx;
+  background: #f7cca2;
+  color: #fff;
+  padding: 0 12rpx;
+  line-height: 60rpx;
+}
+
 /*toast start*/
 .wxapp-toast-mask{
   opacity: 0;

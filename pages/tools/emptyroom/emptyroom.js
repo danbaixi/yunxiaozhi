@@ -140,9 +140,10 @@ Page({
   //获取当前周
   getNowWeekly: function () {
     var date = new Date();
-    var year = app.globalData.start_year;
-    var month = app.globalData.start_month;
-    var day = app.globalData.start_day;
+    let configs = wx.getStorageSync('configs')
+    let termDate = configs.termDate
+    let data = termDate.split('-')
+    let [year, month, day] = [data[0], data[1], data[2]]  
     var start = new Date(year, month - 1, day);
     var left_time = parseInt((date.getTime() - start.getTime()) / 1000);
     var days = parseInt(left_time / 3600 / 24);

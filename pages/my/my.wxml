@@ -28,7 +28,7 @@
         <text class="text-black">问题反馈</text>
       </view>
     </view>
-    <view class="cu-item arrow" wx:if="{{false}}">
+    <view class="cu-item arrow">
       <navigator class="content" target="miniProgram"open-type="navigate" app-id="wx18a2ac992306a5a4" path="pages/apps/largess/detail?id=fepGU2z7jvagPc1CLmE7uw%3D%3D">
         <text class="icon-appreciate lg text-black"></text>
         <text class="text-black">赞赏支持</text>

@@ -12,7 +12,7 @@
  ==================== */
 
 page {
-  background-color: var(--backgroud);
+  background-color: var(--background);
   font-size: 28rpx;
   color: #333;
   font-family: Helvetica Neue, Helvetica, sans-serif;
@@ -32,16 +32,13 @@ page {
   --gray: #aaa;
   --black: #333;
   --white: #fff;
-  --backgroud: #f4f5f7;
+  --background: #f5f6f7;
   --gradualRed: linear-gradient(45deg, #f43f3b, #ec008c);
   --gradualOrange: linear-gradient(45deg, #ff9700, #ed1c24);
   --gradualGreen: linear-gradient(45deg, #39b54a, #8dc63f);
   --gradualPurple: linear-gradient(45deg, #9000ff, #5e00ff);
   --gradualPink: linear-gradient(45deg, #ec008c, #6739b6);
   --gradualBlue: linear-gradient(45deg, #0081ff, #1cbbb4);
-
-  /** 扩展 **/
-  --theme: #6ed4e6;
 }
 
 view, scroll-view, swiper, button, input, textarea, label, navigator, image {
@@ -1378,7 +1375,7 @@ button.icon.lg {
 .cu-list.grid>.cu-item text {
   display: block;
   margin-top: 10rpx;
-  color: #888;
+  color: #666;
   font-size: 26rpx;
   line-height: 40rpx;
 }
@@ -3738,13 +3735,4 @@ scroll-view.cu-steps .cu-item {
 
 .text-shadow {
   text-shadow: 2rpx 4rpx 6rpx rgba(0, 0, 0, 0.4);
-}
-
-/** 扩展 */
-.text-theme, .line-theme, .lines-theme {
-  color: var(--theme)
-}
-.bg-theme{
-  background-color: var(--theme);
-  color: #fff;
 }

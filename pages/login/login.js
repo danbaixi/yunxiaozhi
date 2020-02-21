@@ -5,14 +5,23 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    customBar: app.globalData.customBar
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.setNavigationBarColor({
+      frontColor: '#ffffff',
+      backgroundColor: app.globalData.themeColor,
+    })
     let _this = this
+    let info = wx.getSystemInfoSync()
+    _this.setData({
+      winWidth:info.windowWidth,
+      winHeight:info.windowHeight
+    })
     wx.login({
       success: (res) =>{
         _this.setData({

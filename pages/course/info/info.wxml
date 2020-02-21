@@ -65,10 +65,7 @@
       <text class="text-black">{{course.method}}</text>
     </view>
   </view>
-</view>
-
-<view class="cu-list menu sm-border" wx:if="{{showStudent}}">
-  <view class="cu-item arrow" bindtap="goStudents">
+  <view class="cu-item arrow" bindtap="goStudents"  wx:if="{{showStudent}}">
     <view class="content">
       <text class="icon-peoplelist text-theme"></text>
       <text class="text-theme">同堂同学</text>

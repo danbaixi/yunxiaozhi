@@ -4,88 +4,73 @@ var util = require('../../utils/util.js');
 Page({
   data: {
     tools: [
-    {
-      icon: 'form',
-      color: 'blue',
-      badge: 0,
-      name: '成绩',
-      needLogin:true,
-      url: '../tools/score/score?from=index',
-    }, 
-    {
-      icon: 'rank',
-      color: 'green',
-      badge: 0,
-      name: '报告',
-      needLogin: true,
-      url: '../tools/score/ana/ana?from=index',
-    }, 
-    {
-      icon: 'list',
-      color: 'orange',
-      badge: 0,
-      name: '考勤',
-      needLogin: true,
-      url: '../tools/attendance/attendance?from=index',
-    }, 
-    {
-      icon: 'remind',
-      color: 'olive',
-      badge: 0,
-      name: '考试',
-      needLogin: true,
-      url: '../tools/exam/exam?from=index',
-    }, 
-    {
-      icon: 'evaluate',
-      color: 'red',
-      badge: 0,
-      name: '评教',
-      needLogin: true,
-      url: '../tools/assess/assess?from=index',
-    }, 
-    {
-      icon: 'calendar',
-      color: 'cyan',
-      badge: 0,
-      name: '校历',
-      needLogin: false,
-      url: '../tools/calendar/calendar?from=index',
-    }, 
-    {
-      icon: 'vipcard',
-      color: 'purple',
-      badge: 0,
-      name: '羊城通',
-      needLogin: true,
-      url: '../tools/yct/yct?from=index',
-    }, 
-    {
-      icon: 'time',
-      color: 'pink',
-      badge: 0,
-      name: '时光',
-      needLogin: true,
-      url: '../my/time/time?from=index',
-    }, 
-    {
-      icon: 'search',
-      color: 'yellow',
-      badge: 0,
-      name: '空教室',
-      needLogin: false,
-      url: '../tools/emptyroom/emptyroom?from=index',
-    },
-    {
-      icon: 'apps',
-      color: 'theme',
-      badge: 1,
-      needLogin: false,
-      tab:true,
-      name: '更多',
-      url: '../tool/tool?from=index',
-    }],
-    gridCol: 5,
+      {
+        icon: 'form',
+        color: 'blue',
+        badge: 0,
+        name: '成绩查询',
+        icon: 'score',
+        needLogin: true,
+        url: '../tools/score/score?from=index',
+      }, {
+        icon: 'rank',
+        color: 'green',
+        badge: 0,
+        name: '绩点分析',
+        icon: 'ana',
+        needLogin: true,
+        url: '../tools/score/ana/ana?from=index',
+      }, {
+        icon: 'list',
+        color: 'orange',
+        badge: 0,
+        name: '考勤记录',
+        icon: 'attendance',
+        needLogin: true,
+        url: '../tools/attendance/attendance?from=index',
+      }, {
+        icon: 'remind',
+        color: 'olive',
+        badge: 0,
+        name: '考试安排',
+        icon: 'exam',
+        needLogin: true,
+        url: '../tools/exam/exam?from=index',
+      }, {
+        icon: 'search',
+        color: 'olive',
+        badge: 0,
+        name: '空教室',
+        icon: 'classroom',
+        needLogin: false,
+        url: '../tools/emptyroom/emptyroom?from=index',
+      }, {
+        icon: 'calendar',
+        color: 'cyan',
+        badge: 0,
+        name: '校历',
+        icon: 'calendar',
+        needLogin: false,
+        url: '../tools/calendar/calendar?from=index',
+      }, {
+        icon: 'vipcard',
+        color: 'purple',
+        badge: 0,
+        name: '羊城通',
+        icon: 'yct',
+        needLogin: true,
+        url: '../tools/yct/yct?from=index',
+      }, {
+        icon: 'apps',
+        color: 'theme',
+        badge: 1,
+        needLogin: false,
+        tab:true,
+        name: '全部应用',
+        icon: 'apps',
+        url: '../tool/tool?from=index',
+      }],
+    gridCol: 4,
     news_loading:false,
     course_loading:false,
     message_loading:false,
@@ -107,11 +92,13 @@ Page({
         type:0
       }
     ],
-    soulLock:false
+    statusBar: app.globalData.statusBar,
+    customBar: app.globalData.customBar,
   },
 
   onLoad: function () {
     var that = this
+    //that.getBanner();//获取Banner
     var add_tips = wx.getStorageSync('add_my_tips')
     var time = (new Date).getTime()
     if ((time - add_tips) / 1000 >= 7 * 24 * 60 * 60){
@@ -119,7 +106,6 @@ Page({
         add_tips: true
       })
     }
-
   },
 
   onShow:function(){
@@ -155,7 +141,6 @@ Page({
       })
     }
     
-    that.getBanner();//获取Banner
     // that.getMessage();//获取公告
     that.getNowWeek();//获取第几周
     that.getWeekday();//获取星期几
@@ -168,30 +153,6 @@ Page({
     this.setData({
       tmpClass: tmpClass
     })
-
-    //监听摇一摇
-    // wx.onAccelerometerChange(function (res) {
-    //   if (that.data.hideSoul == 0 && !that.data.soulLock && (res.x >= 1 || res.y >= 1)) {
-    //     that.setData({
-    //       soulLock:true
-    //     })
-    //     wx.stopAccelerometer({})
-    //     wx.showLoading({
-    //       title: '玩命加载中',
-    //     })
-    //     setTimeout(function(){
-    //       wx.hideLoading()
-    //       wx.navigateTo({
-    //         url: '/pages/soul/soul?egg=1',
-    //         success:function(){
-    //           that.setData({
-    //             soulLock: false
-    //           })
-    //         }
-    //       })
-    //     },1200)
-    //   }
-    // });
   },
 
   /** 下拉刷新 */
@@ -202,7 +163,7 @@ Page({
       news_list: [],
     });
     wx.removeStorageSync('news');
-    that.getBanner();
+    //that.getBanner();
     that.getMyExam();
     var user_id = wx.getStorageSync('user_id');
     that.setData({
@@ -245,21 +206,24 @@ Page({
   getNowWeek: function () {
     var that = this;
     var date = new Date();
-    var year = app.globalData.start_year;
-    var month = app.globalData.start_month;
-    var day = app.globalData.start_day;
+    let configs = wx.getStorageSync('configs')
+    let termDate = configs.termDate
+    let data = termDate.split('-')
+    let [year, month, day] = [data[0], data[1], data[2]]  
     var start = new Date(year, month - 1, day);
     //计算时间差
     var left_time = parseInt((date.getTime() - start.getTime()) / 1000);
     var days = parseInt(left_time / 3600 / 24);
     var week = Math.floor(days / 7) + 1;
+    week = 8;
     if (week <= 0 || week > 20) {
-      var now_week = '假期'
+      var now_week_text = '假期'
     }else {
-      var now_week = '第' + week + '周';
+      var now_week_text = '第' + week + '周';
     }
     that.setData({
-      now_week:now_week,
+      now_week:week,
+      now_week_text:now_week_text
     })
   },
   /** 获取课表 */
@@ -376,7 +340,7 @@ Page({
       }
     }
     for (var j = 0; j < result.length; j++) {
-      if (week == ("第" + result[j]+"周")) {
+      if (week == result[j]) {
         return true;
       } else if (j == result.length - 1) {
         return false;
@@ -586,6 +550,32 @@ Page({
   goSoul:function(){
     wx.navigateTo({
       url: '/pages/soul/soul',
+    })
+  },
+
+  //切换课表为本班
+  restore: function () {
+    let _this = this
+    app.isBind().then((resolve) => {
+      if (resolve) {
+        wx.showLoading({
+          title: '正在切换',
+        })
+        app.promiseRequest({
+          url: 'course/getList'
+        }).then((data) => {
+          wx.hideLoading()
+          app.msg('切换成功', 'success')
+          _this.setData({
+            tmpClass:''
+          })
+          wx.removeStorageSync('tmp_class')
+          wx.setStorageSync('course', data.data.course);
+          wx.setStorageSync('train', data.data.train_course);
+        }).catch((error) => {
+          app.msg(error.message)
+        })
+      }
     })
   }
 })

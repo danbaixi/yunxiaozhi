@@ -1,14 +1,39 @@
 const md5 = require('/utils/md5.js');
 App({
-  onLoad: function () {
-    //检查是否登录
-    if (!wx.getStorageSync('user_id')) {
-      wx.reLaunch({
-        url: '../login/login',
+  onLaunch: function () {
+    let updateTime = 3 * 60 * 1000 // 3分钟更新一次config
+    let time = (new Date()).getTime()
+    let configUpdateTime = wx.getStorageSync('config_update_time')
+    if (!configUpdateTime || time - configUpdateTime >= updateTime) {
+      this.httpRequest({
+        url: 'config/getMiniConfig',
+        needLogin: false,
+        success: function (res) {
+          if (res.data.status == 0) {
+            wx.setStorageSync('config_update_time', time)
+            wx.setStorageSync('configs', res.data.data)
+          } else {
+            console.log('get config error')
+          }
+        }
       })
     }
-  },
-  onLaunch: function () {
+
+    //导航栏位置
+    wx.getSystemInfo({
+      success: e => {
+        this.globalData.statusBar = e.statusBarHeight;
+        let capsule = wx.getMenuButtonBoundingClientRect();
+        if (capsule) {
+          this.globalData.custom = capsule;
+          this.globalData.customBar = capsule.bottom + capsule.top - e.statusBarHeight;
+        } else {
+          this.globalData.customBar = e.statusBarHeight + 50;
+        }
+      }
+    })
+    
+    //检查更新
     const updateManager = wx.getUpdateManager()
     updateManager.onCheckForUpdate(function (res) {
     })
@@ -23,26 +48,14 @@ App({
         }
       })
     })
-    //自定义导航栏
-    // wx.getSystemInfo({
-    //   success: e => {
-    //     this.globalData.StatusBar = e.statusBarHeight;
-    //     let custom = wx.getMenuButtonBoundingClientRect();
-    //     this.globalData.Custom = custom;
-    //     this.globalData.CustomBar = custom.bottom + custom.top - e.statusBarHeight;
-    //   }
-    // })
-    //获取当前学期开学日期
   },
   /** 全局变量 */
   globalData:{
     isDebug:true,
+    themeColor: '#1380ff',
     xdebug:"?XDEBUG_SESSION_START=18446",
     domain:'https://www.yunxiaozhi.cn/v1/public/api/',
     key:'ihzoaixnuy4f8835032505e8a45ac102c52d58593e',
-    start_year: 2019,
-    start_month: 9,
-    start_day: 2,
     amap_key: "67c20c2c7db08923379123500b656adf",
     markers_json: "https://www.yunxiaozhi.cn/v1/resource/markers.json",
     adTime: 24,//小时出现一次
@@ -59,7 +72,7 @@ App({
    * 获取请求domain
    */
   getDomain:function(){
-    return this.globalData.isDebug ? 'http://127.0.0.1/yunxiaozhi/public/index.php/api/' : 'https://www.yunxiaozhi.cn/v1/public/api/'
+    return this.globalData.isDebug ? 'http://danbaixi.utools.club/yxz_v1/public/index.php/api/' : 'https://www.yunxiaozhi.cn/v1/public/api/'
   },
 
   getSign:function(){
@@ -177,15 +190,21 @@ App({
     return user_id == '' ? false : user_id
   },
 
-  //获取课表
-  getCourse:function(stu_id){
+  //登录or绑定提示
+  isBind:function(){
+    let _this = this
     return new Promise((resolve) => {
-      app.httpRequest({
-        url: 'course/getList',
-        success: function (res) {
-          resolve(res.data)
-        },
-      });
+      let session = wx.getStorageSync('login_session')
+      if(session == ''){
+        _this.msg('请先登录')
+        return resolve(false)
+      }
+      let user_id = wx.getStorageSync('user_id')
+      if(user_id == ''){
+        _this.msg('请先绑定教务系统账号')
+        return resolve(false)
+      }
+      return resolve(true)
     })
   },
 
@@ -222,6 +241,15 @@ App({
         success:function(res){
           if(res.data.status == 0){
             resolve(res.data)
+          }else if(res.data.status == 4003){
+            //登陆已过期
+            that.msg(res.data.message)
+            wx.clearStorageSync()
+            setTimeout(() => {
+              wx.navigateTo({
+                url: '/pages/login/login',
+              })
+            },1000)
           }else{
             reject(res.data.message || '服务器开小差了 ╯﹏╰')
           }
@@ -269,6 +297,5 @@ App({
         value: value
       }
     })
-  },
-
+  }
 })

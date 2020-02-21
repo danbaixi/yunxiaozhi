@@ -9,49 +9,58 @@ Page({
   data: {
     yzmUrl: "",
     cookie: "",
-    cookie_2: "",
     __VIEWSTATE: "",
-    user_id: "15230203124",
-    user_password: "jiangjixi",
+    user_id: "",
+    user_password: "",
     code: "",
     password_display: false,
     loading: false,
-    modal_visible: false,
-    hasNotice: false,
-    systemType: 2
+    systemType: 1, // 1为青果，2为强智
+    needValidate: false,
+    customBar:app.globalData.customBar
   },
 
   /**
    * 生命周期函数--监听页面 加载
    */
   onLoad: function(options) {
+    wx.setNavigationBarColor({
+      frontColor: '#ffffff',
+      backgroundColor: app.globalData.themeColor,
+    })
     let that = this;
     app.isLogin().then((resolve) =>{
-      if(!resolve){
+      if(!resolve){ 
         return
       }
     })
+
     this.setData({
       url: options.url ? options.url : '/pages/index/index'
     })
-    // this.getNotice();
-    this.loginInitV1();
-    if (wx.getStorageSync('user_id')) {
-      wx.redirectTo({
-        url: '../course/course',
+
+    let configs = wx.getStorageSync('configs')
+    if(this.data.systemType == 1 && configs.bindNeedValidate == 1){
+      this.setData({
+        needValidate:true
+      })
+      this.initQingGuo().then((resolve) => {
+        that.setData({
+          cookie: resolve.data.cookie,
+          __VIEWSTATE: resolve.data.__VIEWSTATE,
+        })
+        that.freshYzm();
+      }).catch((error) => {
+        app.msg(error.message)
+      })
+
+    }else if(this.data.systemType == 2){
+      that.setData({
+        cookie: res.data.data.cookie,
+      }).catch((error) => {
+        app.msg(error.message)
       })
     }
-
-    //新教务系统获取cookie，暂时隐藏
-    // app.httpRequest({
-    //   url: 'login/getLoginCookie',
-    //   data: '',
-    //   success: function(res) {
-    //     that.setData({
-    //       cookie: res.data.data.cookie,
-    //     })
-    //   }
-    // })
   },
   /**
    * 用户点击右上角分享
@@ -76,14 +85,29 @@ Page({
       app.msg('请输入密码')
       return
     }
-    if (that.data.systemType == 2 && code == "") {
+    if (that.data.systemType == 1 && that.data.needValidate && code == "") {
       app.msg('请输入验证码')
       return
     }
     wx.showLoading({
       title: '正在绑定...',
     })
-    if (that.data.systemType == 1) {
+
+    if(that.data.systemType == 1){
+      that.bindQingGuo().then((resolve) => {
+        wx.hideLoading()
+        if (resolve.status == 0) {
+          app.msg("绑定成功", "success")
+          wx.setStorageSync('user_id', that.data.user_id)
+          wx.switchTab({
+            url: '/pages/index/index',
+          })
+          return
+        }
+        that.freshYzm()
+        app.msg(resolve.message)
+      })
+    }else if (that.data.systemType == 2) {
       var cookie = that.data.cookie;
       var encoded = util.encodeInp(user_id) + "%%%" + util.encodeInp(password);
       app.httpRequest({
@@ -142,29 +166,17 @@ Page({
       return
     }
 
-    that.bindQingGuo().then((resolve) =>{
-      wx.hideLoading()
-      if(resolve.status == 0){
-        app.msg("绑定成功","success")
-        wx.setStorageSync('user_id', that.data.user_id)
-        wx.switchTab({
-          url: '/pages/index/index',
-        })
-        return
-      }
-      that.freshYzm()
-      app.msg(resolve.message)
-    })
-
   },
+
   /** 刷新验证码 */
   freshYzm: function() {
     var num = Math.ceil(Math.random() * 1000000);
     this.setData({
       loading: true,
-      yzmUrl: app.getDomain() + 'login/getValidateImg?cookie=' + this.data.cookie_2 + '&rand=' + num,
+      yzmUrl: app.getDomain() + 'login/getValidateImg?cookie=' + this.data.cookie + '&rand=' + num,
     })
   },
+
   /** 输入学号 */
   inputUserId: function(e) {
     var that = this;
@@ -172,6 +184,7 @@ Page({
       user_id: e.detail.value.trim()
     })
   },
+
   /** 输入密码 */
   inputPwd: function(e) {
     var that = this;
@@ -179,6 +192,7 @@ Page({
       user_password: e.detail.value
     })
   },
+
   /** 输入验证码 */
   inputCode: function(e) {
     var that = this;
@@ -186,92 +200,45 @@ Page({
       code: e.detail.value
     })
   },
+
   /** 清空学号 */
   clearUserId: function() {
     this.setData({
       user_id: ''
     })
   },
+
   /** 展开密码 */
   displayPwd: function() {
     this.setData({
-      display_password: true
+      display_password: this.data.display_password ? false : true
     })
   },
-  /** 隐藏密码 */
-  hidePwd: function() {
-    this.setData({
-      display_password: false
-    })
-  },
+
   /** 图片预加载 */
   imageLoad: function() {
     this.setData({
       loading: false
     })
   },
-  /** 帮助 */
-  help: function() {
-    this.setData({
-      modal_visible: true,
-    })
-  },
-  handleClose: function() {
-    this.setData({
-      modal_visible: false,
-    })
-  },
-  //获取公告
-  getNotice: function() {
-    var that = this;
-    app.httpRequest({
-      url: 'notice/getnotice',
-      needLogin:false,
-      data: {
-        page: 'login'
-      },
-      success: function(res) {
-        if (res.data.status == 1001) {
-          that.setData({
-            hasNotice: res.data.data.display == 1 ? true : false,
-            notice: res.data.data.content
-          })
-        } else {
-          that.setData({
-            hasNotice: false
-          })
-        }
-      }
-    })
-  },
 
-  //切换登录方式
-  changeLoginType: function(e) {
-    var type = e.target.dataset.type;
-    this.setData({
-      systemType: type
-    })
-    if (this.data.cookie_2 == "") {
-      this.loginInitV1();
-    }
-
-  },
-
-  //获取旧的教务系统登录cookie
-  loginInitV1: function() {
-    var that = this
-    app.httpRequest({
+  //获取青果教务系统登录cookie
+  initQingGuo: function() {
+    return app.promiseRequest({
       url: 'login/getLoginInitData',
-      needLogin:false,
-      success: function (res) {
-        that.setData({
-          cookie_2: res.data.data.cookie,
-          __VIEWSTATE: res.data.data.__VIEWSTATE,
-        })
-        that.freshYzm();
-      }
+      needLogin: false
     })
   },
+
+  //获取强智教务系统cookie
+  initQiangZhi: function(){
+    return app.promiseRequest({
+      url: 'login/getLoginCookie',
+      needLogin: false
+    })
+  },
+
+
   loginTips:function(){
     wx.navigateTo({
       url: '/pages/loginTips/loginTips',
@@ -291,7 +258,7 @@ Page({
         data: {
           stu_id: _this.data.user_id,
           password: _this.data.user_password,
-          cookie: _this.data.cookie_2,
+          cookie: _this.data.cookie,
           __VIEWSTATE: _this.data.__VIEWSTATE,
           code: _this.data.code,
           session: app.getLoginStatus(),
