@@ -43,9 +43,6 @@ Page({
     train_course_id:0,
     list_is_display:false,
     sheet_visible: false,
-    StatusBar: app.globalData.StatusBar,
-    CustomBar: app.globalData.CustomBar,
-    Custom: app.globalData.Custom,
     toggleDelay:false,//延迟加载
     ad:{
       display:false,
@@ -65,7 +62,10 @@ Page({
     display_course_time:0,
     area:0,
     course_time:[],
-    startDays:['周日','周一']
+    startDays:['周日','周一'],
+    customBar: app.globalData.customBar,
+    statusBar: app.globalData.statusBar,
+    custom: app.globalData.custom
   },
 
   /**
@@ -502,18 +502,11 @@ Page({
           app.httpRequest({
             url: 'course/getList',
             success: function (res) {
-              if (res.data.status == 0) {
-                wx.showToast({
-                  title: '更新成功',
-                })
-                wx.setStorageSync('course_update_time', time);
-                app.msg("更新成功", 'success')
-                wx.setStorageSync('course', res.data.data.course);
-                wx.setStorageSync('train', res.data.data.train_course);
-                that.onShow();
-              } else {
-                app.msg(res.data.message)
-              }
+              wx.setStorageSync('course_update_time', time);
+              app.msg("更新成功", 'success')
+              wx.setStorageSync('course', res.data.data.course);
+              wx.setStorageSync('train', res.data.data.train_course);
+              that.onShow();
             },
           })
         } else {

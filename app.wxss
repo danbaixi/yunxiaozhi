@@ -7,7 +7,10 @@ page{
   --yellow: #ffa807;
   --gradualTheme: linear-gradient(45deg, #1380ff, #1cbbb4);
 }
-
+.cu-custom {
+  display: block;
+  position: relative;
+}
 /** 扩展 */
 .text-theme, .line-theme, .lines-theme {
   color: var(--theme)

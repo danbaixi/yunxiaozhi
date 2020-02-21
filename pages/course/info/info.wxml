@@ -1,7 +1,7 @@
-<!-- <cu-custom bgColor="bg-theme" isBack="true">
+<cu-custom bgColor="bg-theme" isBack="true">
   <view slot="back">返回</view>
 	<view slot="content">课程详情</view>
-</cu-custom> -->
+</cu-custom>
 <view class="cu-bar bg-white solid-bottom">
   <view class="text-black action">
     {{course.fullName || course.name}}

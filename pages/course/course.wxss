@@ -27,13 +27,12 @@ page{
   margin: 0 auto;
 }
 .select_week{
-  position: relative;
   background: #fff;
+  position: relative;
   color: var(--black);
   height: 32px;
   z-index: 1000;
   font-size: 16px;
-  line-height: 28px;
 }
 .xiala{
   width: 20px;
@@ -50,10 +49,9 @@ page{
 .settings{
   position: absolute;
   justify-content: center;
-  top: 0;
-  right: 22rpx;
-  font-size: 58rpx!important;
-  line-height: 32px;
+  left: 22rpx;
+  font-size: 48rpx!important;
+  /* line-height: 32px; */
   transition: 0.5s;
 }
 .train{
@@ -211,7 +209,6 @@ page{
 .mask {
   width: 100%;
   position: fixed;
-  top:32px;
   left: 0;
   background: #000;
   opacity: 0.3;

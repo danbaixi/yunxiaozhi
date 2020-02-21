@@ -45,7 +45,7 @@
     "navigationBarTextStyle": "black"
   },
   "usingComponents": {
-    "cu-custom": "/pages/assets/colorui/components/cu-custom"
+    "cu-custom": "pages/assets/colorui/components/cu-custom"
   },
   "tabBar": {
     "color": "#cbcbcb",

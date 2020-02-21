@@ -1,4 +1,4 @@
-<image class="bg" mode="widthFix" src="/pages/assets/imgs/other/bgImage.jpg"></image>
+<image class="bg" mode="widthFix" src="/pages/assets/imgs/other/by1.jpg"></image>
 <view class="container" style="padding-top:{{customBar}}px">
   <view class="header">
     <image class="logo" mode="widthFix" src="/pages/assets/imgs/other/logo_radius.png"></image>

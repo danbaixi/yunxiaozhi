@@ -27,22 +27,14 @@ Component({
       type: String,
       default: ''
     },
-    isUpdate: {
-      type: [Boolean, String],
-      default: false
-    },
-    update:{
-      type:String,
-      default:'defaultUpdate'
-    }
   },
   /**
    * 组件的初始数据
    */
   data: {
-    StatusBar: app.globalData.StatusBar,
-    CustomBar: app.globalData.CustomBar,
-    Custom: app.globalData.Custom
+    StatusBar: app.globalData.statusBar,
+    CustomBar: app.globalData.customBar,
+    Custom: app.globalData.custom
   },
   /**
    * 组件的方法列表
@@ -56,12 +48,6 @@ Component({
     toHome(){
       wx.reLaunch({
         url: '/pages/index/index',
-      })
-    },
-    defaultUpdate(){
-      wx.showToast({
-        title: '当前没有更新',
-        icon: 'none'
       })
     }
   }

@@ -1,15 +1,16 @@
-<!-- <view class="diy-nav" style="height:{{CustomBar}}px;">
-  <view class='select_week' style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;">
+<view class="diy-nav" style="height:{{customBar}}px;">
+  <view class='select_week' style="height:{{customBar}}px;padding-top:{{statusBar}}px;">
     <picker class='week_num' mode="selector" range="{{zhou_num}}" bindchange="select" value="{{now_week-1}}">
-      <text class="text-white text-lg">第 {{now_week}} 周 </text>
-      <text class="icon-unfold lg text-white"></text>
+      <view style="line-height:{{customBar-statusBar}}px;height:100%">
+        <text class="text-black text-lg">第 {{now_week}} 周 </text>
+        <text class="icon-unfold lg text-black"></text>
+      </view>
     </picker>
-    <view class="text-white text-lg settings" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;" bindtap='listDisplay'>
-    更新
-    </view> 
+    <text class=" icon-add settings text-black" style="top:{{statusBar}}px;line-height:{{customBar-statusBar}}px;height:{{customBar-statusBar}}px;transform:rotate({{list_is_display?135:0}}deg)" bindtap='listDisplay'>
+    </text> 
   </view>
-</view> -->
-<view class="diy-nav">
+</view>
+<!-- <view class="diy-nav">
   <view class='select_week'>
     <picker class='week_num' mode="selector" range="{{zhou_num}}" bindchange="select" value="{{now_week-1}}">
       <text class="text-lg text-black">第 {{now_week}} 周 </text>
@@ -17,9 +18,9 @@
     </picker>
     <text class=" icon-add settings text-black" style="transform:rotate({{list_is_display?135:0}}deg)" bindtap='listDisplay'></text> 
   </view>
-</view>
-<view class="mask" bindtap="hideMask" style='height:{{winHeight-32}}px' wx:if="{{list_is_display}}"></view>
-<view class="list cu-list menu sm-border" style='height:{{7*55}}px;top:{{list_is_display?32:-(7*55)}}px'>
+</view> -->
+<view class="mask" bindtap="hideMask" style='height:{{winHeight-customBar}}px;top:{{customBar}}px' wx:if="{{list_is_display}}"></view>
+<view class="list cu-list menu sm-border" style='height:{{7*55}}px;top:{{list_is_display?customBar:-(7*55)}}px'>
   <view class="cu-item arrow" bindtap='update'>
     <view class="content">
       <text class="text-grey">更新课表</text>

@@ -114,10 +114,35 @@ App({
         'content-type': contentType
       },
       success:function(res){
-        if(res.data.code == 1101){
-          app.msg('请求失败')
+        switch(res.data.status){
+          default:
+            datas.success(res);break;
+          case 4001:
+            that.msg('请先登录');break;
+          case 4002:
+            that.msg('请先绑定账号'); break;
+          case 4003:
+            //登陆已过期
+            that.msg(res.data.message)
+            wx.clearStorageSync()
+            //保留配置信息
+            let configs = wx.getStorageSync('configs')
+            wx.setStorageSync('configs', configs)
+            setTimeout(() => {
+              wx.navigateTo({
+                url: '/pages/login/login',
+              })
+            }, 1000)
+            break;
+          case 4004:
+            that.msg('您已修改了教务系统密码，请重新绑定账号');
+            setTimeout(() => {
+              wx.navigateTo({
+                url: '/pages/bind/bind',
+              })
+            }, 1000);
+            break;
         }
-        datas.success(res)
       },
       fail:function(res){
         wx.showToast({
@@ -245,6 +270,9 @@ App({
             //登陆已过期
             that.msg(res.data.message)
             wx.clearStorageSync()
+            //保留配置信息
+            let configs = wx.getStorageSync('configs')
+            wx.setStorageSync('configs', configs)
             setTimeout(() => {
               wx.navigateTo({
                 url: '/pages/login/login',

@@ -8,12 +8,6 @@
       <text class="icon-back" bindtap="BackPage"></text>
       <text class="icon-homefill" bindtap="toHome"></text>
     </view>
-    <!-- 新增 更新模块 -->
-    <view class="action border-custom"  wx:if="{{isUpdate}}" style="width:{{Custom.width}}px;height:{{Custom.height}}px;margin-left:calc(750rpx - {{Custom.right}}px)">
-      <text class="icon-back" bindtap="BackPage"></text>
-      <text class="icon-refresh" bindtap="{{update}}"></text>
-    </view>
-    <!-- 新增 更新模块 -->
     <view class="content" style="top:{{StatusBar}}px">
       <slot name="content"></slot>
     </view>
