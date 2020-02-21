@@ -530,7 +530,7 @@ Page({
                 app.msg("更新成功", 'success')
                 wx.setStorageSync('course', res.data.data.course);
                 wx.setStorageSync('train', res.data.data.train_course);
-                that.onLoad({animation:true});
+                that.onShow();
               } else {
                 app.msg(res.data.message)
               }

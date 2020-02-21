@@ -40,9 +40,9 @@ App({
     xdebug:"?XDEBUG_SESSION_START=18446",
     domain:'https://www.yunxiaozhi.cn/v1/public/api/',
     key:'ihzoaixnuy4f8835032505e8a45ac102c52d58593e',
-    start_year: 2019,
-    start_month: 9,
-    start_day: 2,
+    start_year: 2020,
+    start_month: 2,
+    start_day: 17,
     amap_key: "67c20c2c7db08923379123500b656adf",
     markers_json: "https://www.yunxiaozhi.cn/v1/resource/markers.json",
     adTime: 24,//小时出现一次
