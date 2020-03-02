@@ -7,6 +7,9 @@ const TIMES = [
   ],
   [
     ["08:30", "09:15"], ["09:20", "10:05"], ["10:20", "11:05"], ["11:10", "11:55"], ["13:45", "14:30"], ["14:35", "15:20"], ["15:35", "16:20"], ["16:25", "17:10"], ["17:45", "18:30"], ["18:35", "19:20"], ["19:25", "20:10"], ["20:15", "21:00"]
+  ],
+  [
+    ["08:30", ""], ["", "10:00"], ["10:30", ""], ["", "12:00"], ["14:00", ""], ["", "15:30"], ["16:00", ""], ["", "17:30"], ["18:30", ""], ["", "20:00"], ["20:30", ""], ["", "22:00"]
   ]
 ]
 Page({
@@ -66,7 +69,8 @@ Page({
     display_course_time:0,
     area:0,
     course_time:[],
-    startDays:['周日','周一']
+    startDays:['周日','周一'],
+    internet_course_time:false
   },
 
   /**
@@ -810,7 +814,10 @@ Page({
     var that = this
     var display_course_time = wx.getStorageSync('display_course_time')
     var area = wx.getStorageSync('user_area')
-    if(display_course_time === '' || area === ''){
+    //更新网上学习时间
+    var internet_course_time = wx.getStorageSync('internet_course_time')
+
+    if (internet_course_time === '' || display_course_time === '' || area === ''){
       var user_id = wx.getStorageSync('user_id');
       var str = app.globalData.key + user_id;
       var sign = md5.hexMD5(str);
@@ -827,17 +834,20 @@ Page({
           }
           that.setData({
             area:res.data.data.area,
-            display_course_time: res.data.data.display
+            display_course_time: res.data.data.display,
+            internet_course_time: res.data.data.internet_course_time //上网课时间
           })
           wx.setStorageSync('display_course_time',res.data.data.display)
           wx.setStorageSync('user_area',res.data.data.area)
+          wx.setStorageSync('internet_course_time', res.data.data.internet_course_time)
           that.displayTime()
         }
       })
     }else{
       that.setData({
         display_course_time: display_course_time,
-        area: area
+        area: area,
+        internet_course_time: internet_course_time
       })
       that.displayTime()
     }
@@ -846,6 +856,12 @@ Page({
   //显示上课时间
   displayTime:function(){
     if(this.data.display_course_time == 0){
+      return
+    }
+    if(this.data.internet_course_time){
+      this.setData({
+        course_time: TIMES[2]
+      })
       return
     }
     if(this.data.area == '' || this.data.area == 0){

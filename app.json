@@ -33,7 +33,6 @@
     "pages/loginTips/loginTips",
     "pages/course/setTime/setTime",
     "pages/soul/soul",
-    "pages/soul/submit/submit",
     "pages/tools/emptyroom/emptyroom"
   ],
   "window": {
