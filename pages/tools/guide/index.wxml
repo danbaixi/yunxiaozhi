@@ -1,7 +1,7 @@
-<!-- <cu-custom bgColor="bg-theme" isBack="true">
+<cu-custom bgColor="bg-white" isBack="true">
   <view slot="back">返回</view>
 	<view slot="content">校园导览</view>
-</cu-custom> -->
+</cu-custom>
 <view style="width: 100%;">
   <scroll-view scroll-x class="bg-white nav" scroll-with-animation scroll-left="{{scrollLeft}}">
     <view class="cu-item {{index==isSelectedBuildType?'text-theme cur':''}}" wx:for="{{buildlData}}" wx:key bindtap="changePage" id="{{index}}">

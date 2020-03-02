@@ -1,7 +1,7 @@
-<!-- <cu-custom bgColor="bg-theme" isBack="true">
+<cu-custom bgColor="bg-white" isBack="true">
   <view slot="back">返回</view>
 	<view slot="content">个人信息</view>
-</cu-custom> -->
+</cu-custom>
 <view class='content'>
   <view class="cu-list menu">
     <view class="cu-item">
@@ -30,7 +30,7 @@
       学籍信息
     </view>
   </view>
-
+  <list-loading loading="{{loading}}"></list-loading>
   <view class="cu-list menu">
     <view class="cu-item" wx:for="{{xueji}}" wx:key="key">
       <view class="content">
@@ -41,13 +41,9 @@
       </view>
     </view>
   </view>
-
-  <!-- <view class='list'>
-    <view class='li xueji' wx:for="{{xueji}}" wx:key="key">
-      <text class='title'>{{item.title}}</text>
-      <text class='info'>{{item.data}}</text>
-    </view>
-  </view> -->
+</view>
+<view class="text-grey text-center margin-top">
+  <text bindtap="infoError">个人信息有误？</text>
 </view>
 
   <!--修改用户昵称-->

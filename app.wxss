@@ -7,10 +7,7 @@ page{
   --yellow: #ffa807;
   --gradualTheme: linear-gradient(45deg, #1380ff, #1cbbb4);
 }
-.cu-custom {
-  display: block;
-  position: relative;
-}
+
 /** 扩展 */
 .text-theme, .line-theme, .lines-theme {
   color: var(--theme)
@@ -24,6 +21,16 @@ page{
 .cu-btn.bg-theme{
   color: #fff;
 }
+switch.theme[checked] .wx-switch-input, checkbox.theme[checked] .wx-checkbox-input,
+radio.theme[checked] .wx-radio-input {
+  border-color: var(--theme) !important;
+}
+
+switch.theme[checked] .wx-switch-input.wx-switch-input-checked,
+checkbox.theme[checked] .wx-checkbox-input, radio.theme[checked] .wx-radio-input {
+  background-color: var(--theme) !important;
+  color: #fff !important;
+}
 
 .app-icon{
   margin-top: 10rpx;
@@ -31,6 +38,7 @@ page{
 }
 .app-icon image{
   width: 56rpx!important;
+  height: 56rpx!important;
 }
 
 /* yxz-bar */

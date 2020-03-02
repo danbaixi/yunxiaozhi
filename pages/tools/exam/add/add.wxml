@@ -1,7 +1,7 @@
-<!-- <cu-custom bgColor="bg-theme" isBack="true">
+<cu-custom bgColor="bg-white" isBack="true">
   <view slot="back">返回</view>
 	<view slot="content">添加考试</view>
-</cu-custom> -->
+</cu-custom>
 <form bindsubmit="formSubmit">
   <view class="cu-form-group">
     <view class="title">考试科目</view>

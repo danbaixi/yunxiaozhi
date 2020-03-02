@@ -1,87 +1,57 @@
-page{
+.page{
   width: 100%;
+  height: 100%;
 }
-.swiper-box{
-  width: 100%;
-  background: linear-gradient(to bottom, #6ed4e6, #379ff7);
-}
-.scores{
-  position: relative;
-  width: 92%;
-  height: 96%;
-  margin: 2% auto;
+.score{
+  box-sizing: border-box;
+  margin: 30rpx 3% 40rpx;
+  padding: 20rpx 16rpx;
   background: #fff;
-  border-radius: 20rpx;
-  padding-bottom: 40rpx;
+  border-radius: 12rpx;
+  box-shadow: 0 0 4rpx 0 rgba(255,255,255, .3)
 }
-.scores .head{
-  min-height: 50px;
-  height: 10%;
-  text-align: center;
-  font-size: 28rpx;
-  padding: 20rpx 0;
-  position: relative;
+.score .gpa{
+  margin: 16rpx 0;
 }
-.scores .avg{
-  display: inline-block;
-  margin: 10rpx 0 20rpx;
-  font-size: 28rpx;
-  padding: 8rpx 30rpx;
-  background: #6ed4e6;
-  border-radius: 30rpx;
-  width: auto;
+.score .gpa>text{
+  background: var(--theme);
+  padding: 10rpx 16rpx;
+  border-radius: 8rpx;
   color: #fff;
-} 
-.scores .list{
-  width: 92%;
-  height: 86%;
-  margin: 2% auto;
+}
+
+.cu-custom .cu-bar .border-custom {
+  position: relative;
+  background: var(--white);
+  border-radius: 1000rpx;
+  border:1px solid #ddd;
+  height: 30px;
+}
+.cu-bar .content-yxz {
+  position: absolute;
+  text-align: center;
+  width: calc(100% - 340rpx);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  margin: auto;
+  height: 60rpx;
   font-size: 32rpx;
-  overflow-y: auto;
-}
-.scores .list .li{
-  padding: 16rpx 0 14rpx;
-  border-bottom: 2rpx solid #d5d5d5;
-}
-.li .result{
-  min-width: 190rpx;
-  float: right;
-  text-align: left;
-}
-.li .result .tag{
-  color: #999;
-}
-.li .result .score{
-  color: #6ed4e6;
-}
-::-webkit-scrollbar{
-  width: 0;
-  height: 0;
-  color: transparent;
-}
-.name{
-  display: inline-block;
-  width: 60%;
-  margin: 0;
-  overflow: hidden;
+  line-height: 60rpx;
+  cursor: none;
+  text-overflow: ellipsis;
   white-space: nowrap;
-  text-overflow:ellipsis;
+  overflow: hidden;
+}
+.cu-list.menu>.cu-item {
+  min-height: 84rpx;
 }
 .null{
+  padding-top: 200rpx;
   text-align: center;
-  line-height: 80rpx;
-  padding: 40% 0;
 }
-.refresh{
-  width: 50rpx;
-  height: 50rpx;
-  position: absolute;
-  right: 40rpx;
-  top: 12rpx;
-}
-.update{
-  position: absolute;
-  top: 16rpx;
-  right: 22px;
-  font-size: 24px!important;
+.null image{
+  width: 200rpx;
+  height: 200rpx;
 }

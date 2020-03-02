@@ -66,7 +66,6 @@ Page({
 
   },
   receiverInput(e) {
-    console.log(e)
     this.setData({
       receiver: e.detail.value
     })
@@ -82,9 +81,10 @@ Page({
     })
   },
   submit:function(){
-    var receiver = this.data.receiver
-    var sender = this.data.sender
-    var content = this.data.content
+    let _this = this
+    var receiver = _this.data.receiver
+    var sender = _this.data.sender
+    var content = _this.data.content
     if(receiver == ''){
       app.msg("你想跟谁表白？")
       return
@@ -100,7 +100,7 @@ Page({
       url:'confession/add',
       data:{
         receiver:receiver,
-        sended:sender,
+        sender:sender,
         content:content
       },
       success:function(res){
@@ -110,6 +110,11 @@ Page({
           wx.showToast({
             title: '提交成功',
             icon: 'success'
+          })
+          _this.setData({
+            content:'',
+            receiver: '',
+            sender: ''
           })
         }else{
           app.msg(res.data.message)

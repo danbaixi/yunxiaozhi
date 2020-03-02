@@ -1,5 +1,3 @@
-var md5 = require('../../../utils/md5.js');
-var util = require('../../../utils/util.js');
 var app = getApp();
 Page({
 
@@ -15,9 +13,11 @@ Page({
     isNull:false,
     maxUpdateTime:2,
     refreshAnimation:"",
-    StatusBar: app.globalData.StatusBar,
-    CustomBar: app.globalData.CustomBar,
-    Custom: app.globalData.Custom
+    StatusBar: app.globalData.statusBar,
+    CustomBar: app.globalData.customBar,
+    Custom: app.globalData.custom,
+    termNumber:[2,1],
+    year_index:0
   },
 
   /**
@@ -31,8 +31,7 @@ Page({
       from: options.from,
       winHeight: winHeight
     })
-    this.getScore(false);
-    // this.getNotice()
+    this.getScore(false)
   },
 
   /**
@@ -66,13 +65,10 @@ Page({
    * 进入成绩详情
    */
   itemData:function(e){
-    var that = this;
-    var course = e.currentTarget.dataset.course;
-    var score = e.currentTarget.dataset.score;
-    var credit = e.currentTarget.dataset.credit;
-    var gpa = e.currentTarget.dataset.gpa;
+    var index = e.currentTarget.dataset.index;
+    var data = this.data.score[index]
     wx.navigateTo({
-      url: 'top/top?course='+course+'&score='+score+'&credit='+credit+'&gpa='+gpa,
+      url: 'top/top?from=score&data=' + encodeURIComponent(JSON.stringify(data))  
     })
   },
   analysis:function(){
@@ -86,44 +82,41 @@ Page({
   //获取成绩
   getScore:function(update){
     var that = this;
-    wx.showLoading({title:"加载中"})
     var scores = wx.getStorageSync('scores');
     if (scores != '' && JSON.stringify(scores) != "{}" && scores.score.length>0 && !update){
       that.setData({
-        avg: scores.avg,
+        gpa: scores.gpa,
         score: scores.score,
-        term: scores.term
+        term: scores.term,
+        year: scores.year,
+        original_score: scores.originalScore
       })
       wx.hideLoading()
-    }else{
-      var user_id = wx.getStorageSync('user_id');
-      var str = app.globalData.key + user_id;
-      var sign = md5.hexMD5(str);
-      app.httpRequest({
-        url: 'score/getscorelist',
-        data: {
-          sign: sign,
-          stu_id: user_id
-        },
-        success: function (res) {
-          wx.hideLoading()
-          if (res.data.status == 1001) {
-            wx.setStorageSync('scores', res.data.data);
-            that.setData({
-              avg: res.data.data.avg,
-              score: res.data.data.score,
-              term: res.data.data.term
-            })
-          } else if (res.data.status == 1002) {
-            app.msg('获取失败')
-          } else if (res.data.status == 1003) {
-            that.setData({
-              isNull: true
-            })
-          }
-        },
-      });
+      return
     }
+    app.httpRequest({
+      url: 'score/getscorelist',
+      success: function (res) {
+        wx.hideLoading()
+        if (res.data.status == 0) {
+          wx.setStorageSync('scores', res.data.data);
+          that.setData({
+            isNull:false,
+            gpa: res.data.data.gpa,
+            score: res.data.data.score,
+            term: res.data.data.term,
+            year: res.data.data.year,
+            original_score: res.data.data.originalScore
+          })
+        }else if(res.data.status == 1001){
+          that.setData({
+            isNull:true
+          })
+        }else{
+          app.msg(res.data.message)
+        }
+      },
+    });
   },
 
   //获取公告
@@ -228,11 +221,7 @@ Page({
   update:function(){
     var that = this;
     that.setData({ list_is_display: false })
-    var user_id = wx.getStorageSync('user_id');
-    if (!user_id) {
-      app.msg("请先登录")
-      return;
-    }
+    app.isBind()
     var time = (new Date()).getTime();
     if (wx.getStorageInfoSync('score_update_time') != "") {
       var update_time = wx.getStorageSync('score_update_time');
@@ -245,40 +234,18 @@ Page({
       app.msg('请在'+season + '秒后更新')
       return
     }
-    wx.showLoading({ title: "更新中" })
-    var user_id = wx.getStorageSync('user_id');
-    var user_password = wx.getStorageSync('user_password');
-    var yzm = that.data.yzm;
-    var cookie = that.data.cookie;
-    var str = app.globalData.key + user_id;
-    var sign = md5.hexMD5(str);
-    // if (yzm == "") {
-    //   app.msg("请输入验证码")
-    //   return
-    // }
+    wx.showLoading({ title: "更新中.." })
     app.httpRequest({
       url: 'score/updateScoreV0',
-      data: {
-        stu_id: user_id,
-        password: user_password,
-        // code: yzm,
-        // cookie: cookie,
-        // __VIEWSTATE: that.data.__VIEWSTATE,
-        sign: sign
+      data:{
+        time:time
       },
       success: function (res) {
         wx.hideLoading()
-        that.hideModal();
-        wx.hideNavigationBarLoading()
-        if (res.data.status == 1001) {
-          app.msg('更新了' + res.data.data + '条记录')
-          if (res.data.data > 0) {
-            that.setData({
-              isNull: false
-            })
-            wx.setStorageSync('scores', '')
-            that.getScore(true);
-          }
+        if (res.data.status == 0) {
+          app.msg('更新成功','success') 
+          wx.setStorageSync('scores', '')
+          that.getScore(true);
           wx.setStorageSync('score_update_time', time);
         } else {
           if (res.data.status == 1002) {
@@ -303,5 +270,11 @@ Page({
         url: '/pages/index/index',
       })
     }
+  },
+  selectYear:function(e){
+    let index = e.detail.value
+    this.setData({
+      year_index: index
+    })
   }
 })

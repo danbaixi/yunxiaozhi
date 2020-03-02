@@ -207,6 +207,13 @@ Page({
     var that = this;
     var date = new Date();
     let configs = wx.getStorageSync('configs')
+    if(!configs){
+      that.setData({
+        now_week: 1,
+        now_week_text: '第1周'
+      })
+      return
+    }
     let termDate = configs.termDate
     let data = termDate.split('-')
     let [year, month, day] = [data[0], data[1], data[2]]  
@@ -215,7 +222,7 @@ Page({
     var left_time = parseInt((date.getTime() - start.getTime()) / 1000);
     var days = parseInt(left_time / 3600 / 24);
     var week = Math.floor(days / 7) + 1;
-    week = 8;
+
     if (week <= 0 || week > 20) {
       var now_week_text = '假期'
     }else {
@@ -231,10 +238,9 @@ Page({
     var that = this;
     var data = wx.getStorageSync('course');
     //将之前的课表清空
-    that.setData({ course: [] });
+    var courses = [];
     if (data.length > 0) {
       var i = 0;
-      var courses = new Array();
       for (var a = 0; a < data.length; a++) {
         if (typeof data[a]['course_weekly'] == "undefined" || typeof data[a]['course_danshuang'] == "undefined") {
           continue
@@ -289,12 +295,12 @@ Page({
           }
         }
       }
-      that.setData({ 
-        course: courses
-      });
-    } else {
-      that.setData({ course: null });
+      
     }
+    that.setData({
+      course: courses
+    });
+
     //获取毒鸡汤
     if (that.data.hideSoul == 0 && (that.data.course == null || that.data.course.length == 0)){
       that.getSoul()
@@ -457,22 +463,17 @@ Page({
   },
   //获取考试列表
   getMyExam: function (e) {
-    var that = this;
+    var that = this,displayExam = false;
     var my_exams = wx.getStorageSync("my_exams");
-    if(my_exams){
-      for(let i =0;i<my_exams.length;i++){
-        if(my_exams[i].days >= 0){
-          that.setData({
-            my_exam: my_exams,
-            displayExam: true,
-          });
-          break;
-        }
+    for (let i = 0; i < my_exams.length; i++) {
+      if (my_exams[i].days >= 0) {
+        displayExam = true
+        break;
       }
-      return
     }
     that.setData({
-      displayExam: false,
+      my_exams:my_exams,
+      displayExam: displayExam,
     });
   },
   //计算两个日期的天数

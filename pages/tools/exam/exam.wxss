@@ -124,12 +124,12 @@
   position: absolute;
   left: 50%;
   bottom: 160rpx;
-  height: 24px;
-  width: 24px;
-  margin-left: -12px;
+  height: 48rpx;
+  width: 48rpx;
+  margin-left: -24rpx;
   border-radius: 100%;
-  font-size: 30px;
-  line-height: 30px;
+  font-size: 48rpx;
+  line-height: 48rpx;
 }
 .copy{
   background: rgba(0, 0, 0, 0.5);

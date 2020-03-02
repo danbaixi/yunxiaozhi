@@ -1,4 +1,9 @@
-<view class="cu-list menu">
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">空教室查询</view>
+</cu-custom>
+<list-loading loading="{{loading}}"></list-loading>
+<view class="cu-list menu" wx:if="{{!loading}}">
   <view class="cu-item" wx:for="{{rooms}}" wx:key="key">
     <view class="content">
       <text class="text-grey">{{item}}</text>

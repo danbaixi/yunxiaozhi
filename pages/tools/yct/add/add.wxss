@@ -2,7 +2,7 @@ page{
   background: #fff;
 }
 label{
-  color: #6ed4e6;
+  color: var(--theme);
   font-size: 16px;
 }
 .inputView{
@@ -14,14 +14,14 @@ label{
   height: 44px;
   width: 90%;
   font-size: 20px;
-  color: #6ed4e6;
+  color: var(--theme);
 }
 .btn button{
   margin: 20px auto;
   width: 90%;
 }
 .btn_press{
-  background: #60b9c9;
+  background: var(--theme);
 }
 .img{
   width: 260px;

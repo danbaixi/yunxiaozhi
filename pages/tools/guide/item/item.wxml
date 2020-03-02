@@ -1,3 +1,7 @@
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">详细介绍</view>
+</cu-custom>
 <view class="container">
   <swiper wx:if="{{imgs.length>0}}" class="screen-swiper square-dot" indicator-dots="true" circular="true" autoplay="true" interval="3000" duration="500">
     <swiper-item wx:for="{{imgs}}" wx:key>

@@ -34,10 +34,17 @@ Page({
       "50,146,195",
       "38,110,146",
       "195,98,50",
-      "146,74,38",
+      "254,135,97",
       "123,104,238",
       "65,105,225",
       "34,139,34",
+      "255,182,185",
+      "190,159,225",
+      "105,132,116",
+      "127,169,152",
+      "228,163,212",
+      "82,222,151",
+      "190,235,233",
       ],
     course: [],
     train_course_id:0,
@@ -65,7 +72,11 @@ Page({
     startDays:['周日','周一'],
     customBar: app.globalData.customBar,
     statusBar: app.globalData.statusBar,
-    custom: app.globalData.custom
+    custom: app.globalData.custom,
+    onlyThisWeek:true,
+    courseGroup:{},
+    showMoreCourse:false,
+    moreCourseList:[]
   },
 
   /**
@@ -82,14 +93,17 @@ Page({
     if (wx.getStorageSync('Copacity') == '') {
       wx.setStorageSync('Copacity', 12)
     }
+    if (wx.getStorageSync('onlyThisWeek') === ''){
+      wx.setStorageSync('onlyThisWeek',true)
+    }
     var winHeight = wx.getSystemInfoSync().windowHeight;
     that.setData({
-      imageUrl: wx.getStorageSync('bg_img'),
       list_is_display: false,
       Kopacity: wx.getStorageSync('Kopacity'),
       Copacity: wx.getStorageSync('Copacity'),
       fontSize: wx.getStorageSync('fontSize'),
-      winHeight: winHeight
+      winHeight: winHeight,
+      onlyThisWeek: wx.getStorageSync('onlyThisWeek')
     });
 
     var week = that.getNowWeek();
@@ -105,7 +119,6 @@ Page({
     var day = that.getDayOfWeek(week,startDay)
 
     that.setData({
-      now_week: week,
       zhou_num: zhou_num,
       now_month: month,
       now_month_number: month / 1, // 当前月份数字类型，用于数字运算
@@ -145,11 +158,13 @@ Page({
   },
 
   onShow:function(){
-    // this.onLoad({animation:false,ad:false})
     var tmpClass = wx.getStorageSync('tmp_class');//临时设置班级
     this.setData({
+      now_week: this.getNowWeek(),
+      imageUrl: wx.getStorageSync('bg_img'),
       list_is_display: false,
-      tmpClass: tmpClass
+      tmpClass: tmpClass,
+      showMoreCourse:false
     })
     //获取当前日期
     this.getTodayDate();
@@ -227,54 +242,108 @@ Page({
     if (typeof animation != "undefined" && animation){
       that.toggleDelay()
     }
-    that.setData({ course: [] });
+    let courses = [],courseGroup = {}
     if (data.length > 0) {
       var i = 0;
       for(var a=0;a<data.length;a++){
         if (typeof data[a].course_weekly == "undefined") {
           continue
         }
-        if(that.ana_week(week,data[a]['course_weekly'],data[a]['course_danshuang'])){
-          var tmp = data[a]['course_section'].split("-")
-          var jie = tmp[0];
-          if(tmp.length == 1){
-            var jieshu = 1
-          }else{
-            var jieshu = tmp[1] - tmp[0] + 1;
+        var tmp = data[a]['course_section'].split("-")
+        var jie = tmp[0];
+        if (tmp.length == 1) {
+          var jieshu = 1
+        } else {
+          var jieshu = tmp[1] - tmp[0] + 1;
+        }
+        //格式化上课地点
+        data[a]['full_address'] = data[a]['course_address']
+        data[a]['course_address'] = data[a]['course_address'].replace('-', '_')//把-换成_
+        var temp = data[a]['course_address'].split('_');
+        var address;
+        if (temp.length > 1) {
+          address = temp[0] + temp[1];
+        } else {
+          address = temp[0];
+        }
+        //将课程通过周次节次分组
+        let key = data[a]['course_week'] + '-' + jie
+        if(courseGroup[key]){
+          courseGroup[key].push(i)
+        }else{
+          courseGroup[key] = [i]
+        }
+        
+        if(jieshu == 4){
+          key = data[a]['course_week'] + '-' + (Number(jie)+2)
+          if (courseGroup[key]) {
+            courseGroup[key].push(i)
+          } else {
+            courseGroup[key] = [i]
           }
-         
-          //格式化上课地点
-          data[a]['full_address'] = data[a]['course_address']
-          data[a]['course_address'] = data[a]['course_address'].replace('-', '_')//把-换成_
-          var temp = data[a]['course_address'].split('_');
-          var address;
-          if(temp.length>1){
-            address = temp[0] + temp[1];
-          }else{
-            address = temp[0];
+        }
+
+        let display = false,thisWeek = false //是否是当周课表
+        if (that.ana_week(week, data[a]['course_weekly'], data[a]['course_danshuang'])) {
+          thisWeek = true
+        }
+        if(thisWeek || !that.data.onlyThisWeek){
+          display = true
+        }
+        var course = {
+          indexNum: i++,
+          week: data[a]['course_week'],
+          jie: jie,
+          jieshu: jieshu,
+          name: that.fiterCourseTitle(data[a]['course_name'], jieshu),
+          fullName: data[a]['course_name'],
+          address: address,
+          fullAddress: data[a]['full_address'],
+          num: data[a]['num'],
+          zhoushu: data[a]['course_weekly'],
+          teacher: data[a]['course_teacher'],
+          credit: data[a]['course_credit'],
+          method: data[a]['course_method'],
+          category: data[a]['course_category'],
+          type: data[a]['course_type'] ? data[a]['course_type'] : 1,
+          id: data[a]['course_id'] ? data[a]['course_id'] : 0,
+          danshuang:data[a]['course_danshuang'],
+          thisWeek:thisWeek,
+          display: display,
+          courseNum: 1
+        };
+
+        courses.push(course)
+      }
+
+      //隐藏存在冲突的课程
+      for (let g in courseGroup) {
+        if(courseGroup[g].length > 1){
+          let hasThisWeek = false
+          var index = 0
+          for (let i in courseGroup[g]){
+            index = courseGroup[g][i]
+            if (hasThisWeek === false && courses[index].thisWeek){
+              courses[index].display = true
+              hasThisWeek = index
+            }else{
+              courses[index].display = false
+            }
           }
-          var course = [{
-            indexNum: i++,
-            week: data[a]['course_week'],
-            jie: jie,
-            jieshu: jieshu,
-            name: that.fiterCourseTitle(data[a]['course_name'],jieshu),
-            fullName: data[a]['course_name'],
-            address: address,
-            fullAddress:data[a]['full_address'],
-            num: data[a]['num'],
-            zhoushu: data[a]['course_weekly'],
-            teacher: data[a]['course_teacher'],
-            credit: data[a]['course_credit'],
-            method: data[a]['course_method'],
-            category: data[a]['course_category']
-          }];
-          that.setData({ course: that.data.course.concat(course) });
+          if (hasThisWeek === false){
+            courses[index].display = true
+            hasThisWeek = index
+          }
+          courses[hasThisWeek].courseNum = courseGroup[g].length
         }
       }
-    } else {
-      that.setData({ course: null });
     }
+
+    that.setData({
+      course: courses,
+      courseGroup: courseGroup
+    })
+
     that.getTrain(week)
   },
   /**
@@ -301,9 +370,38 @@ Page({
    */
   displayCourseInfo:function(e){
     var indexNum = e.currentTarget.dataset.num;
-    var data = this.data.course;
+    var display = e.currentTarget.dataset.display;
+    var data = this.data.course[indexNum];
+    //如果有多个课程则展开
+    if (!display && data.courseNum > 1){
+      //获取同时间的课程
+      let ids = [],courses = []
+      let key = data.week + '-' + data.jie
+      ids = ids.concat(this.data.courseGroup[key])
+      if(data.jieshu == 4){
+        key = data.week + '-' + (Number(data.jie) + 2)
+        for (let i in this.data.courseGroup[key]){
+          let val = this.data.courseGroup[key][i]
+          if(ids.indexOf(val) == -1){
+            ids.push(val)
+          }
+        }
+      }
+      for(let i = 0;i<ids.length;i++){
+        let index = ids[i]
+        courses.push(this.data.course[index])
+      }
+      this.setData({
+        showMoreCourse:true,
+        moreCourseList:courses
+      })
+      return
+    }
     wx.navigateTo({
-      url: "info/info?data=" + encodeURIComponent(JSON.stringify(data[indexNum])),
+      url: "info/info?data=" + encodeURIComponent(JSON.stringify(data)),
+    })
+    this.setData({
+      showMoreCourse: false
     })
   },
   /**
@@ -882,5 +980,29 @@ Page({
       now_day:day
     })
     wx.setStorageSync('start_day',val)
+  },
+  addCourse:function(){
+    wx.navigateTo({
+      url: '/pages/course/add/add',
+    })
+  },
+  displayOnlyWeek:function(){
+    let result = !this.data.onlyThisWeek
+    this.setData({
+      onlyThisWeek: result
+    })
+    wx.setStorageSync('onlyThisWeek',result)
+    this.getCourse(this.data.now_week, true, false);
+  },
+  hideMoreCourse:function(){
+    this.setData({
+      showMoreCourse:false
+    })
+  },
+  //设置背景
+  setBg:function(){
+    wx.navigateTo({
+      url: '/pages/course/setBg/setBg?from=index',
+    })
   }
 })

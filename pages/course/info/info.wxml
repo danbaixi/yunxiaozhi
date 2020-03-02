@@ -1,10 +1,11 @@
-<cu-custom bgColor="bg-theme" isBack="true">
+<cu-custom bgColor="bg-white" isBack="true">
   <view slot="back">返回</view>
 	<view slot="content">课程详情</view>
 </cu-custom>
 <view class="cu-bar bg-white solid-bottom">
   <view class="text-black action">
     {{course.fullName || course.name}}
+    <view wx:if="{{course.type == 2}}" bindtap="alert" class="margin-left cu-tag line-theme radius">编辑</view>
   </view>
 </view>
 <view class="cu-list menu sm-border">
@@ -12,7 +13,7 @@
     <view class="content">
       <text class="icon-calendar text-theme"></text>
       <text class="text-theme">周数　</text>
-      <text class="text-black">{{course.zhoushu}}</text>
+      <text class="text-black">{{course.zhoushu}}{{course.danshuang == 1 ? '(单)' : (course.danshuang == 2 ? '(双)' : '')}}</text>
     </view>
   </view>
   <view class="cu-item">
@@ -34,38 +35,40 @@
     <view class="content">
       <text class="icon-location text-theme"></text>
       <text class="text-theme">地点　</text>
-      <text class="text-black">{{course.address}}</text>
+      <text class="text-{{course.address?'black':'grey'}}">{{course.address ? course.address : '未知'}}</text>
     </view>
   </view>
   <view class="cu-item">
     <view class="content">
       <text class="icon-people text-theme"></text>
       <text class="text-theme">老师　</text>
-      <text class="text-black">{{course.teacher}}</text>
+      <text class="text-{{course.teacher?'black':'grey'}}">{{course.teacher ? course.teacher : '未知'}}</text>
     </view>
   </view>
   <view class="cu-item">
     <view class="content">
       <text class="icon-tag text-theme"></text>
       <text class="text-theme">学分　</text>
-      <text class="text-black">{{course.credit}}</text>
+      <text class="text-{{course.credit?'black':'grey'}}">{{course.credit ? course.credit : '未知'}}</text>
     </view>
   </view>
   <view class="cu-item">
     <view class="content">
       <text class="icon-apps text-theme"></text>
       <text class="text-theme">类型　</text>
-      <text class="text-black">{{course.category}}</text>
+      <text class="text-{{course.category?'black':'grey'}}">{{course.category ? course.category : '未知'}}</text>
     </view>
   </view>
   <view class="cu-item">
     <view class="content">
       <text class="icon-post text-theme"></text>
       <text class="text-theme">考查　</text>
-      <text class="text-black">{{course.method}}</text>
+      <text class="text-{{course.categroy?'black':'grey'}}">{{course.method ? course.method : '未知'}}</text>
     </view>
   </view>
-  <view class="cu-item arrow" bindtap="goStudents"  wx:if="{{showStudent}}">
+</view>
+<view class="cu-list menu sm-border" wx:if="{{showStudent}}">
+  <view class="cu-item arrow" bindtap="goStudents">
     <view class="content">
       <text class="icon-peoplelist text-theme"></text>
       <text class="text-theme">同堂同学</text>

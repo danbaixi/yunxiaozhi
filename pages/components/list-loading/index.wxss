@@ -1,0 +1,7 @@
+.container{
+  background: #fff;
+  text-align: center;
+}
+.container image{
+  width: 100%;
+}

@@ -1,5 +1,35 @@
 page{
-  background: #f7f7f7;
+  background: #fff;
+}
+.bg image{
+  padding-top: 50rpx;
+  width: 100%;
+  z-index: -1;
+}
+.container{
+  position: relative;
+  top: -30rpx;
+}
+.userinfo{
+  padding: 0 3%;
+  width: 100%;
+  height: 130rpx;
+  position: relative;
+}
+.avatar {
+  width: 110rpx;
+  height: 110rpx;
+  border-radius: 100%;
+  position: absolute;
+  top: 0;
+  right: 3%;
+}
+.nickname {
+  font-size: 40rpx;
+  letter-spacing: 4rpx;
+}
+.stuId{
+  padding-top: 20rpx;
 }
 .info{
   line-height: 30px;
@@ -23,39 +53,10 @@ page{
 .my view:first{
   margin-bottom: 20rpx;
 }
-.header{
-  width: 100%;
-  height: 540rpx;
-  background: linear-gradient(to bottom, #6ed4e6, #5fdbff); 
-}
-.userinfo{
-  padding: 40rpx 0 120rpx;
-}
-.avatar {
-  width: 180rpx;
-  height: 180rpx;
-  border-radius: 100%;
-  border:2px solid #fff;
-  display: flex;
-  justify-content: center;
-  margin: 0 auto 20rpx;
-  box-shadow: 0 0 20rpx #999;
-}
-.nickname {
-  color: #fff;
-  text-align: center;
-  font-size: 32rpx;
-  padding: 20rpx 0;
-}
 .infoContent{
-  position: absolute;
-  top: 320rpx;
-  left: 5%;
-  width: 90%;
-  height: 60%;
   background: #fff;
   border-radius: 30rpx;
-  padding-bottom: 60rpx;
+  padding: 10rpx 3%;
 }
 .right{
   height: 20px;
@@ -85,4 +86,32 @@ button::after{
 }
 .navigator-hover{
   background: #fff;
+}
+.cu-list.menu>.cu-item{
+  padding-left: 0;
+}
+.banner{
+  padding: 14rpx 3%;
+  position: relative;
+}
+.banner button{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 188rpx;
+  background: transparent;
+}
+.banner image{
+  width: 100%;
+  height: 188rpx;
+  border-radius: 12rpx;
+  z-index: -1;
+}
+.cu-list.menu>.cu-item.arrow:before {
+  right: 0rpx!important;
+}
+.cu-list.menu.sm-border>.cu-item:after {
+  left: 12rpx;
+  width: calc(200% - 40rpx);
 }

@@ -1,5 +1,5 @@
 <view class="bg">
-  <image src='/pages/assets/imgs/other/bgImage.jpg' mode='widthFix' class='png' style='width:100%;height:320rpx'></image>
+  <image src='/pages/assets/imgs/other/bgImage.jpg' mode='aspectFill' class='png' style='width:100%;height:340rpx'></image>
 </view>
 <view class="add_tips shadow" style="top:{{customBar + 8}}px" wx:if="{{add_tips}}">
   点击<text class="icon-more"></text>添加到"我的小程序"，随时随地看课表
@@ -20,7 +20,7 @@
       <view class="action">
         <text class="text-black text-xl text-bold">今日课表</text>
       </view>
-      <view class="action">
+      <view class="action" wx:if="{{session}}">
         {{now_week_text}} 周{{WEEKDAY}}
       </view>
     </view>
@@ -60,7 +60,7 @@
     </view>
   </view>
 
-  <view class='box' wx:if="{{my_exam.length>0}}">
+  <view class='box' wx:if="{{my_exams.length>0}}">
     <view class="cu-bar bg-white solid-bottom arrow" bindtap='goExam'>
       <view class="action">
         <text class="text-black text-xl text-bold">考试安排</text>
@@ -70,7 +70,7 @@
       </view>
     </view>
     <view class="cu-list menu">
-      <view class="cu-item"  wx:if="{{item.days>=0}}" bindtap='goExam' wx:index="{{index}}" wx:for="{{my_exam}}" wx:key="key">
+      <view class="cu-item"  wx:if="{{item.days>=0}}" bindtap='goExam' wx:index="{{index}}" wx:for="{{my_exams}}" wx:key="key">
         <view class="content">
           <text class="text-black">{{item.exam_name}}</text>
         </view>

@@ -1,3 +1,7 @@
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">切换班级</view>
+</cu-custom>
 <view class="container">
   <view class="cu-bar bg-white search">
     <view class="search-form radius">

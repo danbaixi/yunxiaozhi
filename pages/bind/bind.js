@@ -24,6 +24,7 @@ Page({
    * 生命周期函数--监听页面 加载
    */
   onLoad: function(options) {
+
     wx.setNavigationBarColor({
       frontColor: '#ffffff',
       backgroundColor: app.globalData.themeColor,
@@ -34,9 +35,10 @@ Page({
         return
       }
     })
-
+    let rebind = options.rebind || false
     this.setData({
-      url: options.url ? options.url : '/pages/index/index'
+      url: options.url ? options.url : '/pages/index/index',
+      rebind: rebind
     })
 
     let configs = wx.getStorageSync('configs')
@@ -69,6 +71,12 @@ Page({
 
   },
 
+  getCourseList:function(){
+    return app.promiseRequest({
+      url: 'course/getList'
+    })
+  },
+
   /**
    * 绑定教务系统
    */
@@ -97,11 +105,21 @@ Page({
       that.bindQingGuo().then((resolve) => {
         wx.hideLoading()
         if (resolve.status == 0) {
-          app.msg("绑定成功", "success")
           wx.setStorageSync('user_id', that.data.user_id)
-          wx.switchTab({
-            url: '/pages/index/index',
+          that.getCourseList().then((result)=>{
+            if (result.status == 0){
+              app.msg("绑定成功", "success")
+              wx.setStorageSync('course', result.data.course);
+              wx.setStorageSync('train', result.data.train_course);
+            }else{
+              app.msg("绑定成功，获取课表失败，请手动更新课表")
+            }
           })
+          setTimeout(()=>{
+            wx.switchTab({
+              url: '/pages/index/index',
+            })
+          },1000)
           return
         }
         that.freshYzm()
@@ -264,6 +282,7 @@ Page({
           session: app.getLoginStatus(),
           nickname: nickname,
           avatar: avatar,
+          rebind:_this.data.rebind ? 1 : 0
         },
         method: "POST",
         success: function(res) {

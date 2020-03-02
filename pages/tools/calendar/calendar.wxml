@@ -1,8 +1,9 @@
-<!-- <cu-custom bgColor="bg-theme" isBack="true">
+<cu-custom bgColor="bg-white" isBack="true">
   <view slot="back">返回</view>
 	<view slot="content">校历</view>
-</cu-custom> -->
-<view class='calendar'>
+</cu-custom>
+<list-loading loading="{{loading}}"></list-loading>
+<view class='calendar' wx:if="{{!loading}}">
   <view class='head'>
     <view class='left' data-type="reduce" bindtap="alterMonth">
       <text class="icon-back text-theme text-lg {{clickButton=='left'?'click-btn':''}}"></text>
@@ -12,12 +13,8 @@
       <text class="icon-right text-theme text-lg {{clickButton=='right'?'click-btn':''}}"></text>
     </view>
   </view>
-
-  <view hidden="{{!loading}}">
-    <loading loading="{{loading}}"></loading>
-  </view>
-  <view wx:if="{{!loading}}">
-    <view class='data' style='height:{{30+51.2*hangshu}}px;top:{{40}}px'>
+  <view>
+    <view class='data' style='height:{{30+51*hangshu}}px;top:{{customBar+40}}px'>
       <view class='title'>
         <view class='week'>周次</view>
         <view class='weekly' wx:for='{{weekly}}' wx:key='{{index}}'>{{item}}</view>

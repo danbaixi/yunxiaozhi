@@ -192,3 +192,11 @@ input-holder {
   color: #ec5300;
   text-align: center;
 }
+
+.cu-custom .cu-bar .border-custom {
+  position: relative;
+  background: var(--white);
+  border-radius: 1000rpx;
+  border:1px solid #ddd;
+  height: 30px;
+}

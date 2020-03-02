@@ -1,7 +1,6 @@
-<!-- <cu-custom bgColor="bg-theme" isBack="true">
-  <view slot="back">返回</view>
+<cu-custom bgColor="bg-white">
 	<view slot="content">应用列表</view>
-</cu-custom> -->
+</cu-custom>
 <view class="content">
   <view class='top'>
     <text class='title'>学业查询</text>

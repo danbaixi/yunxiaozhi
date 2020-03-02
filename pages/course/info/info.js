@@ -24,7 +24,7 @@ Page({
     var data = JSON.parse(decodeURIComponent(options.data))
     //判断是否是本班课程
     var tmp_class = wx.getStorageSync('tmp_class')
-    if (tmp_class == "") {
+    if (tmp_class == "" && data.type == 1) {
       this.setData({
         showStudent: true
       })
@@ -137,9 +137,19 @@ Page({
     })
   },
 
-  goStudents(){
+  goStudents:function(){
     wx.navigateTo({
       url: 'students/students?data=' + encodeURIComponent(JSON.stringify(this.data.course)),
+    })
+  },
+
+  alert:function(){
+    if(this.data.course.id == 0){
+      app.msg('获取课程信息失败，请先更新课表')
+      return
+    }
+    wx.navigateTo({
+      url: '/pages/course/add/add?id=' + this.data.course.id,
     })
   }
 })

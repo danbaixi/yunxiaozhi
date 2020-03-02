@@ -1,17 +1,15 @@
-<!-- <view class="cu-custom" style="height:{{CustomBar}}px">
-  <view class="cu-bar fixed bg-theme" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px">
-    <view class="action border-custom" style="width:{{Custom.width}}px;height:{{Custom.height}}px;margin-left:calc(750rpx - {{Custom.right}}px)">
-      <text class="icon-back" bindtap="backPage"></text>
-      <text class="icon-refresh" bindtap="update"></text>
+<view class="cu-custom" style="height:{{customBar}}px">
+  <view class="cu-bar fixed bg-white" style="height:{{customBar}}px;padding-top:{{statusBar}}px">
+    <view class="action border-custom" style="width:{{custom.width}}px;height:{{custom.height}}px;margin-left:calc(750rpx - {{custom.right}}px)">
+      <text class="icon-back text-bold text-black" bindtap="backPage"></text>
+      <text class="icon-refresh text-bold text-black" bindtap="update"></text>
     </view>
-    <view class="content" style="top:{{StatusBar}}px">考勤</view>
+    <view class="content" style="top:{{statusBar}}px">考勤记录</view>
   </view>
-</view> -->
-<view class='attendance'>
+</view>
+<list-loading loading="{{loading}}"></list-loading>
+<view class='attendance' wx:if="{{!loading}}">
   <view class='content' wx:if="{{!isNull}}">
-    <view class="padding flex flex-direction">
-      <button class="cu-btn bg-theme lg" bindtap="update">更新</button>
-    </view>
    <block wx:for="{{term}}" wx:key="key" wx:for-item="xueqi" wx:for-index="index">   
     <view class="season">
       <view class='xueqi'>{{xueqi.term}}</view>

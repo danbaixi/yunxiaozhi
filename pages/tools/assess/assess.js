@@ -7,7 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    
+    loading:true
   },
 
   /**
@@ -15,19 +15,11 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-    var user_id = wx.getStorageSync('user_id')
-    var password = wx.getStorageSync('user_password')
-    if (user_id == "") {
-      wx.showToast({
-        title: '请登录',
-        icon: 'loading'
-      });
-      wx.redirectTo({
-        url: '../../bind/bind',
-      })
-      return;
-    }
-    that.getList()
+    app.isBind().then((result) => {
+      if(result){
+        that.getList()
+      }
+    })
   },
   /**
    * 用户点击右上角分享
@@ -37,36 +29,20 @@ Page({
   },
 
   getList:function(){
-    wx.showLoading({
-      title: '正在加载...',
-    })
     var that = this;
-    var user_id = wx.getStorageSync('user_id')
-    var password = wx.getStorageSync('user_password')
     app.httpRequest({
       url: "access/getItem",
       method: "POST",
-      data: {
-        stu_id: user_id,
-        password: password
-      },
       success: function (res) {
-        wx.hideLoading()
-        if(res.data.status == 0){
-          that.setData({
-            assess: res.data.data.assess,
-            term: res.data.data.term,
-            list: res.data.data.list,
-            finish: res.data.data.finish,
-            totalCount: res.data.data.totalCount
-          })
-        }else{
-          that.setData({
-            assess: res.data.data.assess,
-            term: res.data.data.term,
-            list: res.data.data.list,
-            totalCount: res.data.data.totalCount
-          })
+        that.setData({
+          loading:false,
+          assess: res.data.data.assess,
+          term: res.data.data.term,
+          list: res.data.data.list,
+          finish: res.data.data.finish,
+          totalCount: res.data.data.totalCount
+        })
+        if(res.data.status != 0){
           app.msg(res.data.message)
         }
       }
@@ -74,11 +50,7 @@ Page({
   },
   assess: function () {
     var that = this;
-    var user_id = wx.getStorageSync('user_id');
-    if (!user_id) {
-      app.msg("请先登录")
-      return;
-    }
+    app.isBind()
     if(that.data.finish){
       app.msg("你已经完成评教啦！")
       return
@@ -86,19 +58,15 @@ Page({
     wx.showLoading({
       title: '努力评教中...',
     })
-    var user_id = wx.getStorageSync('user_id');
-    var user_password = wx.getStorageSync('user_password');
     app.httpRequest({
       url: 'access/accessing',
       data: {
         aid:that.data.assess.id,
-        stu_id: user_id,
-        password: user_password,
       },
       method:"POST",
       success: function (res) {
         wx.hideLoading()
-        if (res.data.status == 1001) {
+        if (res.data.status == 0) {
           app.msg("评教成功！", "success")
           setTimeout(function () {
             that.getList();

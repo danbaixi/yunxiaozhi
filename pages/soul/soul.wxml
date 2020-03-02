@@ -1,5 +1,9 @@
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">毒鸡汤</view>
+</cu-custom>
 <view class="container">
-  <view class="content text-center" wx:if="{{soul}}">
+  <view class="yxz-content text-center" wx:if="{{soul}}">
     <view class="soul text-black">{{soul.title}}</view>
 
     <view class="like margin-top-sm text-right" data-id="{{soul.id}}" bindtap="likeSoul">

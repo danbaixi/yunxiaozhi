@@ -1,3 +1,7 @@
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">设置上课时间</view>
+</cu-custom>
 <view class="cu-form-group margin-top">
   <view class="title">设置校区</view>
   <picker bindchange="setArea" value="{{area>0?area-1:area}}" range="{{areas}}">

@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    loading:true
   },
 
   /**
@@ -34,6 +34,7 @@ Page({
       success:function(res){
         if(res.data.status == 0){
           that.setData({
+            loading:false,
             rooms: res.data.data,
             title:title
           })

@@ -11,8 +11,7 @@
 	<view class="scroll-fullpage" bindtouchstart="scrollTouchstart" bindtouchmove="scrollTouchmove" bindtouchend="scrollTouchend" style="transform:translateY(-{{scrollindex*100}}%);margin-top: {{margintop}}px">
 
   <view class="section section02 {{scrollindex==0?'active':''}}">
-    <image class='bg' mode='scaleToFill' src='http://yunxiaozhi-1251388077.cosgz.myqcloud.com/xiaochengxu/time_bg1.jpg'>
-    </image>
+    <image class='bg' mode='scaleToFill' src='http://yunxiaozhi-1251388077.cosgz.myqcloud.com/xiaochengxu/time_bg1.jpg'></image>
     <view class='content' wx:if="{{login&&!needUpdate}}">
       <view class='section-text upIn'>
         <view><text style='font-weight:bold'>{{name}}</text> 同学</view>
@@ -32,8 +31,7 @@
 	</view>
 
 		<view class="section section03 {{scrollindex==1?'active':''}}">
-      <image class='bg' mode='scaleToFill' src='http://yunxiaozhi-1251388077.cosgz.myqcloud.com/xiaochengxu/time_bg33.jpg'>
-      </image>
+      <image class='bg' mode='scaleToFill' src='http://yunxiaozhi-1251388077.cosgz.myqcloud.com/xiaochengxu/time_bg33.jpg'></image>
       <view class='content' wx:if="{{login&&!needUpdate}}">
         <view class='section-text upIn'>
           <view>珍惜大学时光</view>
@@ -53,8 +51,7 @@
 		</view>
 
     <view class="section section03 {{scrollindex==2?'active':''}}">
-      <image class='bg' mode='scaleToFill' src='http://yunxiaozhi-1251388077.cosgz.myqcloud.com/xiaochengxu/time_bg2.jpg'>
-      </image>
+      <image class='bg' mode='scaleToFill' src='http://yunxiaozhi-1251388077.cosgz.myqcloud.com/xiaochengxu/time_bg2.jpg'></image>
       <view class='content' wx:if="{{login&&!needUpdate}}">
         <view class='section-text upIn'>
           <view>假如你能活100岁</view>
@@ -75,8 +72,7 @@
 		</view>
 
     <view class="section section04 {{scrollindex==3?'active':''}}">
-      <image class='bg' mode='scaleToFill' src='http://yunxiaozhi-1251388077.cosgz.myqcloud.com/xiaochengxu/time_bg4.jpg'>
-      </image>
+      <image class='bg' mode='scaleToFill' src='http://yunxiaozhi-1251388077.cosgz.myqcloud.com/xiaochengxu/time_bg4.jpg'></image>
       <view style='padding-top:180rpx;' class='content'>
         <view class='section-text upIn'>
           <view>在上大学之前</view>

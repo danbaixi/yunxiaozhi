@@ -1,7 +1,7 @@
-<!-- <cu-custom bgColor="bg-theme" isBack="true">
+<cu-custom bgColor="bg-white" isBack="true">
   <view slot="back">返回</view>
-	<view slot="content"></view>
-</cu-custom> -->
+	<view slot="content">谁去拿外卖</view>
+</cu-custom>
 <view class='who'>
   <view class='info padding'>用力戳下面的数字</view>
     <view class='num' bindtap='click' data-num='{{num}}'>

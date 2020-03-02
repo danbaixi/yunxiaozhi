@@ -1,5 +1,4 @@
 var app = getApp();
-var md5 = require('../../../../utils/md5.js');
 Page({
 
   /**
@@ -7,6 +6,7 @@ Page({
    */
   data: {
     color: ["#ff9900","#2d8cf0", "#19be6b"],
+    loading:true
   },
 
   /**
@@ -14,28 +14,24 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-    var user_id = wx.getStorageSync('user_id');
-    var course = options.course;
-    var score = options.score;
-    var credit = options.credit;
-    var gpa = options.gpa;
+    let from = options.from;
+    if(from != 'score'){
+      wx.navigateTo({
+        url: '/pages/tools/score/score',
+      })
+      return
+    }
+    let score = JSON.parse(decodeURIComponent(options.data));
     that.setData({
-      course: options.course,
-      score: options.score,
-      credit: options.credit,
-      gpa: options.gpa
+      score:score
     });
-    var str = app.globalData.key + user_id;
-    var sign = md5.hexMD5(str);
     app.httpRequest({
       url: 'score/getCourseScoreData',
       data: {
-        stu_id : user_id,
-        course : course,
-        sign: sign,
+        course : score.name
       },
       success: function(res) {
-        if(res.data.status == 1001){
+        if(res.data.status == 0){
           //排名颜色
           var top = res.data.data.top;
           var num = 0;
@@ -53,10 +49,13 @@ Page({
             fail_rate: res.data.data.fail_rate,
             my_top: res.data.data.my_top,
             top: top,
+            loading:false
           })
         }else{
-          app.msg('获取失败')
-          wx.navigateBack({});
+          app.msg(res.data.message)
+          setTimeout(()=>{
+            wx.navigateBack({});
+          },1000)
         }
 
       },

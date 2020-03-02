@@ -5,6 +5,9 @@
     <view class="padding"><text class="text-xl text-white">绑定教务系统账号</text></view>
   </view>
   <view class="login">
+    <view wx:if="{{rebind}}" class="yxz-tips margin-bottom">
+      您已修改了教务系统密码，请使用新密码绑定账号
+    </view>
     <form>
       <view class="cu-form-group">
         <input bindinput='inputUserId' placeholder='请输入学号' type='number' value='{{user_id}}'></input>
@@ -12,7 +15,7 @@
       </view>
 
       <view class="cu-form-group">
-        <input bindinput='inputPwd' placeholder='请输入密码' type="{{display_password?'text':'password'}}" value='{{user_password}}'></input>
+        <input bindinput='inputPwd' placeholder='请输入密码' type="{{display_password?'tex t':'password'}}" value='{{user_password}}'></input>
         <text wx:if="{{user_password!=''}}" class="icon-{{display_password?'attention':'attentionforbid'}} text-black" bindtap='displayPwd'></text>
       </view>
 

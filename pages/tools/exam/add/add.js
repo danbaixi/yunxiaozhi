@@ -1,6 +1,5 @@
-var md5 = require('../../../../utils/md5.js');
-var util = require('../../../../utils/util.js');
 var app = getApp();
+var util = require('../../../../utils/util.js');
 Page({
 
   /**
@@ -97,16 +96,11 @@ Page({
       app.msg("请输入必填信息")
     }else{
       wx.showLoading({title:"加载中"})
-      var user_id = wx.getStorageSync('user_id');
-      var str = app.globalData.key + user_id;
-      var sign = md5.hexMD5(str);
       if(that.data.action =="修改"){
         app.httpRequest({
           url: 'exam/editlist',
           data: {
-            sign: sign,
             id:that.data.id,
-            stu_id: user_id,
             name: name,
             date: date,
             address: address,
@@ -115,7 +109,7 @@ Page({
           },
           success: function (res) {
             wx.hideLoading()
-            if (res.data.status == 1001) {
+            if (res.data.status == 0) {
               app.msg("修改成功","success")
               wx.setStorageSync('my_exams','')
               setTimeout(function () {
@@ -137,8 +131,6 @@ Page({
       app.httpRequest({
         url: 'exam/addlist',
         data: {
-          sign: sign,
-          stu_id: user_id,
           name: name,
           date: date,
           address: address,
@@ -147,7 +139,7 @@ Page({
         },
         success: function (res) {
           wx.hideLoading()
-          if (res.data.status == 1001) {
+          if (res.data.status == 0) {
             app.msg("添加成功", "success")
             wx.setStorageSync('my_exams', '')
             setTimeout(function () {
@@ -175,19 +167,14 @@ Page({
       success: function (res) {
         if (res.confirm) {
           wx.showLoading({title:"加载中"})
-          var user_id = wx.getStorageSync('user_id');
-          var str = app.globalData.key + user_id;
-          var sign = md5.hexMD5(str);
           app.httpRequest({
             url: 'exam/dellist',
             data: {
-              sign: sign,
-              stu_id: user_id,
               id:that.data.id,
             },
             success:function(res){
               wx.hideLoading()
-              if(res.data.status == 1001){
+              if(res.data.status == 0){
                 app.msg("删除成功","success")
                 wx.setStorageSync('my_exams', '')
                 setTimeout(function () {

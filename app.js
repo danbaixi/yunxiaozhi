@@ -59,7 +59,8 @@ App({
     amap_key: "67c20c2c7db08923379123500b656adf",
     markers_json: "https://www.yunxiaozhi.cn/v1/resource/markers.json",
     adTime: 24,//小时出现一次
-    fileDomain:"http://file.yunxiaozhi.cn/mini/"
+    fileDomain:"http://file.yunxiaozhi.cn/mini/",
+    fileUrl: "https://yunxiaozhi-1251388077.cos.ap-guangzhou.myqcloud.com/mini"
   },
 
   goLogin:function(url){
@@ -124,10 +125,7 @@ App({
           case 4003:
             //登陆已过期
             that.msg(res.data.message)
-            wx.clearStorageSync()
-            //保留配置信息
-            let configs = wx.getStorageSync('configs')
-            wx.setStorageSync('configs', configs)
+            that.exitSaveData()
             setTimeout(() => {
               wx.navigateTo({
                 url: '/pages/login/login',
@@ -138,7 +136,7 @@ App({
             that.msg('您已修改了教务系统密码，请重新绑定账号');
             setTimeout(() => {
               wx.navigateTo({
-                url: '/pages/bind/bind',
+                url: '/pages/bind/bind?rebind=true',
               })
             }, 1000);
             break;
@@ -269,10 +267,7 @@ App({
           }else if(res.data.status == 4003){
             //登陆已过期
             that.msg(res.data.message)
-            wx.clearStorageSync()
-            //保留配置信息
-            let configs = wx.getStorageSync('configs')
-            wx.setStorageSync('configs', configs)
+            that.exitSaveData()
             setTimeout(() => {
               wx.navigateTo({
                 url: '/pages/login/login',
@@ -325,5 +320,16 @@ App({
         value: value
       }
     })
+  },
+  //退出保存的数据
+  exitSaveData:function(){
+    //保留配置信息
+    let configs = wx.getStorageSync('configs')
+    let bg_imgs = wx.getStorageSync('bg_imgs')
+    let bg_img = wx.getStorageSync('bg_img')
+    wx.clearStorageSync()
+    wx.setStorageSync('configs', configs)
+    wx.setStorageSync('bg_imgs', bg_imgs)
+    wx.setStorageSync('bg_img', bg_img)
   }
 })

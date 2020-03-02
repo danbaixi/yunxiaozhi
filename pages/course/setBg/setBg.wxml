@@ -1,0 +1,31 @@
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">设置课表背景</view>
+</cu-custom>
+<view class="container padding">
+  <view class="diy">
+    <view class="li" bindtap="clear">
+      <view class="image defalut {{bg_type==''?'selected':''}}"></view>
+      <text class="text-sm">无</text>
+    </view>
+    <view class="li" bindtap="diy">
+      <view class="image {{bg_type=='diy'?'selected':''}}" wx:if="{{bg_type =='diy'}}">
+        <image mode="aspectFill" src="{{bg_img}}"></image>
+      </view>
+      <view class="image add-photo" wx:else>
+        <text class="icon-cameraadd lg text-white"></text>
+      </view>
+      <text class="text-sm">自定义</text>
+    </view>
+  </view>
+  <view class="bgs margin-top">
+    <view class="text-bold text-lg margin-bottom">推荐背景</view>
+    <view class="cu-list no-border grid col-3" style="background:transparent">
+      <view class="cu-item" wx:for="{{bgNum}}" wx:key="key">
+        <view class="li" data-num="{{item+1}}" bindtap="select">
+          <image class="image {{bg_type == item+1 ? 'selected' : ''}}" src="{{fileUrl}}/course_bg/{{item+1}}_preview.jpg"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

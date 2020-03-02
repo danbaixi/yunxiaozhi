@@ -4,7 +4,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    settings:[]
+    settings:[],
+    loading:true
   },
 
   /**
@@ -27,13 +28,9 @@ Page({
 
   getUserConfig:function(){
     var that = this;
-    wx.showLoading({
-      title:"加载中"
-    })
     app.promiseRequest({
       url: 'user/getUserConfig'
     }).then((data) => {
-      wx.hideLoading()
       wx.stopPullDownRefresh({
         complete: (res) => {},
       })
@@ -41,6 +38,7 @@ Page({
         complete: (res) => {},
       })
       that.setData({
+        loading: false,
         settings:data.data
       })
     })
@@ -51,7 +49,7 @@ Page({
     let field = e.currentTarget.dataset.field
     let value = e.detail.value ? 1 : 0
     app.updateSetting(field,value).then((data) => {
-      app.msg("设置成功","success")
+      //app.msg("设置成功","success")
     }).catch((message) => {
       app.msg(message)
     })
@@ -62,7 +60,7 @@ Page({
     let field = e.currentTarget.dataset.field
     let value = e.detail.value ? 1 : 0
     app.updateSetting(field,value).then((data) => {
-      app.msg("设置成功","success")
+      //app.msg("设置成功","success")
       wx.setStorageSync("hide_soul", value)
     }).catch((message) => {
       app.msg(message)

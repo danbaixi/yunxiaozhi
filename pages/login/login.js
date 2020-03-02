@@ -133,7 +133,6 @@ Page({
             throw new Error(resolve.message)
           }).then((resolve) => {
             if(resolve.status == 0){
-              app.msg('登录成功','success')
               wx.setStorageSync('login_session', resolve.data.session)
               wx.setStorageSync('user_id', resolve.data.stu_id)
               wx.setStorageSync('user_info', resolve.data.info)
@@ -145,10 +144,25 @@ Page({
                   app.msg('请绑定教务系统账号')
                 }, 500);
                 return
+              }else{
+                app.promiseRequest({
+                  url: 'course/getList'
+                }).then((result) => {
+                  if (result.status == 0) {
+                    app.msg("登录成功", "success")
+                    wx.setStorageSync('course', result.data.course);
+                    wx.setStorageSync('train', result.data.train_course);
+                  } else {
+                    app.msg("登录成功，获取课表失败，请手动更新课表")
+                  }
+                })
+                setTimeout(()=> {
+                  wx.switchTab({
+                    url: '/pages/index/index',
+                  })
+                },1000)
               }
-              wx.switchTab({
-                url: '/pages/index/index',
-              })
+              return
             }
             throw new Error(resolve.message)
           }).catch((error) => {

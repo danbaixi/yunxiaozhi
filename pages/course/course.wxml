@@ -10,70 +10,77 @@
     </text> 
   </view>
 </view>
-<!-- <view class="diy-nav">
-  <view class='select_week'>
-    <picker class='week_num' mode="selector" range="{{zhou_num}}" bindchange="select" value="{{now_week-1}}">
-      <text class="text-lg text-black">第 {{now_week}} 周 </text>
-      <text class="icon-unfold lg text-black"></text>
-    </picker>
-    <text class=" icon-add settings text-black" style="transform:rotate({{list_is_display?135:0}}deg)" bindtap='listDisplay'></text> 
-  </view>
-</view> -->
 <view class="mask" bindtap="hideMask" style='height:{{winHeight-customBar}}px;top:{{customBar}}px' wx:if="{{list_is_display}}"></view>
-<view class="list cu-list menu sm-border" style='height:{{7*55}}px;top:{{list_is_display?customBar:-(7*55)}}px'>
-  <view class="cu-item arrow" bindtap='update'>
-    <view class="content">
-      <text class="text-grey">更新课表</text>
+<view class="list" style='height:{{7*55+4+customBar}}px;top:{{list_is_display?0:-(7*55+4+customBar)}}px'>
+  <view style="height:{{customBar}}px;width:100%;background:#fff"></view>
+  <view class="cu-list grid col-4">
+    <view class="cu-item" bindtap='update'>
+      <view class="course-icon">
+        <image mode="widthFix" src="/pages/assets/imgs/course_icon/update.png"></image>
+      </view>
+      <text>更新课表</text>
+    </view>
+    <view class="cu-item" bindtap='addCourse'>
+      <view class="course-icon">
+        <image mode="widthFix" src="/pages/assets/imgs/course_icon/add.png"></image>
+      </view>
+      <text>添加课表</text>
+    </view>
+    <view class="cu-item" bindtap='setTime'>
+      <view class="course-icon">
+        <image mode="widthFix" src="/pages/assets/imgs/course_icon/time.png"></image>
+      </view>
+      <text>设置上课时间</text>
+    </view>
+    <view class="cu-item" bindtap='setClass'>
+      <view class="course-icon">
+        <image mode="widthFix" src="/pages/assets/imgs/course_icon/class.png"></image>
+      </view>
+      <text>切换班级</text>
     </view>
   </view>
-  <view class="cu-item arrow" bindtap='selectImg'>
-    <view class="content">
-      <text class="text-grey">课表背景</text>
-    </view>
-    <view class="action">
-      <text class="text-grey text-sm">{{imageUrl!=''?'已设置':'未设置'}}</text>
-    </view>
-  </view>
-  <view class="cu-item arrow" bindtap='setClass'>
-    <view class="content">
-      <text class="text-grey">切换班级</text>
-    </view>
-    <view class="action">
-      <text class="text-grey text-sm">{{tmpClass==''?'本班':tmpClass.name}}</text>
-    </view>
-  </view>
-  <view class="cu-item arrow" bindtap='setTime'>
-    <view class="content">
-      <text class="text-grey">设置上课时间</text>
-    </view>
-    <view class="action">
-      <text class="text-grey text-sm">{{display_course_time>0?'显示':'不显示'}}</text>
-    </view>
-  </view>
-  <view class="cu-form-group cu-item">
-		<view class="text-grey">每周起始日</view>
-		<picker bindchange="setStartDay" value="{{startDay}}" range="{{startDays}}">
-			<view class="picker text-grey">
-				{{startDay?startDays[startDay]:'周一'}}
-			</view>
-		</picker>
-	</view>
-  <view class="cu-item">
-    <view class="content">
-      <text class="text-grey">边框透明度</text>
-      <view class="slider">
-        <slider data-type='frime' bindchange="sliderchange" activeColor="#1380ff" value='{{Kopacity}}' min="0" max="100" show-value/>
+  <view class="cu-list menu sm-border">
+    <view class="cu-item arrow" bindtap='setBg'>
+      <view class="content">
+        <text class="text-grey">课表背景</text>
+      </view>
+      <view class="action">
+        <text class="text-grey text-sm">{{imageUrl!=''?'已设置':'未设置'}}</text>
       </view>
     </view>
-  </view>
-  <view class="cu-item">
-    <view class="content">
-      <text class="text-grey">课表透明度</text>
-      <view class="slider">
-        <slider data-type='course' bindchange="sliderchange" activeColor="#1380ff" value='{{Copacity}}' min="0" max="100" show-value/>
+    <view class="cu-form-group cu-item">
+      <view class="text-grey">每周起始日</view>
+      <picker bindchange="setStartDay" value="{{startDay}}" range="{{startDays}}">
+        <view class="picker text-grey">
+          {{startDay?startDays[startDay]:'周一'}}
+        </view>
+      </picker>
+    </view>
+    <view class="cu-item">
+      <view class="content">
+        <text class="text-grey">仅显示本周要上的课程</text>
+      </view>
+      <view class="action">
+        <switch class="theme sm" checked="{{onlyThisWeek}}" bindchange="displayOnlyWeek"></switch>
       </view>
     </view>
-  </view>
+    <view class="cu-item">
+      <view class="content">
+        <text class="text-grey">边框透明度</text>
+        <view class="slider">
+          <slider data-type='frime' bindchange="sliderchange" activeColor="#1380ff" value='{{Kopacity}}' min="0" max="100" show-value/>
+        </view>
+      </view>
+    </view>
+    <view class="cu-item">
+      <view class="content">
+        <text class="text-grey">课表透明度</text>
+        <view class="slider">
+          <slider data-type='course' bindchange="sliderchange" activeColor="#1380ff" value='{{Copacity}}' min="0" max="100" show-value/>
+        </view>
+      </view>
+    </view>
+    </view>
 </view>
 
 <!-- 背景图片 -->
@@ -89,7 +96,7 @@
     <view class="date">
       <view class="course-table week {{(now_week==nowWeek&&todayDay==item)?'todayDate':''}}" wx:for="{{now_day}}" wx:key="key" wx:index="index">
         <view class="week-item">周{{zhou[index]}}</view>
-        <view class="date-item">{{now_day[index] == 1? (now_month_number<12?(now_month_number+1):1)+'月' : now_day[index]+'日'}}</view>
+        <view class="date-item">{{(now_day[index] == 1 && startDay == 1) || (now_day[index] == 1 && startDay==0 && zhou[index] != '日') ? (now_month_number<12?(now_month_number+1):1)+'月' : now_day[index]+'日'}}</view>
       </view>
     </view>
 </view>
@@ -107,10 +114,10 @@
       </view>
 
       <view class="course">
-        <view class="{{toggleDelay?'animation-scale-up':''}} kcb-item" wx:for="{{course}}" wx:key="key" bindtap="displayCourseInfo" data-num="{{item.indexNum}}" form-type="submit" style="animation-delay: {{(index%2==0?(index/2):(index-1)/2+1)*0.1}}s;margin-left:{{(item.week - startDay)*(92/7)}}%;margin-top:{{(item.jie-1)*110+4}}rpx;height:{{item.jieshu*110 - 4}}rpx">
-        <view class="smalltext" style="background-color:rgba({{colorArrays[item.num]}},{{(100-Copacity)/100}});" >{{item.name}}@{{item.address}}</view>
+        <view class="{{toggleDelay?'animation-scale-up':''}} kcb-item" wx:for="{{course}}" wx:key="key" bindtap="displayCourseInfo" data-num="{{item.indexNum}}" form-type="submit" style="animation-delay: {{(index%2==0?(index/2):(index-1)/2+1)*0.1}}s;margin-left:{{(item.week - startDay)*(92/7)}}%;margin-top:{{(item.jie-1)*110+4}}rpx;height:{{item.jieshu*110 - 4}}rpx" wx:if="{{item.display}}">
+          <view class="smalltext {{item.courseNum>1?'moreCourse':''}}" style="color:{{!item.thisWeek?'#aab9cc':'#fff'}};background-color:rgba({{!item.thisWeek?'236,245,255':colorArrays[item.num]}},{{(100-Copacity)/100}});-webkit-line-clamp: {{item.jieshu*3}};" >{{!item.thisWeek?'[非本周]':''}}{{item.name}}{{item.address ? '@' + item.address : ''}}
+          </view>
         </view>
-
         <view wx:if="{{ad.display}}" class='kcb-item' style="margin-left:{{(ad.week-1)*(92/7)}}%;margin-top:{{(ad.jie-1)*110+4}}rpx;height:{{ad.jieshu*110 - 4}}rpx">
           <view class="smalltext" bindtap="goAd" style="background:{{ad.background}};color:{{ad.color}};" >{{ad.title}}</view>
           <view bindtap="closeAd" class="ad-close icon-roundclose text-center text-grey"></view>
@@ -136,4 +143,29 @@
         <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
         <view class="btn-confirm" bindtap="update" data-status="confirm">确定</view>
       </view>
+</view>
+
+<view class="showMoreCourse" wx:if="{{showMoreCourse}}" bindtap="hideMoreCourse">
+  <view class="courseList grid col-2">
+    <!-- 本周的课程 -->
+    <view class="animation-scale-up padding" style="animation-duration: 0.2s" wx:if="{{item.thisWeek}}" wx:for="{{moreCourseList}}" wx:key="key" bindtap="displayCourseInfo" data-display="true" data-num="{{item.indexNum}}">
+      <view class="li shadow-blur text-white" style="background-color:rgba({{item.num<colorArrays.length-1?colorArrays[item.num]:colorArrays[colorArrays.length-1]}})">
+        <view>
+          <view class="cu-tag radius line-white">本周</view>
+          <text class="text-bold"> {{item.fullName}}</text>
+        </view>
+        <view class="margin-top-sm">{{item.address ? '@' + item.address : ''}}</view>
+      </view>
+    </view>
+    <!-- 非本周的课程 -->
+    <view class="animation-scale-up padding" style="animation-duration: 0.2s" wx:if="{{!item.thisWeek}}" wx:for="{{moreCourseList}}" wx:key="key" bindtap="displayCourseInfo" data-display="true" data-num="{{item.indexNum}}">
+      <view class="li shadow-blur text-grey" style="background-color:rgba(236,245,255)">
+        <view>
+          <view class="cu-tag radius line-grey">非本周</view>
+          <text class="text-bold"> {{item.fullName}}</text>
+        </view>
+        <view class="margin-top-sm">{{item.address ? '@' + item.address : ''}}</view>
+      </view>
+    </view>
+  </view>
 </view>

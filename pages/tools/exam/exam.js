@@ -1,6 +1,5 @@
-var md5 = require('../../../utils/md5.js');
-var util = require('../../../utils/util.js');
 var app = getApp();
+var util = require('../../../utils/util.js');
 Page({
 
   /**
@@ -17,9 +16,9 @@ Page({
     currentTab: 0,
     //tab标题
     tab_title: ['期末考试', '等级考试'],
-    courseExamIsNull:false,
-    myExamIsNull:false,
-    CustomBar: app.globalData.CustomBar,
+    loading:true,
+    allStatus:false,
+    customBar: app.globalData.customBar,
     colors:[
       'orange',
       'green',
@@ -51,16 +50,12 @@ Page({
       }
     });
     //检查是否登录
-    if (!wx.getStorageSync('user_id')) {
-      wx.reLaunch({
-        url: '../../bind/bind',
-      })
-    } else {
-      wx.showLoading({title:"加载中"})
-      that.getCourseExam();
-      that.getMyExam();
-    }
-
+    app.isBind().then((result) => {
+      if(result){
+        that.getCourseExam();
+        that.getMyExam();
+      }
+    })
   },
   /**
   * 生命周期函数--监听页面显示
@@ -109,32 +104,21 @@ Page({
   },
   getCourseExam:function(e){
     var that = this;
-    var user_id = wx.getStorageSync('user_id');
-    var str = app.globalData.key + user_id;
-    var sign = md5.hexMD5(str);
-    wx.request({
-      url: app.globalData.domain + 'exam/getlist',
-      data: {
-        sign: sign,
-        stu_id: user_id
-      },
+    app.httpRequest({
+      url: 'exam/getlist',
       success: function (res) {
-        wx.hideLoading()
-        if (res.data.status == 1001) {
+        if (res.data.status == 0) {
           var course_exam =  res.data.data.data
           for (var i = 0; i < course_exam;i++){
             course_exam[i].open = 0
           }
           that.setData({
+            loading:false,
             course_exam: course_exam,
             term: res.data.data.term
           });
-        } else if (res.data.status == 1003) {
-          that.setData({
-            courseExamIsNull: true,
-          });
         } else {
-          app.msg("获取失败")
+          app.msg(res.data.message)
         }
       },
     })
@@ -150,18 +134,10 @@ Page({
       });
       return;
     }
-    var user_id = wx.getStorageSync('user_id');
-    var str = app.globalData.key + user_id;
-    var sign = md5.hexMD5(str);
     app.httpRequest({
       url: 'exam/getmylist',
-      data: {
-        sign: sign,
-        stu_id: user_id
-      },
       success: function (res) {
-        wx.hideLoading()
-        if (res.data.status == 1001) {
+        if (res.data.status == 0) {
           var now = util.formatTime2(new Date());
           var data = res.data.data;
           for(var i=0;i<data.length;i++){
@@ -169,14 +145,13 @@ Page({
             data[i].days = days;
           }
           that.setData({
+            loading:false,
             my_exam: res.data.data,
             myExamIsNull: false,
           });
           wx.setStorageSync("my_exams", res.data.data)
-        } else{
-          that.setData({
-            myExamIsNull: true,
-          });
+        }else{
+          app.msg(res.data.message)
         }
       },
     })
@@ -220,6 +195,16 @@ Page({
     exams[index].open = (exams[index].open == 1 ? 0 : 1)
     this.setData({
       course_exam:exams
+    })
+  },
+  changeAll:function(){
+    let exams = this.data.course_exam
+    for(let i=0;i<exams.length;i++){
+      exams[i].open = !this.data.allStatus
+    }
+    this.setData({
+      course_exam:exams,
+      allStatus:!this.data.allStatus
     })
   }
 })

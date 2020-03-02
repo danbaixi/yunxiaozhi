@@ -1,40 +1,49 @@
-<!-- <view class="cu-custom" style="height:{{CustomBar}}px">
-  <view class="cu-bar fixed bg-theme" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px">
-    <view class="action border-custom" style="width:{{Custom.width}}px;height:{{Custom.height}}px;margin-left:calc(750rpx - {{Custom.right}}px)">
-      <text class="icon-back" bindtap="backPage"></text>
-      <text class="icon-refresh" bindtap="update"></text>
-    </view>
-    <view class="content" style="top:{{StatusBar}}px">成绩</view>
-  </view>
-</view> -->
-<swiper current="{{currentTab}}" style='height:{{winHeight}}px' class="swiper-box" duration="300" bindchange="bindChange">
-    <swiper-item  wx:if="{{!isNull}}" scroll-y="true" wx:for="{{term}}" wx:key="key">  
-      <view class='scores'>
-        <view class='head'>
-          <view class='term'>{{item.name}}</view>
-          <view class='avg' bindtap='analysis'>平均分：{{avg[index].avg}}分</view>
-        </view>
-        <text class="update text-theme icon-refresh" bindtap="update"></text>
-        <scroll-view  scroll-y='true' class='list'>
-          <view class='li' wx:for="{{score[index]}}" wx:for-item="score" wx:key="key" bindtap='itemData' data-course='{{score.name}}' data-score='{{score.score}}' data-credit='{{score.credit}}' data-gpa='{{score.gpa}}'>
-            <view class='name'>{{score.name}}</view>
-            <view class='result'>
-              <text class='tag'>成绩：</text><text class='score'>{{score.score==-1?"挂科":score.score}}</text>
-            </view>
+<view class="page" style="min-height:{{winHeight}}px;background-color:{{isNull?'#fff':'#1380ff'}}">
+  <view class="cu-custom" style="height:{{CustomBar}}px">
+    <view class="cu-bar fixed bg-white" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px">
+      <view class="action border-custom" style="width:{{Custom.width}}px;height:{{Custom.height}}px;margin-left:calc(750rpx - {{Custom.right}}px)">
+        <text class="icon-back text-black text-bold" bindtap="backPage"></text>
+        <text class="icon-refresh text-black text-bold" bindtap="update"></text>
+      </view>
+      <view class="content-yxz" style="top:{{StatusBar}}px">
+        <picker wx:if="{{!isNull}}" mode="selector" range="{{year}}" bindchange="selectYear" value="{{year_index}}">
+          <view style="line-height:{{Custom.height}}px;height:100%">
+            <text class="text-black text-lg">{{year[year_index]}}</text>
+            <text class="icon-triangledownfill lg text-black"></text>
           </view>
-        </scroll-view>
-      </view>  
-    </swiper-item> 
-    <swiper-item wx:if="{{isNull}}"> 
-      <view class='scores'>
-        <view class='null'>
-          <view class='answer'>空空如也~</view>
-          <view class='answer'>如果你是第一次使用云小智</view>
-          <view class='answer'>请下拉屏幕更新你的成绩</view>
+        </picker>
+        <text wx:else>成绩</text>
+      </view>
+    </view>
+  </view>
+  <view class="container" wx:if="{{!isNull}}">
+    <view class="rank"></view>
+    <view class="score" wx:for="{{termNumber}}" wx:key="key" wx:if="{{term[year[year_index]+'-'+item]}}">
+      <view class="text-center">{{term[year[year_index]+'-'+item]}}</view>
+      <view class="gpa text-center">
+        <text>平均绩点:{{gpa[year[year_index]+'-'+item]}}<text class="icon-right"></text></text>
+      </view>
+      <view class="cu-list menu sm-border">
+        <view class='cu-item' wx:for="{{score}}" wx:for-item="s" wx:key="key" wx:if="{{s.term == year[year_index]+'-'+item}}" bindtap='itemData' data-index="{{index}}">
+          <view class="content">
+            <text class="text-black">{{s.name}}</text>
+          </view>
+          <view class="action">
+            <text class="text-theme text-lg">{{s.score}}</text>
+          </view>
         </view>
       </view>
-    </swiper-item>
-</swiper>
+
+    </view>
+  </view>
+  <view class="null" wx:else>
+    <image mode="widthFix" src="/pages/assets/imgs/other/null.png"></image>
+    <view class="text-grey text-center">
+      <view class="margin-top-sm">没有记录</view>
+      <view class="margin-top-sm">请点击左上角更新成绩</view>
+    </view>
+  </view>
+</view>
   <!--更新课表输入验证码弹窗-->
   <view class="modal-mask" bindtap="hideModal" style='height:{{winHeight-32}}px;top:32px' catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
   <view class="modal-dialog" wx:if="{{showModal}}" class="{{input_focus == 1?'modal-dialog input_focus':'modal-dialog'}}">

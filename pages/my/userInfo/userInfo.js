@@ -1,4 +1,5 @@
 var uploadFn = require('../../../utils/upload.js');
+var util = require('../../../utils/util.js');
 var app = getApp();
 Page({
 
@@ -6,25 +7,48 @@ Page({
    * 页面的初始数据
    */
   data: { 
-    user_img:'http://yunxiaozhi-1251388077.cosgz.myqcloud.com/user_imgs/defalut.png'
+    user_img:'http://yunxiaozhi-1251388077.cosgz.myqcloud.com/user_imgs/defalut.png',
+    fileUrl: 'http://yunxiaozhi-1251388077.cosgz.myqcloud.com/user_imgs/',
+    loading:true
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that = this;
-    var img = options.img;
-    var name = options.name;
-    var xueji = JSON.parse(options.xueji);
-    that.setData({
-      user_img: img,
-      user_name: name,
-      xueji: xueji
-    });
+    this.getInfo()
   },
   onShareAppMessage: function () {
     return app.share()
+  },
+  getInfo:function(){
+    var that = this;
+    app.promiseRequest({
+      url: 'user/getInfo'
+    }).then((result) => {
+      let data = result.data
+      //处理班级，去掉括号后的
+      var stu_class = data.stu_class.split('（')[0];
+      //时间戳转换
+      var date = new Date(parseInt(data.user_regTime) * 1000);
+      var regTime = util.formatTime2(date);
+      var xueji = [
+        { 'title': '姓名', 'data': data.name },
+        { 'title': '年级', 'data': data.stu_schoolday },
+        { 'title': '学号', 'data': wx.getStorageSync('user_id') },
+        { 'title': '学院', 'data': data.stu_department },
+        { 'title': '班级', 'data': stu_class },
+        { 'title': '注册时间', 'data': regTime },
+      ];
+      that.setData({
+        user_img: data.avatar ? data.avatar : (data.user_img ? that.data.fileUrl + data.user_img : that.data.user_img),
+        user_name: data.nickname ? data.nickname : data.user_name,
+        xueji: xueji,
+        loading: false
+      });
+    }).catch((message) => {
+      app.msg(message)
+    })
   },
   //更新头像
   updateImg:function(){
@@ -117,6 +141,24 @@ Page({
       }
     }).catch((message) => {
       app.msg(message)
+    })
+  },
+
+  //更新个人信息
+  infoError:function(){
+    let _this = this 
+    wx.showLoading({
+      title: '正在更新',
+    })
+    app.httpRequest({
+      url:'user/updateInfo',
+      success:function(res){
+        app.msg(res.data.message)
+        if(res.data.status != 0){
+          return
+        }
+        _this.getInfo()
+      }
     })
   }
 })

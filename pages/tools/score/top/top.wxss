@@ -7,8 +7,6 @@ page{
 .head{
   width: 100%;
   height: 70px;
-  background: #6ed4e6;
-  color: #fff;
 }
 .left{
   width: 70%;
@@ -62,7 +60,7 @@ page{
   float: left;
 }
 .blue{
-  color: #6ed4e6;
+  color: var(--theme);
 }
 .top{
   position: relative;

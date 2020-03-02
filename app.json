@@ -34,7 +34,10 @@
     "pages/soul/soul",
     "pages/soul/submit/submit",
     "pages/tools/emptyroom/emptyroom",
-    "pages/login/login"
+    "pages/login/login",
+    "pages/course/add/add",
+    "pages/course/setBg/setBg",
+    "pages/tools/confession/confession"
   ],
   "window": {
     "navigationStyle": "custom",
@@ -45,7 +48,8 @@
     "navigationBarTextStyle": "black"
   },
   "usingComponents": {
-    "cu-custom": "pages/assets/colorui/components/cu-custom"
+    "cu-custom": "pages/assets/colorui/components/cu-custom",
+    "list-loading": "pages/components/list-loading/index"
   },
   "tabBar": {
     "color": "#cbcbcb",

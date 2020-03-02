@@ -22,7 +22,8 @@ Page({
     margintop: 0,  //滑动下拉距离
     music: false,
     tips:"此功能需要登录后才能使用",
-    modalDisplay:false
+    modalDisplay:false,
+    customBar: app.globalData.customBar
   },
 
   /**

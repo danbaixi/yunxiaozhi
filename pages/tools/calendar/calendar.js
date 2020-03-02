@@ -22,7 +22,9 @@ Page({
     jilu:[],
     clickButton:'',
     loading: true,
-    CustomBar: app.globalData.CustomBar
+    customBar: app.globalData.customBar,
+    statusBar: app.globalData.statusBar,
+    custom: app.globalData.custom
   },
 
   /**

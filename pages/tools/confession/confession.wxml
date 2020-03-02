@@ -1,15 +1,19 @@
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">表白墙</view>
+</cu-custom>
 <view>
   <view class="cu-form-group">
     <view class="title">Ta是</view>
-    <input placeholder="你要向谁表白？" bindinput="receiverInput"></input>
+    <input placeholder="你要向谁表白？" value="{{receiver}}" bindinput="receiverInput"></input>
   </view>
   <view class="cu-form-group">
     <view class="title">内容</view>
-    <textarea data-placeholder="用你的甜言蜜语打动Ta吧" placeholder-class="placeholder" class="{{content?'value':''}}" bindinput="contentInput"></textarea>
+    <textarea data-placeholder="用你的甜言蜜语打动Ta吧" placeholder-class="placeholder" class="{{content?'value':''}}" bindinput="contentInput" value="{{content}}"></textarea>
   </view>
   <view class="cu-form-group">
     <view class="title">你是</view>
-    <input placeholder="可不填" bindinput="senderInput"></input>
+    <input placeholder="可不填" bindinput="senderInput" value="{{sender}}"></input>
   </view>
   <view class="padding flex flex-direction">
     <button class="cu-btn bg-theme margin-tb-sm lg" bindtap="submit">提交</button>

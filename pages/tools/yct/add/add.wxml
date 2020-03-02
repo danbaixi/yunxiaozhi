@@ -1,7 +1,7 @@
-<!-- <cu-custom bgColor="bg-theme" isBack="true">
+<cu-custom bgColor="bg-white" isBack="true">
   <view slot="back">返回</view>
-	<view slot="content">添加羊城通</view>
-</cu-custom> -->
+	<view slot="content">添加羊城通卡</view>
+</cu-custom>
 <view class='add_yct'>
   <form bindsubmit="formSubmit" bindreset="formReset">
     <view class='inputView'>

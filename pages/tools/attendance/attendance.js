@@ -1,5 +1,3 @@
-var md5 = require('../../../utils/md5.js');
-var util = require('../../../utils/util.js');
 var app = getApp();
 Page({
 
@@ -11,16 +9,13 @@ Page({
     attendance:[],
     num:0,
     showModal: false,
-    yzmUrl: "",
-    cookie: "",
-    __VIEWSTATE: "",
-    yzm: "",
     input_focus: 0,
     update_time:null,
     isNull:false,
-    StatusBar: app.globalData.StatusBar,
-    CustomBar: app.globalData.CustomBar,
-    Custom: app.globalData.Custom
+    customBar: app.globalData.customBar,
+    statusBar: app.globalData.statusBar,
+    custom: app.globalData.custom,
+    loading:true
   },
 
   /**
@@ -32,6 +27,29 @@ Page({
     that.setData({
       from:options.from
     })
+    app.isBind().then((result) => {
+      if(result){
+        app.httpRequest({
+          url:'attendance/getlist',
+          success: function (res) {
+            if (res.data.status == 0) {
+              that.setData({
+                loading:false,
+                term: res.data.data.terms,
+                attendance: res.data.data.attendance,
+                isNull: false
+              });
+            } else if (res.data.status == 1002) {
+              that.setData({
+                isNull: true
+              })
+            } else {
+              app.msg('获取失败')
+            }
+          },
+        })
+      }
+    })
     //检查是否登录
     if (!wx.getStorageSync('user_id')) {
       wx.reLaunch({
@@ -39,31 +57,6 @@ Page({
       })
       return
     }
-    var user_id = wx.getStorageSync('user_id');
-    var str = app.globalData.key + user_id;
-    var sign = md5.hexMD5(str);
-    wx.request({
-      url: app.globalData.domain + 'attendance/getlist',
-      data: {
-        stu_id: user_id,
-        sign: sign
-      },
-      success: function (res) {
-        if (res.data.status == 1001) {
-          that.setData({
-            term: res.data.data.terms,
-            attendance: res.data.data.attendance,
-            isNull: false
-          });
-        } else if (res.data.status == 1002) {
-          that.setData({
-            isNull: true
-          })
-        } else {
-          app.msg('获取失败')
-        }
-      },
-    });
   },
 
   /**
@@ -130,15 +123,6 @@ Page({
    */
   update: function (e) {
     var that = this;
-    var user_id = wx.getStorageSync('user_id');
-    var user_password = wx.getStorageSync('user_password');
-    // var yzm = that.data.yzm;
-    // var cookie = that.data.cookie;
-    // var __VIEWSTATE = that.data.__VIEWSTATE;
-    // if (yzm == "") {
-    //   app.msg("请输入验证码")
-    //   return
-    // }
     var time = (new Date()).getTime();
     if (wx.getStorageInfoSync('attendance_update_time') != "") {
       var update_time = wx.getStorageSync('attendance_update_time');
@@ -152,34 +136,19 @@ Page({
       return
     }
     wx.showLoading({ title: "更新中" })
-    var str = app.globalData.key + user_id;
-    var sign = md5.hexMD5(str);
     app.httpRequest({
       url: 'attendance/update',
-      data: {
-        stu_id: user_id,
-        password: user_password,
-        // code: yzm,
-        // cookie: cookie,
-        // __VIEWSTATE: __VIEWSTATE,
-        sign: sign
-      },
       success: function (res) {
         wx.hideLoading()
-        wx.hideNavigationBarLoading();
-        wx.stopPullDownRefresh();
-        if (res.data.status == 1001) {
+        if (res.data.status == 0) {
           app.msg('更新了' + res.data.data + '条记录')
           wx.setStorageSync('attendance_update_time', time);
           setTimeout(function () {
             that.onLoad();
             that.hideModal();
           }, 2000)
-        } else if (res.data.status == 1003) {
-          app.msg("验证码错误")
-          that.freshYzm();
-        } else {
-          app.msg("更新失败")
+        }else {
+          app.msg(res.data.message)
         }
       }
     })
