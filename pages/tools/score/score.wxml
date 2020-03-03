@@ -21,7 +21,7 @@
     <view class="score" wx:for="{{termNumber}}" wx:key="key" wx:if="{{term[year[year_index]+'-'+item]}}">
       <view class="text-center">{{term[year[year_index]+'-'+item]}}</view>
       <view class="gpa text-center">
-        <text>平均绩点:{{gpa[year[year_index]+'-'+item]}}<text class="icon-right"></text></text>
+        <text bindtap="goRank" data-term="{{year[year_index]+'-'+item}}">平均绩点:{{gpa[year[year_index]+'-'+item]}}<text class="icon-right"></text></text>
       </view>
       <view class="cu-list menu sm-border">
         <view class='cu-item' wx:for="{{score}}" wx:for-item="s" wx:key="key" wx:if="{{s.term == year[year_index]+'-'+item}}" bindtap='itemData' data-index="{{index}}">

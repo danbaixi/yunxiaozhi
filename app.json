@@ -37,7 +37,8 @@
     "pages/login/login",
     "pages/course/add/add",
     "pages/course/setBg/setBg",
-    "pages/tools/confession/confession"
+    "pages/tools/confession/confession",
+    "pages/tools/score/rank/rank"
   ],
   "window": {
     "navigationStyle": "custom",

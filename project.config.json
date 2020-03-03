@@ -237,6 +237,13 @@
 					"pathName": "pages/course/setBg/setBg",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": 29,
+					"name": "排名",
+					"pathName": "pages/tools/score/rank/rank",
+					"query": "source=score&term=2018-2019-1",
+					"scene": null
 				}
 			]
 		}

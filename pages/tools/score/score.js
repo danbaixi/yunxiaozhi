@@ -276,5 +276,11 @@ Page({
     this.setData({
       year_index: index
     })
+  },
+  goRank:function(e){
+    let term  = e.currentTarget.dataset.term
+    wx.navigateTo({
+      url: 'rank/rank?source=score&term=' + term,
+    })
   }
 })
