@@ -1,5 +1,5 @@
 <view class="bg" style="display:flex;">
-  <image src='/pages/assets/imgs/other/bgImage.jpg' mode='aspectFill' class='png' style='width:{{winWidth}}px;height:{{bgHeight}}px'></image>
+  <image src='/pages/assets/imgs/other/index_bg.png' mode='aspectFill' class='png' style='width:{{winWidth}}px;height:{{bgHeight}}px'></image>
   <view class="add_tips shadow" style="top:{{customBar + 8}}px" wx:if="{{add_tips}}">
     点击<text class="icon-more"></text>添加到"我的小程序"，随时随地看课表
     <text class="icon-close" bindtap="close_tips"></text>
@@ -95,6 +95,28 @@
         <image mode="widthFix" src="{{news.img}}"></image>
       </view>
       <view class="padding-top-xs text-black text-lg">{{news.title}}</view>
+    </view>
+  </view>
+</view>
+
+<view class="cu-modal {{newVersionTip?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">新版本提示</view>
+      <view class="action" bindtap="hideVersionTips">
+        <text class="icon-close text-red padding-right"></text>
+      </view>
+    </view>
+    <view class="padding-xl">
+      <view class="padding-top-xs">新版本的云小智已采用微信登录</view>
+      <view class="text-theme padding-top-xs">请退出后重新登录即可正常使用</view>
+      <view class="padding-top-xs">感谢您的理解与支持</view>
+    </view>
+    <view class="cu-bar bg-white justify-end">
+      <view class="action">
+        <button class="cu-btn bg-gray margin-right" bindtap="hideVersionTips">取消</button>
+        <button class="cu-btn bg-green margin-right" bindtap="goLogin">点击重新登录</button>
+      </view>
     </view>
   </view>
 </view>

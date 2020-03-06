@@ -1,5 +1,4 @@
 import * as echarts from '../../../../pages/components/ec-canvas/echarts';
-var wxCharts = require('../../../../utils/wxcharts.js');
 var app = getApp();
 var data = null
 Page({

@@ -2,7 +2,7 @@
   <image mode="widthFix" src="/pages/assets/imgs/other/jianying.png"></image>
 </view>
 <view class="container">
-  <view class="userinfo" data-page='userInfo' bindtap="{{session?(user_id?'goPage':'bind'):'login'}}">
+  <view class="userinfo" data-page='/pages/my/userInfo/userInfo' bindtap="{{session?(user_id?'goPage':'bind'):'login'}}">
     <view class="nickname text-black">{{user_name}}</view>
     <view class="stuId text-grey">
       <text class="icon-vipcard"></text>
@@ -27,6 +27,29 @@
     </view>
     <view style="clear:both"></view>
   </view>
+  
+  <view class="banners">
+    <view class="grid col-2">
+      <view class="padding-right-sm" bindtap="focus_me">
+        <image mode="widthFix" src="/pages/assets/imgs/other/focus_banner.png"></image>
+      </view>
+      <view class="padding-left-sm share-item">
+        <button open-type="share"></button>
+        <image mode="widthFix" src="/pages/assets/imgs/other/share_banner.png"></image>
+      </view>
+    </view>
+  </view>
+  <view class="tools">
+    <view class="cu-list grid col-{{gridCol}} no-border">
+      <view class="cu-item" wx:for="{{tools}}" wx:key="key" data-index="{{index}}" bindtap='openTool'>
+        <view class="app-icon my-icon">
+          <image mode="widthFix" src="/pages/assets/imgs/my_icon/{{item.icon}}.png"></image>
+        </view>
+        <text>{{item.name}}</text>
+      </view>
+    </view>
+  </view>
+
 
   <view class='infoContent'>
     <view class="cu-list menu sm-border">
@@ -70,10 +93,10 @@
       </view>
   </view>
   </view>
-  <view class="banner">
+  <!-- <view class="banner">
     <button open-type="share"></button>
     <image mode="widthFix" src="/pages/assets/imgs/other/share_banner.png"></image>
-  </view>
+  </view> -->
 </view>
 
 

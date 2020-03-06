@@ -42,7 +42,9 @@
     "pages/tools/rank/rank",
     "pages/tools/credit/credit",
     "pages/tools/course/theory/theory",
-    "pages/tools/course/train/train"
+    "pages/tools/course/train/train",
+    "pages/tools/course/public/public",
+    "pages/tools/friends/friends"
   ],
   "window": {
     "navigationStyle": "custom",

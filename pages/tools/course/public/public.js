@@ -17,7 +17,7 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      from:options.from
+      from: options.from
     })
     this.getList()
   },
@@ -44,25 +44,14 @@ Page({
   },
   //更新
   update:function(){
-    let _this = this
-    wx.showLoading({
-      title: '更新中...',
-    })
-    app.httpRequest({
-      url:'course/updateTheoryCourse',
-      success:function(res){
-        app.msg(res.data.message)
-        if(res.data.status == 0){
-          _this.setData(res.data.data)
-        }
-      }
-    })
+    app.msg('选修课暂不支持更新')
+    return
   },
 
   getList:function(){
     let _this = this
     app.httpRequest({
-      url:'course/getTheoryCourse',
+      url:'course/getPublicCourse',
       success:function(res){
         if (res.data.status == 0) {
           _this.setData({

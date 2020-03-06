@@ -19,7 +19,7 @@
             <text class="text-theme padding-left" bindtap="changeAll">全部{{allStatus?'收起':'展开'}}</text>
           </view>
         </view>
-        <view class="cu-list menu sm-border margin-bottom-sm card-menu {{item.open ==1?'':'close'}}" wx:for="{{course_exam}}" wx:key="key">
+        <view class="cu-list menu sm-border margin-bottom-sm card-menu {{item.open ==1?'':'close'}}" wx:for="{{course_exam}}" wx:key="key" style="height:{{item.info.length*474}}rpx">
           <view class="cu-item" style="height:152rpx" data-index="{{index}}" bindtap="open">
             <view class="content" style="position:relative">
                 <view class="text-theme text-xl">{{item.course}}</view>

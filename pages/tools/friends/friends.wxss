@@ -1,0 +1,7 @@
+.cu-list.menu-avatar>.cu-item .content {
+  line-height: 0.8em;
+  width: calc(100% - 96rpx - 60rpx - 120rpx - 20rpx - 60rpx);
+}
+.cu-list.menu-avatar>.cu-item .action {
+  width: 160rpx;
+}

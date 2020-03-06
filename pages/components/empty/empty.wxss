@@ -5,6 +5,7 @@
 }
 .img{
   width: 240rpx;
+  height: 238rpx;
 }
 .title{
   margin-top: 40rpx;

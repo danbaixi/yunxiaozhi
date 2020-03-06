@@ -3,6 +3,7 @@
   height: 100%;
 }
 .score{
+  position: relative;
   box-sizing: border-box;
   margin: 30rpx 3%;
   padding: 20rpx 16rpx;
@@ -51,4 +52,10 @@
 .null image{
   width: 200rpx;
   height: 200rpx;
+}
+.option-btn{
+  padding: 10rpx 18rpx;
+  border-radius: 8rpx;
+  color: #fff;
+  margin-left: 20rpx;
 }

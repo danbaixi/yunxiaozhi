@@ -4,6 +4,7 @@
 }
 .container image{
   width: 100%;
+  height: 222rpx;
 }
 .error{
   padding: 20rpx;

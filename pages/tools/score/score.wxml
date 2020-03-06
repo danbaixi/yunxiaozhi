@@ -1,4 +1,4 @@
-<view class="page" style="min-height:{{winHeight}}px;background-color:{{loading||isNull?'#fff':'#1380ff'}}">
+<view class="page padding-bottom-xl" style="min-height:{{winHeight}}px;background-color:{{loading||isNull?'#fff':'#1380ff'}}">
   <view class="cu-custom" style="height:{{CustomBar}}px">
     <view class="cu-bar fixed bg-white" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px">
       <view class="action border-custom" style="width:{{Custom.width}}px;height:{{Custom.height}}px;margin-left:calc(750rpx - {{Custom.right}}px)">
@@ -19,15 +19,21 @@
   <list-loading loading="{{loading}}"></list-loading>
   <view class="container" wx:if="{{!isNull && !loading}}">
     <view class="info score">
-      <view>
-        <text class="text-black">当前成绩：</text>
-        <text class="text-yellow">{{type==0?'有效':'原始'}}成绩</text>
-        <text class="padding-left-sm text-theme" bindtap="changeType">切换</text>
+      <view class="padding-bottom-sm">
+        <text class="text-black">上次更新：</text>
+        <text class="text-gray">{{update_time}}</text>
+        <text class="bg-yellow option-btn" bindtap="update">更新成绩</text>
       </view>
       <view class="padding-top-sm">
-        <text class="text-black">上次更新：</text>
-        <text class="text-yellow">{{update_time}}</text>
-        <text class="padding-left-sm text-theme" bindtap="update">更新</text>
+        <radio-group bindchange="changeType">
+          <radio class="theme" checked="{{type==0}}"></radio> 
+          <text bindtap="changeType" data-val="0"> 有效成绩</text>
+          <radio class="theme margin-left" checked="{{type==1}}"></radio>
+          <text bindtap="changeType" data-val="1"> 原始成绩</text>
+        </radio-group>
+        <!-- <text class="text-black">当前成绩：</text>
+        <text class="text-gray">{{type==0?'有效':'原始'}}成绩</text>
+        <text class="bg-grey option-btn" bindtap="changeType">切换模式</text> -->
       </view>
     </view>
     <view class="score" wx:for="{{termNumber}}" wx:key="key" wx:if="{{term[year[year_index]+'-'+item]}}">

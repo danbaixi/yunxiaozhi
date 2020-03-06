@@ -1,0 +1,33 @@
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">班级通讯录</view>
+</cu-custom>
+<list-loading loading="{{loading}}"></list-loading>
+<view class="container" wx:if="{{!loading&&friends.length>0}}">
+  <view class="cu-bar bg-white search fixed" style="top:{{customBar}}px">
+    <view class="search-form round">
+      <text class="icon-search"></text>
+      <input type="text" placeholder="搜索姓名" confirm-type="search" bindinput="search"></input>
+    </view>
+  </view>
+  <view style="padding-top:100rpx">
+    <view class="padding bg-white">总计：<text class="text-theme text-bold">{{total}}</text> (仅显示云小智用户，非全班通讯录)</view>
+    <view class="cu-list sm-border menu-avatar">
+      <view class="cu-item" wx:for="{{friends}}" wx:key="key" wx:if="{{item.isShow}}">
+        <view class="cu-avatar round lg" style="background-image:url({{item.avatar?item.avatar:fileUrl+(item.user_img?item.user_img:'default.png')}});"></view>
+        <view class="content">
+          <view class="text-grey">{{item.stu_name}}</view>
+          <view class="text-gray text-sm flex">
+            <text class="text-cut">
+              注册时间：{{item.user_regTime}}
+            </text>
+          </view>
+        </view>
+        <view class="action">
+          <view class="text-grey text-sm">{{item.stu_id}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<empty display="{{!loading&&credit.length ==0 || isNull}}" content="暂无记录"></empty>

@@ -96,24 +96,31 @@ Page({
     customBar: app.globalData.customBar,
     bgHeight: 180,//背景高度
     bgFix:false,//是否固定背景
+    newVersionTip:false,//新版本提示
   },
 
   onLoad: function () {
     var that = this
-    //that.getBanner();//获取Banner
+    //新版本更新提示
+    let login_session = wx.getStorageSync('login_session')
+    let user_id = wx.getStorageSync('user_id')
+    if (user_id && !login_session) {
+      this.setData({
+        newVersionTip: true
+      })
+    }
     var add_tips = wx.getStorageSync('add_my_tips')
     let system = wx.getSystemInfoSync()
     var time = (new Date).getTime()
     let add_tips_display = false
-    if ((time - add_tips) / 1000 >= 7 * 24 * 60 * 60){
+    if ((time - add_tips) / 1000 >= 14 * 24 * 60 * 60){
       add_tips_display = true
     }
     this.setData({
       winHeight:system.windowHeight,
       winWidth: system.windowWidth,
-      add_tips: true
+      add_tips: add_tips_display
     })
-    that.getNews()
   },
 
   onShow:function(){
@@ -154,6 +161,7 @@ Page({
     that.getWeekday();//获取星期几
     that.getCourse(that.data.now_week);//获取课表
     that.getMyExam();//获取我的考试
+    that.getNews()
 
     //判断是否为本班课表
     var tmpClass = wx.getStorageSync('tmp_class')
@@ -384,6 +392,7 @@ Page({
     wx.navigateTo({
       url: '../login/login',
     })
+    this.hideVersionTips()
   },
 
   goBind:function(){
@@ -634,6 +643,11 @@ Page({
   viewAllNews:function(){
     wx.navigateTo({
       url: '/pages/news/news',
+    })
+  },
+  hideVersionTips:function(){
+    this.setData({
+      newVersionTip:false
     })
   }
 })

@@ -2,11 +2,11 @@
   <view class="tool music">
     <text class="icon-{{music?'musicfill':'musicforbidfill'}} text-white" bindtap='playBG'></text>
   </view>
-  <view class="tool back">
-    <text class="icon-exit text-white" bindtap='back'></text>
-  </view>
   <view class="tool share-btn">
     <button open-type='share' class="wx-share"><text class="icon-share text-white"></text></button>
+  </view>
+  <view class="tool back">
+    <text class="icon-exit text-white" bindtap='back'></text>
   </view>
 	<view class="scroll-fullpage" bindtouchstart="scrollTouchstart" bindtouchmove="scrollTouchmove" bindtouchend="scrollTouchend" style="transform:translateY(-{{scrollindex*100}}%);margin-top: {{margintop}}px">
 

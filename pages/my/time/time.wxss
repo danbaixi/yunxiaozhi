@@ -1,5 +1,5 @@
 .content{
-  padding: 0 40rpx;
+  padding: 40rpx;
 }
 .section01{
   color: #000;
@@ -57,13 +57,13 @@
   border-radius:100%
 }
 .music{
-  top: 150rpx;
-}
-.back{
-  top: 230rpx;
+  top: 180rpx;
 }
 .share-btn{
-  top: 310rpx;
+  top: 260rpx;
+}
+.back{
+  top: 340rpx;
 }
 page{
 	height: 100%;

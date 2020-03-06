@@ -237,7 +237,7 @@ ad{
   width: 20%;
   justify-content: center;
   background: f9f9f9;
-  color: #848b91;
+  color: #999;
   display: flex;
   height: 3rem;
   font-size: 28rpx;
@@ -246,7 +246,7 @@ ad{
 .yxz-cel .tr .td {
   display: block;
   width: 20%;
-  color: #848b91;
+  color: #333;
   justify-content: center;
   text-align: center;
   font-size: 24rpx;

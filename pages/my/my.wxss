@@ -2,13 +2,15 @@ page{
   background: #fff;
 }
 .bg image{
-  padding-top: 50rpx;
+  padding-top: 60rpx;
   width: 100%;
+  height: 360rpx;
   z-index: -1;
+  filter: blur(2rpx)
 }
 .container{
   position: relative;
-  top: -30rpx;
+  top: -144rpx;
 }
 .userinfo{
   padding: 0 3%;
@@ -23,6 +25,7 @@ page{
   position: absolute;
   top: 0;
   right: 3%;
+  box-shadow: 0 0 8rpx 4rpx rgba(0,0,0,.2)
 }
 .nickname {
   font-size: 40rpx;
@@ -123,4 +126,44 @@ button::after{
   float: left;
   width: 64rpx;
   margin-right: 80rpx;
+}
+.app-icon.my-icon image{
+  width: 70rpx!important;
+  height: 70rpx!important;
+}
+.tools{
+  padding: 10rpx 3%;
+}
+.cu-list.grid.no-border{
+  background: #fafafa;
+  border-radius: 8rpx;
+}
+.cu-list.grid>.cu-item [class*=icon]{
+  margin-top: 0;
+}
+.cu-list.grid.no-border>.cu-item{
+  padding: 0;
+}
+.cu-list.grid>.cu-item text{
+  margin-top: 0;
+}
+.banners{
+  padding: 16rpx 3%;
+}
+.banners image{
+  border-radius: 12rpx;
+  width: 100%;
+  height: 120rpx;
+}
+.share-item{
+  position: relative;
+}
+.share-item button{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  z-index: 1;
 }

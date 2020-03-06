@@ -43,7 +43,7 @@ Page({
    * 下拉刷新，更新成绩
    */
   onPullDownRefresh:function(){
-    this.update()
+    app.msg('请点击黄色按钮更新成绩')
   },
 
   /**
@@ -294,9 +294,13 @@ Page({
     })
   },
   //切换成绩模式
-  changeType:function(){
+  changeType:function(e){
+    let val = e.currentTarget.dataset.val
+    if(!val){
+      val = this.data.type == 0 ? 1 : 0
+    }
     this.setData({
-      type:this.data.type == 0 ? 1 : 0
+      type: val
     })
   }
 })

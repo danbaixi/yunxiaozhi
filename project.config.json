@@ -279,6 +279,20 @@
 					"pathName": "pages/tools/course/train/train",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "选修课",
+					"pathName": "pages/tools/course/public/public",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 36,
+					"name": "通讯录",
+					"pathName": "pages/tools/friends/friends",
+					"query": "",
+					"scene": null
 				}
 			]
 		}

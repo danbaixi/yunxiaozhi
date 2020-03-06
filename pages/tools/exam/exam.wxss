@@ -192,10 +192,7 @@
   right: 40rpx;
 }
 .close{
-  height: 150rpx;
-}
-.open{
-  height: 100%;
+  height: 150rpx!important;
 }
 .open-status{
   position: absolute;
@@ -208,4 +205,7 @@
 }
 .split:last-child{
   border-bottom: none
+}
+.cu-list{
+  transition: all .3s ease-in
 }

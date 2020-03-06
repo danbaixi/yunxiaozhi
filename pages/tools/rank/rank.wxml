@@ -11,15 +11,15 @@
     <view class="grid col-2">
       <view>
         <view class="text-theme text-xl padding-bottom-xs">{{user.gpa}}</view>
-        <view class="text-grey">大学生涯绩点</view>
+        <view class="text-gray">大学生涯绩点</view>
       </view>
       <view>
         <view class="padding-bottom-xs">
           <text class="text-theme text-xl">{{user.rank}}</text>
-          <text class="text-grey"> / </text>
+          <text class="text-gray"> / </text>
           <text class="text-black">{{total}}</text>
         </view>
-        <view class="text-grey">班级排名</view>
+        <view class="text-gray">班级排名</view>
       </view>
     </view>
   </view>
@@ -35,11 +35,11 @@
       </view>
       <view class="action">
         <view>
-          <text class="text-grey">平均绩点 </text>
+          <text class="text-gray">平均绩点 </text>
           <text class="text-theme">{{item.gpa}}</text>
         </view>
         <view class="text-right">
-          <text class="text-grey text-xs">{{item.update_time?item.update_time:'最近没有更新'}}</text>
+          <text class="text-gray text-xs">{{item.update_time?item.update_time:'最近没有更新'}}</text>
         </view>
       </view>
     </view>
