@@ -115,3 +115,12 @@ button::after{
   left: 12rpx;
   width: calc(200% - 40rpx);
 }
+.counts{
+  padding: 10rpx 3%;
+}
+.counts .item{
+  display: inline-block;
+  float: left;
+  width: 64rpx;
+  margin-right: 80rpx;
+}

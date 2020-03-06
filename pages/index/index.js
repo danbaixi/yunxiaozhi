@@ -13,10 +13,18 @@ Page({
         needLogin: true,
         url: '../tools/score/score?from=index',
       }, {
+        icon: 'gpa',
+        color: 'green',
+        badge: 0,
+        name: '绩点排行',
+        icon: 'gpa',
+        needLogin: true,
+        url: '../tools/rank/rank?from=index',
+      },{
         icon: 'rank',
         color: 'green',
         badge: 0,
-        name: '绩点分析',
+        name: '学业分析',
         icon: 'ana',
         needLogin: true,
         url: '../tools/score/ana/ana?from=index',
@@ -28,15 +36,7 @@ Page({
         icon: 'attendance',
         needLogin: true,
         url: '../tools/attendance/attendance?from=index',
-      }, {
-        icon: 'remind',
-        color: 'olive',
-        badge: 0,
-        name: '考试安排',
-        icon: 'exam',
-        needLogin: true,
-        url: '../tools/exam/exam?from=index',
-      }, {
+      },{
         icon: 'search',
         color: 'olive',
         badge: 0,
@@ -94,18 +94,26 @@ Page({
     ],
     statusBar: app.globalData.statusBar,
     customBar: app.globalData.customBar,
+    bgHeight: 180,//背景高度
+    bgFix:false,//是否固定背景
   },
 
   onLoad: function () {
     var that = this
     //that.getBanner();//获取Banner
     var add_tips = wx.getStorageSync('add_my_tips')
+    let system = wx.getSystemInfoSync()
     var time = (new Date).getTime()
+    let add_tips_display = false
     if ((time - add_tips) / 1000 >= 7 * 24 * 60 * 60){
-      this.setData({
-        add_tips: true
-      })
+      add_tips_display = true
     }
+    this.setData({
+      winHeight:system.windowHeight,
+      winWidth: system.windowWidth,
+      add_tips: true
+    })
+    that.getNews()
   },
 
   onShow:function(){
@@ -145,7 +153,6 @@ Page({
     that.getNowWeek();//获取第几周
     that.getWeekday();//获取星期几
     that.getCourse(that.data.now_week);//获取课表
-    // that.getNewsList();//获取新闻
     that.getMyExam();//获取我的考试
 
     //判断是否为本班课表
@@ -465,16 +472,39 @@ Page({
   getMyExam: function (e) {
     var that = this,displayExam = false;
     var my_exams = wx.getStorageSync("my_exams");
-    for (let i = 0; i < my_exams.length; i++) {
-      if (my_exams[i].days >= 0) {
-        displayExam = true
-        break;
+    if(my_exams){
+      for (let i = 0; i < my_exams.length; i++) {
+        if (my_exams[i].days >= 0) {
+          displayExam = true
+          break;
+        }
       }
+      that.setData({
+        my_exams: my_exams,
+        displayExam: displayExam,
+      });
+      return
     }
-    that.setData({
-      my_exams:my_exams,
-      displayExam: displayExam,
-    });
+    app.httpRequest({
+      url: 'exam/getmylist',
+      success: function (res) {
+        if (res.data.status == 0) {
+          var now = util.formatTime2(new Date());
+          var data = res.data.data;
+          for (var i = 0; i < data.length; i++) {
+            var days = that.dateDiff(data[i].exam_date, now);
+            data[i].days = days;
+          }
+          that.setData({
+            my_exams: data,
+            displayExam: false,
+          });
+          wx.setStorageSync("my_exams", data)
+        } else {
+          app.msg(res.data.message)
+        }
+      },
+    })
   },
   //计算两个日期的天数
   dateDiff: function (date1, date2) {
@@ -577,6 +607,33 @@ Page({
           app.msg(error.message)
         })
       }
+    })
+  },
+  //获取新闻
+  getNews:function(){
+    let _this = this
+    app.httpRequest({
+      url:'article/getNews',
+      success:function(res){
+        if(res.data.status == 0){
+          _this.setData({
+            'display_news': res.data.data.display,
+            'news': res.data.data.news
+          })
+        }
+      }
+    })
+  },
+  // 查看
+  viewNews:function(){
+    wx.navigateTo({
+      url: '/pages/article' + '/article?src=' + encodeURIComponent(this.data.news.src),
+    })
+  },
+  // 查看全部
+  viewAllNews:function(){
+    wx.navigateTo({
+      url: '/pages/news/news',
     })
   }
 })

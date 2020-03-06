@@ -1,2 +1,21 @@
-<!--pages/soul/submit/submit.wxml-->
-<text>pages/soul/submit/submit.wxml</text>
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">贡献毒鸡汤</view>
+</cu-custom>
+<view class="padding-sm bg-yellow text-white">
+  温馨提示：请勿提交无意义的内容，否则后果自负
+</view>
+<view class="container padding-top">
+  <view class="cu-form-group top">
+    <view class="title">内容</view>
+    <textarea data-placeholder="请输入毒鸡汤" placeholder-class="placeholder" class="{{soul?'value':''}}" value="{{soul}}" bindinput="soulInput">
+    </textarea>
+  </view>
+  <view class="cu-form-group">
+    <view class="title">昵称</view>
+    <input placeholder="(选填)" bindtap="nameInput" value="{{name}}"></input>
+  </view>
+  <view class="padding flex flex-direction">
+    <button class="cu-btn bg-theme lg" bindtap="submit">提交</button>
+  </view>
+</view>

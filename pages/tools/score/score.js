@@ -1,4 +1,5 @@
 var app = getApp();
+var util = require('../../../utils/util.js');
 Page({
 
   /**
@@ -17,7 +18,9 @@ Page({
     CustomBar: app.globalData.customBar,
     Custom: app.globalData.custom,
     termNumber:[2,1],
-    year_index:0
+    year_index:0,
+    type:0, // 0为有效成绩，1为原始成绩
+    loading:true
   },
 
   /**
@@ -27,9 +30,11 @@ Page({
     app.isLogin()
     var that = this;
     var winHeight = wx.getSystemInfoSync().windowHeight;
+    let update_time = wx.getStorageSync('score_update_time')
     that.setData({
       from: options.from,
-      winHeight: winHeight
+      winHeight: winHeight,
+      update_time: update_time ? util.formatTime3(new Date(update_time)):'无记录'
     })
     this.getScore(false)
   },
@@ -85,19 +90,21 @@ Page({
     var scores = wx.getStorageSync('scores');
     if (scores != '' && JSON.stringify(scores) != "{}" && scores.score.length>0 && !update){
       that.setData({
+        loading: false,
         gpa: scores.gpa,
         score: scores.score,
         term: scores.term,
         year: scores.year,
         original_score: scores.originalScore
       })
-      wx.hideLoading()
       return
     }
     app.httpRequest({
       url: 'score/getscorelist',
       success: function (res) {
-        wx.hideLoading()
+        that.setData({
+          loading:false
+        })
         if (res.data.status == 0) {
           wx.setStorageSync('scores', res.data.data);
           that.setData({
@@ -223,7 +230,7 @@ Page({
     that.setData({ list_is_display: false })
     app.isBind()
     var time = (new Date()).getTime();
-    if (wx.getStorageInfoSync('score_update_time') != "") {
+    if (wx.getStorageSync('score_update_time') != "") {
       var update_time = wx.getStorageSync('score_update_time');
       var cha = time - update_time;
       var season = 60 - Math.floor(cha / 1000);
@@ -247,6 +254,9 @@ Page({
           wx.setStorageSync('scores', '')
           that.getScore(true);
           wx.setStorageSync('score_update_time', time);
+          that.setData({
+            update_time: util.formatTime3(new Date(time))
+          })
         } else {
           if (res.data.status == 1002) {
             that.freshYzm()
@@ -281,6 +291,12 @@ Page({
     let term  = e.currentTarget.dataset.term
     wx.navigateTo({
       url: 'rank/rank?source=score&term=' + term,
+    })
+  },
+  //切换成绩模式
+  changeType:function(){
+    this.setData({
+      type:this.data.type == 0 ? 1 : 0
     })
   }
 })

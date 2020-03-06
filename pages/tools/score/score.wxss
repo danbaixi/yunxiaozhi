@@ -4,7 +4,7 @@
 }
 .score{
   box-sizing: border-box;
-  margin: 30rpx 3% 40rpx;
+  margin: 30rpx 3%;
   padding: 20rpx 16rpx;
   background: #fff;
   border-radius: 12rpx;
@@ -43,9 +43,6 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-}
-.cu-list.menu>.cu-item {
-  min-height: 84rpx;
 }
 .null{
   padding-top: 200rpx;

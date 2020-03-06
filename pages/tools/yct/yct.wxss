@@ -40,6 +40,7 @@ page{
   float: left;
 }
 .logo_text{
+  padding-left: 20px;
   line-height: 40px;
 }
 .num{
@@ -88,7 +89,6 @@ page{
   width: 90%;
   height: 200px;
   background: #f8ab2b;
-  background-image: url('http://yunxiaozhi-1251388077.file.myqcloud.com/xiaochengxu/yct.png'); 
   margin: 20px auto;
   border-radius: 10px;
   text-shadow: 0 0 10px #444;

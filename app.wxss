@@ -12,9 +12,6 @@ page{
 .text-theme, .line-theme, .lines-theme {
   color: var(--theme)
 }
-.text-yellow, .line-yellow, .lines-yellow {
-  color: var(--ffa807)
-}
 .bg-theme{
   background-color: var(--theme);
 }
@@ -30,6 +27,13 @@ switch.theme[checked] .wx-switch-input.wx-switch-input-checked,
 checkbox.theme[checked] .wx-checkbox-input, radio.theme[checked] .wx-radio-input {
   background-color: var(--theme) !important;
   color: #fff !important;
+}
+.cu-custom .cu-bar .border-custom {
+  position: relative;
+  background: var(--white);
+  border-radius: 1000rpx;
+  border:1px solid #ddd;
+  height: 30px;
 }
 
 .app-icon{
@@ -199,3 +203,64 @@ ad{
 .wx-share::after{
   opacity: 0
 }
+
+/** 表格 */
+.yxz-cel{
+  padding: 0 20rpx
+}
+.yxz-cel .title{
+  text-align: center;
+  font-size: 32rpx;
+  color: #848b91;
+  padding: 30rpx 0;
+}
+.yxz-cel .tr {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  height: 3rem;
+  align-items: center;
+  border-bottom: 1px solid #f2f4f7;
+}
+.yxz-cel .tr:last-child{
+  border-color: transparent;
+}
+.yxz-cel .bg-w{
+  background: #f5f5f5;
+  border-radius: 8rpx;
+  border-color: transparent;
+}
+.yxz-cel .bg-g{
+  background: #f6f6f6;
+}
+.yxz-cel .tr .th {
+  width: 20%;
+  justify-content: center;
+  background: f9f9f9;
+  color: #848b91;
+  display: flex;
+  height: 3rem;
+  font-size: 28rpx;
+  align-items: center;
+}
+.yxz-cel .tr .td {
+  display: block;
+  width: 20%;
+  color: #848b91;
+  justify-content: center;
+  text-align: center;
+  font-size: 24rpx;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.yxz-cel .tr .th.b,
+.yxz-cel .tr .td.b{
+  width: 30%;
+}
+.yxz-cel .tr .th.s,
+.yxz-cel .tr .td.s{
+  width: 10%;
+}
+
+/** 表格 end */

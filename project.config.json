@@ -244,6 +244,41 @@
 					"pathName": "pages/tools/score/rank/rank",
 					"query": "source=score&term=2018-2019-1",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "绩点排行",
+					"pathName": "pages/tools/rank/rank",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "提交毒鸡汤",
+					"pathName": "pages/soul/submit/submit",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "学分列表",
+					"pathName": "pages/tools/credit/credit",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 33,
+					"name": "理论课列表",
+					"pathName": "pages/tools/course/theory/theory",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "实训课程",
+					"pathName": "pages/tools/course/train/train",
+					"query": "",
+					"scene": null
 				}
 			]
 		}

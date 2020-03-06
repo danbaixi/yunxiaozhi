@@ -1,9 +1,9 @@
-<view class="bg">
-  <image src='/pages/assets/imgs/other/bgImage.jpg' mode='aspectFill' class='png' style='width:100%;height:340rpx'></image>
-</view>
-<view class="add_tips shadow" style="top:{{customBar + 8}}px" wx:if="{{add_tips}}">
-  点击<text class="icon-more"></text>添加到"我的小程序"，随时随地看课表
-  <text class="icon-close" bindtap="close_tips"></text>
+<view class="bg" style="display:flex;">
+  <image src='/pages/assets/imgs/other/bgImage.jpg' mode='aspectFill' class='png' style='width:{{winWidth}}px;height:{{bgHeight}}px'></image>
+  <view class="add_tips shadow" style="top:{{customBar + 8}}px" wx:if="{{add_tips}}">
+    点击<text class="icon-more"></text>添加到"我的小程序"，随时随地看课表
+    <text class="icon-close" bindtap="close_tips"></text>
+  </view>
 </view>
 <view class="container">
   <view class="cu-list grid col-{{gridCol}} no-border tools">
@@ -16,7 +16,7 @@
   </view>
 
   <view class='box'>
-    <view class="cu-bar bg-white arrow" bindtap='goCourse'>
+    <view class="cu-bar bg-white solid-bottom arrow" bindtap='goCourse'>
       <view class="action">
         <text class="text-black text-xl text-bold">今日课表</text>
       </view>
@@ -78,6 +78,23 @@
           <text>剩余<text class='days'>{{item.days}}</text>天</text>
         </view>
       </view>
+    </view>
+  </view>
+
+  <view class='box' wx:if="{{display_news}}" bindtap='viewAllNews'>
+    <view class="cu-bar bg-white solid-bottom arrow">
+      <view class="action">
+        <text class="text-black text-xl text-bold">校园头条</text>
+      </view>
+      <view class="action">
+        <button class="cu-btn sm round line-theme">查看更多</button>
+      </view>
+    </view>
+    <view class="padding-top-sm padding-bottom-sm" bindtap="viewNews">
+      <view class="news-img">
+        <image mode="widthFix" src="{{news.img}}"></image>
+      </view>
+      <view class="padding-top-xs text-black text-lg">{{news.title}}</view>
     </view>
   </view>
 </view>

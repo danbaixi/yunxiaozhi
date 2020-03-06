@@ -1,13 +1,47 @@
 <cu-custom bgColor="bg-white" isBack="true">
   <view slot="back">返回</view>
-	<view slot="content">学业分析</view>
+	<view slot="content">学业报告</view>
 </cu-custom>
-<view class="content padding" wx:if="{{!isNull}}">
-  <text class='jidian'>GPA(平均绩点)：<text class="text-lg">{{gpa}}</text></text>
-  <text class='title tip'>数据仅供参考，与奖学金无关</text>
-  <text class='title'>成绩趋向图</text>
-  <canvas  class='line' canvas-id="lineCanvas" disable-scroll="true"></canvas>
-  <text class='title'>成绩分布图</text>
-  <canvas class='column' canvas-id="columnCanvas"></canvas>
+<view class="container">
+  <update-tips></update-tips>
+  <view class="total grid col-3 text-center padding bg-white margin-top" style="position:relative">
+    <text class="question icon-question" bindtap="showQuestion"></text>
+    <view bindtap="goPage" data-page="/pages/tools/rank/rank">
+      <view class="text-theme text-xl">{{gpa}}</view>
+      <view class="text-grey text-sm padding-top-xs">总平均绩点</view>
+    </view>
+    <view bindtap="goPage" data-page="/pages/tools/rank/rank">
+      <view class="text-theme text-xl">{{top}}</view>
+      <view class="text-grey text-sm padding-top-xs">总排名</view>
+    </view>
+    <view bindtap="goPage" data-page="/pages/tools/credit/credit">
+      <view class="text-theme text-xl">{{credit}}</view>
+      <view class="text-grey text-sm padding-top-xs">已修学分</view>
+    </view>
+  </view>
+  <view class="bg-white margin-top padding-top padding-bottom">
+    <list-loading loading="{{loading}}"></list-loading>
+    <view wx:if="{{!loading}}">
+      <view class="text-center">
+        <view class="text-theme text-lg">学习趋势</view>
+        <view class="text-grey text-sm padding-top-xs">绩点和排名学期变化</view>
+      </view>
+      <view class="canvas-box padding-top">
+        <ec-canvas id="gpa-line-dom"  canvas-id="gpa-line" ec="{{ecGPA}}"></ec-canvas>
+      </view>
+    </view>
+  </view>
+  <view class="bg-white margin-top padding-top padding-bottom">
+    <list-loading loading="{{loading}}"></list-loading>
+    <view wx:if="{{!loading}}">
+      <view class="text-center">
+        <view class="text-theme text-lg">成绩分布</view>
+        <view class="text-grey text-sm padding-top-xs">成绩分数段的分布</view>
+      </view>
+      <view class="score-box padding-top">
+        <ec-canvas canvas-id="score" ec="{{ecScore}}"></ec-canvas>
+      </view>
+    </view>
+  </view>
 </view>
 <view wx:if="{{isNull}}" style='margin-top:40px;text-align:center'>没有数据，请在成绩页面更新后再进入</view>

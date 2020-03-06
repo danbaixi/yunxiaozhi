@@ -11,9 +11,5 @@
     <view class="padding flex flex-direction">
       <button class="cu-btn bg-theme lg" bindtap='add' formType="submit">添加</button>
     </view>
-
-    <view class='img'>
-      <image src='http://yunxiaozhi-1251388077.file.myqcloud.com/xiaochengxu/yct_demo.png'></image>
-    </view>
   </form>
 </view>

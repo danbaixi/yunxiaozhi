@@ -1,3 +1,10 @@
+page{
+  position: relative;
+  width: 100%;
+}
+.bg{
+  z-index: 1;
+}
 .container{
   box-sizing: border-box;
 }
@@ -244,4 +251,12 @@
 }
 .cu-list.grid.no-border>.cu-item{
   padding-bottom: 10rpx;
+}
+.news-img{
+  box-sizing: border-box;
+}
+.news-img image{
+  width: 897rpx;
+  height: 383rpx;
+  border-radius: 12rpx;
 }

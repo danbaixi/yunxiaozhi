@@ -35,7 +35,7 @@ Page({
             if (res.data.status == 0) {
               that.setData({
                 loading:false,
-                term: res.data.data.terms,
+                term: res.data.data.term,
                 attendance: res.data.data.attendance,
                 isNull: false
               });
@@ -124,7 +124,7 @@ Page({
   update: function (e) {
     var that = this;
     var time = (new Date()).getTime();
-    if (wx.getStorageInfoSync('attendance_update_time') != "") {
+    if (wx.getStorageSync('attendance_update_time') != "") {
       var update_time = wx.getStorageSync('attendance_update_time');
       var cha = time - update_time;
       var season = 60 - Math.floor(cha / 1000);

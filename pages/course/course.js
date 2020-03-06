@@ -577,7 +577,7 @@ Page({
       return;
     }
     var time = (new Date()).getTime();
-    if (wx.getStorageInfoSync('course_update_time') != "") {
+    if (wx.getStorageSync('course_update_time') != "") {
       var update_time = wx.getStorageSync('course_update_time');
       var cha = time - update_time;
       var season = 120 - Math.floor(cha / 1000);

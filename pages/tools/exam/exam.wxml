@@ -3,7 +3,7 @@
 	<view slot="content">考试</view>
 </cu-custom>
 <scroll-view scroll-x class="bg-white nav text-center">
-  <view class="cu-item {{index==currentTab?'text-theme cur':''}}" wx:for="{{tab_title}}" wx:key data-current="{{index}}" bindtap='swichNav'>
+  <view class="cu-item {{index==currentTab?'text-theme cur':''}}" wx:for="{{tab_title}}" wx:key="key" wx:key data-current="{{index}}" bindtap='swichNav'>
     {{item}}
   </view>
 </scroll-view>

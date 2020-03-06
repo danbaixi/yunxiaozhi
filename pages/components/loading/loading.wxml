@@ -1,3 +1,0 @@
-<view class="container" wx:if="{{loading}}">
-  <image mode="widthFix" src="/pages/assets/imgs/other/loading.gif"></image>
-</view>

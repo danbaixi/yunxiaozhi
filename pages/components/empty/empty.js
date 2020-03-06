@@ -7,6 +7,10 @@ Component({
     display:{
       type:Boolean,
       value:false
+    },
+    content:{
+      type:String,
+      value:'没有记录'
     }
   },
 

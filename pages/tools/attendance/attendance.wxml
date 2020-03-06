@@ -11,8 +11,8 @@
 <view class='attendance' wx:if="{{!loading}}">
   <view class='content' wx:if="{{!isNull}}">
    <block wx:for="{{term}}" wx:key="key" wx:for-item="xueqi" wx:for-index="index">   
-    <view class="season">
-      <view class='xueqi'>{{xueqi.term}}</view>
+    <view class="yxz-cel">
+      <view class='title'>{{xueqi}}</view>
       <view class="tr bg-w">
         <view class="th">课程</view>
         <view class="th">老师</view>
@@ -21,21 +21,21 @@
         <view class="th">日期</view>
         <view class="th">记录</view>
       </view>
-      <block wx:for="{{attendance[xueqi.term]}}" wx:key="key" wx:for-item="att" wx:for-index="index1">
-        <view class="tr">
+      <block wx:for="{{attendance}}" wx:key="key" wx:for-item="att" wx:for-index="index1">
+        <view class="tr" wx:if="{{att.term == xueqi}}">
           <view class="td">{{att.course}}</view>
           <view class="td">{{att.teacher}}</view>
           <view class="td s">{{att.zhouci}}</view>
           <view class="td">{{att.jieci}}</view>
           <view class="td">{{att.date}}</view>
-          <view class="td {{att.reason=='旷课'||att.reason=='迟到'||att.reason=='早退'?'red':''}}">
-           {{att.reason}}
+          <view class="td" style="color:{{att.reason=='旷课'||att.reason=='迟到'||att.reason=='早退'?'#e54d42':'#848b91'}}">
+            {{att.reason}}
           </view>
         </view>
       </block>
     </view>  
-    </block>
-  </view>
+  </block>
+</view>
 <view style="margin-top:40%" wx:if="{{isNull}}">
   <view class="text-center padding">没有记录，请点击更新记录</view>
   <view class="text-center">若还是没有，那你很优秀哦</view>

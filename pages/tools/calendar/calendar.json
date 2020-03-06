@@ -1,6 +1,3 @@
 {
-  "navigationBarTitleText": "校历",
-  "usingComponents":{
-    "loading" : "/pages/components/loading/loading"
-  }
+  "navigationBarTitleText": "校历"
 }

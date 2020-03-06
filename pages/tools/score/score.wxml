@@ -1,4 +1,4 @@
-<view class="page" style="min-height:{{winHeight}}px;background-color:{{isNull?'#fff':'#1380ff'}}">
+<view class="page" style="min-height:{{winHeight}}px;background-color:{{loading||isNull?'#fff':'#1380ff'}}">
   <view class="cu-custom" style="height:{{CustomBar}}px">
     <view class="cu-bar fixed bg-white" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px">
       <view class="action border-custom" style="width:{{Custom.width}}px;height:{{Custom.height}}px;margin-left:calc(750rpx - {{Custom.right}}px)">
@@ -16,17 +16,38 @@
       </view>
     </view>
   </view>
-  <view class="container" wx:if="{{!isNull}}">
-    <view class="rank"></view>
+  <list-loading loading="{{loading}}"></list-loading>
+  <view class="container" wx:if="{{!isNull && !loading}}">
+    <view class="info score">
+      <view>
+        <text class="text-black">当前成绩：</text>
+        <text class="text-yellow">{{type==0?'有效':'原始'}}成绩</text>
+        <text class="padding-left-sm text-theme" bindtap="changeType">切换</text>
+      </view>
+      <view class="padding-top-sm">
+        <text class="text-black">上次更新：</text>
+        <text class="text-yellow">{{update_time}}</text>
+        <text class="padding-left-sm text-theme" bindtap="update">更新</text>
+      </view>
+    </view>
     <view class="score" wx:for="{{termNumber}}" wx:key="key" wx:if="{{term[year[year_index]+'-'+item]}}">
       <view class="text-center">{{term[year[year_index]+'-'+item]}}</view>
       <view class="gpa text-center">
         <text bindtap="goRank" data-term="{{year[year_index]+'-'+item}}">平均绩点:{{gpa[year[year_index]+'-'+item]}}<text class="icon-right"></text></text>
       </view>
       <view class="cu-list menu sm-border">
-        <view class='cu-item' wx:for="{{score}}" wx:for-item="s" wx:key="key" wx:if="{{s.term == year[year_index]+'-'+item}}" bindtap='itemData' data-index="{{index}}">
-          <view class="content">
+        <view class='cu-item' style="min-height: {{type==0?84:100}}rpx;" wx:for="{{type==0?score:original_score}}" wx:for-item="s" wx:key="key" wx:if="{{s.term == year[year_index]+'-'+item}}" bindtap='itemData' data-index="{{index}}">
+          <view class="content" wx:if="{{type==0}}">
             <text class="text-black">{{s.name}}</text>
+          </view>
+          <view class="content" wx:else>
+            <view><text class="text-black">{{s.name}}</text></view>
+            <view class="text-sm">
+              <text class="text-grey" wx:if="{{s.performance>0}}">平时:<text class="text-theme">{{s.performance}} </text></text>
+              <text class="text-grey" wx:if="{{s.middle>0}}">期中:<text class="text-theme">{{s.middle}} </text></text>
+              <text class="text-grey" wx:if="{{s.final>0}}">期末:<text class="text-theme">{{s.final}} </text></text>
+              <text class="text-grey" wx:if="{{s.skill>0}}">技能:<text class="text-theme">{{s.skill}}</text></text>
+            </view>
           </view>
           <view class="action">
             <text class="text-theme text-lg">{{s.score}}</text>
@@ -36,7 +57,7 @@
 
     </view>
   </view>
-  <view class="null" wx:else>
+  <view class="null" wx:if="{{isNull}}">
     <image mode="widthFix" src="/pages/assets/imgs/other/null.png"></image>
     <view class="text-grey text-center">
       <view class="margin-top-sm">没有记录</view>

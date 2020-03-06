@@ -1,32 +1,23 @@
-page{
-  background: #fff
+.container{
+  position: relative;
 }
-.content{
-  margin-top:4px;
-  height: 100%;
-  width: 100%;
+.canvas-box{
+  position: relative;
+  height: 360rpx;
 }
-.line{
-  height: 400rpx;
-  width: 100%;
+.score-box{
+  position: relative;
+  height: 360rpx;
 }
-.column{
-  height: 500rpx;
-  width: 100%;
-  margin: 0 auto;
+#gpa-line-dom {
+  position: absolute;
+  top: 10rpx;
+  left: 0;
+  bottom: 0;
+  right: 0;
 }
-.title{
-  display: block;
-  text-align: center;
-  font-size: 14px;
-  margin: 20rpx 0;
-}
-.jidian{
-  display: block;
-  text-align: center;
-}
-.tip{
-  font-size: 12px;
-  color: #f4e;
-  margin-top: 0;
+.question{
+  position: absolute;
+  top: 10rpx;
+  right: 20rpx;
 }

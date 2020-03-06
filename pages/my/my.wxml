@@ -12,20 +12,25 @@
     <image mode='aspectFill' class="avatar" src="{{user_img}}" background-size="cover"></image>
   </view>
 
-  <view class="banner">
-    <button open-type="share"></button>
-    <image mode="widthFix" src="/pages/assets/imgs/other/share_banner.png"></image>
+  <view class="counts text-center" wx:if="{{user_id}}">
+    <view class="item" data-page='/pages/tools/credit/credit?from=index' bindtap="goPage">
+      <view class="text-black text-bold text-lg">{{credit}}</view>
+      <view class="text-gray">学分</view>
+    </view>
+    <view class="item" data-page='/pages/tools/attendance/attendance?from=index' bindtap="goPage">
+      <view class="text-black text-bold text-lg">{{attendance}}</view>
+      <view class="text-gray">考勤</view>
+    </view>
+    <view class="item" data-page='/pages/tools/exam/exam?currentTab=1' bindtap="goPage">
+      <view class="text-black text-bold text-lg">{{exam}}</view>
+      <view class="text-gray">考试</view>
+    </view>
+    <view style="clear:both"></view>
   </view>
 
   <view class='infoContent'>
     <view class="cu-list menu sm-border">
-      <!-- <view class="cu-item arrow" data-page='userInfo' bindtap="goPage">
-        <view class="content">
-          <text class="icon-my lg text-black"></text>
-          <text class="text-black">详细信息</text>
-        </view>
-      </view> -->
-      <view class="cu-item arrow" data-page='set' bindtap="goPage">
+      <view class="cu-item arrow" data-page='/pages/my/set/set' bindtap="goPage">
         <view class="content">
           <text class="icon-settings lg text-black"></text>
           <text class="text-black">个人设置</text>
@@ -65,7 +70,10 @@
       </view>
   </view>
   </view>
-
+  <view class="banner">
+    <button open-type="share"></button>
+    <image mode="widthFix" src="/pages/assets/imgs/other/share_banner.png"></image>
+  </view>
 </view>
 
 

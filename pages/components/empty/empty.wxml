@@ -1,4 +1,4 @@
 <view class="container" wx:if="{{display}}">
   <image class="img" mode="widthFix" src="/pages/assets/imgs/other/empty.png"></image>
-  <view class="title">没有记录</view>
+  <view class="title">{{content}}</view>
 </view>

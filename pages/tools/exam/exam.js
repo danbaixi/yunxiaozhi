@@ -146,10 +146,10 @@ Page({
           }
           that.setData({
             loading:false,
-            my_exam: res.data.data,
+            my_exam: data,
             myExamIsNull: false,
           });
-          wx.setStorageSync("my_exams", res.data.data)
+          wx.setStorageSync("my_exams", data)
         }else{
           app.msg(res.data.message)
         }

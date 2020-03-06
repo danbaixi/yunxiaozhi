@@ -38,7 +38,11 @@
     "pages/course/add/add",
     "pages/course/setBg/setBg",
     "pages/tools/confession/confession",
-    "pages/tools/score/rank/rank"
+    "pages/tools/score/rank/rank",
+    "pages/tools/rank/rank",
+    "pages/tools/credit/credit",
+    "pages/tools/course/theory/theory",
+    "pages/tools/course/train/train"
   ],
   "window": {
     "navigationStyle": "custom",
@@ -50,7 +54,8 @@
   },
   "usingComponents": {
     "cu-custom": "pages/assets/colorui/components/cu-custom",
-    "list-loading": "pages/components/list-loading/index"
+    "list-loading": "pages/components/list-loading/index",
+    "empty": "pages/components/empty/empty"
   },
   "tabBar": {
     "color": "#cbcbcb",

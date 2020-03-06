@@ -3722,7 +3722,7 @@ scroll-view.cu-steps .cu-item {
 }
 
 .text-gray, .line-gray, .lines-gray {
-  color: var(--grey);
+  color: var(--gray);
 }
 
 .text-black, .line-black, .lines-black {

@@ -7,6 +7,10 @@ Component({
     loading: {
       type: [Boolean, String],
       value: true
+    },
+    errmsg: {
+      type: String,
+      value: ''
     }
   },
 

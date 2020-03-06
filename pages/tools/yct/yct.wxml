@@ -2,12 +2,12 @@
   <view slot="back">返回</view>
 	<view slot="content">羊城通余额查询</view>
 </cu-custom>
-<view class='yct'>
+<list-loading loading="{{loading}}"></list-loading>
+<view class='yct' wx:if="{{!loading}}">
   <view class='list'>
-    <view class='none' wx:if="{{isExit == 0}}">未添加任何卡，请点击下方按钮添加</view>
-    <view class='yct_list' wx:if="{{isExit == 1}}" wx:for="{{yct}}" wx:key="key">
+    <view class='none' wx:if="{{yct.length==0}}">未添加任何卡，请点击下方按钮添加</view>
+    <view wx:if="{{yct.length>0}}" class='yct_list' wx:for="{{yct}}" wx:key="key">
       <view class='li' data-num='{{item.account}}' bindtap='query' bindtouchstart="mytouchstart" bindtouchend="mytouchend">
-        <image class='logo' src='../../assets/imgs/apps_icon/query_yct.png'></image>
         <text class='logo_text'>羊城通</text>
         <view class='num'>{{item.account}}</view>
       </view>

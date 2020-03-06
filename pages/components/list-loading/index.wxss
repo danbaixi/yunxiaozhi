@@ -5,3 +5,9 @@
 .container image{
   width: 100%;
 }
+.error{
+  padding: 20rpx;
+}
+.error image{
+  width: 300rpx;
+}

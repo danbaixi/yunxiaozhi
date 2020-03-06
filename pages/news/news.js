@@ -169,7 +169,6 @@ Page({
 
   //打开推文
   viewArticle:function(e){
-    console.log(e)
     var index = e.currentTarget.dataset.index
     wx.navigateTo({
       url: '/pages/article' + '/article?src=' + encodeURIComponent(e.currentTarget.dataset.src),

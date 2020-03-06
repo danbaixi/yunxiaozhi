@@ -1,4 +1,3 @@
-var md5 = require('../../../utils/md5.js');
 var util = require('../../../utils/util.js');
 var app = getApp();
 Page({
@@ -8,13 +7,13 @@ Page({
    */
   data: {
     yct:[],
-    isExit:0,
     num:'',
     money:0,
     amount:0,
     time:'',
     display:0,
     history:'历史查询数据',
+    loading:true
   },
 
   /**
@@ -22,26 +21,18 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-    //检查是否登录
-    if (!wx.getStorageSync('user_id')) {
-      wx.reLaunch({
-        url: '../../bind/bind',
+    app.isBind()
+    that.getAccount()
+    //加载历史查询记录
+    var data = wx.getStorageSync('yct-data');
+    if (data) {
+      that.setData({
+        display: 1,
+        num: data[0],
+        money: data[1],
+        amount: data[2],
+        time: data[3],
       })
-    } else {
-      wx.showLoading({title:"加载中"})
-      that.getAccount();
-      //加载历史查询记录
-      var data = wx.getStorageSync('yct-data');
-      if(data){
-        that.setData({
-          display:1,
-          num: data[0],
-          money: data[1],
-          amount: data[2],
-          time: data[3],
-        })
-      }
-      wx.hideLoading()
     }
   },
   /**
@@ -128,25 +119,19 @@ Page({
       title: '提示',
       content: tip,
       success: function (res) {
-        var user_id = wx.getStorageSync('user_id');
-        var str = app.globalData.key + user_id;
-        var sign = md5.hexMD5(str);
         if (res.confirm) {
-          wx.request({
-            url: app.globalData.domain + 'yct/delList',
+          app.httpRequest({
+            url: 'yct/delList',
             data: {
-              stu_id : user_id,
-              account: num,
-              sign : sign
+              account: num
             },
             success: function (res) {
-              if(res.data.status == 1001){
+              if(res.data.status == 0){
                 app.msg("删除成功","success")
                 setTimeout(function(){
                   wx.removeStorageSync("ycts");
                   that.onLoad();
                 },1000)
-                
               }else{
                 app.msg("删除失败")
               }
@@ -177,40 +162,28 @@ Page({
   },
   //获取卡号
   getAccount:function(){
-    wx.showLoading({title:"加载中"})
     var that = this;
     var ycts = wx.getStorageSync("ycts");
     if(ycts){
       that.setData({
-        isExit: 1,
+        loading:false,
         yct: ycts,
       });
-      wx.hideLoading()
-    }else{
-      var user_id = wx.getStorageSync('user_id');
-      var str = app.globalData.key + user_id;
-      var sign = md5.hexMD5(str);
-      wx.request({
-        url: app.globalData.domain + 'yct/getlist',
-        data: {
-          stu_id: user_id,
-          sign: sign
-        },
-        success: function (res) {
-          wx.hideLoading()
-          if (res.data.status == 1001) {
-            that.setData({
-              isExit: 1,
-              yct: res.data['data'],
-            });
-            wx.setStorageSync("ycts", res.data['data'])
-          } else if (res.data.status == 1002) {
-            that.setData({ isExit: 0 });
-          } else {
-            app.msg('获取失败')
-          }
-        },
-      });
+      return
     }
+    app.httpRequest({
+      url: 'yct/getlist',
+      success: function (res) {
+        if (res.data.status == 0) {
+          that.setData({
+            loading:false,
+            yct: res.data.data,
+          });
+          wx.setStorageSync("ycts", res.data.data)
+        } else {
+          app.msg(res.data.message)
+        }
+      },
+    });
   }
 })

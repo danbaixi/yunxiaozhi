@@ -12,7 +12,10 @@ Page({
     visible:false,
     customBar: app.globalData.customBar,
     statusBar: app.globalData.statusBar,
-    custom: app.globalData.custom
+    custom: app.globalData.custom,
+    credit:0,
+    attendance:0,
+    exam:0
   },
 
   /**
@@ -28,6 +31,7 @@ Page({
 
   onPullDownRefresh: function () {
     this.getUserInfo();
+    this.getCountData();
     setTimeout(() => {
       wx.hideNavigationBarLoading({
         complete: (res) => {},
@@ -92,34 +96,6 @@ Page({
       session: session,
       user_id: user_id
     });
-
-    if(false){
-      app.promiseRequest({
-        url: 'user/getInfo'
-      }).then((data) => {
-        //处理班级，去掉括号后的
-        var stu_class = data.data.stu_class.split('（')[0];
-        //时间戳转换
-        var date = new Date(parseInt(data.data.user_regTime) * 1000);
-        var regTime = util.formatTime2(date);
-        var xueji = [
-          { 'title': '姓名', 'data': data.data.name },
-          { 'title': '年级', 'data': data.data.stu_schoolday },
-          { 'title': '学号', 'data': wx.getStorageSync('user_id') },
-          { 'title': '学院', 'data': data.data.stu_department },
-          { 'title': '班级', 'data': stu_class },
-          { 'title': '注册时间', 'data': regTime },
-        ];
-        that.setData({
-          user_img: that.data.user_img,
-          user_name: data.data.nickname ? data.data.nickname : data.data.user_name,
-          xueji: xueji,
-          xj: JSON.stringify(xueji)
-        });
-      }).catch((message) => {
-        app.msg(message)
-      })
-    }
   },
 
   showModal(e) {
@@ -150,10 +126,8 @@ Page({
       return
     }
     var page = e.currentTarget.dataset.page
-    var param = "";
-
     wx.navigateTo({
-      url: '/pages/my/' + page + '/' + page + param,
+      url: page
     })
   },
 
@@ -172,6 +146,19 @@ Page({
           wx.navigateTo({
             url: '/pages/login/login',
           })
+        }
+      }
+    })
+  },
+
+  //获取汇总数据
+  getCountData:function(){
+    let _this = this
+    app.httpRequest({
+      url:'user/getCountData',
+      success:function(res){
+        if(res.data.status == 0){
+          _this.setData(res.data.data)
         }
       }
     })

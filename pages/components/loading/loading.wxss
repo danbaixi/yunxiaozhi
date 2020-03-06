@@ -1,8 +1,0 @@
-.container{
-  text-align: center;
-  padding: 100px 0;
-}
-.container image{
-  width: 100px;
-  height: 100px!important;
-}
