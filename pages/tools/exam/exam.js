@@ -27,7 +27,8 @@ Page({
       'purple',
       'pink',
       'red',
-    ]
+    ],
+    term_index:0
   },
 
   /**
@@ -109,13 +110,19 @@ Page({
       success: function (res) {
         if (res.data.status == 0) {
           var course_exam =  res.data.data.data
+          var term = res.data.data.term
+          var picker_term = []
           for (var i = 0; i < course_exam;i++){
             course_exam[i].open = 0
+          }
+          for(var i= 0;i < term.length;i++){
+            picker_term.push(term[i].title)
           }
           that.setData({
             loading:false,
             course_exam: course_exam,
-            term: res.data.data.term
+            term: term,
+            picker_term: picker_term
           });
         } else {
           app.msg(res.data.message)
@@ -205,6 +212,12 @@ Page({
     this.setData({
       course_exam:exams,
       allStatus:!this.data.allStatus
+    })
+  },
+  //选择学期
+  selectTerm:function(e){
+    this.setData({
+      term_index: e.detail.value
     })
   }
 })

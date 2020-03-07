@@ -114,10 +114,20 @@
       </view>
 
       <view class="course">
-        <view class="{{toggleDelay?'animation-scale-up':''}} kcb-item" wx:for="{{course}}" wx:key="key" bindtap="displayCourseInfo" data-num="{{item.indexNum}}" form-type="submit" style="animation-delay: {{(index%2==0?(index/2):(index-1)/2+1)*0.1}}s;margin-left:{{(item.week - startDay)*(92/7)}}%;margin-top:{{(item.jie-1)*110+4}}rpx;height:{{item.jieshu*110 - 4}}rpx" wx:if="{{item.display}}">
-          <view class="smalltext {{item.courseNum>1?'moreCourse':''}}" style="color:{{!item.thisWeek?'#aab9cc':'#fff'}};background-color:rgba({{!item.thisWeek?'236,245,255':colorArrays[item.num]}},{{(100-Copacity)/100}});-webkit-line-clamp: {{item.jieshu*3}};" >{{!item.thisWeek?'[非本周]':''}}{{item.name}}{{item.address ? '@' + item.address : ''}}
+        <view 
+        class="{{toggleDelay?'animation-scale-up':''}} kcb-item" 
+        wx:for="{{course}}" wx:key="key" 
+        wx:if="{{item.display}}"
+        bindtap="displayCourseInfo" 
+        data-num="{{item.indexNum}}" 
+        form-type="submit" 
+        style="animation-delay: {{(index%2==0?(index/2):(index-1)/2+1)*0.1}}s;margin-left:{{(item.week - startDay)*(92/7)}}%;margin-top:{{(item.jie-1)*110+4}}rpx;height:{{item.jieshu*110 - 4}}rpx">
+
+          <view class="smalltext {{item.courseNum>1?'moreCourse':''}}" 
+          style="color:{{!item.thisWeek?'#aab9cc':'#fff'}};background-color:rgba({{!item.thisWeek?'236,245,255':colorArrays[item.num]}},{{(100-Copacity)/100}});-webkit-line-clamp: {{item.jieshu*3}};" >{{!item.thisWeek?'[非本周]':''}}{{item.name}}{{item.address ? '@' + item.address : ''}}
           </view>
         </view>
+        
         <view wx:if="{{ad.display}}" class='kcb-item' style="margin-left:{{(ad.week-1)*(92/7)}}%;margin-top:{{(ad.jie-1)*110+4}}rpx;height:{{ad.jieshu*110 - 4}}rpx">
           <view class="smalltext" bindtap="goAd" style="background:{{ad.background}};color:{{ad.color}};" >{{ad.title}}</view>
           <view bindtap="closeAd" class="ad-close icon-roundclose text-center text-grey"></view>

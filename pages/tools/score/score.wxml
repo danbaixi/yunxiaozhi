@@ -6,7 +6,7 @@
         <text class="icon-refresh text-black text-bold" bindtap="update"></text>
       </view>
       <view class="content-yxz" style="top:{{StatusBar}}px">
-        <picker wx:if="{{!isNull}}" mode="selector" range="{{year}}" bindchange="selectYear" value="{{year_index}}">
+        <picker wx:if="{{!isNull&&!loading}}" mode="selector" range="{{year}}" bindchange="selectYear" value="{{year_index}}">
           <view style="line-height:{{Custom.height}}px;height:100%">
             <text class="text-black text-lg">{{year[year_index]}}</text>
             <text class="icon-triangledownfill lg text-black"></text>

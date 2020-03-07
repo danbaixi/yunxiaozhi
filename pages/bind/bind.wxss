@@ -8,7 +8,7 @@ page{
   width: 100%;
   text-align: center;
   margin: 0 auto;
-  padding: 60rpx 0;
+  padding: 40rpx 0 60rpx;
 }
 .header .logo{
   width: 140rpx;
@@ -20,14 +20,14 @@ page{
   top: 0;
   left: 0;
   width: 100%;
-  filter: blur(4rpx)
+  filter: blur(2rpx)
 }
 
 .login{
   position: relative;
   padding: 30rpx 8%;
   background: #fff;
-  top: -34rpx;
+  top: -60rpx;
   border-radius: 40rpx 40rpx 0 0;
 }
 .validate{

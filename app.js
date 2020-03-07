@@ -52,6 +52,7 @@ App({
   /** 全局变量 */
   globalData:{
     isDebug:true,
+    isTest:true,
     themeColor: '#1380ff',
     xdebug:"?XDEBUG_SESSION_START=18446",
     domain:'https://www.yunxiaozhi.cn/v1/public/api/',
@@ -73,7 +74,7 @@ App({
    * 获取请求domain
    */
   getDomain:function(){
-    return this.globalData.isDebug ? 'http://danbaixi.utools.club/yxz_v1/public/index.php/api/' : 'https://www.yunxiaozhi.cn/v1/public/api/'
+    return this.globalData.isDebug ? (this.globalData.isTest ? 'https://www.yunxiaozhi.cn/test/public/api/' : 'http://danbaixi.utools.club/yxz_v1/public/index.php/api/') : 'https://www.yunxiaozhi.cn/v1/public/api/'
   },
 
   getSign:function(){

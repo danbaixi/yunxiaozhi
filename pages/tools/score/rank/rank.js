@@ -9,7 +9,8 @@ Page({
     showQuestion: false,
     grade: 6,
     names: ['最强王者', '璀璨钻石', '华贵铂金', '荣耀黄金', '英勇黄铜'],
-    rankColor:['red','yellow','olive']
+    rankColor:['red','yellow','olive'],
+    articleUrl: "http://mp.weixin.qq.com/s?__biz=MzI1NTUwNDIzNQ==&mid=100001310&idx=1&sn=a50e8db5869db0bff232b2ba85cc28e5&chksm=6a35bc1a5d42350ca1230585d9eb81deb2231568b887392ebc2af69e26cad0019d08aad7af7a#rd"
   },
 
   /**
@@ -142,6 +143,11 @@ Page({
   viewAll:function(){
     wx.navigateTo({
       url: '/pages/tools/rank/rank',
+    })
+  },
+  help: function () {
+    wx.navigateTo({
+      url: '/pages/article/article?src=' + encodeURIComponent(this.data.articleUrl),
     })
   }
 })

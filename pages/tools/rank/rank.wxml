@@ -4,7 +4,7 @@
 </cu-custom>
 <view class="my bg-white text-center padding-bottom-sm">
   <list-loading loading="{{loading}}" errmsg="{{errmsg}}"></list-loading>
-  <text class="question icon-question" bindtap="showQuestion"></text>
+  <text class="question icon-question" bindtap="help"></text>
   <view wx:if="{{!loading}}">
     <image class="grade" mode="widthFix" src="/pages/assets/imgs/rank/{{grade}}.png"></image>
     <view class="text-lg text-bold text-black padding-sm">{{names[grade-1]}}</view>

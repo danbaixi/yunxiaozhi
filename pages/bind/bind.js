@@ -17,7 +17,8 @@ Page({
     loading: false,
     systemType: 1, // 1为青果，2为强智
     needValidate: false,
-    customBar:app.globalData.customBar
+    customBar:app.globalData.customBar,
+    articleUrl:"http://mp.weixin.qq.com/s?__biz=MzI1NTUwNDIzNQ==&mid=100001298&idx=1&sn=9839487b01ae3453f89f5b6f287e16ab&chksm=6a35bc165d4235000aeaf709dcc5b7e48668c0fabea13292ce7633242a3a54bc8117a56bc5da#rd"
   },
 
   /**
@@ -290,5 +291,12 @@ Page({
         }
       })
     }))
+  },
+
+  //疑问
+  help:function(){
+    wx.navigateTo({
+      url: '/pages/article/article?src=' + encodeURIComponent(this.data.articleUrl),
+    })
   }
 })

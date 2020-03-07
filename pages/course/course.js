@@ -334,11 +334,13 @@ Page({
               courses[index].display = false
             }
           }
-          if (hasThisWeek === false){
+          if (hasThisWeek === false && !that.data.onlyThisWeek){
             courses[index].display = true
             hasThisWeek = index
           }
-          courses[hasThisWeek].courseNum = courseGroup[g].length
+          if(hasThisWeek !== false){
+            courses[hasThisWeek].courseNum = courseGroup[g].length
+          }
         }
       }
     }

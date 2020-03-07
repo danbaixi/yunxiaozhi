@@ -28,6 +28,9 @@
         <button class="cu-btn round bg-theme shadow text-white lg" bindtap='login'>绑定</button>
       </view>
       
+      <view class="padding-top-xl text-center">
+        <text bindtap="help" class="text-gray">对此有疑问？</text>
+      </view>
 
     </form>
   </view>
