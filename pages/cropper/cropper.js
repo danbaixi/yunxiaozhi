@@ -10,6 +10,7 @@ var app = getApp();
 
 Page({
   data: {
+    customBar: app.globalData.customBar,
     cropperOpt: {
       id: 'cropper',
       width,
@@ -39,56 +40,48 @@ Page({
         wx.showLoading({
           title: '正在上传',
         });
-        var m = new Date().getMinutes().toString();
-        if (m != wx.getStorageSync('m')) {
-          wx.setStorageSync('m', m)
-          var dir_name = 'user_imgs';
-          //删除原来的头像
-          var delImg = wx.getStorageSync('user_headImg');
-          var returnDel = delPictureFn(delImg, dir_name);
-          if (returnDel == delImg) {
+        var time = Math.floor(new Date().getTime() / 1000);
+        if (time - wx.getStorageSync('upload_course_bg_time') >= 20) {
+          wx.setStorageSync('upload_course_bg_time', time)
+          var dir_name = 'course_bg';
+          //删除原来的背景
+          var delImg = wx.getStorageSync('upload_course_bg');
+          var returnDel = delPictureFn(delImg,dir_name);
+          if (returnDel) {
             console.log('删除成功');
           }
           //上传图片
           //获取文件名
-          var fileName = src.match(/(wxfile:\/\/)(.+)/);
-          fileName = fileName[2];
-          var user_id = wx.getStorageSync('user_id');
-          uploadFn.upload(src, fileName, dir_name);
-          var user_id = wx.getStorageSync('user_id');
-          var str = app.globalData.key + user_id;
-          var sign = md5.hexMD5(str);
-          wx.request({
-            url: app.globalData.domain + 'user/alterUserImg',
-            data: {
-              sign: sign,
-              stu_id: user_id,
-              img_url: fileName
-            },
-            success: function (res) {
-              if (res.data.status == 1001) {
-                app.msg("修改成功","success")
-                setTimeout(function () {
-                  //返回后刷新
-                  var pages = getCurrentPages();
-                  var currPage = pages[pages.length - 1];  //当前页面
-                  var prevPage = pages[pages.length - 2]; //上上一个页面
-                  //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
-                  prevPage.setData({
-                    isFresh: true
-                  });
-                  wx.navigateBack({})
-                }, 1000);
-              } else if (res.data.status == 1003) {
-                app.msg("用户不存在")
-              } else {
-                app.msg("修改失败")
-              }
-
+          let fileName = ''
+          if (!app.globalData.isLocal){
+            fileName = src.match(/(wxfile:\/\/)(.+)/);
+            fileName = fileName[2];
+          }else{
+            let tmp = src.split(".")
+            if(tmp.length == 4){
+              fileName = tmp[tmp.length-2] + '.' + tmp[tmp.length-1]
             }
-          })
+          }
+          if(fileName == ''){
+            app.msg("获取图片失败，请重试")
+            return
+          }
+          let uploadResult = uploadFn.upload(src, fileName, dir_name);
+          if(uploadResult === false){
+            app.msg("上传失败，请重试")
+            return
+          }
+          app.msg("上传成功")
+          setTimeout(()=>{
+            var pages = getCurrentPages();
+            var prevPage = pages[pages.length - 2];
+            prevPage.setData({
+              uploadFile: fileName
+            })
+            wx.navigateBack({})
+          },1000)
         } else {
-          app.msg("请勿重复提交")
+          app.msg("请勿频繁提交")
         } 
       } else {
         app.msg("获取图片地址失败")
@@ -110,7 +103,20 @@ Page({
     })
   },
   onLoad(option) {
-    const { cropperOpt } = this.data
+    const cropperOpt = this.data.cropperOpt
+    let src = option.src
+    let cutWidth = Math.floor(device.windowWidth * 0.8)
+    let cutHeight = Math.floor(device.windowHeight * 0.8)
+    if(src){
+      cropperOpt.src = src
+      let cut = {
+        x: (width - cutWidth) / 2,
+        y: (height - cutHeight) / 2,
+        width: cutWidth,
+        height: cutHeight
+      }
+      cropperOpt.cut = cut
+    }
     if (option.src) {
       cropperOpt.src = option.src
       new WeCropper(cropperOpt)
@@ -130,5 +136,10 @@ Page({
         })
         .updateCanvas()
     }
+  },
+  cancel:function(){
+    wx.navigateBack({
+      
+    })
   }
 })

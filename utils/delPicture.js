@@ -55,10 +55,9 @@ function delPicture(fileName,dir_name) {
                 method:"POST",
                 success: function(res){
                   if (res.code == 0) {
-                    return fileName;
-                  }else{
-                    console.log(res);
+                    return true;
                   }
+                  return false
                 },
                 fail: function(e) {
                     wx.showToast({

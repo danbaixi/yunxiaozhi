@@ -5,7 +5,7 @@
 <view class="container">
   <update-tips></update-tips>
   <view class="total grid col-3 text-center padding bg-white margin-top" style="position:relative">
-    <text class="question icon-question" bindtap="showQuestion"></text>
+    <text class="question icon-question" bindtap="help"></text>
     <view bindtap="goPage" data-page="/pages/tools/rank/rank">
       <view class="text-theme text-xl">{{gpa}}</view>
       <view class="text-grey text-sm padding-top-xs">总平均绩点</view>

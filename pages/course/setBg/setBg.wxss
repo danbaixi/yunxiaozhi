@@ -26,6 +26,10 @@
   margin-bottom: 10rpx;
   border:4rpx solid transparent;
 }
+.image image{
+  width: 100%;
+  height: 100%;
+}
 .cu-list.grid.no-border{
   padding: 0
 }

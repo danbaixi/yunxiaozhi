@@ -80,7 +80,9 @@ Page({
     courseGroup:{},
     showMoreCourse:false,
     moreCourseList:[],
-    internet_course_time:false
+    internet_course_time:false,
+    fileUrl: app.globalData.fileUrl,
+    courseFileUrl: 'https://yunxiaozhi-1251388077.cos.ap-guangzhou.myqcloud.com/course_bg/',
   },
 
   /**
@@ -123,6 +125,7 @@ Page({
     var day = that.getDayOfWeek(week,startDay)
 
     that.setData({
+      now_week: this.getNowWeek(),
       zhou_num: zhou_num,
       now_month: month,
       now_month_number: month / 1, // 当前月份数字类型，用于数字运算
@@ -162,20 +165,57 @@ Page({
   },
 
   onShow:function(){
+    let _this = this
     var tmpClass = wx.getStorageSync('tmp_class');//临时设置班级
-    this.setData({
-      now_week: this.getNowWeek(),
+    //判断背景图片是否存在
+    let bg_img = wx.getStorageSync('bg_img')
+    if (bg_img){
+      let bg_imgs = wx.getStorageSync('bg_imgs')
+      const fs = wx.getFileSystemManager()
+      fs.access({
+        path: bg_img,
+        complete: function (res) {
+          if (res.errMsg != 'access:ok') {
+            //图片被删了，重新下载
+            let bg_type = wx.getStorageSync('bg_type')
+            if(!bg_type){
+              app.msg("课表背景图片不存在，请重新设置")
+              return
+            }else if (bg_type == 'diy') {
+              let url = _this.data.courseFileUrl + wx.getStorageSync('upload_course_bg')
+            } else {
+              let url = _this.data.fileUrl + '/course_bg/' + bg_type + '.jpg'
+            }
+            _this.download(url).then((url) => {
+              if(bg_type != 'diy'){
+                bg_imgs[bg_type] = url
+                wx.setStorageSync('bg_imgs', bg_imgs)
+              }
+              wx.setStorageSync('bg_img', url)
+              _this.setData({
+                imageUrl: url
+              })
+            }).catch((error) => {
+              app.msg('课表背景文件已被删除，请重新设置')
+            })
+            return
+          }
+        }
+      })
+    }
+
+    _this.setData({
       imageUrl: wx.getStorageSync('bg_img'),
       list_is_display: false,
       tmpClass: tmpClass,
       showMoreCourse:false
     })
     //获取当前日期
-    this.getTodayDate();
+    _this.getTodayDate();
     //获取课表
-    this.getCourse(this.data.now_week, true, false);
+    _this.getCourse(_this.data.now_week, true, false);
     //获取设置
-    this.getConfigData()
+    _this.getConfigData()
   },
   /**
    * 用户点击右上角分享
@@ -404,7 +444,7 @@ Page({
       return
     }
     wx.navigateTo({
-      url: "info/info?data=" + encodeURIComponent(JSON.stringify(data)),
+      url: "info/info?internet_course_time=" + this.data.internet_course_time + "&data=" + encodeURIComponent(JSON.stringify(data)),
     })
     this.setData({
       showMoreCourse: false
@@ -657,35 +697,6 @@ Page({
         list_is_display: false,
       })
     }
-  },
-  //选择设置背景图片
-  selectImg:function(){
-    var that = this;
-    that.setData({list_is_display:false})
-    wx.showActionSheet({
-      itemList: ['相册选择','清空背景'],
-      success: function (res) {
-        if (res.tapIndex == 1){
-          wx.setStorageSync('bg_img', '');
-          that.onLoad({ animation: true });
-        }else{
-          wx.chooseImage({
-            count: 1,
-            sizeType: ['original'],
-            sourceType: ['album'],
-            success: function (e) {
-              var tempFilePaths = e.tempFilePaths
-              wx.setStorageSync('bg_img', tempFilePaths[0]);
-              wx.showToast({
-                title: '设置成功',
-                icon: 'success'
-              })
-              that.onLoad({ animation: true });
-            },
-          })
-        }
-      },
-    });
   },
   //设置透明度
   sliderchange: function (e) {

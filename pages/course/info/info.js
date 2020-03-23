@@ -5,6 +5,9 @@ const TIMES = [
   ],
   [
     ["08:30", "09:15"], ["09:20", "10:05"], ["10:20", "11:05"], ["11:10", "11:55"], ["13:45", "14:30"], ["14:35", "15:20"], ["15:35", "16:20"], ["16:25", "17:10"], ["17:45", "18:30"], ["18:35", "19:20"], ["19:25", "20:10"], ["20:15", "21:00"]
+  ],
+  [
+    ["08:30", ""], ["", "10:00"], ["10:30", ""], ["", "12:00"], ["14:00", ""], ["", "15:30"], ["16:00", ""], ["", "17:30"], ["18:30", ""], ["", "20:00"], ["20:30", ""], ["", "22:00"]
   ]
 ]
 Page({
@@ -22,6 +25,7 @@ Page({
    */
   onLoad: function (options) {
     var data = JSON.parse(decodeURIComponent(options.data))
+    let internet_course_time = options.internet_course_time || 1
     //判断是否是本班课程
     var tmp_class = wx.getStorageSync('tmp_class')
     if (tmp_class == "" && data.type == 1) {
@@ -35,7 +39,15 @@ Page({
     var jie = parseInt(data.jie)
     var jieshu = parseInt(data.jieshu)
 
-    if(area == 1){
+    if (internet_course_time){
+      if(jieshu == 2){
+        time = TIMES[2][jie - 1][0] + '~' + TIMES[2][jie][1]
+      }else if(jieshu == 4){
+        time = TIMES[2][jie - 1][0] + '~' + TIMES[2][jie+2][1]
+      }else{
+        time = '获取时间'
+      }
+    }else if(area == 1){
       //正常情况
       if (jieshu == 2) {
         if(jie < 5) {

@@ -60,7 +60,7 @@
     </view>
   </view>
 
-  <view class='box' wx:if="{{my_exams.length>0}}">
+  <view class='box' wx:if="{{displayExam}}">
     <view class="cu-bar bg-white solid-bottom arrow" bindtap='goExam'>
       <view class="action">
         <text class="text-black text-xl text-bold">考试安排</text>

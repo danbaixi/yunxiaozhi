@@ -10,6 +10,8 @@
 		"coverView": true,
 		"nodeModules": false,
 		"autoAudits": false,
+		"showShadowRootInWxmlPanel": true,
+		"scopeDataCheck": false,
 		"uglifyFileName": true,
 		"checkInvalidKey": true,
 		"checkSiteMap": true,
@@ -291,6 +293,13 @@
 					"id": 36,
 					"name": "通讯录",
 					"pathName": "pages/tools/friends/friends",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "选修推荐",
+					"pathName": "pages/tools/public_course/public_course",
 					"query": "",
 					"scene": null
 				}

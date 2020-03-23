@@ -1,0 +1,57 @@
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">选修推荐</view>
+</cu-custom>
+<scroll-view scroll-x class="bg-white nav text-center">
+  <view class="cu-item {{index==currentTab?'text-theme cur':''}}" wx:for="{{tab_title}}" wx:key="key" data-current="{{index}}" bindtap='swichNav'>
+    {{item}}
+  </view>
+</scroll-view>
+<swiper current="{{currentTab}}" class="swiper-box" duration="300" style="height:{{winHeight - customBar - 49}}px" bindchange="bindChange">
+  <swiper-item>
+
+    <list-loading loading="{{loading}}"></list-loading>
+    <scroll-view scroll-y="true" wx:if="{{!loading}}" style="height:{{winHeight - customBar - 49}}px" >
+      <view class="cu-bar bg-white search fixed">
+        <view class="search-form round">
+          <text class="icon-search"></text>
+          <input type="text" placeholder="搜索科目或老师" confirm-type="search" bindinput="search"></input>
+        </view>
+        <view class="margin-right-xs" bindtap="onlyIntenet">
+          <button class="cu-btn round line-{{onlyIntenet?'theme':'gray'}}">网络授课</button>
+        </view>
+      </view>
+      <view wx:if="{{!loading&&courses.length>0}}" class="cu-list menu sm-border" style="padding-top:110rpx">
+        <view class="cu-item" wx:if="{{item.isShow}}" wx:for="{{courses}}" wx:key="key">
+          <view class="content">
+            <view>
+              <view>
+                {{item.name}}
+                <view wx:if="{{item.teach_method == '网络授课'}}" class="margin-left-xs cu-tag radius sm bg-theme text-white">{{item.teach_method}}</view>
+              </view>
+            </view>
+            <view>
+              <text class="text-sm text-grey">老师：{{item.teacher==''?'未知':item.teacher}}{{item.teacher==''?'':'等'}}</text>
+            </view>
+          </view>
+          <view class="action">
+            <view wx:if="{{item.point>0}}" class="text-right">
+              <text class="text-xxl text-yellow">{{item.point}}</text>
+              <text class="text-sm text-grey"> 分</text>
+            </view>
+            <!-- <view class="text-right"><text class="text-xs text-gray">已有{{item.assess_num}}人评分</text></view> -->
+            <view wx:else class="text-right text-gray">
+              未有评分
+            </view>
+          </view>
+        </view>
+      </view>
+      <empty display="{{!loading&&courses.length ==0 || isNull}}"></empty>
+    </scroll-view>
+
+  </swiper-item>
+
+  <swiper-item>
+    <list-loading loading="{{loading}}"></list-loading>
+  </swiper-item>
+</swiper>

@@ -13,7 +13,7 @@
   </view>
   <view class="cu-form-group">
     <view class="title">昵称</view>
-    <input placeholder="(选填)" bindtap="nameInput" value="{{name}}"></input>
+    <input placeholder="(选填)" bindinput="nameInput" value="{{name}}"></input>
   </view>
   <view class="padding flex flex-direction">
     <button class="cu-btn bg-theme lg" bindtap="submit">提交</button>

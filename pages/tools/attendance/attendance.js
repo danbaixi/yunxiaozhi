@@ -37,14 +37,10 @@ Page({
                 loading:false,
                 term: res.data.data.term,
                 attendance: res.data.data.attendance,
-                isNull: false
+                isNull: res.data.data.term.length == 0 ? true : false
               });
-            } else if (res.data.status == 1002) {
-              that.setData({
-                isNull: true
-              })
             } else {
-              app.msg('获取失败')
+              app.msg(res.data.message)
             }
           },
         })

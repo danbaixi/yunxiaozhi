@@ -44,7 +44,8 @@
     "pages/tools/course/theory/theory",
     "pages/tools/course/train/train",
     "pages/tools/course/public/public",
-    "pages/tools/friends/friends"
+    "pages/tools/friends/friends",
+    "pages/tools/public_course/public_course"
   ],
   "window": {
     "navigationStyle": "custom",

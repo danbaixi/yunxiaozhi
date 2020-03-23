@@ -71,7 +71,12 @@ Page({
    */
   itemData:function(e){
     var index = e.currentTarget.dataset.index;
-    var data = this.data.score[index]
+    if(this.data.type == 0){
+      var data = this.data.score[index]
+    }else{
+      var data = this.data.original_score[index]
+    }
+
     wx.navigateTo({
       url: 'top/top?from=score&data=' + encodeURIComponent(JSON.stringify(data))  
     })

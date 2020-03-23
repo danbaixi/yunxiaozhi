@@ -7,7 +7,9 @@ Page({
   data: {
     bgNum:9,
     fileUrl : app.globalData.fileUrl,
-    bg_type:null
+    bg_type:null,
+    uploadFile: '',
+    courseFileUrl: 'https://yunxiaozhi-1251388077.cos.ap-guangzhou.myqcloud.com/course_bg/',
   },
 
   /**
@@ -43,8 +45,19 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-
+  onShow: function (option) {
+    let _this = this
+    if (_this.data.uploadFile != ''){
+      //设置背景
+      let src = _this.data.courseFileUrl + _this.data.uploadFile
+      wx.setStorageSync('upload_course_bg', _this.data.uploadFile)
+      //缓存背景
+      _this.download(src).then((url) => {
+        _this.setBg('diy',url)
+      }).catch((error) => {
+        app.msg(error)
+      })
+    }
   },
 
   /**
@@ -76,26 +89,58 @@ Page({
   },
 
   //下载背景
-  download:function(num){
+  download:function(url){
     let _this = this
     let promise = new Promise((resolve,reject) => {
       wx.downloadFile({
-        url: _this.data.fileUrl + '/course_bg/' + num + '.jpg',
+        url: url,
         success: function (res) {
           if (res.statusCode === 200) {
+            console.log(res.tempFilePath)
             const fs = wx.getFileSystemManager()
-            fs.saveFile({
-              tempFilePath: res.tempFilePath,
-              success(res) {
-                return resolve(res.savedFilePath)
-              },
-              fail(res){
-                return reject('保存失败')
+            _this.checkMaxSize().then((result) => {
+              if(result){
+                fs.saveFile({
+                  tempFilePath: res.tempFilePath,
+                  success(res) {
+                    return resolve(res.savedFilePath)
+                  },
+                  fail(res) {
+                    console.log(res)
+                    return reject('保存失败，请联系客服解决')
+                  }
+                })
               }
             })
+            
           } else {
             return reject('下载失败')
           }
+        }
+      })
+    })
+    return promise
+  },
+
+  //判断缓存文件是否>10M，预留4m空间
+  checkMaxSize:function(){
+    let maxSize = (10-2) * 1024 * 1024 / 2
+    let promise = new Promise((resolve) => {
+      wx.getSavedFileList({
+        success(res) {
+          let files = res.fileList
+          let total = 0
+          for (let i = 0; i < files.length; i++) {
+            total = total + files[i].size
+          }
+          if (total > maxSize) {
+            for (let i = 0; i < files.length; i++) {
+              wx.removeSavedFile({
+                filePath: files[i].filePath
+              })
+            }
+          }
+          return resolve(true)
         }
       })
     })
@@ -126,10 +171,11 @@ Page({
   select:function(e){
     let _this = this
     let num = e.currentTarget.dataset.num
+    let url = _this.data.fileUrl + '/course_bg/' + num + '.jpg'
     let bg_imgs = wx.getStorageSync('bg_imgs')
     if(!bg_imgs || !bg_imgs[num]){
       //下载图片
-      _this.download(num).then((url) => {
+      _this.download(url).then((url) => {
         if(bg_imgs == ''){
           bg_imgs = []
         }
@@ -148,7 +194,7 @@ Page({
         complete:function(res){
           if (res.errMsg != 'access:ok'){
             //图片被删了，重新下载
-            _this.download(num).then((url) => {
+            _this.download(url).then((url) => {
               bg_imgs[num] = url
               wx.setStorageSync('bg_imgs', bg_imgs)
               _this.setBg(num, url)
@@ -172,7 +218,16 @@ Page({
       sourceType: ['album'],
       success: function (e) {
         var tempFilePaths = e.tempFilePaths
-        _this.setBg('diy',tempFilePaths[0])
+        let src = tempFilePaths[0]
+        wx.showLoading({
+          title: '正在加载...',
+        })
+        wx.navigateTo({
+          url: `../../cropper/cropper?src=${src}`,
+          success:function(){
+            wx.hideLoading()
+          }
+        })
       },
     })
   },

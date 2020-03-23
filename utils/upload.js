@@ -50,6 +50,7 @@ function upload(filePath, fileName,dir_name) {
           if(uploadRes.code == 0){
             return fileName;
           }
+          return false
         },
         fail: function(e) {
           console.log(e);
