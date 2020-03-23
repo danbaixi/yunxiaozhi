@@ -18,7 +18,10 @@ Page({
     systemType: 1, // 1为青果，2为强智
     needValidate: false,
     customBar:app.globalData.customBar,
-    articleUrl:"http://mp.weixin.qq.com/s?__biz=MzI1NTUwNDIzNQ==&mid=100001298&idx=1&sn=9839487b01ae3453f89f5b6f287e16ab&chksm=6a35bc165d4235000aeaf709dcc5b7e48668c0fabea13292ce7633242a3a54bc8117a56bc5da#rd"
+    articleUrl:"http://mp.weixin.qq.com/s?__biz=MzI1NTUwNDIzNQ==&mid=100001298&idx=1&sn=9839487b01ae3453f89f5b6f287e16ab&chksm=6a35bc165d4235000aeaf709dcc5b7e48668c0fabea13292ce7633242a3a54bc8117a56bc5da#rd",
+    modal_visible: false,
+    hasNotice: false,
+    tips_show:true
   },
 
   /**
@@ -82,6 +85,24 @@ Page({
    * 绑定教务系统
    */
   login: function(e) {
+    var time = (new Date()).getTime()
+    if (wx.getStorageInfoSync('login_time') != "") {
+      var update_time = wx.getStorageSync('login_time');
+      var cha = time - update_time;
+      var season = 60 * 5 - Math.floor(cha / 1000);
+    } else {
+      var season = 0;
+    }
+    if (season > 0) {
+      let minute = Math.floor(season / 60)
+      if(minute > 0 ){
+        app.msg('目前使用人数较多，请在'+ minute + '分钟后登录，谢谢你的谅解')
+        return
+      }
+      app.msg('目前使用人数较多，请在' + season + '秒后登录，谢谢你的谅解')
+      return
+    }
+
     var that = this;
     var user_id = that.data.user_id;
     var password = that.data.user_password;
@@ -297,6 +318,11 @@ Page({
   help:function(){
     wx.navigateTo({
       url: '/pages/article/article?src=' + encodeURIComponent(this.data.articleUrl),
+    })
+  },
+  closeTips:function(){
+    this.setData({
+      tips_show:false
     })
   }
 })
