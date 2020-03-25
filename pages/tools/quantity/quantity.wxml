@@ -1,0 +1,14 @@
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">水电查询</view>
+</cu-custom>
+<view class="container" wx:if="{{!loading}}">
+  <view class="info" wx:if="{{dormitory.did}}">
+
+  </view>
+  <view class="unset" wx:else>
+      <empty display="true" content="您未设置宿舍信息"></empty>
+      <button class="cu-btn bg-theme" bindtap="setDormitory">设置宿舍信息</button>
+  </view>
+</view>
+<list-loading loading="{{loading}}"></list-loading>
