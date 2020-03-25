@@ -1,4 +1,5 @@
 const app = getApp()
+import WxCountUp from '../../../utils/wxCountUp.js'
 Page({
 
   /**
@@ -8,7 +9,9 @@ Page({
     loading:true,
     name: '',
     did: '',
-    area_id: ''
+    area_id: '',
+    electricity: 0,
+    water: 0
   },
 
   /**
@@ -78,7 +81,10 @@ Page({
           loading: false
         })
         if(res.data.data != []){
-          _this.setData(res.data.data)
+          let data = res.data.data
+          data.waterGrade = _this.getWaterGrade(data.water)
+          _this.setData(data)
+          _this.startWaterUp(data.water)
         }
       }
     })
@@ -87,5 +93,22 @@ Page({
     wx.navigateTo({
       url: '/pages/my/dormitory/dormitory',
     })
+  },
+  //获取等级
+  getWaterGrade:function(number){
+    if(number <= 50){
+      return 'a'
+    }else if(number <= 100){
+      return 'b'
+    }else if(number <= 300){
+      return 'c'
+    }else{
+      return 'd'
+    }
+  },
+  //水滚动
+  startWaterUp:function(number){
+    this.countUp = new WxCountUp('water', number, { decimalPlaces:2}, this)
+    this.countUp.start()
   }
 })

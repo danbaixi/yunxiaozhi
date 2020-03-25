@@ -2,9 +2,29 @@
   <view slot="back">返回</view>
 	<view slot="content">水电查询</view>
 </cu-custom>
-<view class="container" wx:if="{{!loading}}">
+<view wx:if="{{!loading}}">
   <view class="info" wx:if="{{dormitory.did}}">
-
+    <!-- <view class="item">
+      <view class="water">
+        <view class="header"></view>
+        <view class="battery">
+        </view>
+        <view class="battery-copy">
+            <view class="g-wave"></view>
+            <view class="g-wave"></view>
+            <view class="g-wave"></view>
+        </view>
+      </view>
+    </view> -->
+    <view class="item">
+      <view class="electricity">
+          <view class="wave {{waterGrade}}"></view>
+      </view>
+      <view class="text-center text-xxl padding-top-sm text-black">
+        {{water}}
+        <text class="text-sm text-gray">吨</text>
+      </view>
+    </view>
   </view>
   <view class="unset" wx:else>
       <empty display="true" content="您未设置宿舍信息"></empty>
