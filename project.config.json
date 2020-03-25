@@ -302,6 +302,20 @@
 					"pathName": "pages/tools/public_course/public_course",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": 38,
+					"name": "水电查询",
+					"pathName": "pages/tools/quantity/quantity",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "设置宿舍信息",
+					"pathName": "pages/my/dormitory/dormitory",
+					"query": "",
+					"scene": null
 				}
 			]
 		}

@@ -45,7 +45,9 @@
     "pages/tools/course/train/train",
     "pages/tools/course/public/public",
     "pages/tools/friends/friends",
-    "pages/tools/public_course/public_course"
+    "pages/tools/public_course/public_course",
+    "pages/tools/quantity/quantity",
+    "pages/my/dormitory/dormitory"
   ],
   "window": {
     "navigationStyle": "custom",

@@ -72,5 +72,12 @@ Page({
     wx.navigateTo({
       url: '/pages/course/setTime/setTime',
     })
+  },
+
+  //设置宿舍
+  setDormitory:function(){
+    wx.navigateTo({
+      url: '/pages/my/dormitory/dormitory',
+    })
   }
 })

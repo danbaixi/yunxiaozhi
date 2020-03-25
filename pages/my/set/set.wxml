@@ -42,5 +42,11 @@
         <text class="text-grey">校区与上课时间</text>
       </view>
     </view>
+    <view class="cu-item arrow" bindtap="setDormitory">
+      <view class="content">
+        <text class="cuIcon-circlefill text-grey"></text>
+        <text class="text-grey">宿舍信息</text>
+      </view>
+    </view>
   </view>
 </view>
