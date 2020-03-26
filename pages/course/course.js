@@ -186,6 +186,9 @@ Page({
             } else {
               let url = _this.data.fileUrl + '/course_bg/' + bg_type + '.jpg'
             }
+            if(!url){
+              return
+            }
             _this.download(url).then((url) => {
               if(bg_type != 'diy'){
                 bg_imgs[bg_type] = url

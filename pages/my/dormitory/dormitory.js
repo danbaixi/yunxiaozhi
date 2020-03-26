@@ -224,6 +224,12 @@ Page({
         app.msg(res.data.message)
         if(res.data.status == 0){
           _this.getInfo()
+          var pages = getCurrentPages();
+          var currPage = pages[pages.length - 1];
+          var prevPage = pages[pages.length - 2];
+          prevPage.setData({
+            isFresh: true
+          })
         }
       }
     })

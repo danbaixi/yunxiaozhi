@@ -46,14 +46,16 @@ Page({
         needLogin: true,
         url: '../tools/course/train/train?from=index',
       }
-    ]
+    ],
+    electricity:0,
+    water: 0
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    this.getQuantityData()
   },
 
   onShow:function(){
@@ -215,5 +217,18 @@ Page({
   },
   focus_me:function(){
     app.msg('在微信搜索云小智就能找到我们啦~')
-  }
+  },
+
+  //获取水电
+  getQuantityData: function () {
+    let _this = this
+    app.httpRequest({
+      url: 'dormitory/getQuantityDetail',
+      success: function (res) {
+        if (res.data.data != []) {
+          _this.setData(res.data.data)
+        }
+      }
+    })
+  },
 })

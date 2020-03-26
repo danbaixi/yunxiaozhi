@@ -4,22 +4,29 @@
 </cu-custom>
 <view wx:if="{{!loading}}">
   <view class="info" wx:if="{{dormitory.did}}">
-    <view class="item">
-      <view class="electricity box">
-          <view class="wave {{electricityGrade}}"></view>
+    <view class="cu-bar bg-white margin-sm padding-sm radius">
+      <text>当前宿舍：<text class="text-theme">{{dormitory.name}}</text></text>
+      <view class="action">
+        <view class="text-yellow" bindtap="setDormitory">设置</view>
       </view>
-      <view class="text-center text-sm text-theme">剩余电量</view>
-      <view class="text-center text-xxl padding-top-sm text-black">
+    </view>
+    <view class="item">
+      <view class="header"></view>
+      <view class="electricity box {{electricityGrade=='null'?'null':''}}">
+        <view class="wave {{electricityGrade}}"></view>
+      </view>
+      <view class="text-center text-sm text-theme padding-top-xs">剩余电量</view>
+      <view class="text-center text-xxl padding-top-sm text-{{electricity>0?'black':'red'}}">
         {{electricity}}
         <text class="text-sm text-gray">度</text>
       </view>
     </view>
     <view class="item" wx:if="{{dormitory.area_id == 1}}">
-      <view class="water box">
+      <view class="water box {{waterGrade=='null'?'null':''}}">
           <view class="wave {{waterGrade}}"></view>
       </view>
-      <view class="text-center text-sm text-theme">剩余水量</view>
-      <view class="text-center text-xxl padding-top-sm text-black">
+      <view class="text-center text-sm text-theme padding-top-xs">剩余水量</view>
+      <view class="text-center text-xxl padding-top-sm  text-{{water>0?'black':'red'}}">
         {{water}}
         <text class="text-sm text-gray">吨</text>
       </view>

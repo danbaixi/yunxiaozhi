@@ -124,8 +124,9 @@ button::after{
 .counts .item{
   display: inline-block;
   float: left;
-  width: 64rpx;
-  margin-right: 80rpx;
+  width: 84rpx;
+  margin-right: 50rpx;
+  text-align: center;
 }
 .app-icon.my-icon image{
   width: 70rpx!important;
