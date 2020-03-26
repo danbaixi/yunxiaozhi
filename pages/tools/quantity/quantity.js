@@ -82,9 +82,11 @@ Page({
         })
         if(res.data.data != []){
           let data = res.data.data
-          data.waterGrade = _this.getWaterGrade(data.water)
+          data.waterGrade = _this.getGrade(data.water)
+          data.electricityGrade = _this.getGrade(data.electricity)
           _this.setData(data)
           _this.startWaterUp(data.water)
+          _this.startElectricityUp(data.electricity)
         }
       }
     })
@@ -95,8 +97,10 @@ Page({
     })
   },
   //获取等级
-  getWaterGrade:function(number){
-    if(number <= 50){
+  getGrade:function(number){
+    if(number <=0){
+      return 'null'
+    }else if(number <= 50){
       return 'a'
     }else if(number <= 100){
       return 'b'
@@ -106,9 +110,14 @@ Page({
       return 'd'
     }
   },
-  //水滚动
+  //水量滚动
   startWaterUp:function(number){
     this.countUp = new WxCountUp('water', number, { decimalPlaces:2}, this)
+    this.countUp.start()
+  },
+  //电量滚动
+  startElectricityUp:function(number){
+    this.countUp = new WxCountUp('electricity', number, { decimalPlaces:2}, this)
     this.countUp.start()
   }
 })

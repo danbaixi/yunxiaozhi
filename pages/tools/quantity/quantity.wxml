@@ -4,22 +4,21 @@
 </cu-custom>
 <view wx:if="{{!loading}}">
   <view class="info" wx:if="{{dormitory.did}}">
-    <!-- <view class="item">
-      <view class="water">
-        <view class="header"></view>
-        <view class="battery">
-        </view>
-        <view class="battery-copy">
-            <view class="g-wave"></view>
-            <view class="g-wave"></view>
-            <view class="g-wave"></view>
-        </view>
-      </view>
-    </view> -->
     <view class="item">
-      <view class="electricity">
+      <view class="electricity box">
+          <view class="wave {{electricityGrade}}"></view>
+      </view>
+      <view class="text-center text-sm text-theme">剩余电量</view>
+      <view class="text-center text-xxl padding-top-sm text-black">
+        {{electricity}}
+        <text class="text-sm text-gray">度</text>
+      </view>
+    </view>
+    <view class="item" wx:if="{{dormitory.area_id == 1}}">
+      <view class="water box">
           <view class="wave {{waterGrade}}"></view>
       </view>
+      <view class="text-center text-sm text-theme">剩余水量</view>
       <view class="text-center text-xxl padding-top-sm text-black">
         {{water}}
         <text class="text-sm text-gray">吨</text>
