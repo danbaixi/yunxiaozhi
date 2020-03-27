@@ -11,7 +11,7 @@
 
 .box{
   position: relative;
-  margin: 20rpx auto;
+  margin: 24rpx auto;
   width: 300rpx;
   height: 360rpx;
   border: 14rpx solid #fff;
@@ -54,7 +54,7 @@
   background: #fff;
   border-radius: 16rpx;
   position: absolute;
-  top: 20rpx;
+  top: 30rpx;
   left: calc((100% - 60rpx) / 2);
 }
 

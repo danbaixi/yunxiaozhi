@@ -51,7 +51,7 @@ App({
   },
   /** 全局变量 */
   globalData:{
-    isDebug:true,
+    isDebug:false,
     isTest:false,
     isLocal:true,
     themeColor: '#1380ff',
