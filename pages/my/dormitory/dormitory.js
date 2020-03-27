@@ -115,7 +115,6 @@ Page({
     let coloum = ''
     switch(type){
       case 1:coloum = 'area';break
-      case 2:coloum = 'build';break
     }
     let result = []
     type = type + 1
@@ -132,7 +131,7 @@ Page({
     let optype = Number(e.currentTarget.dataset.optype)
     let val = e.detail.value
     let ops = []
-    if(optype < 3){
+    if(optype < 2){
       let id = this.data.rooms[optype][val]['id']
       ops = this.getOptions(optype,id)
     }
@@ -148,14 +147,13 @@ Page({
       case 2:
         data = {
           build: val,
-          levels: ops,
           level: -1
         }
         break
       case 3:
         data = {
           level: val,
-          room: -1
+          room: 0
         }
         break
       case 4:
@@ -164,11 +162,44 @@ Page({
         }
     }
     this.setData(data)
-    if(optype == 3){
+    if(optype == 2){
+      this.getLevels()
+    }else if(optype == 3){
       this.getRooms()
     }
   },
 
+  //获取楼层
+  getLevels:function(){
+    let _this = this
+    let area = _this.data.areas[_this.data.area].id
+    let build = _this.data.builds[_this.data.build].id
+    wx.showLoading({
+      title: '正在加载',
+      mask: true
+    })
+    app.httpRequest({
+      url:'dormitory/getLevelsList',
+      data:{
+        area:area,
+        build:build
+      },
+      success:function(res){
+        wx.hideLoading({
+          complete: (res) => {},
+        })
+        if(res.data.status == 0){
+          _this.setData({
+            levels:res.data.data
+          })
+          return
+        }
+        app.msg(res.data.messgae)
+      }
+    })
+  },
+
+  //获取宿舍号
   getRooms:function(){
     let _this = this
     let area = _this.data.areas[_this.data.area].id
@@ -176,6 +207,7 @@ Page({
     let level = _this.data.levels[_this.data.level].id
     wx.showLoading({
       title: '正在加载',
+      mask: true
     })
     app.httpRequest({
       url:'dormitory/getDormitoryList',
@@ -214,11 +246,14 @@ Page({
       app.msg('请选择房号')
       return
     }
+    let id = _this.data.dormitorys[_this.data.room].id
+    let name = _this.data.areas[_this.data.area].name + '-' + _this.data.builds[_this.data.build].name + '-' + _this.data.dormitorys[_this.data.room].name
     app.httpRequest({
       url:'dormitory/setRoom',
       method:'POST',
       data:{
-        did: _this.data.dormitorys[_this.data.room].did
+        id: id,
+        name: name
       },
       success:function(res){
         app.msg(res.data.message)
@@ -227,6 +262,9 @@ Page({
           var pages = getCurrentPages();
           var currPage = pages[pages.length - 1];
           var prevPage = pages[pages.length - 2];
+          if(!prevPage){
+            return
+          }
           prevPage.setData({
             isFresh: true
           })
