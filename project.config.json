@@ -316,6 +316,12 @@
 					"pathName": "pages/my/dormitory/dormitory",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "毕业回忆录",
+					"pathName": "pages/tools/summary/summary",
+					"scene": null
 				}
 			]
 		}
