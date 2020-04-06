@@ -46,6 +46,12 @@ Page({
         xueji: xueji,
         loading: false
       });
+      var user_info = wx.getStorageSync('user_info')
+      if (user_info && user_info['avatarUrl']) {
+        that.setData({
+          user_img: user_info['avatarUrl']
+        })
+      }
     }).catch((message) => {
       app.msg(message)
     })

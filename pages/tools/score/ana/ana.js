@@ -205,8 +205,8 @@ function initGPAChart(canvas, width, height) {
         splitLine: {
           show: false
         },
-        min: gpaMinMax[0] - 0.2,
-        max: gpaMinMax[1] + 0.2,
+        min: gpaMinMax[0] - 0.4,
+        max: gpaMinMax[1] + 0.4,
         show: false,
         type: 'value',
         },
@@ -216,8 +216,8 @@ function initGPAChart(canvas, width, height) {
         splitLine: {
           show: false
         },
-        min: topMinMax[0] - 0.2,
-        max: topMinMax[1] + 0.2,
+        min: topMinMax[0] - 12,
+        max: topMinMax[1] ,
         show: false,
         type: 'value',
         inverse: true
@@ -252,6 +252,7 @@ function initScoreChart(canvas, width, height){
     height: height
   });
   canvas.setChart(chart);
+  let areaMinMax = getMinMax(data.area_value)
   let option = {
     color: ['#1380ff'],
     tooltip: {
@@ -287,7 +288,9 @@ function initScoreChart(canvas, width, height){
         splitLine: {
           show: false
         },
-        show: false
+        show: false,
+        min: areaMinMax[0],
+        max: areaMinMax[1] + 16
       }
     ],
     series: [

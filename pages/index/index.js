@@ -636,7 +636,7 @@ Page({
   // 查看
   viewNews:function(){
     wx.navigateTo({
-      url: '/pages/article' + '/article?src=' + encodeURIComponent(this.data.news.src),
+      url: '/pages/article/article?src=' + encodeURIComponent(this.data.news.src) + '&title=' + this.data.news.title + '&img=' + encodeURIComponent(this.data.news.img),
     })
   },
   // 查看全部

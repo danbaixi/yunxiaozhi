@@ -13,7 +13,9 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      src: decodeURIComponent(options.src)
+      src: decodeURIComponent(options.src),
+      img: decodeURIComponent(options.img),
+      title: options.title
     })
   },
 
@@ -63,6 +65,10 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: this.data.title,
+      imageUrl: this.data.img,
+      path: "pages/article/article?src=" + encodeURIComponent(this.data.src) + "&title=" + this.data.title + "&img=" + this.data.img
+    }
   }
 })
