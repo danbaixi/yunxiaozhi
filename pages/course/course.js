@@ -90,7 +90,6 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-    var animation = (typeof options.animation == 'undefined' || !options.animation ? false : true)
 
     //设置默认参数
     if (wx.getStorageSync('Kopacity') == '') {
@@ -102,6 +101,8 @@ Page({
     if (wx.getStorageSync('onlyThisWeek') === ''){
       wx.setStorageSync('onlyThisWeek',true)
     }
+    //每周起始日
+    var startDay = wx.getStorageSync('start_day') || 1
     var winHeight = wx.getSystemInfoSync().windowHeight;
     that.setData({
       list_is_display: false,
@@ -109,10 +110,12 @@ Page({
       Copacity: wx.getStorageSync('Copacity'),
       fontSize: wx.getStorageSync('fontSize'),
       winHeight: winHeight,
-      onlyThisWeek: wx.getStorageSync('onlyThisWeek')
+      onlyThisWeek: wx.getStorageSync('onlyThisWeek'),
+      startDay:startDay
     });
 
     var week = that.getNowWeek();
+    var day = that.getDayOfWeek(week,startDay)
     var zhou_num = that.data.zhou_num;
     var n = zhou_num[week - 1].search(/(本周)/i);
     if (n == -1) {
@@ -120,17 +123,13 @@ Page({
     }
 
     var month = that.getMonth((that.data.now_week - 1) * 7);
-    //每周起始日
-    var startDay = wx.getStorageSync('start_day') || 1
-    var day = that.getDayOfWeek(week,startDay)
 
     that.setData({
       now_week: this.getNowWeek(),
       zhou_num: zhou_num,
       now_month: month,
       now_month_number: month / 1, // 当前月份数字类型，用于数字运算
-      now_day: day,
-      startDay:startDay
+      now_day: day
     })
     // ad
     var time = (new Date).getTime()
@@ -267,6 +266,11 @@ Page({
     var start = new Date(year, month-1, day);
     //计算时间差
     var left_time = parseInt((date.getTime()-start.getTime())/1000);
+    //如果从周日算起，需要+1天
+    if (this.data.startDay == 0){
+      left_time += 24 * 60 * 60
+    }
+
     var days = parseInt(left_time/3600/24);
     var week = Math.floor(days / 7) + 1;
     var result = week
@@ -1004,13 +1008,24 @@ Page({
   //设置起始日
   setStartDay:function(e){
     var val = e.detail.value
-    var week = this.getNowWeek()
-    var day = this.getDayOfWeek(week,val)
     this.setData({
-      startDay:val,
-      now_day:day
+      startDay:val
     })
     wx.setStorageSync('start_day',val)
+    var week = this.getNowWeek()
+    var day = this.getDayOfWeek(week,val)
+    var zhou_num = ['第1周', '第2周', '第3周', '第4周', '第5周', '第6周', '第7周', '第8周', '第9周', '第10周', '第11周', '第12周', '第13周', '第14周', '第15周', '第16周', '第17周', '第18周', '第19周', '第20周']
+    var n = zhou_num[week - 1].search(/(本周)/i);
+    if (n == -1) {
+      zhou_num[week - 1] = zhou_num[week - 1] + "(本周)";
+    }
+    this.setData({
+      now_week: week,
+      now_day: day,
+      zhou_num: zhou_num,
+      list_is_display:0
+    })
+    this.getCourse(week, true, false)
   },
   addCourse:function(){
     wx.navigateTo({

@@ -53,7 +53,7 @@ App({
   globalData:{
     isDebug:false,
     isTest:false,
-    isLocal:true,
+    isLocal:false,
     themeColor: '#1380ff',
     xdebug:"?XDEBUG_SESSION_START=18446",
     domain:'https://www.yunxiaozhi.cn/v1/public/api/',
