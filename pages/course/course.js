@@ -121,11 +121,11 @@ Page({
     if (n == -1) {
       zhou_num[week - 1] = zhou_num[week - 1] + "(本周)";
     }
-
-    var month = that.getMonth((that.data.now_week - 1) * 7);
+    let now_week = this.getNowWeek()
+    var month = that.getMonth((now_week - 1) * 7);
 
     that.setData({
-      now_week: this.getNowWeek(),
+      now_week: now_week,
       zhou_num: zhou_num,
       now_month: month,
       now_month_number: month / 1, // 当前月份数字类型，用于数字运算
