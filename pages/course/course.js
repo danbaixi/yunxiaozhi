@@ -121,11 +121,11 @@ Page({
     if (n == -1) {
       zhou_num[week - 1] = zhou_num[week - 1] + "(本周)";
     }
-    let now_week = this.getNowWeek()
-    var month = that.getMonth((now_week - 1) * 7);
+
+    var month = that.getMonth((week - 1) * 7);
 
     that.setData({
-      now_week: now_week,
+      now_week: week,
       zhou_num: zhou_num,
       now_month: month,
       now_month_number: month / 1, // 当前月份数字类型，用于数字运算
@@ -229,6 +229,9 @@ Page({
    * 获取第几周后的月份
    */
   getMonth:function(days) {
+    if(this.data.startDay == 0){
+      days = days - 7
+    }
     let configs = wx.getStorageSync('configs')
     let termDate = configs.termDate
     let data = termDate.split('-')
@@ -1012,18 +1015,23 @@ Page({
       startDay:val
     })
     wx.setStorageSync('start_day',val)
-    var week = this.getNowWeek()
+    var week = this.data.now_week
     var day = this.getDayOfWeek(week,val)
     var zhou_num = ['第1周', '第2周', '第3周', '第4周', '第5周', '第6周', '第7周', '第8周', '第9周', '第10周', '第11周', '第12周', '第13周', '第14周', '第15周', '第16周', '第17周', '第18周', '第19周', '第20周']
     var n = zhou_num[week - 1].search(/(本周)/i);
     if (n == -1) {
       zhou_num[week - 1] = zhou_num[week - 1] + "(本周)";
     }
+    var month = this.getMonth((week - 1) * 7);
+
     this.setData({
+      startDay:val,
       now_week: week,
       now_day: day,
       zhou_num: zhou_num,
-      list_is_display:0
+      list_is_display:0,
+      now_month: month,
+      now_month_number: month / 1, // 当前月份数字类型，用于数字运算
     })
     this.getCourse(week, true, false)
   },
