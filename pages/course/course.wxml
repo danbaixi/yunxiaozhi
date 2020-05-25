@@ -106,7 +106,7 @@
     </view>
 </view>
 
-  <scroll-view scroll-y="true" class="scroll">
+  <scroll-view scroll-x="false" scroll-y="true" scroll-top="{{scrollTop}}" class="scroll" bindtouchstart='touchStart' bindtouchend="touchEnd">
     <view class='course-content'>
       <view class='jie' style="background-color:rgba(220,220,220,{{(100-Kopacity)/100}})">
         <view wx:for="{{12}}" wx:key="key" wx:index="index" class="left">
@@ -144,6 +144,7 @@
       </view>
     </view>
   </scroll-view>
+  <view class="water {{clickStatus}}" style="top:{{finishY}}px;left:{{finishX}}px;"></view>
   <!--更新课表输入验证码弹窗-->
   <view class="modal-mask" bindtap="hideModal" style='height:{{winHeight}}px;' catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
   <view class="modal-dialog" wx:if="{{showModal}}" class="{{input_focus == 1?'modal-dialog input_focus':'modal-dialog'}}">

@@ -414,3 +414,25 @@ input-holder {
   padding: 40rpx 20rpx;
   border-radius: 12rpx;
 }
+
+.water{
+  position: absolute;
+  background: #fff;
+  border-radius: 100%;
+  position:absolute;
+}
+.water.finish{
+  width: 30px;
+  height: 30px;
+  animation: finishScreen 2s infinite;
+}
+@keyframes finishScreen {
+  0% {
+    transform:scale(1,1);
+    opacity: 0.5;
+ }
+ 100% {
+    transform:scale(200,200);
+    opacity: 0;
+ }
+}

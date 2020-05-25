@@ -83,6 +83,8 @@ Page({
     internet_course_time:false,
     fileUrl: app.globalData.fileUrl,
     courseFileUrl: 'https://yunxiaozhi-1251388077.cos.ap-guangzhou.myqcloud.com/course_bg/',
+    clickScreenTime:0,
+    scrollTop:""
   },
 
   /**
@@ -402,11 +404,7 @@ Page({
 
     that.getTrain(week)
   },
-  /**
-   * 选择周数
-   */
-  select:function(e){
-    var week = parseInt(e.detail.value)+1;
+  selectWeek:function(week){
     this.getCourse(week,false,true);
     this.getTrain(week);
     var month = this.getMonth((week - 1) * 7);
@@ -420,6 +418,13 @@ Page({
     this.setData({
       now_day: day,
     })
+  },
+  /**
+   * 选择周数
+   */
+  select:function(e){
+    var week = parseInt(e.detail.value)+1;
+    this.selectWeek(week)
   },
   /**
    * 显示课表详细内容
@@ -1058,5 +1063,55 @@ Page({
     wx.navigateTo({
       url: '/pages/course/setBg/setBg?from=index',
     })
+  },
+  touchStart: function(e) {
+    this.setData({
+      "touch.x": e.changedTouches[0].clientX,
+      "touch.y": e.changedTouches[0].clientY,
+    });
+  },
+  touchEnd: function(e) {
+    let x = e.changedTouches[0].clientX;
+    let y = e.changedTouches[0].clientY;
+    let time = new Date().getTime()
+    if(time - this.data.clickScreenTime < 1000){
+      app.msg("不要操作那么快啦！")
+      return
+    }
+    this.switchWeek(x,y)
+  },
+  switchWeek: function(x,y) {
+    var direction = app.getTouchData(x,y,this.data.touch.x,this.data.touch.y)
+    var week = this.data.now_week
+    if(direction == ""){
+      return
+    }else if(direction == "left"){
+      week++
+    }else if(direction == "right"){
+      week--
+    }
+    this.setData({
+      scrollTop: 0
+    })
+    if(week < 1){
+      app.msg("已经是第一周啦！")
+      return
+    }else if(week > 20){
+      app.msg("已经是最后一周啦！")
+      return
+    }
+    this.setData({
+      clickStatus: 'finish',
+      finishX: x,
+      finishY: y,
+      clickScreenTime: (new Date().getTime())
+    })
+    let _this = this
+    setTimeout(function(){
+      _this.setData({
+        clickStatus: ''
+      })
+    },1000)
+    this.selectWeek(week)
   }
 })

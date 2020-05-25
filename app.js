@@ -333,5 +333,15 @@ App({
     wx.setStorageSync('configs', configs)
     wx.setStorageSync('bg_imgs', bg_imgs)
     wx.setStorageSync('bg_img', bg_img)
+  },
+  getTouchData: function(endX, endY, startX, startY) {
+    let turn = "";
+    let length = 50
+    if (endX - startX > length && Math.abs(endY - startY) < length) {
+      turn = "right";
+    } else if (endX - startX < -length && Math.abs(endY - startY) < length) {
+      turn = "left";
+    }
+    return turn;
   }
 })
