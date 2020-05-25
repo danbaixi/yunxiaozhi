@@ -1111,7 +1111,7 @@ Page({
       _this.setData({
         clickStatus: ''
       })
-    },1000)
+    },500)
     this.selectWeek(week)
   }
 })

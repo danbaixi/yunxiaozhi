@@ -417,14 +417,16 @@ input-holder {
 
 .water{
   position: absolute;
-  background: #fff;
   border-radius: 100%;
   position:absolute;
+  width: 0px;
+  height: 0px;
+  background: #1380ff;
 }
 .water.finish{
   width: 30px;
   height: 30px;
-  animation: finishScreen 2s infinite;
+  animation: finishScreen 1s infinite;
 }
 @keyframes finishScreen {
   0% {
@@ -432,7 +434,7 @@ input-holder {
     opacity: 0.5;
  }
  100% {
-    transform:scale(200,200);
+    transform:scale(100,100);
     opacity: 0;
  }
 }
