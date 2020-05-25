@@ -13,7 +13,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    app.isBind()
+    app.isLogin()
   },
 
   nameInput:function(e){
@@ -27,6 +27,11 @@ Page({
     })
   },
   submit:function(){
+    let session = wx.getStorageSync('login_session')
+    if (session == ''){
+      app.msg('请先登录')
+      return
+    }
     if(this.data.soul == ''){
       app.msg('不写点内容再提交？')
       return
@@ -40,7 +45,8 @@ Page({
       method:'POST',
       data:{
         title: _this.data.soul,
-        name:_this.data.name
+        name:_this.data.name,
+        session: session
       },
       success:function(res){
         app.msg(res.data.message)
