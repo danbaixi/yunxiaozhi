@@ -1,5 +1,5 @@
-var util = require('../../utils/util.js');
 var md5 = require('../../utils/md5.js');
+var colors = require('../../utils/colors.js')
 const app = getApp();
 const TIMES = [
   [
@@ -22,33 +22,6 @@ Page({
     now_week:1,
     now_day:[],
     now_month:0,
-    colorArrays: [
-      "93,113,213",
-      "133,93,213",
-      "193,93,213",
-      "213,93,173",
-      "213,93,113",
-      "213,133,93",
-      "213,193,93",
-      "173,213,93",
-      "113,213,93",
-      "93,213,133",
-      "93,213,193",
-      "50,146,195",
-      "38,110,146",
-      "195,98,50",
-      "254,135,97",
-      "123,104,238",
-      "65,105,225",
-      "34,139,34",
-      "255,182,185",
-      "190,159,225",
-      "105,132,116",
-      "127,169,152",
-      "228,163,212",
-      "82,222,151",
-      "190,235,233",
-      ],
     course: [],
     train_course_id:0,
     list_is_display:false,
@@ -113,7 +86,8 @@ Page({
       fontSize: wx.getStorageSync('fontSize'),
       winHeight: winHeight,
       onlyThisWeek: wx.getStorageSync('onlyThisWeek'),
-      startDay:startDay
+      startDay:startDay,
+      colorArrays: colors
     });
 
     var week = that.getNowWeek();
@@ -314,14 +288,7 @@ Page({
         }
         //格式化上课地点
         data[a]['full_address'] = data[a]['course_address']
-        data[a]['course_address'] = data[a]['course_address'].replace('-', '_')//把-换成_
-        var temp = data[a]['course_address'].split('_');
-        var address;
-        if (temp.length > 1) {
-          address = temp[0] + temp[1];
-        } else {
-          address = temp[0];
-        }
+        data[a]['course_address'] = app.formatAddress(data[a]['course_address'])
         //将课程通过周次节次分组
         let key = data[a]['course_week'] + '-' + jie
         if(courseGroup[key]){
@@ -353,7 +320,7 @@ Page({
           jieshu: jieshu,
           name: that.fiterCourseTitle(data[a]['course_name'], jieshu),
           fullName: data[a]['course_name'],
-          address: address,
+          address:  data[a]['course_address'],
           fullAddress: data[a]['full_address'],
           num: data[a]['num'],
           zhoushu: data[a]['course_weekly'],
@@ -1113,5 +1080,15 @@ Page({
       })
     },500)
     this.selectWeek(week)
+  },
+  courseList:function(){
+    var tmpClass = wx.getStorageSync('tmp_class')
+    if(tmpClass){
+      app.msg("不能管理非本班课表")
+      return
+    }
+    wx.navigateTo({
+      url: '/pages/course/list/list',
+    })
   }
 })

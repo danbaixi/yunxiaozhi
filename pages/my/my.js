@@ -7,6 +7,7 @@ Page({
    */
   data: {
     focus_article:"http://mp.weixin.qq.com/s?__biz=MzI1NTUwNDIzNQ==&mid=100001363&idx=1&sn=67d2da535e60c9cb0f6e14d6064fd343&chksm=6a35bc575d423541201186f77e8203f6d5318a073a69e614967edf4ebf207381690812f0f08d#rd",
+    question_article: "http://mp.weixin.qq.com/s?__biz=MzI1NTUwNDIzNQ==&mid=100001694&idx=1&sn=9309f576dc890a02095509553122519d&chksm=6a35bd9a5d42348c22fd657bc2014f805f7559b536fd3da8eb661697636345aa4e9fbeb6029c#rd",
     userInfo: null,
     user_name:"请先登录",
     user_img:"http://yunxiaozhi-1251388077.cosgz.myqcloud.com/user_imgs/defalut.png",
@@ -234,4 +235,9 @@ Page({
       }
     })
   },
+  question:function(){
+    wx.navigateTo({
+      url: '/pages/article/article?src=' + encodeURIComponent(this.data.question_article),
+    })
+  }
 })

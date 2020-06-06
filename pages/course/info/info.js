@@ -45,7 +45,7 @@ Page({
       }else if(jieshu == 4){
         time = TIMES[2][jie - 1][0] + '~' + TIMES[2][jie+2][1]
       }else{
-        time = '获取时间'
+        time = TIMES[2][jie - 1][0] + '~' + TIMES[2][jieshu-1][1]
       }
     }else if(area == 1){
       //正常情况

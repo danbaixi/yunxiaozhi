@@ -128,13 +128,14 @@ Page({
   selectWeeklyMode:function(e){
     let val = e.currentTarget.dataset.value
     let weeklys = []
+    let value = this.data.weeklyMode == val ? false : true
     for (let i = 1; i <= this.data.weeklysNum;i++){
       if (val == 0 || (val == 1 && i % 2 == 1) || (val == 2 && i % 2 == 0)){
-        weeklys[i] = true
+        weeklys[i] = value
       }
     }
     this.setData({
-      weeklyMode:val,
+      weeklyMode:val == this.data.weeklyMode ? -1 : val,
       weeklys: weeklys
     })
   },
@@ -198,18 +199,18 @@ Page({
       app.msg("哪有只上一节的课程？如果有请反馈给客服")
       return
     }
-    if(result[1] < 4 && result[2] >= 4){
-      app.msg("中午可是要休息的哦，这课程不合理")
-      return
-    }
-    if (result[1] < 8 && result[2] >= 8) {
-      app.msg("下午可是要吃饭的呀，这课程不合理")
-      return
-    }
-    if(result[1] % 2 == 1 && result[2]-result[1] == 1){
-      app.msg("白云还没有" + (result[1]+1) + '-' + (result[2]+1) + "节这样的课程")
-      return
-    }
+    // if(result[1] < 4 && result[2] >= 4){
+    //   app.msg("中午可是要休息的哦，这课程不合理")
+    //   return
+    // }
+    // if (result[1] < 8 && result[2] >= 8) {
+    //   app.msg("下午可是要吃饭的呀，这课程不合理")
+    //   return
+    // }
+    // if(result[1] % 2 == 1 && result[2]-result[1] == 1){
+    //   app.msg("白云还没有" + (result[1]+1) + '-' + (result[2]+1) + "节这样的课程")
+    //   return
+    // }
     this.setData({
       week: result[0],
       section: (result[1]+1) + '-' + (result[2]+1)
@@ -287,11 +288,11 @@ Page({
               app.msg("保存成功，获取课表失败，请手动更新课表")
             }
           })
-          setTimeout(()=>{
+          setTimeout(() => {
             wx.switchTab({
               url: '/pages/course/course',
             })
-          },1000)
+          }, 1000)
         }
       }
     })

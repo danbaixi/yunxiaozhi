@@ -1,7 +1,7 @@
 {
   "navigationBarTitleText": "成绩分析",
   "usingComponents": {
-    "ec-canvas": "../../../../components/ec-canvas/ec-canvas",
+    "ec-canvas": "/pages/components/ec-canvas/ec-canvas",
     "update-tips": "/pages/components/update-tips/update-tips"
   }
 }

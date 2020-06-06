@@ -343,5 +343,21 @@ App({
       turn = "left";
     }
     return turn;
+  },
+  //星期几转换
+  num2Week:function(num){
+    let weeks = ['日','一','二','三','四','五','六']
+    return weeks[num]
+  },
+  //格式化课表地址
+  formatAddress:function(address){
+    address = address.replace('-', '_')//把-换成_
+    var temp = address.split('_');
+    if (temp.length > 1) {
+      address = temp[0] + temp[1];
+    } else {
+      address = temp[0];
+    }
+    return address
   }
 })

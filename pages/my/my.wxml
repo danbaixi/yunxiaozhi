@@ -67,7 +67,7 @@
           <text class="text-black">个人设置</text>
         </view>
       </view>
-      <view class="cu-item arrow" bindtap="showModal">
+      <view class="cu-item arrow" bindtap="question">
         <view class="content">
           <text class="icon-comment lg text-black"></text>
           <text class="text-black">问题反馈</text>

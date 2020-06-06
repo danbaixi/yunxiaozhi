@@ -48,7 +48,8 @@
     "pages/tools/public_course/public_course",
     "pages/tools/quantity/quantity",
     "pages/my/dormitory/dormitory",
-    "pages/tools/summary/summary"
+    "pages/tools/summary/summary",
+    "pages/course/list/list"
   ],
   "window": {
     "navigationStyle": "custom",

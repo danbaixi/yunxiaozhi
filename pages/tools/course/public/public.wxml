@@ -42,12 +42,11 @@
     </view>
     <view class="padding text-left">
       <view class="padding-bottom-xs">名称：<text class="text-theme">{{course[detailIndex].course_name}}</text></view>
-      <view class="padding-bottom-xs">学期：<text class="text-theme">{{term[course[detailIndex].term]}}</text></view>
+      <view class="padding-bottom-xs">学期：<text class="text-theme">{{term[course[detailIndex].course_term]}}</text></view>
       <view class="padding-bottom-xs">学分：<text class="text-theme">{{course[detailIndex].credit?course[detailIndex].credit:'未知'}}</text></view>
       <view class="padding-bottom-xs">类型：<text class="text-theme">{{course[detailIndex].type?course[detailIndex].type:'未知'}}</text></view>
       <view class="padding-bottom-xs">考核：<text class="text-theme">{{course[detailIndex].method?course[detailIndex].method:'未知'}}</text></view>
-      <view class="padding-bottom-xs">周数：<text class="text-theme">{{course[detailIndex].week}}</text></view>
-      <view class="padding-bottom-xs">承担单位：<text class="text-theme">{{course[detailIndex].department}}</text></view>
+      <view class="padding-bottom-xs">周数：<text class="text-theme">{{course[detailIndex].course_weekly}}</text></view>
     </view>
   </view>
 </view>

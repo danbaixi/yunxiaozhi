@@ -1,0 +1,6 @@
+.course{
+  position: relative;
+  padding: 24rpx 20rpx;
+  margin-bottom: 4rpx;
+  border-radius: 8rpx;
+}

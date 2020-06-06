@@ -20,11 +20,11 @@
       </view>
       <text>更新课表</text>
     </view>
-    <view class="cu-item" bindtap='addCourse'>
+    <view class="cu-item" bindtap='courseList'>
       <view class="course-icon">
         <image mode="widthFix" src="/pages/assets/imgs/course_icon/add.png"></image>
       </view>
-      <text>添加课表</text>
+      <text>课程管理</text>
     </view>
     <view class="cu-item" bindtap='setTime'>
       <view class="course-icon">

@@ -24,7 +24,7 @@
 		"bundle": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.10.2",
+	"libVersion": "2.11.1",
 	"appid": "wxe0f03cdec8ab9416",
 	"projectname": "%E4%BA%91%E5%B0%8F%E6%99%BA",
 	"simulatorType": "wechat",
@@ -321,6 +321,14 @@
 					"id": -1,
 					"name": "毕业回忆录",
 					"pathName": "pages/tools/summary/summary",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 41,
+					"name": "课程管理",
+					"pathName": "pages/course/list/list",
+					"query": "",
 					"scene": null
 				}
 			]
