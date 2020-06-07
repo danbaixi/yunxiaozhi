@@ -15,7 +15,7 @@
     <button open-type="share" class="cu-btn bg-theme">分享</button>
     <button bindtap="getSoul" class="cu-btn bg-theme">再来一碗</button>
   </view>
-  <view class="create">
+  <view class="create" wx:if="{{display}}">
     <text>来源<text class="text-bold">{{soul.source == null || soul.source == ''?"网络": soul.source}}</text>，</text>
     <text class="text-blue" bindtap="create">我也要贡献</text>
   </view>

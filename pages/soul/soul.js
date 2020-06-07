@@ -14,6 +14,7 @@ Page({
   onLoad: function (options) {
     let soul = options.id
     this.getSoul()
+    this.display()
   },
 
   /**
@@ -123,6 +124,12 @@ Page({
   create:function(){
     wx.navigateTo({
       url: 'submit/submit',
+    })
+  },
+  display:function(){
+    let config = wx.getStorageSync('configs')
+    this.setData({
+      display:!config.auditing
     })
   }
 })
