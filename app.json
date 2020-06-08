@@ -49,7 +49,8 @@
     "pages/tools/quantity/quantity",
     "pages/my/dormitory/dormitory",
     "pages/tools/summary/summary",
-    "pages/course/list/list"
+    "pages/course/list/list",
+    "pages/tools/clockin/clockin"
   ],
   "window": {
     "navigationStyle": "custom",

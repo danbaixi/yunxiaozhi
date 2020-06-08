@@ -21,7 +21,11 @@
 			"disablePlugins": [],
 			"outputPath": ""
 		},
-		"bundle": true
+		"bundle": true,
+		"useIsolateContext": true,
+		"useCompilerModule": true,
+		"userConfirmedUseCompilerModuleSwitch": false,
+		"compileHotReLoad": false
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.11.1",
@@ -328,6 +332,13 @@
 					"id": 41,
 					"name": "课程管理",
 					"pathName": "pages/course/list/list",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "早起打卡",
+					"pathName": "pages/tools/clockin/clockin",
 					"query": "",
 					"scene": null
 				}

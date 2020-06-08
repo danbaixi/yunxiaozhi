@@ -1,0 +1,11 @@
+<cu-custom bgColor="bg-transparent" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">早起打卡</view>
+</cu-custom>
+<image mode="widthFix" class="bg" src="/pages/assets/imgs/other/clockin-bg.png"></image>
+<view class="container">
+  <view class="clockin text-center">
+    <button class="cu-btn bg-theme round lg text-white">打卡</button>
+  </view>
+
+</view>

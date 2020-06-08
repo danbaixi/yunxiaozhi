@@ -9,6 +9,9 @@ page{
 }
 
 /** 扩展 */
+.bg-transparent{
+  background-color: transparent;
+}
 .text-theme, .line-theme, .lines-theme {
   color: var(--theme)
 }
