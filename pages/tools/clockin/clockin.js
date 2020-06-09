@@ -1,18 +1,23 @@
-// pages/tools/clockin/clockin.js
+const app = getApp()
+import WxCountUp from '../../../utils/wxCountUp.js'
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    todayCount:0,
+    times:{
+      start:'05:30',
+      end: '08:30'
+    }
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.getData()
   },
 
   /**
@@ -62,5 +67,40 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+  //获取数据
+  getData:function(){
+    let _this = this
+    app.httpRequest({
+      url:'clockin/getData',
+      success:function(res){
+        if(res.data.status == 0){
+          _this.setData(res.data.data)
+          _this.todayCountUp()
+          return
+        }
+        app.msg(res.data.message)
+      }
+    })
+  },
+  //打卡
+  clockIn:function(){
+    let _this = this
+    app.httpRequest({
+      url:'clockin/clockIn',
+      success:function(res){
+        if(res.data.status == -1){
+          app.msg(res.data.message)
+          return
+        }
+        app.msg("打卡成功，你是第" + res.data.data.top + "个打卡的同学")
+        _this.getData()
+      }
+    })
+  },
+  //人数滚动
+  todayCountUp:function(number){
+    this.countUp = new WxCountUp('todayCount', this.data.todayCount, {decimalPlaces:0}, this)
+    this.countUp.start()
+  },
 })

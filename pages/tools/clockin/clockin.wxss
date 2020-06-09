@@ -18,3 +18,7 @@ page{
   padding: 0 120rpx;
   letter-spacing: 2px;
 }
+.number{
+  font-size: 60rpx;
+  letter-spacing: 2px;
+}

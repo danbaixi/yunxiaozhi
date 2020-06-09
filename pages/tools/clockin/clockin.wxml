@@ -5,7 +5,12 @@
 <image mode="widthFix" class="bg" src="/pages/assets/imgs/other/clockin-bg.png"></image>
 <view class="container">
   <view class="clockin text-center">
-    <button class="cu-btn bg-theme round lg text-white">打卡</button>
+    <view class="text-theme padding">今天已有 <text class="text-yellow text-xxl number">{{todayCount}}</text> 人参与打卡</view>
+    <view class="text-grey padding">打卡时间：{{times.start}} ~ {{times.end}}</view>
+    <button class="cu-btn bg-{{status==1?'yellow':'theme'}} round lg text-white" bindtap="clockIn">
+      {{status == 1 ? '已打卡' : '打卡'}}
+      <text class="text-sm" wx:if="{{status == 1}}">({{clockTime}})</text>
+    </button>
   </view>
 
 </view>
