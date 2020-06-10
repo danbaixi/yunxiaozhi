@@ -93,7 +93,8 @@ Page({
           app.msg(res.data.message)
           return
         }
-        app.msg("打卡成功，你是第" + res.data.data.top + "个打卡的同学")
+        _this.clockInSuccess()
+        _this.setData(res.data.data)
         _this.getData()
       }
     })
@@ -103,4 +104,16 @@ Page({
     this.countUp = new WxCountUp('todayCount', this.data.todayCount, {decimalPlaces:0}, this)
     this.countUp.start()
   },
+  //打卡成功
+  clockInSuccess:function(){
+    this.setData({
+      modalName:'success'
+    })
+  },
+  //关闭窗口
+  close:function(){
+    this.setData({
+      modalName:''
+    })
+  }
 })

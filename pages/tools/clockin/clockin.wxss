@@ -22,3 +22,29 @@ page{
   font-size: 60rpx;
   letter-spacing: 2px;
 }
+.cu-dialog{
+  width: 300px;
+}
+.cu-dialog .bg-img{
+  width:300px;
+  height:407px;
+}
+.dialog-close{
+  position: absolute;
+  width: 68rpx;
+  height: 68rpx;
+  margin-left: -34rpx;
+  background: white;
+  bottom: 100px;
+  left: 50%;
+  border-radius: 50%;
+}
+.dialog-close .icon-close{
+  line-height: 68rpx;
+}
+.dialog-content{
+  padding: 110px 0 50px;
+}
+.success-text{
+  font-size: 60rpx;
+}

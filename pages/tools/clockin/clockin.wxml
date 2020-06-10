@@ -5,7 +5,7 @@
 <image mode="widthFix" class="bg" src="/pages/assets/imgs/other/clockin-bg.png"></image>
 <view class="container">
   <view class="clockin text-center">
-    <view class="text-theme padding">今天已有 <text class="text-yellow text-xxl number">{{todayCount}}</text> 人参与打卡</view>
+    <view class="text-grey padding">今天已有 <text class="text-yellow text-xxl number">{{todayCount}}</text> 人参与打卡</view>
     <view class="text-grey padding">打卡时间：{{times.start}} ~ {{times.end}}</view>
     <button class="cu-btn bg-{{status==1?'yellow':'theme'}} round lg text-white" bindtap="clockIn">
       {{status == 1 ? '已打卡' : '打卡'}}
@@ -13,4 +13,21 @@
     </button>
   </view>
 
+</view>
+
+<view class="cu-modal {{modalName=='success'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="bg-img" style="background-image: url('/pages/assets/imgs/other/success.png');">
+      <view class="dialog-content">
+        <view class="text-white success-text padding-sm">打卡成功</view>
+        <view class="text-grey text-lg padding-xs">全校排名<text class="text-yellow text-xxl padding-left-sm">{{top}}</text></view>
+        <view class="text-grey text-lg padding-xs">连续打卡<text class="text-yellow text-xxl padding-left-sm">{{continuous}}</text></view>
+        <view class="text-grey text-lg padding-xs">累计打卡<text class="text-yellow text-xxl padding-left-sm">{{total}}</text></view>
+      </view>
+      <button class="cu-btn bg-yellow lg radius text-white shadow">生成打卡海报</button>
+    </view>
+  </view>
+  <view class="dialog-close" bindtap="close">
+    <text class="icon-close text-xl text-black"></text>
+  </view>
 </view>
