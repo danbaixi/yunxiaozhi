@@ -9,6 +9,9 @@ page{
 }
 
 /** 扩展 */
+.y-radius {
+  border-radius: 12rpx;
+}
 .bg-color{
   background-color: var(--background)
 }

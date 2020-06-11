@@ -11,12 +11,13 @@ Page({
       start:'05:30',
       end: '08:30'
     },
-    p:1,
     length:10,
-    type:'today',
-    tabs:['今日','全校','学院','班级'],
-    tabCur:0,
+    type:0,
     customBar:app.globalData.customBar,
+    tabs: ['今日', '全校', '学院', '班级'],
+    list: [[],[],[],[]],
+    p:[0,0,0,0],
+    more:[true,true,true,true]
   },
 
   /**
@@ -152,32 +153,44 @@ Page({
   //获取排名
   getRanks:function(){
     let _this = this
+    let type = _this.data.type
     app.httpRequest({
       url:'clockin/getRank',
       data:{
-        p:_this.data.p,
+        p:_this.data.p[type] + 1,
         length:_this.data.length,
-        type:_this.data.type
+        type:type
       },
       success:function(res){
-        console.log(res)
+        let list = _this.data.list
+        let more = _this.data.more
+
+        let data = _this.data.list[type]
+        list[type] = data.concat(res.data.data)
+
+        more[type] = res.data.data.length >= _this.data.length
+
+        _this.setData({
+          list:list,
+          more:more
+        })
       }
     })
   },
   //切换排名
   tabSelect:function(e){
     let _this = this
-    if(_this.data.tabCur == e.currentTarget.dataset.id){
+    if(_this.data.type == e.currentTarget.dataset.id){
       return
     }
     _this.setData({
-      tabCur: e.currentTarget.dataset.id,
+      type: e.currentTarget.dataset.id,
     })
   },
   swpierSelect:function(e){
     let _this = this
     _this.setData({
-      tabCur: e.detail.current 
+      type: e.detail.current 
     });
   }
 })

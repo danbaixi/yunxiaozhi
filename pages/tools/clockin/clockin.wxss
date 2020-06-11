@@ -12,7 +12,13 @@ page{
   height:100%;
 }
 .clockin{
-  padding-top: 200rpx;
+  position: fixed;
+  top: 20%;
+  left: 0px;
+  right: 0px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 .cu-btn.lg{
   padding: 0 120rpx;
@@ -51,5 +57,6 @@ page{
   font-size: 60rpx;
 }
 .rank{
-  z-index:1
+  z-index:1;
+  margin-top: 60%;
 }
