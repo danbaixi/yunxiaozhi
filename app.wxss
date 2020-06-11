@@ -9,6 +9,9 @@ page{
 }
 
 /** 扩展 */
+.bg-color{
+  background-color: var(--background)
+}
 .bg-transparent{
   background-color: transparent;
 }

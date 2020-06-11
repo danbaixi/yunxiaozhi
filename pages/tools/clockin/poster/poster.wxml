@@ -1,0 +1,16 @@
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">打卡海报</view>
+</cu-custom>
+<view class="container padding">
+  <view class="poster text-center" wx:if="{{!loading&&url}}">
+    <image class="shadow image" mode="widthFix" style="min-height:80%" src="{{url}}"></image>
+    <view class="options text-center padding-top-lg">
+      <button class="cu-btn radius bg-theme" bindtap="save">保存到手机</button>
+    </view>
+  </view>
+  <view class="padding text-center" wx:if="{{!loading&&!url}}">
+    <view class="padding">获取海报失败，请重试</view>
+    <button class="cu-btn bg-theme" bindtap="getPoster">重新获取</button>
+  </view>
+</view>

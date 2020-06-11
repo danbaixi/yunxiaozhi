@@ -2,8 +2,11 @@
   <view slot="back">返回</view>
 	<view slot="content">早起打卡</view>
 </cu-custom>
-<image mode="widthFix" class="bg" src="/pages/assets/imgs/other/clockin-bg.png"></image>
-<view class="container">
+<view class="bg" style="width:{{winWidth}}px;height:{{winHeight}}px">
+  <image mode="aspectFill" src="/pages/assets/imgs/other/clockin-bg.png"></image>
+</view>
+<scroll-view scroll-y style="height:{{widHeight - customBar}}px">
+<!-- <view class="container"> -->
   <view class="clockin text-center">
     <view class="text-grey padding">今天已有 <text class="text-yellow text-xxl number">{{todayCount}}</text> 人参与打卡</view>
     <view class="text-grey padding">打卡时间：{{times.start}} ~ {{times.end}}</view>
@@ -12,19 +15,36 @@
       <text class="text-sm" wx:if="{{status == 1}}">({{clockTime}})</text>
     </button>
   </view>
-
-</view>
+  <view class="rank padding-lg">
+    <view class="bg-white radius">
+      <view class="text-theme text-xl text-center padding-sm" style="letter-spacing:3px">早起排行榜</view>
+      <scroll-view scroll-x class="bg-white nav">
+        <view class="flex text-center">
+          <view class="cu-item flex-sub {{index==tabCur?'text-theme cur':''}}" wx:for="{{tabs}}" wx:key="key" bindtap="tabSelect" data-id="{{index}}">
+            {{item}}
+          </view>
+        </view>
+      </scroll-view>
+      <swiper style="height:{{winHeight - customBar - 100}}px" current="{{tabCur}}" class="swiper-box" duration="300" bindchange="swpierSelect">
+        <swiper-item wx:for="{{tabs}}" wx:key="key">  
+          <view class="padding-sm">{{item}}</view>
+        </swiper-item>
+      </swiper>
+    </view>
+  </view>
+<!-- </view> -->
+</scroll-view>
 
 <view class="cu-modal {{modalName=='success'?'show':''}}">
   <view class="cu-dialog">
-    <view class="bg-img" style="background-image: url('/pages/assets/imgs/other/success.png');">
+    <view class="bg-img">
       <view class="dialog-content">
         <view class="text-white success-text padding-sm">打卡成功</view>
         <view class="text-grey text-lg padding-xs">全校排名<text class="text-yellow text-xxl padding-left-sm">{{top}}</text></view>
         <view class="text-grey text-lg padding-xs">连续打卡<text class="text-yellow text-xxl padding-left-sm">{{continuous}}</text></view>
         <view class="text-grey text-lg padding-xs">累计打卡<text class="text-yellow text-xxl padding-left-sm">{{total}}</text></view>
       </view>
-      <button class="cu-btn bg-yellow lg radius text-white shadow">生成打卡海报</button>
+      <button class="cu-btn bg-yellow lg radius text-white shadow" bindtap="getPoster">生成打卡海报</button>
     </view>
   </view>
   <view class="dialog-close" bindtap="close">

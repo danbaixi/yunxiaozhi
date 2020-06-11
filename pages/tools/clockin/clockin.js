@@ -10,14 +10,27 @@ Page({
     times:{
       start:'05:30',
       end: '08:30'
-    }
+    },
+    p:1,
+    length:10,
+    type:'today',
+    tabs:['今日','全校','学院','班级'],
+    tabCur:0,
+    customBar:app.globalData.customBar,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let info = wx.getSystemInfoSync()
+    this.setData({
+      winHeight:info.windowHeight,
+      winWidth:info.windowWidth
+    })
     this.getData()
+    this.getInfo()
+    this.getRanks()
   },
 
   /**
@@ -115,5 +128,56 @@ Page({
     this.setData({
       modalName:''
     })
+  },
+
+  //获取海报
+  getPoster:function(){
+    wx.navigateTo({
+      url:'/pages/tools/clockin/poster/poster'
+    })
+    this.close()
+  },
+  getInfo:function(){
+    var _this = this;
+    app.promiseRequest({
+      url: 'user/getInfo'
+    }).then((result) => {
+      _this.setData({
+        userInfo:result.data
+      })
+    }).catch((message) => {
+      app.msg(message)
+    })
+  },
+  //获取排名
+  getRanks:function(){
+    let _this = this
+    app.httpRequest({
+      url:'clockin/getRank',
+      data:{
+        p:_this.data.p,
+        length:_this.data.length,
+        type:_this.data.type
+      },
+      success:function(res){
+        console.log(res)
+      }
+    })
+  },
+  //切换排名
+  tabSelect:function(e){
+    let _this = this
+    if(_this.data.tabCur == e.currentTarget.dataset.id){
+      return
+    }
+    _this.setData({
+      tabCur: e.currentTarget.dataset.id,
+    })
+  },
+  swpierSelect:function(e){
+    let _this = this
+    _this.setData({
+      tabCur: e.detail.current 
+    });
   }
 })

@@ -50,7 +50,8 @@
     "pages/my/dormitory/dormitory",
     "pages/tools/summary/summary",
     "pages/course/list/list",
-    "pages/tools/clockin/clockin"
+    "pages/tools/clockin/clockin",
+    "pages/tools/clockin/poster/poster"
   ],
   "window": {
     "navigationStyle": "custom",
