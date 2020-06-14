@@ -26,11 +26,12 @@
       <view class="text-gray">考试</view>
     </view>
     <view class="item" data-page='/pages/tools/quantity/quantity' bindtap="goPage">
-      <view class="text-black text-bold text-lg">{{electricity}}</view>
+      <view class="text-black text-bold text-lg">{{electricity?electricity:0}}</view>
       <view class="text-gray">电费</view>
     </view>
     <view wx:if="{{dormitory.area_id == 1}}" class="item" data-page='/pages/tools/quantity/quantity' bindtap="goPage">
-      <view class="text-black text-bold text-lg">{{water}}</view>
+      <view class="text-black text-bold text-lg">{{water?watet:0}}</view>
+      
       <view class="text-gray">水费</view>
     </view>
     <view style="clear:both"></view>

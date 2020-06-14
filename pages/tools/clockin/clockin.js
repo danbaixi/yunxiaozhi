@@ -11,13 +11,15 @@ Page({
       start:'05:30',
       end: '08:30'
     },
-    length:10,
+
     type:0,
     customBar:app.globalData.customBar,
     tabs: ['今日', '全校', '学院', '班级'],
-    list: [[],[],[],[]],
-    p:[0,0,0,0],
-    more:[true,true,true,true]
+    list: [],
+    length: 10,
+    p:0,
+    loading: false,
+    finish: false
   },
 
   /**
@@ -73,14 +75,17 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    if(this.data.finish){
+      return
+    }
+    this.getRanks()
   },
 
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return app.share('早起打卡挑战，你敢来吗？', 'clockin.png', this.route)
   },
   //获取数据
   getData:function(){
@@ -110,6 +115,7 @@ Page({
         _this.clockInSuccess()
         _this.setData(res.data.data)
         _this.getData()
+        _this.getRanks()
       }
     })
   },
@@ -154,25 +160,25 @@ Page({
   getRanks:function(){
     let _this = this
     let type = _this.data.type
+    _this.setData({
+      loading: true
+    })
     app.httpRequest({
       url:'clockin/getRank',
       data:{
-        p:_this.data.p[type] + 1,
+        p:_this.data.p + 1,
         length:_this.data.length,
-        type:type
+        type:type,
+        value:_this.getValue(type)
       },
       success:function(res){
-        let list = _this.data.list
-        let more = _this.data.more
-
-        let data = _this.data.list[type]
-        list[type] = data.concat(res.data.data)
-
-        more[type] = res.data.data.length >= _this.data.length
+        let data = _this.data.list
+        let list = data.concat(res.data.data)
+        let finish = res.data.data.length < _this.data.length
 
         _this.setData({
           list:list,
-          more:more
+          finish: finish
         })
       }
     })
@@ -185,12 +191,32 @@ Page({
     }
     _this.setData({
       type: e.currentTarget.dataset.id,
+      list: [],
+      p:0,
+      finish:false
+    })
+    _this.getRanks()
+  },
+  getValue:function(type){
+    switch(type){
+      default:return '';break
+      case 2:return this.data.userInfo.stu_department;break
+      case 3:return this.data.userInfo.stu_class;break
+    }
+  },
+  showRule:function(){
+    this.setData({
+      modalName:'rule'
     })
   },
-  swpierSelect:function(e){
-    let _this = this
-    _this.setData({
-      type: e.detail.current 
-    });
+  hideRule:function(){
+    this.setData({
+      modalName: ''
+    })
+  },
+  goSetting:function(){
+    wx.navigateTo({
+      url: '/pages/my/set/set',
+    })
   }
 })

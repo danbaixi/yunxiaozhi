@@ -1,6 +1,5 @@
 .container{
   text-align: center;
-  margin-top: 80rpx;
   padding: 30rpx;
 }
 .img{

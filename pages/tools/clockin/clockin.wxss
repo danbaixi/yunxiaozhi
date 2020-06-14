@@ -4,21 +4,17 @@ page{
 .bg{
   z-index: -999;
   position: fixed;
-  top: 0;
   left: 0;
+}
+.bg-diy{
+  background: #e7f4f0
 }
 .bg image{
   width:100%;
   height:100%;
 }
 .clockin{
-  position: fixed;
-  top: 20%;
-  left: 0px;
-  right: 0px;
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
+  padding-top: 180rpx;
 }
 .cu-btn.lg{
   padding: 0 120rpx;
@@ -57,6 +53,45 @@ page{
   font-size: 60rpx;
 }
 .rank{
-  z-index:1;
-  margin-top: 60%;
+  padding: 60rpx 40rpx;
+}
+.rank-num{
+  width: 60rpx;
+  position: absolute;
+  left: 30rpx;
+  text-align: center;
+}
+.cu-list.menu-avatar>.cu-item>.cu-avatar{
+  left: 100rpx;
+}
+.cu-list.menu-avatar>.cu-item .content {
+  left: 216rpx;
+  width: calc(100% - 96rpx - 60rpx - 120rpx - 20rpx - 70rpx);
+}
+
+.myself .text-grey{
+  color: var(--yellow)
+}
+.options{
+  padding: 30rpx 40rpx 20rpx;
+}
+.option{
+  position: fixed;
+  right: 0;
+  top: 200rpx;
+}
+.option .item{
+  border-radius: 10rpx 0 0 10rpx;
+  padding: 8rpx 20rpx;
+  margin: 32rpx 0;
+  position: relative;
+}
+.option .item button{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  z-index: 1;
 }

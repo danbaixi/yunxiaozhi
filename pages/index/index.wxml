@@ -1,4 +1,4 @@
-<view class="bg" style="display:flex;">
+ <view class="bg" style="display:flex;">
   <image src='/pages/assets/imgs/other/index_bg.png' mode='aspectFill' class='png' style='width:{{winWidth}}px;height:{{bgHeight}}px'></image>
   <view class="add_tips shadow" style="top:{{customBar + 8}}px" wx:if="{{add_tips}}">
     点击<text class="icon-more"></text>添加到"我的小程序"，随时随地看课表

@@ -11,6 +11,10 @@ Component({
     content:{
       type:String,
       value:'没有记录'
+    },
+    top:{
+      type:Number,
+      value:80
     }
   },
 

@@ -1,22 +1,47 @@
-<cu-custom bgColor="bg-transparent" isBack="true">
+<cu-custom bgColor="bg-diy" isBack="true">
   <view slot="back">返回</view>
 	<view slot="content">早起打卡</view>
 </cu-custom>
-<view class="bg" style="width:{{winWidth}}px;height:{{winHeight}}px">
+<view class="bg" style="width:{{winWidth}}px;height:{{winHeight}}px;top:{{customBar}}px">
   <image mode="aspectFill" src="/pages/assets/imgs/other/clockin-bg.png"></image>
 </view>
-<view class="container">
-  <view class="clockin text-center">
-    <view class="text-grey padding">今天已有 <text class="text-yellow text-xxl number">{{todayCount}}</text> 人参与打卡</view>
-    <view class="text-grey padding">打卡时间：{{times.start}} ~ {{times.end}}</view>
-    <button class="cu-btn bg-{{status==1?'yellow':'theme'}} round lg text-white" bindtap="clockIn">
-      {{status == 1 ? '已打卡' : '打卡'}}
-      <text class="text-sm" wx:if="{{status == 1}}">({{clockTime}})</text>
-    </button>
+<view class="option">
+  <view class="item text-white bg-yellow" bindtap="showRule">
+    <text class="icon-calendar"></text> 规则
+  </view>
+  <view class="item text-white bg-theme">
+    <button open-type="share"></button>
+    <text class="icon-share"></text> 分享
   </view>
 </view>
-<scroll-view scroll-y style="height:{{winHeight - customBar}}px">
-  <view class="rank padding-lg">
+
+<view class="container">
+  <view class="clockin text-center">
+    <view class="text-grey padding-top">今天已有 <text class="text-yellow text-xxl number">{{todayCount}}</text> 人参与打卡</view>
+    <view class="text-gray padding-top-xs padding-bottom-xl">打卡时间：{{times.start}} ~ {{times.end}}</view>
+    <button class="cu-btn bg-{{status==1?'yellow':'theme'}} round lg text-white" bindtap="clockIn">
+      {{status == 1 ? '已打卡' : '打卡'}}
+      <text class="text-sm" wx:if="{{status == 1}}">({{todayState.time}})</text>
+    </button>
+    <view wx:if="{{status==1}}" class="text-center text-theme padding-top-sm" bindtap="getPoster">生成打卡海报</view>
+  </view>
+  <view class="options" wx:if="{{false}}">
+    <view class="grid col-4 bg-white padding-sm y-radius">
+      <view class="cu-item text-center">
+        <text class="text-theme icon-pic text-xl"></text>
+        <view class="text-grey text-sm padding-top-xs">生成海报</view>
+      </view>
+      <view class="cu-item text-center">
+        <view class="text-theme text-xl">{{totalState.continuous}}</view>
+        <view class="text-grey text-sm padding-top-xs">连续打卡</view>
+      </view>
+      <view class="cu-item text-center">
+        <view class="text-theme text-xl">{{totalState.total}}</view>
+        <view class="text-grey text-sm padding-top-xs">累计打卡</view>
+      </view>
+    </view>
+  </view>
+  <view class="rank">
     <view class="bg-white y-radius">
       <view class="text-theme text-xl text-center padding-sm" style="letter-spacing:3px">早起排行榜</view>
       <scroll-view scroll-x class="bg-white nav">
@@ -26,32 +51,43 @@
           </view>
         </view>
       </scroll-view>
-      <swiper style="height:{{winHeight - customBar - 160}}px" current="{{type}}" class="swiper-box" duration="300" bindchange="swpierSelect">
-        <swiper-item wx:for="{{tabs}}" wx:for-index="tab" wx:key="key">  
-          <view class="padding-sm">
-            <scroll-view scroll-y style="height:{{winHeight - customBar - 180}}px">
-              <view class="cu-list menu-avatar">
-                <view class="cu-item" wx:for="{{list[tab]}}" wx:key="key">
-                  <view class="cu-avatar round lg" style="background-image:url({{item.avatar}});"></view>
-                  <view class="content">
-                    <view class="text-grey">{{item.hidden_clockin_name?item.nickname:item.stu_name}}</view>
-                    <view class="text-gray text-sm flex">
-                      <text class="text-cut">{{item.stu_department}}</text>
-                    </view>
-                  </view>
-                  <view class="action">
-                    <view class="text-grey text-xs">{{item.add_time}}</view>
-                    <view class="cu-tag round bg-grey sm">第{{item.total}}天</view>
-                  </view>
-                </view>
-              </view>
-            </scroll-view>
+
+      <view class="cu-list menu-avatar {{list.length>0?'padding-top-sm padding-bottom-sm':''}}">
+        <view class="cu-item" wx:if="{{type==0&&status==1&&list.length>1}}">
+          <view class="rank-num">{{todayState.top}}</view>
+          <view class="cu-avatar round lg" style="background-image:url({{userInfo.avatar}});"></view>
+          <view class="content">
+            <view class="text-grey">{{userInfo.stu_name}}</view>
+            <view class="text-gray text-sm flex">
+              <text class="text-cut">{{userInfo.stu_department}}</text>
+            </view>
           </view>
-        </swiper-item>
-      </swiper>
+          <view class="action">
+          <view class="text-grey text-xs">{{todayState.miniTime}}</view>
+            <view class="cu-tag round text-white bg-theme sm">第{{totalState.total}}天</view>
+          </view>
+        </view>
+        <view class="cu-item {{type>0&&item.stu_id == userInfo.stu_id ? 'myself':''}}" wx:for="{{list}}" wx:key="key">
+          <view class="rank-num">{{index+1}}</view>
+          <view class="cu-avatar round lg" style="background-image:url({{item.avatar}});"></view>
+          <view class="content">
+            <view class="text-grey">{{item.hidden_clockin_name?item.nickname:item.stu_name}}</view>
+            <view class="text-gray text-sm flex">
+              <text class="text-cut">{{type>=2?item.stu_class:item.stu_department}}</text>
+            </view>
+          </view>
+          <view class="action">
+            <view class="text-grey text-xs">{{item.add_time}}</view>
+            <view class="cu-tag round text-white bg-theme sm">第{{item.total}}天</view>
+          </view>
+        </view>
+      </view>
+      <view wx:if="{{loading}}" class="cu-load {{!finish?'loading':(p>1?'over':'')}}"></view>
+      <empty display="{{p==0&&finish&&list.length==0}}" top="0" content="{{type==0?'今天还没有人打卡':'暂无记录'}}"></empty>
     </view>
   </view>
-</scroll-view>
+</view>
+
 
 <view class="cu-modal {{modalName=='success'?'show':''}}">
   <view class="cu-dialog">
@@ -67,5 +103,23 @@
   </view>
   <view class="dialog-close" bindtap="close">
     <text class="icon-close text-xl text-black"></text>
+  </view>
+</view>
+
+<view class="cu-modal {{modalName=='rule'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">早起打卡规则</view>
+      <view class="action" bindtap="hideRule">
+        <text class="icon-close text-yellow"></text>
+      </view>
+    </view>
+    <view class="padding text-left">
+      <view class="text-black padding-xs">1.打卡时间：{{times.start}} 至 {{times.end}}</view>
+      <view class="text-black padding-xs">2.积分规则：每次打卡获得1+N积分，N为连续打卡天数，N上限为7</view>
+      <view class="text-black padding-xs">3.积分可兑换礼品，礼品系统即将上线</view>
+      <view class="text-black padding-xs">4.排行榜可隐藏真实姓名，<text class="text-theme" bindtap="goSetting">点我设置</text></view>
+      <view class="text-black padding-xs">5.此功能有待完善，您有任何建议请反馈给我们，谢谢</view>
+    </view>
   </view>
 </view>
