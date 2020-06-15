@@ -17,7 +17,7 @@ Page({
     tabs: ['今日', '全校', '学院', '班级'],
     list: [],
     length: 10,
-    p:0,
+    p:1,
     loading: false,
     finish: false
   },
@@ -166,7 +166,7 @@ Page({
     app.httpRequest({
       url:'clockin/getRank',
       data:{
-        p:_this.data.p + 1,
+        p:_this.data.p,
         length:_this.data.length,
         type:type,
         value:_this.getValue(type)
@@ -177,6 +177,7 @@ Page({
         let finish = res.data.data.length < _this.data.length
 
         _this.setData({
+          p:_this.data.p + 1,
           list:list,
           finish: finish
         })
@@ -192,7 +193,7 @@ Page({
     _this.setData({
       type: e.currentTarget.dataset.id,
       list: [],
-      p:0,
+      p:1,
       finish:false
     })
     _this.getRanks()
