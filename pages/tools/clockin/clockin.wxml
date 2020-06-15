@@ -53,11 +53,11 @@
       </scroll-view>
 
       <view class="cu-list menu-avatar {{list.length>0?'padding-top-sm padding-bottom-sm':''}}">
-        <view class="cu-item" wx:if="{{type==0&&status==1&&list.length>1}}">
+        <view class="cu-item you" wx:if="{{type==0&&status==1&&todayState.top>1}}">
           <view class="rank-num">{{todayState.top}}</view>
           <view class="cu-avatar round lg" style="background-image:url({{userInfo.avatar}});"></view>
           <view class="content">
-            <view class="text-grey">{{userInfo.stu_name}}</view>
+            <view class="text-grey">{{item.hidden_clockin_name?item.nickname:item.stu_name}}</view>
             <view class="text-gray text-sm flex">
               <text class="text-cut">{{userInfo.stu_department}}</text>
             </view>

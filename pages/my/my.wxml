@@ -30,7 +30,7 @@
       <view class="text-gray">电费</view>
     </view>
     <view wx:if="{{dormitory.area_id == 1}}" class="item" data-page='/pages/tools/quantity/quantity' bindtap="goPage">
-      <view class="text-black text-bold text-lg">{{water?watet:0}}</view>
+      <view class="text-black text-bold text-lg">{{water?water:0}}</view>
       
       <view class="text-gray">水费</view>
     </view>
