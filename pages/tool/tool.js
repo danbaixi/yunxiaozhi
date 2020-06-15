@@ -163,7 +163,7 @@ Page({
         name: '早起打卡',
         icon: 'clockin',
         needLogin: false,
-        url: '/pages/tools/article/article?src=' + encodeURIComponent("http://mp.weixin.qq.com/s?__biz=MzI1NTUwNDIzNQ==&mid=100001742&idx=1&sn=efe4c24af20e1b919bf36a9ab7c3f040&chksm=6a35bdca5d4234dc97c9b6d135eaa728d67477ae3727e8916f9c70e7c2eb43a132c50525b63d#rd"),
+        url: '/pages/article/article?src=' + encodeURIComponent("http://mp.weixin.qq.com/s?__biz=MzI1NTUwNDIzNQ==&mid=100001742&idx=1&sn=efe4c24af20e1b919bf36a9ab7c3f040&chksm=6a35bdca5d4234dc97c9b6d135eaa728d67477ae3727e8916f9c70e7c2eb43a132c50525b63d#rd"),
       }, 
     ],
   },
