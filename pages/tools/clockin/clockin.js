@@ -17,7 +17,7 @@ Page({
     tabs: ['今日', '全校', '学院', '班级'],
     list: [],
     length: 10,
-    p:0,
+    p:1,
     loading: false,
     finish: false
   },
@@ -68,7 +68,9 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    this.getData()
+    this.getInfo()
+    this.freshRank(this.data.type)
   },
 
   /**
@@ -166,7 +168,7 @@ Page({
     app.httpRequest({
       url:'clockin/getRank',
       data:{
-        p:_this.data.p + 1,
+        p:_this.data.p,
         length:_this.data.length,
         type:type,
         value:_this.getValue(type)
@@ -177,6 +179,7 @@ Page({
         let finish = res.data.data.length < _this.data.length
 
         _this.setData({
+          p:_this.data.p + 1,
           list:list,
           finish: finish
         })
@@ -195,7 +198,7 @@ Page({
     this.setData({
       type: type,
       list: [],
-      p:0,
+      p:1,
       finish:false
     })
     this.getRanks()

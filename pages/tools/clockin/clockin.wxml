@@ -43,21 +43,21 @@
   </view>
   <view class="rank">
     <view class="bg-white y-radius">
-      <view class="text-theme text-xl text-center padding-sm" style="letter-spacing:3px">早起排行榜</view>
+      <view class="text-theme text-xl text-center padding-sm bg-white" style="letter-spacing:3px">早起排行榜</view>
       <scroll-view scroll-x class="bg-white nav">
         <view class="flex text-center">
-          <view class="cu-item flex-sub {{index==type?'text-theme cur':''}}" wx:for="{{tabs}}" wx:key="key" bindtap="tabSelect" data-id="{{index}}">
+          <view class="cu-item bg-white flex-sub {{index==type?'text-theme cur':''}}" wx:for="{{tabs}}" wx:key="key" bindtap="tabSelect" data-id="{{index}}">
             {{item}}
           </view>
         </view>
       </scroll-view>
 
-      <view class="cu-list menu-avatar {{list.length>0?'padding-top-sm padding-bottom-sm':''}}">
+      <view class="cu-list bg-white menu-avatar">
         <view class="cu-item you" wx:if="{{type==0&&status==1&&todayState.top>1}}">
           <view class="rank-num">{{todayState.top}}</view>
           <view class="cu-avatar round lg" style="background-image:url({{userInfo.avatar}});"></view>
           <view class="content">
-            <view class="text-grey">{{item.hidden_clockin_name?item.nickname:item.stu_name}}</view>
+            <view class="text-grey">{{userInfo.nickname}}</view>
             <view class="text-gray text-sm flex">
               <text class="text-cut">{{userInfo.stu_department}}</text>
             </view>

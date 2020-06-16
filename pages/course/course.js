@@ -468,7 +468,10 @@ Page({
             }
           }
         } else {
-          result[k++] = parseInt(temp2[a][0]);
+          let weekNum = parseInt(temp2[a][0])
+          if((danshuang == 1 && weekNum % 2 == 1) || (danshuang == 2 && weekNum % 2 == 0)){
+            result[k++] = weekNum;
+          }
         }
       }
     }
