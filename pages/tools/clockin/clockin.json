@@ -1,4 +1,5 @@
 {
   "usingComponents": {},
-  "navigationBarTitleText": "早起打卡"
+  "navigationBarTitleText": "早起打卡",
+  "enablePullDownRefresh": true
 }

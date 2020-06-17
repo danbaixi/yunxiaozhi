@@ -14,7 +14,7 @@
     <view style="margin:0 30rpx;position:relative">
       <view class="text-lg">{{term}}</view>
       <view class="text-sm text-grey margin-top-xs" wx:if="{{assess!=null}}">截止时间：{{assess.start}}至{{assess.end}}</view>
-      <button class="cu-btn bg-theme assessing" wx:if="{{assess!=null}}" bindtap="assess">点击一键评教</button>
+      <button class="cu-btn bg-theme assessing" wx:if="{{assess!=null}}" bindtap="start">点击一键评教</button>
     </view>
   </view>
   <view class="assess">

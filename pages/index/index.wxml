@@ -34,7 +34,7 @@
           <text class="text-black">{{item.name}}</text>
         </view>
         <view class="action">
-          <text class="text-black text-sm">{{item.address}}</text>
+          <text class="text-black text-sm">{{item.address ? item.address : '未知'}}</text>
         </view>
       </view>
     </view>

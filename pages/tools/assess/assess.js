@@ -1,6 +1,6 @@
 var app = getApp();
-var util = require('../../../utils/util.js');
 var md5 = require('../../../utils/md5.js');
+let videoAd = null
 Page({
 
   /**
@@ -20,6 +20,20 @@ Page({
         that.getList()
       }
     })
+    if (wx.createRewardedVideoAd) {
+      videoAd = wx.createRewardedVideoAd({
+        adUnitId: 'adunit-3c3771d2ae21a30f'
+      })
+      videoAd.onLoad(() => {})
+      videoAd.onError((err) => {})
+      videoAd.onClose((res) => {
+        if(res && res.isEnded){
+          console.log("正常播放，可以一键评教")
+        }else{
+          console.log("关闭了广告，不能一键评教")
+        }
+      })
+    }
   },
   /**
    * 用户点击右上角分享
@@ -47,6 +61,34 @@ Page({
         }
       }
     })
+  },
+  start:function(){
+    let _this = this
+    wx.showModal({
+      title:'温馨提示',
+      content: '您是否愿意花费15秒钟观看一段视频广告？完成后即可一键评教。',
+      success:function(res){
+        if(res.confirm){
+          app.msg("谢谢您的理解与支持")
+          if (videoAd) {
+            videoAd.show().catch(() => {
+              // 失败重试
+              videoAd.load()
+                .then(() => videoAd.show())
+                .catch(err => {
+                  console.log('激励视频 广告显示失败')
+                })
+            })
+          }
+        }else{
+          app.msg("谢谢你的支持")
+          setTimeout(() => {
+            _this.assess()
+          }, 1000);
+        }
+      }
+    })
+
   },
   assess: function () {
     var that = this;

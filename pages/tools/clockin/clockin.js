@@ -68,7 +68,9 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    this.getData()
+    this.getInfo()
+    this.freshRank(this.data.type)
   },
 
   /**
@@ -115,7 +117,7 @@ Page({
         _this.clockInSuccess()
         _this.setData(res.data.data)
         _this.getData()
-        _this.getRanks()
+        _this.freshRank()
       }
     })
   },
@@ -190,19 +192,22 @@ Page({
     if(_this.data.type == e.currentTarget.dataset.id){
       return
     }
-    _this.setData({
-      type: e.currentTarget.dataset.id,
+    _this.freshRank(e.currentTarget.dataset.id)
+  },
+  freshRank:function(type){
+    this.setData({
+      type: type,
       list: [],
       p:1,
       finish:false
     })
-    _this.getRanks()
+    this.getRanks()
   },
   getValue:function(type){
     switch(type){
       default:return '';break
       case 2:return this.data.userInfo.stu_department;break
-      case 3:return this.data.userInfo.stu_class;break
+      case 3:return this.data.userInfo.stu_class_full;break
     }
   },
   showRule:function(){
