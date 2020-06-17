@@ -27,11 +27,7 @@ Page({
       videoAd.onLoad(() => {})
       videoAd.onError((err) => {})
       videoAd.onClose((res) => {
-        if(res && res.isEnded){
-          console.log("正常播放，可以一键评教")
-        }else{
-          console.log("关闭了广告，不能一键评教")
-        }
+        that.assess()
       })
     }
   },
@@ -64,6 +60,10 @@ Page({
   },
   start:function(){
     let _this = this
+    if (_this.data.finish) {
+      app.msg("你已经完成评教啦！")
+      return
+    }
     wx.showModal({
       title:'温馨提示',
       content: '您是否愿意花费15秒钟观看一段视频广告？完成后即可一键评教。',
