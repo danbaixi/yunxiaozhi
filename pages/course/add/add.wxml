@@ -17,7 +17,7 @@
   </view>
   <view class="cu-form-group arrow" bindtap="showModal">
     <view class="title">课程周数</view>
-    <view class="action text-black">{{weeklysResult?weeklysResult+'周':'点击选择课程周数'}}</view>
+    <view class="action text-black">{{weeklysResult?'第'+weeklysResult+'周':'点击选择课程周数'}}</view>
   </view>
   <view class="cu-form-group">
     <view class="title">课程节数</view>
