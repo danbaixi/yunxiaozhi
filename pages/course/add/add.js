@@ -164,25 +164,30 @@ Page({
     var start = result[0]
     var end = result[0]
     var strings = []
-    for(let i = 1;i<result.length;i++){
-      if(result[i] - end == 1){
-        end = result[i]
-        if(i == result.length - 1){
-          strings.push(start + '-' + end)
-        }
-      }else{
-        if(start == end){
-          strings.push(start)
+    if(result.length == 1){
+      strings.push(result[0])
+    }else{
+      for(let i = 1;i<result.length;i++){
+        if(result[i] - end == 1){
+          end = result[i]
+          if(i == result.length - 1){
+            strings.push(start + '-' + end)
+          }
         }else{
-          strings.push(start + '-' + end)
-        }
-        start = result[i]
-        end = result[i]
-        if (i == result.length - 1) {
-          strings.push(end)
+          if(start == end){
+            strings.push(start)
+          }else{
+            strings.push(start + '-' + end)
+          }
+          start = result[i]
+          end = result[i]
+          if (i == result.length - 1) {
+            strings.push(end)
+          }
         }
       }
     }
+    
     this.setData({
       weeklysResult: strings.join(","),
       modalName:''
