@@ -119,7 +119,8 @@
       <view class="text-black padding-xs">2.积分规则：每次打卡获得1+N积分，N为连续打卡天数，N上限为7</view>
       <view class="text-black padding-xs">3.积分可兑换礼品，礼品系统即将上线</view>
       <view class="text-black padding-xs">4.排行榜可隐藏真实姓名，<text class="text-theme" bindtap="goSetting">点我设置</text></view>
-      <view class="text-black padding-xs">5.此功能有待完善，您有任何建议请反馈给我们，谢谢</view>
+      <view class="text-black padding-xs">5.为了减轻服务器压力，排行榜5分钟更新一次</view>
+      <view class="text-black padding-xs">6.此功能有待完善，您有任何建议请反馈给我们，谢谢</view>
     </view>
   </view>
 </view>

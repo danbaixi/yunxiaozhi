@@ -80,7 +80,7 @@ Page({
     if(this.data.finish){
       return
     }
-    this.getRanks()
+    //this.getRanks()
   },
 
   /**
@@ -176,7 +176,8 @@ Page({
       success:function(res){
         let data = _this.data.list
         let list = data.concat(res.data.data)
-        let finish = res.data.data.length < _this.data.length
+        // let finish = res.data.data.length < _this.data.length
+        let finish = true
 
         _this.setData({
           p:_this.data.p + 1,
