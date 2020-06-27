@@ -273,3 +273,52 @@ ad{
 }
 
 /** 表格 end */
+
+@keyframes leftIn{
+	from {
+		transform: translateX(-200rpx);
+    opacity: 0;
+	}
+	to {
+		transform: translateX(0);
+    opacity: 1;
+	}
+}
+@keyframes rightIn{
+	from {
+		transform: translateX(0);
+    opacity: 0;
+	}
+	to {
+		transform: translateX(200rpx);
+    opacity: 1;
+	}
+}
+@keyframes upIn{
+	from {
+		transform: translateY(80rpx);
+    opacity: 0;
+	}
+	to {
+		transform: translateY(0);
+    opacity: 1;
+	}
+}
+@keyframes downIn{
+	from {
+		transform: translateY(-80rpx);
+    opacity: 0;
+	}
+	to {
+		transform: translateY(0);
+    opacity: 1;
+	}
+}
+@keyframes fade{
+  from {
+    opacity: 0;
+	}
+	to {
+    opacity: 1;
+	}
+}

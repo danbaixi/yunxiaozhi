@@ -1,2 +1,349 @@
-<!--pages/tools/summary/summary.wxml-->
-<text>pages/tools/summary/summary.wxml</text>
+<cu-custom bgColor="bg-transparent" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">毕业报告</view>
+</cu-custom>
+
+<empty display="{{!loading&&!myself&&(isOpen==0||!summary)}}" content="此报告的暂未开放查看"></empty>
+<view class="container" wx:if="{{myself || summary!=null || loading}}" style="top:-{{customBar}}px;width:{{winWidth}}px;Height:{{winHeight}}px">
+  <view class="index">
+    <view class="mark bg-white {{show?'show':''}}"></view>
+    <image class="bg" src="{{fileUrl}}/index-1.png" mode="aspectFill"></image>
+    <view class="summary text-center" style="padding-top:{{120+customBar}}px">
+      <image class="logo" src="{{fileUrl}}/baiyun-logo.png" mode="widthFix"></image>
+      <view class="content" style="padding-top:80rpx;">
+        <button wx:if="{{isGraduation}}" class="cu-btn lg text-white view" bindtap="view">
+          {{myself?'追忆我的大学':'查看'+(summary.data.name?summary.data.name:'某某')+'的毕业报告'}}
+        </button>
+        <!-- 不是应届毕业生 -->
+        <button wx:else class="cu-btn lg text-white view" bindtap="goTime">查看离校倒计时</button>
+        <view class="padding" wx:if="{{isGraduation&&needBuild==0}}">
+          <button wx:if="{{myself||isAuditing == 1}}" class="cu-btn line-theme" bindtap="showShare"><text class="icon-share"></text> 分享</button>
+          <button wx:else class="cu-btn line-yellow" bindtap="showArticle">查看我的毕业报告</button>
+          <button wx:if="{{myself}}" class="cu-btn line-{{summary.is_open==1?'grey':'yellow'}} margin-left" bindtap="switchShare">{{summary.is_open==1?'关闭':'开启'}}分享</button>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="summary-content {{show?'show':''}}">
+    <view class="tool share" bindtap="showShare">
+      <text class="icon-share text-white"></text>
+    </view>
+    <view class="tool index" bindtap="hide">
+      <text class="icon-home text-white"></text>
+    </view>
+    <view class="tool topper" bindtap="topper">
+      <text class="icon-top text-white"></text>
+    </view>
+    <view class="tool downner" bindtap="downner">
+      <text class="icon-down text-white"></text>
+    </view>
+    <view class="tool music {{music?'rotate':''}}" bindtap='{{music?"stopMusic":"playMusic"}}'>
+      <text class="icon-{{music?'musicfill':'musicforbidfill'}} text-white"></text>
+    </view>
+    <view class="scroll-fullpage" bindtouchstart="scrollTouchstart" bindtouchmove="scrollTouchmove" bindtouchend="scrollTouchend" style="transform:translateY(-{{scrollindex*100}}%);margin-top: {{margintop}}px">
+      <view class="section {{scrollindex==0?'active':''}}">
+        <image class='section-bg'  mode="aspectFill" src='{{fileUrl}}/gotoschool.png'></image>
+        <view class='section-content' style="top:{{customBar+40}}px">
+          <view class="padding-xs {{animationPlay?'animation-fade':''}}"><text class="h">{{summary.data.entryDate}}年</text>，夏天</view>
+          <view class="padding-xs {{animationPlay?'animation-fade':''}}">{{stuName}}结束了紧张的考试</view>
+          <view class="padding-xs {{animationPlay?'animation-fade':''}}">告别了<text class="h">{{summary.data.middleSchool}}</text></view>
+          <view class="padding"></view>
+          <view class="padding-xs {{animationPlay?'animation-fade':''}}">长途跋涉，来到了<text class="h">广东白云学院</text></view>
+          <view class="padding-xs {{animationPlay?'animation-fade':''}}">一个全新的旅程也由此展开</view>
+        </view>
+      </view>
+
+      <view class="section {{scrollindex==1?'active':''}}">
+        <image class='section-bg'  mode="aspectFill" src='{{fileUrl}}/course.png'></image>
+        <view class='section-content' style="top:{{customBar+180}}px">
+          <view class="padding-xs {{animationPlay?'animation-fade':''}}">大学期间，{{stuName}}一共学了<text class="h"> {{summary.data.courseCount}}</text> 门课程</view>
+          <view wx:if="{{myself}}">
+            <view class="padding-xs {{animationPlay?'animation-fade':''}}">哪门课程，让你最难忘？</view>
+            <view class="padding"></view>
+            <view class="padding-xs {{animationPlay?'animation-fade':''}}">是考得最好的<text class="h">《{{summary.data.maxScore}}》</text>吗？</view>
+            <view class="padding-xs {{animationPlay?'animation-fade':''}}">还是最差的<text class="h">《{{summary.data.minScore}}》</text>？</view>
+          </view>
+          <view wx:else>
+            <view class="padding-xs {{animationPlay?'animation-fade':''}}">你知道{{ta}}最擅长哪门课吗？</view>
+            <view class="padding"></view>
+            <view class="padding-xs {{animationPlay?'animation-fade':''}}">
+              <text class="h">《{{summary.data.maxScore}}》</text>
+            </view>
+            <view class="padding-xs {{animationPlay?'animation-fade':''}}">是{{ta}}考得最好的科目</view>
+          </view>
+        </view>
+      </view>
+
+      <view class="section {{scrollindex==2?'active':''}}">
+        <image class='section-bg'  mode="aspectFill" src='{{fileUrl}}/exam-1.png'></image>
+        <view class='section-content' style="top:{{customBar+40}}px">
+          <view class="padding-xs {{animationPlay?'animation-fade':''}}">{{stuName}}一共参与了<text class="h"> {{summary.data.examCourseCount}}</text> 场考试</view>
+          <view class="padding-xs {{animationPlay?'animation-fade':''}}">
+            累计获得 <text class="h">{{summary.data.creditTotal}}</text> 学分
+          </view>
+          <view wx:if="{{myself}}" class="padding-xs {{animationPlay?'animation-fade':''}}">平均绩点<text class="h"> {{summary.data.gpa}}</text></view>
+          <view class="padding"></view>
+          <view wx:if="{{myself}}">
+            <view class="padding-xs {{animationPlay?'animation-fade':''}}">别人说，</view>
+            <view class="padding-xs {{animationPlay?'animation-fade':''}}">不挂科的大学，是不完整</view>
+            <view class="padding-xs {{animationPlay?'animation-fade':''}}">
+              而你挂科 <text class="h">{{summary.data.unPassCount}}</text> 次，{{summary.data.unPassCount==0?'却很完美':'很完整'}}
+            </view>
+          </view>
+          <view wx:else>
+            <view class="padding-xs {{animationPlay?'animation-fade':''}}">
+              {{ta}}的成绩在班上<text class="h">{{summary.data.grade == 1 ? '名列前茅' : (summary.data.grade <= 4) ? '比较优秀':'虽然不是很优秀'}}</text>
+            </view>
+            <view class="padding-xs {{animationPlay?'animation-fade':''}}">
+              {{summary.data.grade <=4 ? '相信在职场上，也会表现得非常优秀' : '但在职场上，没准是最优秀的'}}
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view class="section {{scrollindex==3?'active':''}}">
+        <image class='section-bg'  mode="aspectFill" src='{{fileUrl}}/attendance.png'></image>
+        <view class='section-content' style="top:{{customBar+40}}px">
+          <view wx:if="{{summary.data.attendanceCount == 0}}">
+            <view wx:if="{{myself}}">
+              <view class="padding-xs {{animationPlay?'animation-fade':''}}">
+                你的大学并不完整，
+              </view>
+              <view class="padding-xs {{animationPlay?'animation-fade':''}}">
+                考勤记录数量竟然为 <text class="h"> 0 </text> 条
+              </view>
+              <view class="padding-xs {{animationPlay?'animation-fade':''}}">
+                你真的很棒！大学课堂能保持全勤
+              </view>
+              <view class="padding"></view>
+              <view class="padding-xs {{animationPlay?'animation-fade':''}}">相信你是一个非常自律的人</view>
+              <view class="padding-xs {{animationPlay?'animation-fade':''}}">未来在职场中，也会有出色的表现！</view>
+            </view>
+            <view wx:else>
+              <view class="padding-xs {{animationPlay?'animation-fade':''}}">如今，已经很少人能像{{stuName}}一样优秀了</view>
+              <view class="padding-xs {{animationPlay?'animation-fade':''}}">{{ta}}的大学课堂竟然能保持全勤！</view>
+              <view class="padding"></view>
+              <view class="padding-xs {{animationPlay?'animation-fade':''}}">如此优秀，真为{{ta}}感到骄傲</view>
+              <view class="padding-xs {{animationPlay?'animation-fade':''}}">未来在职场中，也会有出色的表现！</view>
+            </view>
+          </view>
+          <view wx:else>
+            <view class="padding-xs {{animationPlay?'animation-fade':''}}">大学期间</view>
+            <view class="padding-xs {{animationPlay?'animation-fade':''}}">
+              {{ta}}一共有<text class="h"> {{summary.data.attendanceCount}}</text> 条考勤记录
+            </view>
+            <view class="padding-xs {{animationPlay?'animation-fade':''}}">
+              请了<text class="h"> {{summary.data.leaveCount}}</text> 次假
+            </view>
+            <view class="padding"></view>
+            <view wx:if="{{myself}}">
+              <view wx:if="{{summary.data.lateCount == 0}}">
+                <view class="padding-xs {{animationPlay?'animation-fade':''}}">没有迟到、旷课、早退记录</view>
+                <view class="padding-xs {{animationPlay?'animation-fade':''}}">{{stuName}}的课堂考勤，非常优秀</view>
+                <view class="padding-xs {{animationPlay?'animation-fade':''}}">相信你在职场中，也能保持这份优秀</view>
+              </view>
+              <view wx:else>
+                <view class="padding-xs {{animationPlay?'animation-fade':''}}">还记得帮你点名喊到的同学吗？</view>
+                <view class="padding-xs {{animationPlay?'animation-fade':''}}">但，工作后</view>
+                <view class="padding-xs {{animationPlay?'animation-fade':''}}">很难再遇到这样的朋友了</view>
+              </view>
+            </view>
+            <view wx:else>
+              <view class="padding-xs {{animationPlay?'animation-fade':''}}">你猜，{{ta}}请假都干嘛去了？</view>
+              <view class="padding-xs {{animationPlay?'animation-fade':''}}">也许只是，{{ta}}想家了。</view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view class="section {{scrollindex==4?'active':''}}">
+        <image class='section-bg'  mode="aspectFill" src='{{fileUrl}}/junxun.png'></image>
+        <view class='section-content' style="top:{{customBar+40}}px">
+          <view class="padding-xs {{animationPlay?'animation-fade':''}}">那年夏天，</view>
+          <view class="padding-xs {{animationPlay?'animation-fade':''}}">还未熟悉校园的{{stuName}}</view>
+          <view class="padding-xs {{animationPlay?'animation-fade':''}}">已经换上了校服，接受军训的考验</view>
+          <view class="padding"></view>
+          <view class="padding-xs {{animationPlay?'animation-fade':''}}">每次训练结束后，都急着冲去饭堂</view>
+          <view class="padding-xs {{animationPlay?'animation-fade':''}}">不仅是因为肚子饿了</view>
+          <view class="padding-xs {{animationPlay?'animation-fade':''}}">主要是还得去占好位子</view>
+          <view class="padding-xs {{animationPlay?'animation-fade':''}}"><text class="h">你的军训回忆是什么呢？</text></view>
+        </view>
+      </view>
+
+      <view class="section {{scrollindex==5?'active':''}}">
+        <image class='section-bg'  mode="aspectFill" src='{{fileUrl}}/sushe.png'></image>
+        <view class='section-content' style="top:{{customBar+40}}px">
+          <view class="padding-xs {{animationPlay?'animation-fade':''}}">宿舍那么小，</view>
+          <view class="padding-xs {{animationPlay?'animation-fade':''}}">还是装满了我们的青春回忆</view>
+          <view class="padding"></view>
+          <view class="padding-xs {{animationPlay?'animation-fade':''}}">一起开黑、看比赛的狂欢</view>
+          <view class="padding-xs {{animationPlay?'animation-fade':''}}">断电后，一起聊八卦的欢乐</view>
+          <view class="padding-xs {{animationPlay?'animation-fade':''}}">考试的前一晚，临时抱佛脚的慌张</view>
+          <view class="padding-xs {{animationPlay?'animation-fade':''}}">现在依旧清晰...</view>
+        </view>
+      </view>
+
+      <view class="section {{scrollindex==6?'active':''}}">
+        <image class='section-bg'  mode="aspectFill" src='{{fileUrl}}/caochang2.png'></image>
+        <view class='section-content' style="top:{{customBar+100}}px">
+          <view class="padding-xs {{animationPlay?'animation-fade':''}}">到后来才明白，</view>
+          <view class="padding-xs {{animationPlay?'animation-fade':''}}">操场上挥洒的不仅仅是汗水</view>
+          <view class="padding-xs {{animationPlay?'animation-fade':''}}">还有我们回不去的青春</view>
+          <view class="padding"></view>
+          <view class="padding-xs {{animationPlay?'animation-fade':''}}">这有班级社团聚会的欢笑声</view>
+          <view class="padding-xs {{animationPlay?'animation-fade':''}}">这有运动会比赛的加油声</view>
+          <view class="padding-xs {{animationPlay?'animation-fade':''}}">还有{{ta=='他'?1000:800}}米的体测噩梦...</view>
+        </view>
+      </view>
+
+      <view class="section {{scrollindex==7?'active':''}}">
+        <image class='section-bg'  mode="aspectFill" src='{{fileUrl}}/yiqing.png'></image>
+        <view class='section-content' style="top:{{customBar+40}}px">
+          <view class="padding-xs {{animationPlay?'animation-fade':''}}">
+            突如其来的<text class="h">新冠肺炎疫情</text>
+          </view>
+          <view class="padding-xs {{animationPlay?'animation-fade':''}}">让今年的就业形势雪上加霜</view>
+          <view class="padding"></view>
+          <view class="padding-xs {{animationPlay?'animation-fade':''}}">危机中育有新机，奋斗者终有所获</view>
+          <view class="padding-xs {{animationPlay?'animation-fade':''}}">保持积极进取的心态</view>
+          <view class="padding-xs {{animationPlay?'animation-fade':''}}"><text class="h">相信{{stuName=='你'?stuName:stuName+'同学'}}一定能从中突围</text></view>
+        </view>
+      </view>
+
+      <view class="section {{scrollindex==8?'active':''}}">
+        <image class='section-bg'  mode="aspectFill" src='{{fileUrl}}/yunxiaozhi.png'></image>
+        <view class='section-content' style="top:{{customBar+40}}px">
+          <view class="padding-xs {{animationPlay?'animation-fade':''}}"><text class="h">{{summary.data.regTime}}</text></view>
+          <view class="padding-xs {{animationPlay?'animation-fade':''}}">是{{stuName}}和<text class="h">云小智</text>第一次相遇</view>
+          <view wx:if="{{myself}}">
+            <view class="padding-xs {{animationPlay?'animation-fade':''}}">与你相遇，好幸运</view>
+            <view class="padding"></view>
+            <view class="padding-xs {{animationPlay?'animation-fade':''}}">希望你继续兴致盎然地与世界交手，</view>
+            <view class="padding-xs {{animationPlay?'animation-fade':''}}">一直走在开满鲜花的路上。</view>
+          </view>
+          <view wx:else>
+            <view class="padding"></view>
+            <view class="padding-xs {{animationPlay?'animation-fade':''}}">云小智是一款白云学院专属的智慧校园小程序</view>
+            <view class="padding-xs {{animationPlay?'animation-fade':''}}">你有在用吗？</view>
+          </view>
+        </view>
+      </view>
+
+      <view wx:if="{{myself}}" class="section {{scrollindex==9?'active':''}}">
+        <image class='section-bg'  mode="aspectFill" src='{{fileUrl}}/caochang.png'></image>
+        <view class='section-content' style="top:{{customBar+30}}px">
+          <view class="padding-xs text-xl text-bold {{animationPlay?'animation-fade':''}}">亲爱的{{summary.data.name}}同学：</view>
+          <view class="padding-xs {{animationPlay?'animation-fade':''}}">从走进白云学院的那一刻起，你我便与白云结下了永恒的缘分...</view>
+          <view class="padding-xs {{animationPlay?'animation-fade':''}}">
+            青春的脚印留在校园的小路上，笑语欢歌留在花坛的馨香中。大学的生活美好、难忘，一切回首，是珍惜，是缘分，是感动。
+          </view>
+          <view class="padding-xs {{animationPlay?'animation-fade':''}}">
+            2020年，这个毕业季注定特殊又难忘。祝福每一位即将远行的白云学子，愿有前程可奔赴，亦有岁月可回首。
+          </view>
+          <view class="padding-xs"></view>
+          <view class="text-right padding-bottom-xs padding-right-xs {{animationPlay?'animation-fade':''}}">
+            云小智
+          </view>
+          <view class="text-right padding-right-xs {{animationPlay?'animation-fade':''}}">
+            2020/6/26
+          </view>
+          <view class="padding-top-xl text-center">
+            <button class="cu-btn bg-theme text-white lg padding radius" bindtap="showShare">分享给同学们</button>
+            <view class="text-grey padding-sm text-sm" bindtap="hide">重新观看</view>
+          </view>
+        </view>
+        <view class="padding next text-center text-black text-sm">下滑有惊喜</view>
+      </view>
+
+      <view class="section {{myself&&scrollindex==10 || !myself&&scrollindex==9 ? 'active':''}}">
+        <image class='section-bg'  mode="aspectFill" src='{{fileUrl}}/liuyan-1.png'></image>
+        <view class="blessings" style="padding-top:{{customBar+10}}px">
+          <view class="padding bg-white radius">
+            <view class="padding-sm text-theme text-xxl text-center">来自好友的祝福</view>
+            <scroll-view scroll-y="true" class="list" wx:if="{{benediction.length>0}}">
+              <view class="padding-xs text-default" wx:for="{{benediction}}" wx:key="key">
+                <text class="text-theme">{{item.author?item.author:'好友'}}</text>：{{item.content}}
+              </view>
+            </scroll-view>
+            <empty display="{{benediction.length == 0}}" content="{{myself?'分享到朋友圈就能收到祝福哦':'还没有祝福，快给'+ta+'送上真挚的祝福吧！'}}"></empty>
+            <view class="padding text-center" wx:if="{{benediction.length == 0 && myself}}">
+              <button class="cu-btn bg-theme lg" bindtap="showShare">分享毕业报告</button>
+            </view>
+          </view>
+          <view class="padding text-center" wx:if="{{!myself}}">
+            <button wx:if="{{isAuditing==0}}" class="cu-btn bg-theme lg" bindtap="showEditor">送祝福</button>
+            <button class="cu-btn bg-yellow text-white lg margin-left" bindtap="showArticle">查看我的毕业报告</button>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+</view>
+
+
+<view class="cu-modal {{loadingData?'show':''}}">
+  <view class="cu-dialog loading-dialog">
+    <view class="padding bg-white">
+      <view class="building" wx:if="{{!buildFail}}">
+        <view class="padding text-center">
+          <image src="{{fileUrl}}/loading-white.gif" mode="widthFix"></image>
+        </view>
+        <view class="cu-progress round">
+          <view class="bg-theme" style="width:{{loadingWidth}}%;">{{loadingWidth}}%</view>
+        </view>
+        <view class="padding-top">
+          <view class="text-theme text-center">正在生成报告，请耐心等待...</view>
+        </view>
+      </view>
+      <view class="build-fail" wx:else>
+        <view class="text-center text-black text-lg padding-bottom-sm">生成毕业报告失败，原因：</view>
+        <view class="text-center text-red text-lg padding-bottom-sm">{{failSeason}}</view>
+        <view class="padding">
+          <button class="cu-btn line-theme text-theme" bindtap="closeBuild">关闭</button>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class="cu-modal {{share?'show':''}}">
+  <view class="cu-dialog share-dialog">
+    <image mode="widthFix" src="{{posterUrl}}"></image>
+    <view class="padding-xs"></view>
+    <view class="padding">
+      <button open-type="share" class="cu-btn bg-theme text-white">分享给好友</button>
+      <button class="cu-btn bg-yellow text-white margin-left" bindtap="savePoster">保存海报发票圈</button>
+    </view>
+  </view>
+  <view class="dialog-close" bindtap="hideShare">
+    <text class="icon-close text-xl text-black"></text>
+  </view>
+</view>
+
+
+<view class="cu-modal {{editor?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">祝福{{stuName}}</view>
+      <view class="action" bindtap="hideEditor">
+        <text class="icon-close text-red"></text>
+      </view>
+    </view>
+    <view class="padding-xl text-left">
+      <view class="cu-form-group top">
+        <view class="title">祝福内容</view>
+        <textarea data-placeholder="请输入毕业祝福语" placeholder-class="placeholder" class="{{blessing?'value':''}}" value="{{blessing}}" bindinput="blessingInput">
+        </textarea>
+      </view>
+      <view class="cu-form-group">
+        <view class="title">你的名字</view>
+        <input placeholder="(选填)" bindinput="nameInput" value="{{name}}"></input>
+      </view>
+      <view class="padding flex flex-direction">
+        <button disabled="{{submiting}}" class="cu-btn bg-theme lg" bindtap="submit">提交</button>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,1 +1,162 @@
-/* pages/tools/summary/summary.wxss */
+page{
+  width: 100%;
+  overflow: hidden;
+}
+.container{
+  position: relative;
+}
+.bg{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width:100%;
+  height:100%;
+}
+.summary .logo{
+  width: 60%;
+}
+.summary .view{
+  background: #609579;
+  padding: 24px 40px;
+  letter-spacing: 4px;
+  font-size: 36rpx;
+}
+.loading-dialog{
+  width:480rpx;
+}
+
+.summary-content{
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+}
+.summary-content.show{
+  z-index: 1;
+  opacity: 1;
+}
+.mark{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 1s ease-in
+}
+.mark.show{
+  z-index: 1;
+  opacity: 1; 
+}
+.section{
+  position: relative;
+	height: 100%;
+  font-size: 36rpx;
+  letter-spacing: 2px;
+}
+.scroll-fullpage{
+	height: 100%;
+	transition: all 0.8s;
+}
+.section-bg{
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+.h{
+  color: var(--theme);
+  font-weight: bold;
+}
+.section-content{
+  width: 90%;
+  min-height: 120px;
+  padding: 8px;
+  background: #faf6eb;
+  box-shadow: 2px 2px 10px rgba(0,0,0,.1);
+  position: relative;
+  top: 280rpx;
+  margin-left: 5%;
+}
+.section-content .padding-xs{
+  animation-delay: .6s;
+  line-height: 54rpx;
+}
+.tool{
+  position: fixed;
+  z-index: 999;
+  font-size: 40rpx;
+  line-height: 60rpx;
+  background: rgba(0,0,0, 0.4);
+  width: 60rpx;
+  height: 60rpx;
+  text-align: center;
+  border-radius:100%;
+  right: 20rpx;
+}
+.music{
+  bottom: 40rpx;
+}
+.downner{
+  bottom: 120rpx;
+}
+.topper{
+  bottom: 200rpx;
+}
+.index{
+  bottom: 280rpx;
+}
+.share{
+  bottom: 360rpx;
+}
+
+.next{
+  position: absolute;
+  bottom: 0px;
+}
+.rotate{
+   animation: rotate 4s linear infinite
+}
+.share-dialog{
+  width: 600rpx;
+  background: transparent;
+  text-align: center;
+}
+.share-dialog image{
+  height:840rpx;
+}
+.dialog-close{
+  position: absolute;
+  width: 68rpx;
+  height: 68rpx;
+  margin-left: -34rpx;
+  background: white;
+  bottom: 40px;
+  left: 50%;
+  border-radius: 50%;
+}
+.dialog-close .icon-close{
+  line-height: 68rpx;
+}
+@keyframes rotate{
+  0% {
+    transform: rotate(0deg)
+  }
+  100%{
+    transform: rotate(360deg)
+  }
+}
+.blessings{
+  width: 90%;
+  max-height:700rpx; 
+  margin-left: 5%;
+}
+.list{
+  max-height: 600rpx;
+  min-height: 400rpx;
+  overflow-y: auto;
+}

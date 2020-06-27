@@ -175,6 +175,15 @@ Page({
         needLogin: false,
         url: '/pages/tools/clockin/clockin',
       }, 
+      {
+        icon: 'bad',
+        color: 'red',
+        badge: '新',
+        name: '毕业报告',
+        icon: 'summary',
+        needLogin: false,
+        url: '/pages/article/article?src=' + encodeURIComponent("http://mp.weixin.qq.com/s?__biz=MzI1NTUwNDIzNQ==&mid=100001850&idx=1&sn=86ac4874a5debb7102318da5360318a7&chksm=6a35b23e5d423b28caa7c155aa07f3b7248245f53532fff6474541594217590c33eeea9e862b#rd"),
+      },  
     ],
   },
 
