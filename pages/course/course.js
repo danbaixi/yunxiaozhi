@@ -831,7 +831,8 @@ Page({
     var display_course_time = wx.getStorageSync('display_course_time')
     var area = wx.getStorageSync('user_area')
     //更新网上学习时间
-    var internet_course_time = wx.getStorageSync('internet_course_time')
+    // var internet_course_time = wx.getStorageSync('internet_course_time')
+    var internet_course_time = 0
     if (internet_course_time === '' || display_course_time === '' || area === ''){
       app.httpRequest({
         url: 'user/getareainfo',

@@ -12,6 +12,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var redirect = options.redirect || ''
     wx.setNavigationBarColor({
       frontColor: '#ffffff',
       backgroundColor: app.globalData.themeColor,
@@ -20,7 +21,8 @@ Page({
     let info = wx.getSystemInfoSync()
     _this.setData({
       winWidth:info.windowWidth,
-      winHeight:info.windowHeight
+      winHeight:info.windowHeight,
+      redirect:redirect
     })
     wx.login({
       success: (res) =>{
@@ -138,7 +140,7 @@ Page({
               wx.setStorageSync('user_info', resolve.data.info)
               if(!resolve.data.stu_id){
                 wx.redirectTo({
-                  url: '/pages/bind/bind',
+                  url: '/pages/bind/bind?url=' + _this.data.redirect,
                 })
                 setTimeout(() => {
                   app.msg('请绑定教务系统账号')
@@ -157,9 +159,15 @@ Page({
                   }
                 })
                 setTimeout(()=> {
-                  wx.switchTab({
-                    url: '/pages/index/index',
-                  })
+                  if (_this.data.redirect) {
+                    wx.redirectTo({
+                      url: _this.data.redirect,
+                    })
+                  }else{
+                    wx.switchTab({
+                      url: '/pages/index/index',
+                    })
+                  }
                 },1000)
               }
               return

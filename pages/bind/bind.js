@@ -28,7 +28,6 @@ Page({
    * 生命周期函数--监听页面 加载
    */
   onLoad: function(options) {
-
     wx.setNavigationBarColor({
       frontColor: '#ffffff',
       backgroundColor: app.globalData.themeColor,
@@ -137,11 +136,17 @@ Page({
               app.msg("绑定成功，获取课表失败，请手动更新课表")
             }
           })
-          setTimeout(()=>{
+          setTimeout(function () {
+            if (that.data.url != '') {
+              wx.redirectTo({
+                url: that.data.url,
+              })
+              return
+            }
             wx.switchTab({
-              url: '/pages/index/index',
+              url: '/pages/index/index'
             })
-          },1000)
+          }, 1000);
           return
         }
         that.freshYzm()

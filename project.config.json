@@ -322,10 +322,10 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 40,
 					"name": "毕业回忆录",
 					"pathName": "pages/tools/summary/summary",
-					"query": "",
+					"query": "id=15230203124",
 					"scene": null
 				},
 				{

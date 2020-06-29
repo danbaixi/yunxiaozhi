@@ -90,6 +90,7 @@ App({
    */
   httpRequest: function (datas){
     datas.data = datas.data == undefined ? {} : datas.data
+    datas.redirect = datas.redirect || ''
     if (datas.needLogin == undefined || datas.needLogin == true){
       let session = this.getLoginStatus()
       if(session == ""){
@@ -130,7 +131,7 @@ App({
             that.exitSaveData()
             setTimeout(() => {
               wx.navigateTo({
-                url: '/pages/login/login',
+                url: '/pages/login/login?redirect=' + datas.redirect,
               })
             }, 1000)
             break;
@@ -185,7 +186,7 @@ App({
   },
 
   //强制需要登录
-  isLogin:function(){
+  isLogin:function(route){
     let _this = this
     return new Promise((resolve) => {
       let session = wx.getStorageSync('login_session')
@@ -193,7 +194,7 @@ App({
         _this.msg('请先登录')
         setTimeout(() => {
           wx.reLaunch({
-            url: '/pages/login/login',
+            url: '/pages/login/login?redirect=' + route,
           })
         }, 1000);
         return resolve(false)
@@ -236,6 +237,7 @@ App({
   //promise封装请求
   promiseRequest: function (datas){
     datas.data = datas.data == undefined ? {} : datas.data
+    datas.redirect = datas.redirect || ''
     if (datas.needLogin == undefined || datas.needLogin == true){
       let session = this.getLoginStatus()
       if(session == ""){
@@ -272,7 +274,7 @@ App({
             that.exitSaveData()
             setTimeout(() => {
               wx.navigateTo({
-                url: '/pages/login/login',
+                url: '/pages/login/login?redirect=' + datas.redirect,
               })
             },1000)
           }else{
