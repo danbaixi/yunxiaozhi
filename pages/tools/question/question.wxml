@@ -1,6 +1,6 @@
 <cu-custom bgColor="bg-white" isBack="true">
   <view slot="back">返回</view>
-	<view slot="content">光速查题</view>
+	<view slot="content">光速搜题</view>
 </cu-custom>
 <view class="container" wx:if="{{!loading&&display}}">
   <view class="padding bg-white" wx:if="{{false}}">
