@@ -138,11 +138,32 @@ Page({
   },
   //查题
   query:function(){
+    let _this = this
+    if(_this.data.info.stock <= 0){
+      app.msg("你的查题次数不足，请先增加")
+      return
+    }
+    //TODO 查题
 
   },
   //请求
   apiQuery:function(){
-
+    let _this = this
+    let promise = new Promise((resolve,reject) => {
+      wx.request({
+        url: _this.data.url + _this.data.question,
+        method: 'GET',
+        success:function(res){
+          console.log(res)
+          return res
+        },
+        fail:function(res){
+          app.msg('请求超时，请重试')
+          return false
+        }
+      })
+    })
+    return promise
   },
 
 })
