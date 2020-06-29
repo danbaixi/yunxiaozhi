@@ -1,0 +1,35 @@
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">查题</view>
+</cu-custom>
+<view class="container padding-top" wx:if="{{!loading}}">
+  <view class="padding bg-white">
+    <text>当前剩余查询次数：<text class="text-theme text-bold">{{info.stock}}</text></text>
+    <button class="cu-btn bg-yellow text-white margin-left sm" bindtap="add">增加次数</button>
+  </view>
+  <view class="padding-top">
+    <view class="question bg-white">
+      <textarea class="padding" style="width:100%;height:240rpx" maxlength="-1" bindinput="inputing" bindconfirm="query">
+        {{question}}
+      </textarea>
+      <view>
+        <view class="cu-form-group">
+          <view class="title">自动获取剪贴板内容</view>
+          <switch checked="{{clip}}" bindchange="switchClip"></switch>
+        </view>
+        <view class="cu-form-group">
+          <view class="title">自动查询</view>
+          <switch checked="{{auto}}" bindchange="switchAuto"></switch>
+        </view>
+      </view>
+    </view>
+    <view class="padding">
+      <button class="cu-btn bg-theme block lg" bindtap="query">查询</button>
+    </view>
+  </view>
+  <view class="padding-top">
+
+  </view>
+</view>
+<empty display="{{!loading && !display}}" content="{{notice}}"></empty>
+<list-loading loading="{{loading}}"></list-loading>

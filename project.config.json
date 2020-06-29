@@ -341,6 +341,13 @@
 					"pathName": "pages/tools/clockin/clockin",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "查题",
+					"pathName": "pages/tools/question/question",
+					"query": "",
+					"scene": null
 				}
 			]
 		}

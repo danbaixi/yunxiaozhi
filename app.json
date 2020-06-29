@@ -51,7 +51,8 @@
     "pages/tools/summary/summary",
     "pages/course/list/list",
     "pages/tools/clockin/clockin",
-    "pages/tools/clockin/poster/poster"
+    "pages/tools/clockin/poster/poster",
+    "pages/tools/question/question"
   ],
   "window": {
     "navigationStyle": "custom",
