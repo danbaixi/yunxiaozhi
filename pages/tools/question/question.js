@@ -9,6 +9,7 @@ Page({
     display: false,
     clip: true,
     auto: false,
+    question:'',
     preQuestion:'',
     answer:[],
     article:'',
