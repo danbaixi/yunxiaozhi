@@ -5,10 +5,14 @@ Page({
    * 页面的初始数据
    */
   data: {
-    loading: false,
-    display: true,
+    loading: true,
+    display: false,
     clip: true,
-    auto: false
+    auto: false,
+    preQuestion:'',
+    answer:[],
+    article:'',
+    tips:false
   },
 
   /**
@@ -17,6 +21,7 @@ Page({
   onLoad: function (options) {
     app.isLogin()
     this.init()
+    this.showTips()
   },
 
   /**
@@ -30,7 +35,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.getClip()
+    if(this.data.display){
+      this.getClip()
+    }
   },
 
   /**
@@ -74,6 +81,9 @@ Page({
     app.httpRequest({
       url:'question/init',
       success:function(res){
+        _this.setData({
+          loading: false
+        })
         if(res.data.status == -1){
           app.msg(res.data.status)
           _this.setData({
@@ -118,33 +128,90 @@ Page({
     this.setData({
       auto: e.detail.value
     })
+    if (e.detail.value) {
+      this.checkClip()
+    }else {
+
+    }
   },
   //获取剪贴板内容
   getClip:function(){
-    if(!this.data.clip){
+    if(!this.data.clip && !this.data.auto){
       return
     }
     let _this = this
     wx.getClipboardData({
       success: (res) => {
+        if(_this.data.question == res.data || res.data == ''){
+          return
+        }
         _this.setData({
           question:res.data
         })
+        if(_this.data.auto){
+          _this.query()
+        }else{
+          app.msg("题目已粘贴")
+        }
       },
       fail:(res) => {
         console.log('获取剪贴板内容失败')
       }
     })
   },
+  //输入
+  inputing:function(e){
+    if(this.data.auto){
+      return
+    }
+    this.setData({
+      question: e.detail.value
+    })
+  },
   //查题
   query:function(){
     let _this = this
-    if(_this.data.info.stock <= 0){
-      app.msg("你的查题次数不足，请先增加")
+    let question = _this.data.question.trim()
+    if(question == ''){
+      app.msg("请输入需要查询的题目")
       return
     }
-    //TODO 查题
-
+    if(_this.data.preQuestion == _this.data.question){
+      app.msg("该题已查过啦~")
+      return
+    }
+    // if(_this.data.info.stock <= 0){
+    //   app.msg("你的查题次数不足，请先增加")
+    //   return
+    // }
+    wx.showLoading({
+      title: '正在查询',
+    })
+    _this.apiQuery().then((resolve)=>{
+      wx.hideLoading()
+      let info = _this.data.info
+      info.stock -= 1
+      _this.setData({
+        info: info,
+        answer: resolve,
+        preQuestion:question
+      })
+      app.httpRequest({
+        url: 'question/query',
+        data: {
+          question: question,
+          answer: resolve,
+        },
+        success: function (res) {
+          if (res.data.status == -1) {
+            console.log("添加记录失败")
+            return
+          }
+        }
+      })
+    }).catch((message) => {
+      app.msg(message)
+    })
   },
   //请求
   apiQuery:function(){
@@ -154,16 +221,55 @@ Page({
         url: _this.data.url + _this.data.question,
         method: 'GET',
         success:function(res){
-          console.log(res)
-          return res
+          if(res.statusCode != 200){
+            return reject('查询失败，请重试')
+          }
+          return resolve(res.data)
         },
         fail:function(res){
-          app.msg('请求超时，请重试')
-          return false
+          return reject('查询失败，请重试')
         }
       })
     })
     return promise
   },
-
+  //检测剪贴板
+  checkClip:function(){
+    let interval = setInterval(()=>{
+      if(this.data.auto){
+        this.getClip()
+      }else{
+        clearInterval(interval)
+      }
+    },1000)
+  },
+  clear:function(){
+    if(this.data.auto){
+      app.msg("请先关闭粘贴模式")
+      return
+    }
+    this.setData({
+      question:''
+    })
+  },
+  showTips:function(){
+    this.setData({
+      tips:true
+    })
+  },
+  hideTips:function(){
+    this.setData({
+      tips: false
+    })
+  },
+  //教程
+  help:function(){
+    if(this.data.article == ''){
+      app.msg("获取失败")
+      return
+    }
+    wx.navigateTo({
+      url: '/pages/article/article?src=' + encodeURIComponent(this.data.article),
+    })
+  }
 })

@@ -1,1 +1,15 @@
-/* pages/tools/question/question.wxss */
+.cu-form-group textarea {
+  margin: 16rpx 0;
+}
+.answer{
+  line-height: 44rpx;
+}
+.question{
+  position: relative;
+}
+.clear{
+  position: absolute;
+  bottom: 0;
+  right: 20rpx;
+  z-index: 2;
+}
