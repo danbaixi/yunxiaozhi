@@ -52,7 +52,9 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    this.setData({
+      auto:false
+    })
   },
 
   /**
@@ -73,7 +75,7 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return app.share('光速搜题了解一下~','questions-1.png',this.route)
   },
   
   //初始化

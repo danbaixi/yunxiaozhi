@@ -128,7 +128,6 @@ Page({
       title = '查看' + this.data.summary.data.name + '的毕业报告'
       path = path + '?id=' + this.data.id 
     }
-    console.log(path)
     return app.share(title,'summary.png',path)
   },
 
