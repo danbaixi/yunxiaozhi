@@ -81,6 +81,11 @@ Page({
   //初始化
   init:function(){
     let _this = this
+    let displayTips = wx.getStorageSync('display_question_tips') || 'yes'
+    _this.setData({
+      displayTips:displayTips
+    })
+    wx.setStorageSync('display_question_tips', 'no')
     app.httpRequest({
       url:'question/init',
       success:function(res){

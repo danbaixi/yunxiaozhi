@@ -41,10 +41,10 @@
     </view>
     <view class="padding-left padding-right">
       <view class="text-theme">参考问题</view>
-      <view class="padding-bottom-xs" wx:for="{{answer}}" wx:key="key" wx:if="{{answer.length>1 && index > 0}}">
-        <view>问题：<text class="text-grey">{{item.ques}}</text></view>
+      <view class="padding-bottom-sm" wx:for="{{answer}}" wx:key="key" wx:if="{{answer.length>1 && index > 0}}">
+        <view>问题{{index}}：<text class="text-grey">{{item.ques}}</text></view>
         <view wx:if="{{item.ch!=''}}">选项：<text class="text-grey">{{item.ch}}</text></view>
-        <view>答案：{{answer[0].ans}}</view>
+        <view>答案：{{item.ans}}</view>
       </view>
     </view>
 
@@ -52,7 +52,7 @@
 </view>
 <list-loading loading="{{loading}}"></list-loading>
 <empty display="{{!loading && !display}}" content="{{notice}}"></empty>
-<view class="cu-modal {{tips&&display?'show':''}}">
+<view class="cu-modal {{tips&&display&&displayTips=='yes'?'show':''}}">
   <view class="cu-dialog">
     <view class="cu-bar bg-white justify-end">
       <view class="content">请认真阅读以下内容</view>
