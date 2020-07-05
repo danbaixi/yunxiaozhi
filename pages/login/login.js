@@ -159,7 +159,7 @@ Page({
                   }
                 })
                 setTimeout(()=> {
-                  if (_this.data.redirect) {
+                  if (_this.data.redirect != '') {
                     wx.redirectTo({
                       url: _this.data.redirect,
                     })

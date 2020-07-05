@@ -62,7 +62,6 @@ Page({
       totalnum = 10
       this.getSummary(id)
     }
-    console.log(scene, id)
     const config = wx.getStorageSync('configs')
     this.setData({
       winWidth: systemInfo.windowWidth,

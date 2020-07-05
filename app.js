@@ -188,6 +188,7 @@ App({
   //强制需要登录
   isLogin:function(route){
     let _this = this
+    var route = route || ''
     return new Promise((resolve) => {
       let session = wx.getStorageSync('login_session')
       if(session == ''){

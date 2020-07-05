@@ -70,12 +70,12 @@ Page({
    * 进入成绩详情
    */
   itemData:function(e){
-    var index = e.currentTarget.dataset.index;
-    if(this.data.type == 0){
-      var data = this.data.score[index]
-    }else{
-      var data = this.data.original_score[index]
+    if (this.data.type == 1) {
+      app.msg("原始成绩不支持查看成绩详情，请切换为有效成绩")
+      return
     }
+    var index = e.currentTarget.dataset.index;
+    var data = this.data.score[index]
 
     wx.navigateTo({
       url: 'top/top?from=score&data=' + encodeURIComponent(JSON.stringify(data))  
@@ -299,6 +299,10 @@ Page({
   },
   goRank:function(e){
     let term  = e.currentTarget.dataset.term
+    if (!this.data.gpa.hasOwnProperty(term)){
+      app.msg("当前学期还未出有效成绩，不支持查看排名")
+      return
+    }
     wx.navigateTo({
       url: 'rank/rank?source=score&term=' + term,
     })
