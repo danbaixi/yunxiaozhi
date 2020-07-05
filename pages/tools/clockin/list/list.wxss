@@ -1,0 +1,19 @@
+.li{
+  width: calc(100% / 7);
+  display: inline-block;
+  position: relative;
+}
+.high-light{
+  background: var(--yellow)
+}
+.active::after{
+  content: " ";
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  margin-left: -2px;
+  border-radius: 50%;
+  width: 4px;
+  height: 4px;
+  background: var(--theme)
+}

@@ -11,7 +11,6 @@ Page({
       start:'05:30',
       end: '08:30'
     },
-
     type:0,
     customBar:app.globalData.customBar,
     tabs: ['今日', '全校', '学院', '班级'],
@@ -26,14 +25,18 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let _this = this
     let info = wx.getSystemInfoSync()
-    this.setData({
+    _this.setData({
       winHeight:info.windowHeight,
       winWidth:info.windowWidth
     })
-    this.getData()
-    this.getInfo()
-    this.getRanks()
+    app.isLogin('/' + _this.route).then(function(res){
+      _this.getData()
+      _this.getInfo()
+      _this.getRanks()
+    })
+
   },
 
   /**
@@ -80,7 +83,7 @@ Page({
     if(this.data.finish){
       return
     }
-    //this.getRanks()
+    this.getRanks()
   },
 
   /**
@@ -176,9 +179,7 @@ Page({
       success:function(res){
         let data = _this.data.list
         let list = data.concat(res.data.data)
-        // let finish = res.data.data.length < _this.data.length
-        let finish = true
-
+        let finish = res.data.data.length < _this.data.length
         _this.setData({
           p:_this.data.p + 1,
           list:list,
@@ -224,6 +225,11 @@ Page({
   goSetting:function(){
     wx.navigateTo({
       url: '/pages/my/set/set',
+    })
+  },
+  goList:function(){
+    wx.navigateTo({
+      url: '/pages/tools/clockin/list/list',
     })
   }
 })

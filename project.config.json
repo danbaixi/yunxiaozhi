@@ -348,6 +348,12 @@
 					"pathName": "pages/tools/question/question",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "打卡轨迹",
+					"pathName": "pages/tools/clockin/list/list",
+					"scene": null
 				}
 			]
 		}

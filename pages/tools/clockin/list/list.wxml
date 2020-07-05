@@ -1,0 +1,29 @@
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">打卡轨迹</view>
+</cu-custom>
+<view class="container padding">
+  <view class="head text-center text-lg">
+    <text class="padding icon-back" bindtap="setMonth" data-type="pre"></text>
+    <text class="padding">{{year}}年{{month}}月</text>
+    <text class="padding icon-right" bindtap="setMonth" data-type="next"></text>
+  </view>
+  <view class="date bg-white padding margin-top radius">
+    <view class="head">
+      <view class="li text-center padding-sm" wx:for="{{weeks}}" wx:key="key">
+        <text>{{item}}</text>
+      </view>
+    </view>
+    <view class="list">
+      <view class="li radius text-center padding-sm {{list[item].top>0?'active':''}} {{item == active ?'high-light':''}}" wx:for="{{days}}" wx:key="key" bindtap="click" data-day="{{item}}">
+        <text>{{item > 0 ? item : ''}}</text>
+      </view>
+    </view>
+  </view>
+  <view class="margin-top bg-white">
+    <view class="padding">本月累计打卡次数：{{count}}</view>
+  </view>
+  <view class="margin-top bg-white" wx:if="{{active!=-1}}">
+    <view class="padding">打卡时间：{{list[active].top>0?list[active].time+' 第'+list[active].top+'名':'未打卡'}}</view>
+  </view>
+</view>
