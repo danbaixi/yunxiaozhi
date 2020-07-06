@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    weeks: ['一', '二', '三', '四', '五', '六', '日'],
+    weeks: ['MON','TUE','WEB','THU','FRI','SAT','SUN'],
     year:0,
     month:0,
     days:[],

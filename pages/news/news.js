@@ -12,7 +12,8 @@ Page({
     p:1,
     length:10,
     article:[],
-    types: ['yunxiaozhi','baiyunxinwen', 'xykx','xinxigonggao']
+    types: ['yunxiaozhi','baiyunxinwen', 'xykx','xinxigonggao'],
+    focus_article:"http://mp.weixin.qq.com/s?__biz=MzI1NTUwNDIzNQ==&mid=100001363&idx=1&sn=67d2da535e60c9cb0f6e14d6064fd343&chksm=6a35bc575d423541201186f77e8203f6d5318a073a69e614967edf4ebf207381690812f0f08d#rd",
   },
 
   /**
@@ -169,9 +170,8 @@ Page({
 
   //打开推文
   viewArticle:function(e){
-    var index = e.currentTarget.dataset.index
     wx.navigateTo({
       url: '/pages/article' + '/article?src=' + encodeURIComponent(e.currentTarget.dataset.src),
     })
-  }
+  },
 })

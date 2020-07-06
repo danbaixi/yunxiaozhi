@@ -60,16 +60,29 @@ Page({
         icon: 'yct',
         needLogin: true,
         url: '../tools/yct/yct?from=index',
-      }, {
-        icon: 'apps',
-        color: 'theme',
-        badge: 1,
+      }, 
+      // {
+      //   icon: 'apps',
+      //   color: 'theme',
+      //   badge: 1,
+      //   needLogin: false,
+      //   tab:true,
+      //   name: '全部应用',
+      //   icon: 'apps',
+      //   url: '../tool/tool?from=index',
+      // }
+      {
+        icon: 'bad',
+        color: 'red',
+        badge: '新',
+        name: '云小圈',
+        icon: 'quanzi',
         needLogin: false,
-        tab:true,
-        name: '全部应用',
-        icon: 'apps',
-        url: '../tool/tool?from=index',
-      }],
+        appid: "wxb036cafe2994d7d0",
+        path: "/portal/group-profile/group-profile?group_id=13104375827371700&invite_ticket=BgAARwqnU-49GW8g92KH3E7WFA&fromScene=bizArticle",
+        url: '/pages/tools/summary/summary',
+      },
+    ],
     gridCol: 4,
     news_loading:false,
     course_loading:false,
@@ -199,6 +212,8 @@ Page({
     var url = e.currentTarget.dataset.url
     var needLogin = e.currentTarget.dataset.needlogin
     var tab = e.currentTarget.dataset.tab
+    var path = e.currentTarget.dataset.path
+    var appid = e.currentTarget.dataset.appid
     if (needLogin && !app.getLoginStatus()) {
       app.msg("请先登录")
       return;
@@ -206,6 +221,13 @@ Page({
     if (needLogin && !app.getUserId()) {
       app.msg("请先绑定教务系统账号")
       return;
+    }
+    if(appid){
+      wx.navigateToMiniProgram({
+        appId:appid,
+        path: path
+      })
+      return
     }
     if(tab === true){
       wx.switchTab({
@@ -638,6 +660,8 @@ Page({
   },
   // 查看
   viewNews:function(){
+    this.viewAllNews()
+    return
     wx.navigateTo({
       url: '/pages/article/article?src=' + encodeURIComponent(this.data.news.src) + '&title=' + this.data.news.title + '&img=' + encodeURIComponent(this.data.news.img),
     })

@@ -8,7 +8,7 @@
     <text class="padding">{{year}}年{{month}}月</text>
     <text class="padding icon-right" bindtap="setMonth" data-type="next"></text>
   </view>
-  <view class="date bg-white padding margin-top radius">
+  <view class="date bg-white padding-sm margin-top radius">
     <view class="head">
       <view class="li text-center padding-sm" wx:for="{{weeks}}" wx:key="key">
         <text>{{item}}</text>
