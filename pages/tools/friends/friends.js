@@ -7,7 +7,7 @@ Page({
   data: {
     customBar: app.globalData.customBar,
     loading:true,
-    fileUrl:'http://yunxiaozhi-1251388077.cosgz.myqcloud.com/user_imgs/'
+    fileUrl:app.globalData.headImgUrl
   },
 
   /**

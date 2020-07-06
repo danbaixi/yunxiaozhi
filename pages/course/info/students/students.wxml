@@ -4,7 +4,7 @@
 </cu-custom>
 <view class="cu-list menu-avatar sm-border">
   <view class="cu-item" wx:for="{{list}}" wx:key>
-    <view class="cu-avatar round lg" style="background-image:url({{item.avatar?item.avatar:img_pre + (item.user_img?item.user_img:'defalut.png')}});"></view>
+    <view class="cu-avatar round lg" style="background-image:url({{item.user_img?img_pre +item.user_img : (item.avatar?item.avatar:img_pre+'defalut.png')}});"></view>
     <view class="content">
       <view class="text-grey">{{item.stu_name?item.stu_name:'匿名'}}</view>
       <view class="text-gray text-sm">

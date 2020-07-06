@@ -41,17 +41,12 @@ Page({
         { 'title': '注册时间', 'data': regTime },
       ];
       that.setData({
-        user_img: data.avatar ? data.avatar : (data.user_img ? that.data.fileUrl + data.user_img : that.data.user_img),
-        user_name: data.nickname ? data.nickname : data.user_name,
+        user_img: data.user_img ? that.data.fileUrl + data.user_img : (data.avatar ? data.avatar : that.data.fileUrl + 'default.png'),
+        user_name: data.user_name,
         xueji: xueji,
         loading: false
       });
-      var user_info = wx.getStorageSync('user_info')
-      if (user_info && user_info['avatarUrl']) {
-        that.setData({
-          user_img: user_info['avatarUrl']
-        })
-      }
+      
     }).catch((message) => {
       app.msg(message)
     })

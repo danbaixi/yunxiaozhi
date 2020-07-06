@@ -118,6 +118,17 @@ Page({
     if (userInfo){
       user_name = userInfo.nickName
       user_img = userInfo.avatarUrl
+      app.promiseRequest({
+        url: 'user/getInfo'
+      }).then((result) => {
+        let data = result.data
+        user_name = app.isDefaultNickname(data.user_name) ? data.nickname : data.user_name
+        user_img = data.user_img ? app.globalData.headImgUrl + data.user_img : data.avatar
+        that.setData({
+          user_name: user_name,
+          user_img: user_img,
+        })
+      })
     }
     if (user_id){
       let start = user_id.substring(0, 3);
@@ -126,8 +137,6 @@ Page({
     }
 
     this.setData({
-      user_name: user_name,
-      user_img: user_img,
       session: session,
       user_id: user_id
     });
@@ -161,7 +170,6 @@ Page({
       return
     }
     var page = e.currentTarget.dataset.page
-    console.log(page)
     wx.navigateTo({
       url: page
     })

@@ -62,7 +62,8 @@ App({
     markers_json: "https://www.yunxiaozhi.cn/v1/resource/markers.json",
     adTime: 24,//小时出现一次
     fileDomain:"http://file.yunxiaozhi.cn/mini/",
-    fileUrl: "https://yunxiaozhi-1251388077.cos.ap-guangzhou.myqcloud.com/mini"
+    fileUrl: "https://yunxiaozhi-1251388077.cos.ap-guangzhou.myqcloud.com/mini",
+    headImgUrl:"https://yunxiaozhi-1251388077.cos.ap-guangzhou.myqcloud.com/user_imgs/"
   },
 
   goLogin:function(url){
@@ -362,5 +363,9 @@ App({
       address = temp[0];
     }
     return address
+  },
+  //判断是否是默认昵称
+  isDefaultNickname:function(nickname){
+    return nickname.indexOf('yxz_') === -1 ? false : true
   }
 })

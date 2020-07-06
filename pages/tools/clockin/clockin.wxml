@@ -72,7 +72,7 @@
         </view>
         <view class="cu-item {{type>0&&item.stu_id == userInfo.stu_id ? 'myself':''}}" wx:for="{{list}}" wx:key="key">
           <view class="rank-num">{{index+1}}</view>
-          <view class="cu-avatar round lg" style="background-image:url({{item.avatar}});"></view>
+          <view class="cu-avatar round lg" style="background-image:url({{item.user_img?headImgUrl+item.user_img:item.avatar}});"></view>
           <view class="content">
             <view class="text-grey">{{item.hidden_clockin_name?item.nickname:item.stu_name}}</view>
             <view class="text-gray text-sm flex">

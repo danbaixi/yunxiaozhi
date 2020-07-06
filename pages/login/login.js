@@ -24,16 +24,7 @@ Page({
       winHeight:info.windowHeight,
       redirect:redirect
     })
-    wx.login({
-      success: (res) =>{
-        _this.setData({
-          code: res.code
-        })
-      },
-      fail:() => {
-        app.msg('初始化失败，请重试')
-      }
-    })
+    _this.getCode()
   },
 
   /**
@@ -84,7 +75,19 @@ Page({
   onShareAppMessage: function () {
 
   },
-
+  getCode:function(){
+    let _this = this
+    wx.login({
+      success: (res) => {
+        _this.setData({
+          code: res.code
+        })
+      },
+      fail: () => {
+        app.msg('初始化失败，请重试')
+      }
+    })
+  },
   //微信登录
   wechatLogin:function(code){
     return new Promise((resolve) => {
@@ -132,6 +135,8 @@ Page({
             if(resolve.status == 0){
               return _this.getUserInfo(_this.data.code,userInfo)
             }
+            //刷新code
+            _this.getCode()
             throw new Error(resolve.message)
           }).then((resolve) => {
             if(resolve.status == 0){

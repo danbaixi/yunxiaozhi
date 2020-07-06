@@ -18,7 +18,8 @@ Page({
     length: 10,
     p:1,
     loading: false,
-    finish: false
+    finish: false,
+    headImgUrl:app.globalData.headImgUrl
   },
 
   /**

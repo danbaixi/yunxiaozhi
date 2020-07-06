@@ -14,7 +14,7 @@
     <view class="padding bg-white">总计：<text class="text-theme text-bold">{{total}}</text> (仅显示云小智用户，非全班通讯录)</view>
     <view class="cu-list sm-border menu-avatar">
       <view class="cu-item" wx:for="{{friends}}" wx:key="key" wx:if="{{item.isShow}}">
-        <view class="cu-avatar round lg" style="background-image:url({{item.avatar?item.avatar:fileUrl+(item.user_img?item.user_img:'default.png')}});"></view>
+        <view class="cu-avatar round lg" style="background-image:url({{item.user_img?fileUrl+item.user_img:(item.avatar?item.avatar:fileUrl+'default.png')}});"></view>
         <view class="content">
           <view class="text-grey">{{item.stu_name}}</view>
           <view class="text-gray text-sm flex">
