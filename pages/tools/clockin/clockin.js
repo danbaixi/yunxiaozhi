@@ -155,6 +155,8 @@ Page({
     app.promiseRequest({
       url: 'user/getInfo'
     }).then((result) => {
+      let info = result.data
+      info.name = app.isDefaultNickname(info.user_name) ? info.nickname : info.user_name
       _this.setData({
         userInfo:result.data
       })
@@ -178,9 +180,21 @@ Page({
         value:_this.getValue(type)
       },
       success:function(res){
-        let data = _this.data.list
-        let list = data.concat(res.data.data)
-        let finish = res.data.data.length < _this.data.length
+        let list = _this.data.list
+        let data = res.data.data
+        for(let i =0;i<data.length;i++){
+          let name = data[i].stu_name
+          if(data[i].hidden_clockin_name == 1){
+            if(app.isDefaultNickname(data[i].user_name)){
+              name = data[i].nickname
+            }else{
+              name = data[i].user_name
+            }
+          }
+          data[i].name = name
+        }
+        list = list.concat(data)
+        let finish = data.length < _this.data.length
         _this.setData({
           p:_this.data.p + 1,
           list:list,
@@ -230,7 +244,7 @@ Page({
   },
   goList:function(){
     wx.navigateTo({
-      url: '/pages/tools/clockin/list/list',
+      url: '/pages/tools/clockin/list/list?state=' + JSON.stringify(this.data.totalState),
     })
   }
 })

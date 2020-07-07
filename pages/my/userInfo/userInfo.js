@@ -9,7 +9,8 @@ Page({
   data: { 
     user_img:'http://yunxiaozhi-1251388077.cosgz.myqcloud.com/user_imgs/defalut.png',
     fileUrl: 'http://yunxiaozhi-1251388077.cosgz.myqcloud.com/user_imgs/',
-    loading:true
+    loading:true,
+    uploadFile:''
   },
 
   /**
@@ -17,6 +18,27 @@ Page({
    */
   onLoad: function (options) {
     this.getInfo()
+  },
+  onShow: function(){
+    if(this.data.uploadFile != ''){
+      //设置头像
+      let _this = this
+      app.httpRequest({
+        url:'user/alterUserImg',
+        method: 'POST',
+        data:{
+          url: _this.data.uploadFile
+        },
+        success:function(res){
+          app.msg(res.data.message)
+          if(res.data.status == 0){
+            _this.setData({
+              user_img : _this.data.fileUrl + _this.data.uploadFile
+            })
+          }
+        }
+      })
+    }
   },
   onShareAppMessage: function () {
     return app.share()
@@ -59,8 +81,8 @@ Page({
       sourceType: ['album', 'camera'],
       success: function (res) {
         const src = res.tempFilePaths[0]
-        wx.redirectTo({
-          url: `../../cropper/cropper?src=${src}`
+        wx.navigateTo({
+          url: `../../cropper/cropper?&type=headImg&src=${src}`
         })
       }
     })

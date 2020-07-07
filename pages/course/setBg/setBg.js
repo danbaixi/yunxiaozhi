@@ -223,7 +223,7 @@ Page({
           title: '正在加载...',
         })
         wx.navigateTo({
-          url: `../../cropper/cropper?src=${src}`,
+          url: `../../cropper/cropper?type=course&src=${src}`,
           success:function(){
             wx.hideLoading()
           }

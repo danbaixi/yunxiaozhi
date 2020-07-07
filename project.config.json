@@ -22,7 +22,7 @@
 			"outputPath": ""
 		},
 		"bundle": true,
-		"useCompilerModule": false,
+		"useCompilerModule": true,
 		"userConfirmedUseCompilerModuleSwitch": false,
 		"compileHotReLoad": false,
 		"useIsolateContext": true
@@ -353,6 +353,13 @@
 					"id": -1,
 					"name": "打卡轨迹",
 					"pathName": "pages/tools/clockin/list/list",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "个人信息",
+					"pathName": "pages/my/userInfo/userInfo",
 					"scene": null
 				}
 			]

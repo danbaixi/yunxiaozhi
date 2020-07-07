@@ -24,8 +24,14 @@
       </view>
     </view>
   </view>
+  <view class="margin-top bg-white radius" wx:if="{{state != '' && state != null}}">
+    <view class="padding">
+      <text class="padding-right-sm">累计早起：<text class="text-theme text-bold">{{state.total}} 天</text></text>
+      <text>最长连续打卡：<text class="text-theme text-bold">{{state.max_continuous}} 天</text></text>
+    </view>
+  </view>
   <view class="margin-top bg-white radius">
-    <view class="padding">本月累计打卡：<text class="text-theme text-bold">{{count}} 天</text></view>
+    <view class="padding">本月累计早起：<text class="text-theme text-bold">{{count}} 天</text></view>
     <view class="cu-list menu">
       <view class="cu-item" wx:for="{{list}}" wx:key="key">
         <view class="content">
