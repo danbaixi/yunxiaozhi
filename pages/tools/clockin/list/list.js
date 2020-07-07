@@ -155,11 +155,5 @@ Page({
     this.setData({
       active:-1
     })
-  },
-  click:function(e){
-    let day = e.currentTarget.dataset.day
-    this.setData({
-      active:day
-    })
   }
 })
