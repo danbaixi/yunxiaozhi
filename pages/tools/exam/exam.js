@@ -28,7 +28,9 @@ Page({
       'pink',
       'red',
     ],
-    term_index:0
+    term_index:0,
+    classList:[],
+    class_name:''
   },
 
   /**
@@ -105,9 +107,16 @@ Page({
   },
   getCourseExam:function(e){
     var that = this;
+    wx.showLoading({
+      title: '加载中...',
+    })
     app.httpRequest({
       url: 'exam/getlist',
+      data:{
+        class_name:that.data.class_name
+      },
       success: function (res) {
+        wx.hideLoading()
         if (res.data.status == 0) {
           var course_exam =  res.data.data.data
           var term = res.data.data.term
@@ -122,8 +131,12 @@ Page({
             loading:false,
             course_exam: course_exam,
             term: term,
-            picker_term: picker_term
+            picker_term: picker_term,
+            class_name:res.data.data.class_name
           });
+          if(that.data.classList.length == 0){
+            that.getClassList();
+          }
         } else {
           app.msg(res.data.message)
         }
@@ -219,5 +232,32 @@ Page({
     this.setData({
       term_index: e.detail.value
     })
+  },
+  //获取班级
+  getClassList:function(){
+    let _this = this
+    app.httpRequest({
+      url:'exam/getClassList',
+      data:{
+        term: _this.data.term[_this.data.term_index].num
+      },
+      success:function(res){
+        console.log(res)
+        if(res.data.status == -1){
+          app.msg(res.data.message)
+          return
+        }
+        _this.setData({
+          classList:res.data.data
+        })
+      }
+    })
+  },
+  selectClass:function(e){
+    let class_name = this.data.classList[e.detail.value]
+    this.setData({
+      class_name:class_name
+    })
+    this.getCourseExam()
   }
 })

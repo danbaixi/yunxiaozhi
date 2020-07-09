@@ -12,8 +12,20 @@
     <swiper-item>  
       <list-loading loading="{{loading}}"></list-loading>
       <scroll-view scroll-y wx:if="{{!loading && course_exam.length>0}}" style="height:{{winHeight- customBar - 49}}px" >
-        <view class="text-lg padding" style="position:relative">
+        <view class="text-lg padding-top-xs padding-bottom-xs padding-left padding-right" style="position:relative">
           <view class="text-grey text-df padding-top-xs">
+            <text>当前班级：</text>
+            <picker style="display:inline-block" mode="selector" range="{{classList}}" bindchange="selectClass" value="{{0}}">
+              <text>
+                <text class="text-black text-lg">{{class_name}}</text>
+                <text class="icon-triangledownfill lg text-black"></text>
+              </text>
+            </picker>
+          </view>
+        </view>
+        <view class="text-lg padding-top-xs padding-bottom padding-left padding-right" style="position:relative">
+          <view class="text-grey text-df padding-top-xs">
+          <text>当前学期：</text>
             <picker style="display:inline-block" mode="selector" range="{{picker_term}}" bindchange="selectTerm" value="{{term_index}}">
               <text>
                 <text class="text-black text-lg">{{picker_term[term_index]}}</text>
