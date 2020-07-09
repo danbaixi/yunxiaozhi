@@ -97,7 +97,7 @@
   position: relative;
   width: 90%;
   margin: 20rpx auto;
-  border-radius: 20rpx;
+  border-radius: 8rpx;
   color: #fff;
   font-size: 32rpx;
   padding: 20rpx 4%;

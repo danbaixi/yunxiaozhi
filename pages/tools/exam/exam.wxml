@@ -23,7 +23,7 @@
             </picker>
           </view>
         </view>
-        <view class="text-lg padding-top-xs padding-bottom padding-left padding-right" style="position:relative">
+        <view class="text-lg padding-bottom padding-left padding-right" style="position:relative">
           <view class="text-grey text-df padding-top-xs">
           <text>当前学期：</text>
             <picker style="display:inline-block" mode="selector" range="{{picker_term}}" bindchange="selectTerm" value="{{term_index}}">
@@ -49,7 +49,9 @@
             <view class="cu-item"><view class="content"><text class="text-grey">人数：{{list.number}}人</text></view></view>
             <view class="cu-item split"><view class="content"><text class="text-grey">监考：{{list.teacher1}} {{list.teacher2}}</text></view></view>
           </block>
-
+        </view>
+        <view class="margin padding-sm bg-white" style="border-radius: 8rpx;">
+          <text class="text-yellow" style="line-height:1.5">温馨提示：考试安排可能会有变动，请以老师公布的为准；若数据有误，请联系客服反馈，谢谢。</text>
         </view>
       </scroll-view>
       <empty display="{{course_exam.length==0}}"></empty>
