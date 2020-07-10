@@ -1,0 +1,3 @@
+<view class="float-tool" wx:if="{{display}}">
+  <image class="float-tool-image" src="{{image}}" mode="widthFix" bindtap="click"></image>
+</view>
