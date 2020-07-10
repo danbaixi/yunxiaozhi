@@ -83,6 +83,7 @@
     </view>
 </view>
 
+<float-tool></float-tool>
 <!-- 背景图片 -->
 <view class='bg-content'>
   <image class="course_bg" src="{{imageUrl}}" mode="aspectFill"> </image>

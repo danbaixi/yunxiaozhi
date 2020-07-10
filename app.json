@@ -66,7 +66,8 @@
   "usingComponents": {
     "cu-custom": "pages/assets/colorui/components/cu-custom",
     "list-loading": "pages/components/list-loading/index",
-    "empty": "pages/components/empty/empty"
+    "empty": "pages/components/empty/empty",
+    "float-tool": "pages/components/float-tool/float-tool"
   },
   "tabBar": {
     "color": "#cbcbcb",
