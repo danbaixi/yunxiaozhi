@@ -31,7 +31,11 @@ Page({
       term:term,
       termName: this.getTermName(term)
     })
-    this.getRank(term)
+    let that = this
+    app.isLogin('/' + that.route).then(function (res) {
+      that.getRank(term)
+    })
+
   },
 
   /**

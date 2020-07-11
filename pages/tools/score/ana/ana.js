@@ -26,7 +26,10 @@ Page({
     this.setData({
       winWidth: windowWidth,
     })
-    this.getData()
+    let that = this
+    app.isLogin('/' + that.route).then(function (res) {
+      that.getData()
+    })
   },
 
   /**

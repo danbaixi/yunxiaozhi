@@ -27,32 +27,9 @@ Page({
     that.setData({
       from:options.from
     })
-    app.isBind().then((result) => {
-      if(result){
-        app.httpRequest({
-          url:'attendance/getlist',
-          success: function (res) {
-            if (res.data.status == 0) {
-              that.setData({
-                loading:false,
-                term: res.data.data.term,
-                attendance: res.data.data.attendance,
-                isNull: res.data.data.term.length == 0 ? true : false
-              });
-            } else {
-              app.msg(res.data.message)
-            }
-          },
-        })
-      }
+    app.isLogin('/' + that.route).then(function (res) {
+      that.getData()
     })
-    //检查是否登录
-    if (!wx.getStorageSync('user_id')) {
-      wx.reLaunch({
-        url: '../../bind/bind',
-      })
-      return
-    }
   },
 
   /**
@@ -184,4 +161,22 @@ Page({
       })
     }
   },
+  getData:function(){
+    let that = this
+    app.httpRequest({
+      url: 'attendance/getlist',
+      success: function (res) {
+        if (res.data.status == 0) {
+          that.setData({
+            loading: false,
+            term: res.data.data.term,
+            attendance: res.data.data.attendance,
+            isNull: res.data.data.term.length == 0 ? true : false
+          });
+        } else {
+          app.msg(res.data.message)
+        }
+      },
+    })
+  }
 })

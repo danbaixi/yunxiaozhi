@@ -12,11 +12,17 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getUserConfig()
+    let that = this
+    app.isLogin('/' + that.route).then(function (res) {
+      that.getUserConfig()
+    })
   },
 
   onPullDownRefresh: function(){
-    this.getUserConfig()
+    let that = this
+    app.isLogin('/' + that.route).then(function (res) {
+      that.getUserConfig()
+    })
     wx.showNavigationBarLoading({
       complete: (res) => {},
     })

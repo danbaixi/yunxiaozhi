@@ -27,7 +27,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    app.isLogin()
     var that = this;
     var winHeight = wx.getSystemInfoSync().windowHeight;
     let update_time = wx.getStorageSync('score_update_time')
@@ -36,7 +35,9 @@ Page({
       winHeight: winHeight,
       update_time: update_time ? util.formatTime3(new Date(update_time)):'无记录'
     })
-    this.getScore(false)
+    app.isLogin('/' + that.route).then(function (res) {
+      that.getScore(false)
+    })
   },
 
   /**

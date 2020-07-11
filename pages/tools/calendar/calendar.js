@@ -270,7 +270,7 @@ Page({
     for(var a=0;a<semester.length;a++){
       for(var b=0;b<calendar.length;b++){
         if(calendar[b].semester == semester[a].semester){
-          if (calendar[b].title == '正式上课' || calendar[b].title == '老生正式上课'){
+          if (calendar[b].title.indexOf('正式上课') != -1){
             start[a] = calendar[b].start;
           } else if (calendar[b].title == '考试周'){
             end[a] = calendar[b].end;

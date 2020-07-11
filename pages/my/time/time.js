@@ -31,23 +31,17 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-    var user_id = wx.getStorageSync('user_id');
-    if (user_id) {
+    app.isLogin('/' + that.route).then(function (res) {
       that.setData({
-        login:true
+        login: true
       })
       var data = wx.getStorageSync('time_data')
-      if (data != ""){
+      if (data != "") {
         that.makeData();
-      }else{
+      } else {
         that.getData();
       }
-    }else{
-      this.setData({
-        modalDisplay:true
-      })
-    }
-
+    })
   },
 
   /**

@@ -353,6 +353,13 @@
 					"id": -1,
 					"name": "打卡轨迹",
 					"pathName": "pages/tools/clockin/list/list",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "学业报告",
+					"pathName": "pages/tools/score/ana/ana",
 					"scene": null
 				}
 			]

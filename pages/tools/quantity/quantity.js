@@ -19,8 +19,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    app.isLogin()
-    this.getData()
+    let that = this
+    app.isLogin('/' + that.route).then(function (res) {
+      that.getData()
+    })
   },
 
   /**

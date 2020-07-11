@@ -25,40 +25,8 @@ Page({
     that.setData({
       score:score
     });
-    app.httpRequest({
-      url: 'score/getCourseScoreData',
-      data: {
-        course : score.name
-      },
-      success: function(res) {
-        if(res.data.status == 0){
-          //排名颜色
-          var top = res.data.data.top;
-          var num = 0;
-          var first = top[0].rank;
-          for(var i=0;i<top.length;i++){
-            if(top[i].rank != first){
-              first = top[i].rank;
-              num++;
-            }
-            top[i].color = num;
-          }
-          that.setData({
-            avg: res.data.data.avg,
-            max: res.data.data.max,
-            fail_rate: res.data.data.fail_rate,
-            my_top: res.data.data.my_top,
-            top: top,
-            loading:false
-          })
-        }else{
-          app.msg(res.data.message)
-          setTimeout(()=>{
-            wx.navigateBack({});
-          },1000)
-        }
-
-      },
+    app.isLogin('/' + that.route).then(function (res) {
+      that.getData()
     })
   },
 
@@ -72,4 +40,43 @@ Page({
       imageUrl: 'http://yunxiaozhi-1251388077.cosgz.myqcloud.com/wx_share/score.jpg'
     };
   },
+
+  getData:function(){
+    let that = this
+    app.httpRequest({
+      url: 'score/getCourseScoreData',
+      data: {
+        course: that.data.score.name
+      },
+      success: function (res) {
+        if (res.data.status == 0) {
+          //排名颜色
+          var top = res.data.data.top;
+          var num = 0;
+          var first = top[0].rank;
+          for (var i = 0; i < top.length; i++) {
+            if (top[i].rank != first) {
+              first = top[i].rank;
+              num++;
+            }
+            top[i].color = num;
+          }
+          that.setData({
+            avg: res.data.data.avg,
+            max: res.data.data.max,
+            fail_rate: res.data.data.fail_rate,
+            my_top: res.data.data.my_top,
+            top: top,
+            loading: false
+          })
+        } else {
+          app.msg(res.data.message)
+          setTimeout(() => {
+            wx.navigateBack({});
+          }, 1000)
+        }
+
+      },
+    })
+  }
 })

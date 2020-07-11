@@ -21,7 +21,10 @@ Page({
     this.setData({
       stu_id: stu_id
     })
-    this.getRank()
+    let that = this
+    app.isLogin('/' + that.route).then(function (res) {
+      that.getRank()
+    })
   },
 
   /**

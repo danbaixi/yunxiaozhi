@@ -19,7 +19,10 @@ Page({
     this.setData({
       from:options.from
     })
-    this.getList()
+    let that = this
+    app.isLogin('/' + that.route).then(function (res) {
+      that.getList()
+    })
   },
 
   /**

@@ -21,8 +21,9 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-    app.isBind()
-    that.getAccount()
+    app.isLogin('/' + that.route).then(function (res) {
+      that.getAccount()
+    })
     //加载历史查询记录
     var data = wx.getStorageSync('yct-data');
     if (data) {

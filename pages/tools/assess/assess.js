@@ -15,10 +15,8 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-    app.isBind().then((result) => {
-      if(result){
-        that.getList()
-      }
+    app.isLogin('/' + that.route).then(function (res) {
+      that.getList()
     })
     if (wx.createRewardedVideoAd) {
       videoAd = wx.createRewardedVideoAd({
