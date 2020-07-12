@@ -3,7 +3,8 @@
 	<view slot="content">校园头条</view>
 </cu-custom>
 <view class="padding-sm text-center">
-  <text class="text-theme" bindtap="viewArticle" data-src="{{focus_article}}">点击关注云小智公众号，掌握最新白云资讯</text>
+  <focus></focus>
+  <!-- <text class="text-theme" bindtap="viewArticle" data-src="{{focus_article}}">点击关注云小智公众号，掌握最新白云资讯</text> -->
 </view>
 <view class='list'>
   <view class='section' wx:if="{{current==0}}">

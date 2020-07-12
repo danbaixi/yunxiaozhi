@@ -11,6 +11,7 @@ var app = getApp();
 Page({
   data: {
     customBar: app.globalData.customBar,
+    type:"course",
     cropperOpt: {
       id: 'cropper',
       width,
@@ -35,20 +36,24 @@ Page({
     this.wecropper.touchEnd(e)
   },
   getCropperImage() {
-    this.wecropper.getCropperImage((src) => {
+    let _this = this
+    _this.wecropper.getCropperImage((src) => {
       if (src) {
         wx.showLoading({
           title: '正在上传',
         });
         var time = Math.floor(new Date().getTime() / 1000);
-        if (time - wx.getStorageSync('upload_course_bg_time') >= 20) {
+        if (time - wx.getStorageSync('upload_course_bg_time') >= 10) {
           wx.setStorageSync('upload_course_bg_time', time)
-          var dir_name = 'course_bg';
-          //删除原来的背景
-          var delImg = wx.getStorageSync('upload_course_bg');
-          var returnDel = delPictureFn(delImg,dir_name);
-          if (returnDel) {
-            console.log('删除成功');
+          var dir_name = 'user_imgs';
+          if(_this.data.type == 'course'){
+            dir_name = 'course_bg'
+            //删除原来的文件
+            var delImg = wx.getStorageSync('upload_course_bg');
+            var returnDel = delPictureFn(delImg,dir_name);
+            if (returnDel) {
+              console.log('删除成功');
+            }
           }
           //上传图片
           //获取文件名
@@ -105,8 +110,22 @@ Page({
   onLoad(option) {
     const cropperOpt = this.data.cropperOpt
     let src = option.src
-    let cutWidth = Math.floor(device.windowWidth * 0.8)
-    let cutHeight = Math.floor(device.windowHeight * 0.8)
+    let type = option.type
+    this.setData({
+      type:type
+    })
+    let cutWidth = 0,cutHeight = 0
+    switch (type){
+      case "course":
+        cutWidth = Math.floor(device.windowWidth * 0.8)
+        cutHeight = Math.floor(device.windowHeight * 0.8)
+        break
+      default:
+      case "headImg":
+        cutWidth = 300
+        cutHeight = 300
+        break
+    }
     if(src){
       cropperOpt.src = src
       let cut = {
@@ -116,9 +135,7 @@ Page({
         height: cutHeight
       }
       cropperOpt.cut = cut
-    }
-    if (option.src) {
-      cropperOpt.src = option.src
+
       new WeCropper(cropperOpt)
         .on('ready', (ctx) => {
         })
@@ -138,8 +155,6 @@ Page({
     }
   },
   cancel:function(){
-    wx.navigateBack({
-      
-    })
+    wx.navigateBack({})
   }
 })

@@ -57,7 +57,7 @@ Page({
   onShareAppMessage: function (res) {
     if (res.from === 'button') {
       // 来自页面内转发按钮
-      console.log(res.target)
+      // console.log(res.target)
     }
     return {
       title: app.globalData.introduce.name + ' - 校园导览',
@@ -110,7 +110,7 @@ Page({
     this.setData({ fullscreen: !this.data.fullscreen })
   },
   changePage: function (event) {
-    console.log(event)
+    // console.log(event)
     this.setData({
       isSelectedBuildType: event.currentTarget.id,
       isSelectedBuild: 0

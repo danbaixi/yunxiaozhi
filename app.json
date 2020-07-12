@@ -53,7 +53,8 @@
     "pages/tools/clockin/clockin",
     "pages/tools/clockin/poster/poster",
     "pages/tools/question/question",
-    "pages/tools/clockin/list/list"
+    "pages/tools/clockin/list/list",
+    "pages/tools/guide/index"
   ],
   "window": {
     "navigationStyle": "custom",
@@ -66,7 +67,8 @@
   "usingComponents": {
     "cu-custom": "pages/assets/colorui/components/cu-custom",
     "list-loading": "pages/components/list-loading/index",
-    "empty": "pages/components/empty/empty"
+    "empty": "pages/components/empty/empty",
+    "float-tool": "pages/components/float-tool/float-tool"
   },
   "tabBar": {
     "color": "#cbcbcb",

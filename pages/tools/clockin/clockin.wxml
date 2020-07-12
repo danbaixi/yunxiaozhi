@@ -58,9 +58,9 @@
       <view class="cu-list bg-white menu-avatar">
         <view class="cu-item you" wx:if="{{type==0&&status==1&&todayState.top>1}}">
           <view class="rank-num">{{todayState.top}}</view>
-          <view class="cu-avatar round lg" style="background-image:url({{userInfo.avatar}});"></view>
+          <view class="cu-avatar round lg" style="background-image:url({{userInfo.user_img?headImgUrl+userInfo.user_img:userInfo.avatar}});"></view>
           <view class="content">
-            <view class="text-grey">{{userInfo.nickname}}</view>
+            <view class="text-grey">{{userInfo.name}}</view>
             <view class="text-gray text-sm flex">
               <text class="text-cut">{{userInfo.stu_department}}</text>
             </view>
@@ -74,7 +74,7 @@
           <view class="rank-num">{{index+1}}</view>
           <view class="cu-avatar round lg" style="background-image:url({{item.user_img?headImgUrl+item.user_img:item.avatar}});"></view>
           <view class="content">
-            <view class="text-grey">{{item.hidden_clockin_name?item.nickname:item.stu_name}}</view>
+            <view class="text-grey">{{item.name}}</view>
             <view class="text-gray text-sm flex">
               <text class="text-cut">{{type>=2?item.stu_class:item.stu_department}}</text>
             </view>
@@ -122,8 +122,7 @@
       <view class="text-black padding-xs">2.积分规则：每次打卡获得1+N积分，N为连续打卡天数，N上限为7</view>
       <view class="text-black padding-xs">3.积分可兑换礼品，礼品系统即将上线</view>
       <view class="text-black padding-xs">4.排行榜可隐藏真实姓名，<text class="text-theme" bindtap="goSetting">点我设置</text></view>
-      <view class="text-black padding-xs">5.为了减轻服务器压力，排行榜5分钟更新一次</view>
-      <view class="text-black padding-xs">6.此功能有待完善，您有任何建议请反馈给我们，谢谢</view>
+      <view class="text-black padding-xs">5.此功能有待完善，您有任何建议请反馈给我们，谢谢</view>
     </view>
   </view>
 </view>

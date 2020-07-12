@@ -358,8 +358,15 @@
 				},
 				{
 					"id": -1,
-					"name": "学业报告",
-					"pathName": "pages/tools/score/ana/ana",
+					"name": "个人信息",
+					"pathName": "pages/my/userInfo/userInfo",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "校园导览",
+					"pathName": "pages/tools/guide/index",
 					"scene": null
 				}
 			]

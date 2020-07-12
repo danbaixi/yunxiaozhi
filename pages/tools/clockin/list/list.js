@@ -18,12 +18,14 @@ Page({
    */
   onLoad: function (options) {
     let _this = this
+    let state = options.state ? JSON.parse(options.state) : ''
     let date = new Date()
     let year = date.getFullYear()
     let month = date.getMonth() + 1
     _this.setData({
       year:year,
-      month:month
+      month:month,
+      state:state,
     })
     app.isLogin('/'+this.route).then(function(){
       _this.getList()
@@ -154,12 +156,6 @@ Page({
     this.getList()
     this.setData({
       active:-1
-    })
-  },
-  click:function(e){
-    let day = e.currentTarget.dataset.day
-    this.setData({
-      active:day
     })
   }
 })

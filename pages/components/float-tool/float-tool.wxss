@@ -1,0 +1,9 @@
+.float-tool{
+  position: fixed;
+  bottom: 30rpx;
+  right: 30rpx;
+  z-index: 999;
+}
+.float-tool-image{
+  width: 60rpx;
+}

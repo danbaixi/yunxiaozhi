@@ -1,0 +1,15 @@
+<view class="container">
+  <view class="focus">
+    <view class="logo">
+      <image class="logo-img" mode="widthFix" src="/pages/assets/imgs/other/gzh-logo.jpg"></image>
+    </view>
+    <view class="content">
+      <view class="name">云小智</view>
+      <view class="desc">白云智慧校园平台</view>
+    </view>
+    <view class="action">
+      <button class="focus-btn" bindtap="focus">关注</button>
+    </view>
+    <view class="clearfloat"></view>
+  </view>
+</view>
