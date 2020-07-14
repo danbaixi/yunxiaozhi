@@ -39,6 +39,7 @@ Page({
           loading: false
         })
         if(res.data.status == 0){
+          res.data.data.isNull = res.data.data.credit.length == 0 ? true : false
           _this.setData(res.data.data)
         }
       }
