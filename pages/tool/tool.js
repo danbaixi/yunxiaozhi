@@ -195,6 +195,15 @@ Page({
         path: "/portal/group-profile/group-profile?group_id=13104375827371700&invite_ticket=BgAARwqnU-49GW8g92KH3E7WFA&fromScene=bizArticle",
         url: '/pages/tools/summary/summary',
       },
+      {
+        icon: 'bad',
+        color: 'red',
+        badge: '新',
+        name: '失物招领',
+        icon: 'lost',
+        needLogin: false,
+        url: '/pages/tools/lost/lost',
+      },  
     ],
   },
 

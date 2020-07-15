@@ -367,6 +367,13 @@
 					"id": -1,
 					"name": "校园导览",
 					"pathName": "pages/tools/guide/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "失物招领",
+					"pathName": "pages/tools/lost/lost",
 					"scene": null
 				}
 			]

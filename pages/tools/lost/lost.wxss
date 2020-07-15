@@ -1,0 +1,6 @@
+page{
+  background: #fff;
+}
+.yxz-cel .tr .th , .yxz-cel .tr .td{
+  width: 25%
+}

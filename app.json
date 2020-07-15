@@ -54,7 +54,8 @@
     "pages/tools/clockin/poster/poster",
     "pages/tools/question/question",
     "pages/tools/clockin/list/list",
-    "pages/tools/guide/index"
+    "pages/tools/guide/index",
+    "pages/tools/lost/lost"
   ],
   "window": {
     "navigationStyle": "custom",
