@@ -100,7 +100,7 @@ Page({
     if (wx.getStorageSync('attendance_update_time') != "") {
       var update_time = wx.getStorageSync('attendance_update_time');
       var cha = time - update_time;
-      var season = 60 * 15 - Math.floor(cha / 1000);
+      var season = 60 * 1 - Math.floor(cha / 1000);
     } else {
       var season = 0;
     }

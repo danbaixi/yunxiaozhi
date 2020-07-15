@@ -36,4 +36,4 @@
   </view>
 
 </view>
-<empty display="{{!loading&&credit.length ==0 || isNull}}"></empty>
+<empty display="{{!loading&&isNull}}"></empty>

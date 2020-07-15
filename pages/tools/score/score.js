@@ -71,13 +71,15 @@ Page({
    * 进入成绩详情
    */
   itemData:function(e){
-    if (this.data.type == 1) {
-      app.msg("原始成绩不支持查看成绩详情，请切换为有效成绩")
+    let type = this.data.type
+    let score = type == 1 ? this.data.original_score : this.data.score
+    let index = e.currentTarget.dataset.index;
+    let data = score[index]
+
+    if (type == 1 && !this.hasEffectScore(data.name)) {
+      app.msg("该科目暂没有有效成绩，不支持查看排名")
       return
     }
-    var index = e.currentTarget.dataset.index;
-    var data = this.data.score[index]
-
     wx.navigateTo({
       url: 'top/top?from=score&data=' + encodeURIComponent(JSON.stringify(data))  
     })
@@ -239,7 +241,7 @@ Page({
     if (wx.getStorageSync('score_update_time') != "") {
       var update_time = wx.getStorageSync('score_update_time');
       var cha = time - update_time;
-      var season = 60 * 15 - Math.floor(cha / 1000);
+      var season = 60 * 1 - Math.floor(cha / 1000);
     } else {
       var season = 0;
     }
@@ -317,5 +319,19 @@ Page({
     this.setData({
       type: val
     })
+  },
+  //是否存在有效成绩
+  hasEffectScore:function(name){
+    if(this.data.score.length <= 0){
+      return false
+    }
+    let isExist = false
+    this.data.score.forEach(function(s){
+      if(s.name == name){
+        isExist = true
+        return
+      }
+    })
+    return isExist
   }
 })
