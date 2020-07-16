@@ -506,8 +506,11 @@ Page({
   getMyExam: function (e) {
     var that = this,displayExam = false;
     var my_exams = wx.getStorageSync("my_exams");
+    var now = util.formatTime2(new Date());
     if(my_exams){
       for (let i = 0; i < my_exams.length; i++) {
+        var days = that.dateDiff(my_exams[i].exam_date, now);
+        my_exams[i].days = days;
         if (my_exams[i].days >= 0) {
           displayExam = true
           break;
@@ -523,7 +526,6 @@ Page({
       url: 'exam/getmylist',
       success: function (res) {
         if (res.data.status == 0) {
-          var now = util.formatTime2(new Date());
           var data = res.data.data;
           for (var i = 0; i < data.length; i++) {
             var days = that.dateDiff(data[i].exam_date, now);

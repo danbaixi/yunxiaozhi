@@ -146,8 +146,13 @@ Page({
   getMyExam:function(e){
     var that = this;
     var my_exams = wx.getStorageSync("my_exams");
+    var now = util.formatTime2(new Date());
     if (my_exams != '') {
       wx.hideLoading()
+      for (var i = 0; i < my_exams.length; i++) {
+        var days = that.dateDiff(my_exams[i].exam_date, now);
+        my_exams[i].days = days;
+      }
       that.setData({
         my_exam: my_exams,
         myExamIsNull: false,
@@ -158,7 +163,6 @@ Page({
       url: 'exam/getmylist',
       success: function (res) {
         if (res.data.status == 0) {
-          var now = util.formatTime2(new Date());
           var data = res.data.data;
           for(var i=0;i<data.length;i++){
             var days = that.dateDiff(data[i].exam_date,now);
