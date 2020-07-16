@@ -3,10 +3,12 @@ page{
 }
 .head{
   position: fixed;
-  height: 40px;
+  height: 50px;
+  line-height: 50px;
   width: 100%;
   justify-content: center;
   background: #fff;
+  padding: 0 40rpx;
 }
 .left,.right{
   padding: 0 20px;
@@ -58,38 +60,39 @@ image{
 .zhoushu{
   position: relative;
   float: left;
-  width: 17.68%;
+  width: 14%;
   text-align: center;
   line-height: 30px;
 }
 .zhou{
- height: 50px;
+ height: 60px;
  color: #0099CC;
- line-height: 50px;
+ line-height: 60px;
  border-bottom: 1px solid #f2f4f5;
 }
 .riqi{
   position: relative;
   float: left;
-  width: 82.32%;
+  width: 86%;
   display: block;
   text-align: center;
   line-height: 30px;
 }
 .ri{
-  height: 50px;
-  width: 14.28%; 
-  line-height: 50px;
+  height: 60px;
+  width: calc(100% / 7); 
+  line-height: 60px;
   float: left;
   border-bottom: 1px solid #f2f4f5;
 }
 .num{
-  height: 50px;
+  height: 60px;
 }
 .num .text-df{
   padding-top: 4px;
-  height: 26px;
-  line-height: 26px;
+  height: 34px;
+  line-height: 34px;
+  font-size: 32rpx;
 }
 .num .text-xs{
   height: 14px;
@@ -102,14 +105,14 @@ image{
 .spot{
   width: 5px;
   height: 5px;
-  border-radius: 20px;
+  border-radius: 50%;
   float: left;
 }
 .spot:not(:first-child){
   margin-left: 2px;
 }
 .empyt{
-  height: 50px;
+  height: 60px;
   float: left;
   border-bottom: 1px solid #f2f4f5;
 }
@@ -132,11 +135,6 @@ image{
   white-space: nowrap;
   text-overflow:ellipsis;
 }
-.click-btn{
-  animation-name: click;
-  animation-duration: 0.5s;
-  animation-timing-function: ease-in-out;
-}
 .icon-back,.icon-right{
   border-radius: 100%;
   padding: 16rpx;
@@ -144,14 +142,17 @@ image{
 .thisDay{
   background: #f1f1f1;
 }
-@keyframes click{
-  0%{
-    background: #fff;
-  }
-  50%{
-    background: #f1f1f1;
-  }
-  100%{
-    background: #fff;
-  }
+.option{
+  color: #fff;
+  background: var(--theme);
+  border-radius: 50%;
+  padding: 14rpx;
+  text-align: right;
+  line-height: 50px;
+}
+.option:nth-child(1){
+  margin-right: 30rpx;
+}
+.clearfloat{
+  clear: both;
 }

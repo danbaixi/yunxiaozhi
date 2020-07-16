@@ -4,17 +4,22 @@
 </cu-custom>
 <list-loading loading="{{loading}}"></list-loading>
 <view class='calendar' wx:if="{{!loading}}">
-  <view class='head'>
-    <view class='left' data-type="reduce" bindtap="alterMonth">
-      <text class="icon-back text-theme text-lg {{clickButton=='left'?'click-btn':''}}"></text>
+  <view class="head text-lg grid col-2">
+    <view class="text-left">
+    <picker mode="date" value="{{now_year}}-{{now_month}}" start="2015-09-01" end="2100-09-01" fields="month" bindchange="seleteDate">
+      <view class="picker">
+        <text>{{now_year}}年 <text class="text-theme">{{now_month}}月</text></text>
+      </view>
+    </picker>
+      
     </view>
-     <view class='now_month'>{{now_year}}年{{now_month}}月</view> 
-    <view class='right' data-type="add" bindtap="alterMonth">
-      <text class="icon-right text-theme text-lg {{clickButton=='right'?'click-btn':''}}"></text>
+    <view class="text-right">
+      <text class="icon-back option" data-type="reduce" bindtap="alterMonth"></text>
+      <text class="icon-right option"  data-type="add" bindtap="alterMonth"></text>
     </view>
   </view>
   <view>
-    <view class='data' style='height:{{30+51*hangshu}}px;top:{{customBar+40}}px'>
+    <view class='data' style='height:{{30+60*hangshu}}px;top:{{customBar+50}}px'>
       <view class='title'>
         <view class='week'>周次</view>
         <view class='weekly' wx:for='{{weekly}}' wx:key='{{index}}'>{{item}}</view>
@@ -35,9 +40,10 @@
             </view>
           </view>
         </view>
+        <view class="clearfloat"></view>
       </view>
     </view>
-    <view class='shijianAll' style='margin-top:{{70+51*hangshu}}px'>
+    <view class='shijianAll' style='margin-top:{{80+60*hangshu}}px'>
       <view class='shijian'  wx:for="{{shijianOfThisMonth}}" wx:key="{{index}}">
         <view style='border-left: 5px solid {{colors[index]}};float:left;height:38px;margin:5px 0'></view>
           <text class='li'>{{item.start[1]}}月{{item.start[2]<10?'0'+item.start[2]:item.start[2]}}日-{{item.end[1]}}月{{item.end[2]<10?'0'+item.end[2]:item.end[2]}}日　{{item.title}}

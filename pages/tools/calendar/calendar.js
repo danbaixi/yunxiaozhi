@@ -19,6 +19,7 @@ Page({
       "#00FFFF",
       "#800000",
     ],
+    hangshu:5,
     jilu:[],
     clickButton:'',
     loading: true,
@@ -70,15 +71,6 @@ Page({
         that.zhouci();
       }
     })
-    var time = (new Date).getTime()
-    var ad = wx.getStorageSync('calendar_ad_display');
-    if (ad == '' || (ad != '' && Math.floor((time - ad) / 1000) > app.globalData.adTime * 24 * 60)) {
-      var interstitialAd = wx.createInterstitialAd({
-        adUnitId: 'adunit-08243d9ade5de071'
-      })
-      interstitialAd.show()
-      wx.setStorageSync('calendar_ad_display', time)
-    }
   },
   /**
    * 用户点击右上角分享
@@ -249,12 +241,6 @@ Page({
     })
     this.getDayData(this.data.now_year, this.data.now_month);
     this.zhouci();
-    var that = this
-    setTimeout(function(){
-      that.setData({
-        clickButton:''
-      })
-    },500)
   },
   /**
    * 计算出周次
@@ -281,8 +267,8 @@ Page({
     //判断当月是属于哪个学期的
     var xq_num = -1;
     for (var c=0; c < start.length; c++){
-      var d1 = that.strToDate(start[c][0] + '-' + start[c][1] + '-' + start[c][2]);
-      var d2 = that.strToDate(end[c][0] + '-' + end[c][1] + '-' + end[c][2]);
+      var d1 = new Date(start[c][0] + '/' + start[c][1] + '/' + start[c][2])
+      var d2 = new Date(end[c][0] + '/' + end[c][1] + '/' + end[c][2])
       var d3 = new Date(now_year,now_month,0);
       var d4 = new Date(now_year, now_month-1, 1);
       var diff1 = parseInt((d3 - d1) / 1000 / 60 / 60 / 24);
@@ -300,9 +286,9 @@ Page({
     }else{
       var startTime = start[xq_num];
       var endTime = end[xq_num];
-      var d1 = that.strToDate(startTime[0] + '-' + startTime[1] + '-' + startTime[2]);
-      var d2 = that.strToDate(endTime[0] + '-' + endTime[1] + '-' + endTime[2]);
-      var d3 = that.strToDate(now_year + '-' + now_month + '-1');
+      var d1 = new Date(startTime[0] + '/' + startTime[1] + '/' + startTime[2]);
+      var d2 = new Date(endTime[0] + '/' + endTime[1] + '/' + endTime[2]);
+      var d3 = new Date(now_year + '/' + now_month + '/1');
       var diff1 = parseInt((d3 - d1) / 1000 / 60 / 60 / 24);
       var diff2 = parseInt((d2 - d3) / 1000 / 60 / 60 / 24);
       if (diff1<0 && diff2<0) {
@@ -358,19 +344,16 @@ Page({
       weekData:week,
     })
   },
-  //计算两个日期的天数
-  dateDiff: function (date1, date2) {
-    var aDate, oDate1, oDate2, iDays;
-    aDate = date1.split("-");
-    oDate1 = this.strToDate(aDate[1] + '-' + aDate[2] + '-' + aDate[0]);
-    aDate = date2.split("-");
-    oDate2 = this.strToDate(aDate[1] + '-' + aDate[2] + '-' + aDate[0]);
-    iDays = parseInt(Math.abs(oDate1 - oDate2) / 1000 / 60 / 60 / 24);
-    return iDays;
-  },
-  strToDate: function (dateObj) {
-    var dateObj = dateObj.replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '').replace(/(-)/g, '/')
-    var dateObj = dateObj.slice(0, dateObj.indexOf("."))
-    return new Date(dateObj)
+  seleteDate:function(e){
+    let date = e.detail.value
+    let arr = date.split('-')
+    let year = parseInt(arr[0])
+    let month = parseInt(arr[1])
+    this.setData({
+      now_month:month,
+      now_year:year,
+    })
+    this.getDayData(this.data.now_year, this.data.now_month);
+    this.zhouci();
   }
 })

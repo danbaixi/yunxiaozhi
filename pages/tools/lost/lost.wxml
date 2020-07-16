@@ -31,7 +31,9 @@
       </block>
     </view>  
   </view>
-
+  <view class="padding">
+    <view class="text-theme bg-gray padding-sm y-radius text-center">数据来源：广东白云学院失物招领处</view>
+  </view>
 </view>
 <empty display="{{!loading&&list.length ==0 || isNull}}"></empty>
 <view class="cu-modal {{showDetail?'show':''}}" bindtap="hideModal">
