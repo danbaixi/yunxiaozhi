@@ -1,4 +1,8 @@
 {
   "navigationBarTitleText": "学业成绩",
-  "enablePullDownRefresh": true
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "notice": "/pages/components/notice/notice",
+    "float-tool": "/pages/components/float-tool/float-tool"
+  }
 }

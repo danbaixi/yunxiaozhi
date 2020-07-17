@@ -145,20 +145,7 @@ Page({
   },
   getMyExam:function(e){
     var that = this;
-    var my_exams = wx.getStorageSync("my_exams");
     var now = util.formatTime2(new Date());
-    if (my_exams != '') {
-      wx.hideLoading()
-      for (var i = 0; i < my_exams.length; i++) {
-        var days = that.dateDiff(my_exams[i].exam_date, now);
-        my_exams[i].days = days;
-      }
-      that.setData({
-        my_exam: my_exams,
-        myExamIsNull: false,
-      });
-      return;
-    }
     app.httpRequest({
       url: 'exam/getmylist',
       success: function (res) {
@@ -173,7 +160,6 @@ Page({
             my_exam: data,
             myExamIsNull: false,
           });
-          wx.setStorageSync("my_exams", data)
         }else{
           app.msg(res.data.message)
         }

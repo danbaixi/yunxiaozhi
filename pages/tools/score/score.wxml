@@ -18,6 +18,9 @@
   </view>
   <list-loading loading="{{loading}}"></list-loading>
   <view class="container" wx:if="{{!isNull && !loading}}">
+    <view class="score" style="padding:0">
+      <notice page="score"></notice>
+    </view>
     <view class="info score">
       <view class="padding-bottom-sm">
         <text class="text-black">上次更新：</text>
@@ -87,3 +90,4 @@
         <view class="btn-confirm" bindtap="update" data-status="confirm">确定</view>
       </view>
 </view>
+<float-tool page="score"></float-tool>

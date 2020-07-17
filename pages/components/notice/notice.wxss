@@ -1,0 +1,29 @@
+@import "/pages/assets/colorui/icon.wxss";
+
+.container {
+  background-color: #fff;
+  border-radius: 12rpx;
+  overflow: hidden;
+  padding: 10rpx 16rpx;
+  position: relative;
+}
+
+.content{
+  width: 94%;
+  height: 60rpx;
+  line-height: 60rpx;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  color: #1380ff;
+}
+
+.icon-close{
+  padding: 8rpx 12rpx;
+  position: absolute;
+  right: 8rpx;
+  top: 2rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  color: #ffa807;
+}

@@ -61,27 +61,27 @@ Page({
         needLogin: true,
         url: '../tools/yct/yct?from=index',
       }, 
-      // {
-      //   icon: 'apps',
-      //   color: 'theme',
-      //   badge: 1,
-      //   needLogin: false,
-      //   tab:true,
-      //   name: '全部应用',
-      //   icon: 'apps',
-      //   url: '../tool/tool?from=index',
-      // }
       {
-        icon: 'bad',
-        color: 'red',
-        badge: '新',
-        name: '云小圈',
-        icon: 'quanzi',
+        icon: 'apps',
+        color: 'theme',
+        badge: 1,
         needLogin: false,
-        appid: "wxb036cafe2994d7d0",
-        path: "/portal/group-profile/group-profile?group_id=13104375827371700&invite_ticket=BgAARwqnU-49GW8g92KH3E7WFA&fromScene=bizArticle",
-        url: '/pages/tools/summary/summary',
-      },
+        tab:true,
+        name: '全部应用',
+        icon: 'apps',
+        url: '../tool/tool?from=index',
+      }
+      // {
+      //   icon: 'bad',
+      //   color: 'red',
+      //   badge: '新',
+      //   name: '云小圈',
+      //   icon: 'quanzi',
+      //   needLogin: false,
+      //   appid: "wxb036cafe2994d7d0",
+      //   path: "/portal/group-profile/group-profile?group_id=13104375827371700&invite_ticket=BgAAOQPnZwBIXbie9VzbA61wtWz6QPMmh78lsDF6ofDhQxYeLwki4LGpz1Ns33MyJffI00v6&fromScene=bizArticle",
+      //   url: '/pages/tools/summary/summary',
+      // },
     ],
     gridCol: 4,
     news_loading:false,
@@ -113,7 +113,6 @@ Page({
   },
 
   onLoad: function () {
-    var that = this
     //新版本更新提示
     let login_session = wx.getStorageSync('login_session')
     let user_id = wx.getStorageSync('user_id')
@@ -126,7 +125,7 @@ Page({
     let system = wx.getSystemInfoSync()
     var time = (new Date).getTime()
     let add_tips_display = false
-    if ((time - add_tips) / 1000 >= 14 * 24 * 60 * 60){
+    if ((time - add_tips) / 1000 >= 30 * 24 * 60 * 60){
       add_tips_display = true
     }
     this.setData({
@@ -505,23 +504,7 @@ Page({
   //获取考试列表
   getMyExam: function (e) {
     var that = this,displayExam = false;
-    var my_exams = wx.getStorageSync("my_exams");
     var now = util.formatTime2(new Date());
-    if(my_exams){
-      for (let i = 0; i < my_exams.length; i++) {
-        var days = that.dateDiff(my_exams[i].exam_date, now);
-        my_exams[i].days = days;
-        if (my_exams[i].days >= 0) {
-          displayExam = true
-          break;
-        }
-      }
-      that.setData({
-        my_exams: my_exams,
-        displayExam: displayExam,
-      });
-      return
-    }
     app.httpRequest({
       url: 'exam/getmylist',
       success: function (res) {
@@ -530,12 +513,14 @@ Page({
           for (var i = 0; i < data.length; i++) {
             var days = that.dateDiff(data[i].exam_date, now);
             data[i].days = days;
+            if(days > 0){
+              displayExam = true
+            }
           }
           that.setData({
             my_exams: data,
-            displayExam: false,
+            displayExam: displayExam,
           });
-          wx.setStorageSync("my_exams", data)
         } else {
           app.msg(res.data.message)
         }
