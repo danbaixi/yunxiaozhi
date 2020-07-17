@@ -8,7 +8,8 @@ Page({
     loading: true,
     customBar: app.globalData.customBar,
     xuanxiu:false,
-    isNull: false
+    isNull: false,
+    search:''
   },
 
   /**
@@ -62,6 +63,7 @@ Page({
       }
     }
     this.setData({
+      search:val,
       credit: list,
       total: total.toFixed(1),
       xuanxiu: false,

@@ -333,5 +333,10 @@ Page({
       }
     })
     return isExist
+  },
+  viewAllScore:function(){
+    wx.navigateTo({
+      url: '/pages/tools/credit/credit',
+    })
   }
 })

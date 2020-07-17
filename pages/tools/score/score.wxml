@@ -34,9 +34,11 @@
           <radio class="theme margin-left" checked="{{type==1}}"></radio>
           <text bindtap="changeType" data-val="1"> 原始成绩</text>
         </radio-group>
-        <!-- <text class="text-black">当前成绩：</text>
-        <text class="text-gray">{{type==0?'有效':'原始'}}成绩</text>
-        <text class="bg-grey option-btn" bindtap="changeType">切换模式</text> -->
+        <view class="fr">
+          <view class="text-yellow" bindtap="viewAllScore">
+            查看已修科目<text class="icon-right"></text>
+          </view>
+        </view>
       </view>
     </view>
     <view class="score" wx:for="{{termNumber}}" wx:key="key" wx:if="{{term[year[year_index]+'-'+item]}}">

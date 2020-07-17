@@ -24,7 +24,7 @@
 		},
 		"bundle": true,
 		"useIsolateContext": true,
-		"useCompilerModule": false,
+		"useCompilerModule": true,
 		"userConfirmedUseCompilerModuleSwitch": false
 	},
 	"compileType": "miniprogram",
@@ -374,6 +374,13 @@
 					"id": -1,
 					"name": "失物招领",
 					"pathName": "pages/tools/lost/lost",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "找社团",
+					"pathName": "pages/tools/club/club",
 					"scene": null
 				}
 			]

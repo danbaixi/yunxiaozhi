@@ -55,7 +55,8 @@
     "pages/tools/question/question",
     "pages/tools/clockin/list/list",
     "pages/tools/guide/index",
-    "pages/tools/lost/lost"
+    "pages/tools/lost/lost",
+    "pages/tools/club/club"
   ],
   "window": {
     "navigationStyle": "custom",

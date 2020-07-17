@@ -22,18 +22,29 @@
           <text class="text-theme text-bold">{{total}}</text>
         </view>
       </view>
-      <view class="cu-item" wx:for="{{credit}}" wx:key="key" wx:if="{{item.isShow}}" bindtap="itemData" data-index="{{index}}">
-        <view class="content">
-          {{item.name}}
+    </view>
+      <view class="cu-list menu" style="margin-top:0px" wx:for="{{term}}" wx:key="key" wx:for-item="t">
+        <view class="bg-gray padding-sm text-center" wx:if="{{search==''}}">{{t.name}}</view>
+        <view class="cu-item" wx:if="{{search==''}}">
+          <view class="content text-grey text-center">
+            <text class="text-grey">总学分绩点：</text><text class="text-theme text-bold">{{t.creditGpaSum}} </text> 
+            <text class="text-grey"> 总学分：</text><text class="text-theme text-bold">{{t.creditSum}} </text>
+            <text class="text-grey"> 平均绩点：</text><text class="text-yellow text-bold">{{t.gpa}} </text>
+          </view>
         </view>
-        <view class="action">
-          <text class="text-yellow">{{item.score}} </text>
-          <text class="text-gray">学分:</text>
-          <text class="text-theme">{{item.credit}}</text>
+        <view class="cu-item" wx:for="{{credit}}" wx:key="key" wx:if="{{item.isShow&&t.num==item.term}}" bindtap="itemData" data-index="{{index}}">
+          <view class="content">
+            {{item.name}}
+          </view>
+          <view class="action">
+            <text class="text-theme">{{item.score}} </text>
+            <text class="text-gray">学分:</text>
+            <text class="text-theme">{{item.credit}}</text>
+            <text class="text-gray">绩点:</text>
+            <text class="text-yellow">{{item.gpa}}</text>
+          </view>
         </view>
       </view>
     </view>
   </view>
-
-</view>
 <empty display="{{!loading&&isNull}}"></empty>
