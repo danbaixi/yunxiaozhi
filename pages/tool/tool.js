@@ -204,6 +204,15 @@ Page({
         needLogin: false,
         url: '/pages/tools/lost/lost',
       },  
+      // {
+      //   icon: 'bad',
+      //   color: 'red',
+      //   badge: '新',
+      //   name: '找社团',
+      //   icon: 'club',
+      //   needLogin: false,
+      //   url: '/pages/tools/club/club',
+      // },  
     ],
   },
 

@@ -10,7 +10,8 @@ Page({
     user_img:'http://yunxiaozhi-1251388077.cosgz.myqcloud.com/user_imgs/defalut.png',
     fileUrl: 'http://yunxiaozhi-1251388077.cosgz.myqcloud.com/user_imgs/',
     loading:true,
-    uploadFile:''
+    uploadFile:'',
+    nickNameInput:''
   },
 
   /**
@@ -66,6 +67,8 @@ Page({
         user_img: data.user_img ? that.data.fileUrl + data.user_img : (data.avatar ? data.avatar : that.data.fileUrl + 'default.png'),
         user_name: data.user_name,
         xueji: xueji,
+        nickname:data.nickname,
+        avatar:data.avatar,
         loading: false
       });
       
@@ -129,14 +132,15 @@ Page({
   /** 获取昵称 */
   yzmInput: function (e) {
     this.setData({
-      nickName: e.detail.value,
+      nickNameInput: e.detail.value,
     })
   },
   //修改昵称
   UpdateName:function(e){
     var that = this;
-    var nickName = that.data.nickName;
-    if(nickName == that.data.user_name){
+    var nickName = that.data.nickNameInput;
+    if(nickName == '' || nickName == that.data.user_name){
+      app.msg("没有修改内容")
       return
     }
     wx.showLoading({
@@ -152,23 +156,13 @@ Page({
       that.hideModal();
       app.msg(data.message)
       if(data.status == 0){
-        setTimeout(function () {
-          var pages = getCurrentPages();
-          var currPage = pages[pages.length - 1];
-          var prevPage = pages[pages.length - 2];
-          prevPage.setData({
-            isFresh: true
-          });
-          wx.navigateBack({})
-        }, 1000)
+        that.getInfo()
       }
-    }).catch((message) => {
-      app.msg(message)
     })
   },
 
   //更新个人信息
-  infoError:function(){
+  updateInfo:function(){
     let _this = this 
     wx.showLoading({
       title: '正在更新',
@@ -181,6 +175,52 @@ Page({
           return
         }
         _this.getInfo()
+      }
+    })
+  },
+  updateWechat:function(){
+    let _this = this
+    wx.login({
+      success: (res) => {
+        let code = res.code
+        wx.showLoading({
+          title: '更新中',
+        })
+        app.httpRequest({
+          url: 'wechat/wechatLogin',
+          data: {
+            code: code
+          },
+          needLogin: false,
+          success: function (res) {
+            wx.getUserInfo({
+              success: (res) => {
+                app.httpRequest({
+                  url: 'user/updateData',
+                  data: {
+                    code: code,
+                    encryptedData: res.encryptedData,
+                    iv: res.iv,
+                  },
+                  success: function (res) {
+                    app.msg(res.data.message)
+                    if (res.data.status != 0) {
+                      return
+                    }
+                    _this.getInfo()
+                  }
+                })
+              },
+              fail: () => {
+                app.msg('拒绝授权将无法同步微信信息')
+              }
+            })
+          }
+        })
+        
+      },
+      fail: () => {
+        app.msg('初始化失败，请重试')
       }
     })
   }

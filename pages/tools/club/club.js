@@ -10,7 +10,8 @@ Page({
     list:[],
     p:1,
     length:10,
-    search: ''
+    search: '',
+    notMore: false
   },
 
   /**
@@ -59,6 +60,13 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
+    if(!this.data.notMore){
+      this.setData({
+        loading: true,
+        p: this.data.p + 1
+      })
+      this.getList()
+    }
 
   },
 
@@ -94,6 +102,12 @@ Page({
         length: _this.data.length
       },
       success:function(res){
+        let list = _this.data.list
+        if(res.data.data.list.length < _this.data.length){
+          res.data.data.notMore = true
+        }
+        list = list.concat(res.data.data.list)
+        res.data.data.list = list
         _this.setData(res.data.data)
       }
     })

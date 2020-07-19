@@ -322,3 +322,16 @@ ad{
     opacity: 1;
 	}
 }
+/* 透明按钮 */
+.tr-btn{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  z-index: 1;
+}
+.tr-btn::after{
+  border: none
+}

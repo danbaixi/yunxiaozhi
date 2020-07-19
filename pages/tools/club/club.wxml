@@ -28,5 +28,6 @@
         </view>
       </view>
     </view>
+    <view wx:if="{{loading||notMore}}" class="cu-load {{!notMore?'loading':(p>1?'over':'')}}"></view>
   </view>
 </view>

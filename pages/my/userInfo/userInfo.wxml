@@ -14,8 +14,6 @@
         </view>
       </view>
     </view>
-  </view>
-  <view class="cu-list menu">
     <view class="cu-item arrow" bindtap="openUpdateName">
       <view class="content">
         <text class="text-black">昵称</text>
@@ -25,9 +23,12 @@
       </view>
     </view>
   </view>
-  <view class="cu-bar bg-white solid-bottom margin-top">
+  <view class="cu-bar bg-white solid-bottom margin-top" bindtap="updateInfo">
     <view class="action">
       学籍信息
+    </view>
+    <view class="action">
+     同步学籍信息 <text class="icon-right"></text>
     </view>
   </view>
   <list-loading loading="{{loading}}"></list-loading>
@@ -41,9 +42,35 @@
       </view>
     </view>
   </view>
-</view>
-<view class="text-grey text-center margin-top">
-  <text bindtap="infoError">个人信息有误？</text>
+  <view class="cu-bar bg-white solid-bottom margin-top">
+    <view class="action">
+      微信信息
+    </view>
+    <view class="action" bindtap="updateWechat">
+      <button open-type="getUserInfo" class="tr-btn"></button>
+      同步微信信息 <text class="icon-right"></text>
+    </view>
+  </view>
+  <view class="cu-list menu">
+    <view class="cu-item">
+      <view class="content">
+        <text class="text-black">头像</text>
+      </view>
+      <view class="action">
+        <view class="cu-avatar-group">
+          <view class="cu-avatar round sm" style="background-image:url({{avatar}});"></view>
+        </view>
+      </view>
+    </view>
+    <view class="cu-item">
+      <view class="content">
+        <text class="text-black">昵称</text>
+      </view>
+      <view class="action">
+        <text class="text-black text-sm">{{nickname}}</text>
+      </view>
+    </view>
+  </view>
 </view>
 
   <!--修改用户昵称-->
