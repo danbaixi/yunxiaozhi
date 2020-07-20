@@ -11,7 +11,13 @@ Page({
     p:1,
     length:10,
     search: '',
-    notMore: false
+    oldSearch: '',
+    notMore: false,
+    category:[{
+      id:0,
+      name:"全部分类"
+    }],
+    cid:0
   },
 
   /**
@@ -19,6 +25,7 @@ Page({
    */
   onLoad: function (options) {
     this.getList()
+    this.getCategory()
   },
 
   /**
@@ -77,13 +84,17 @@ Page({
 
   },
   searchInput:function(e){
-    let oldSearch = this.data.search
-    let search = e.detail.value
-    if(oldSearch == search){
+    this.setData({
+      search: e.detail.value
+    })
+  },
+  search:function(){
+    if(this.data.search == this.data.oldSearch){
       return
     }
     this.setData({
-      search: search,
+      oldSearch: this.data.search,
+      list: [],
       p:1
     })
     this.getList()
@@ -98,6 +109,7 @@ Page({
       needLogin: false,
       data:{
         search:_this.data.search,
+        cid: _this.data.category[_this.data.cid].id,
         p: _this.data.p,
         length: _this.data.length
       },
@@ -105,6 +117,8 @@ Page({
         let list = _this.data.list
         if(res.data.data.list.length < _this.data.length){
           res.data.data.notMore = true
+        }else{
+          res.data.data.notMore = false
         }
         list = list.concat(res.data.data.list)
         res.data.data.list = list
@@ -115,5 +129,33 @@ Page({
   star:function(){
     app.msg("暂未开放")
     return
+  },
+  //获取分类
+  getCategory:function(){
+    let _this = this
+    app.httpRequest({
+      url:'/club/getCategory',
+      needLogin:false,
+      success:function(res){
+        let category = _this.data.category
+        category = category.concat(res.data.data)
+        _this.setData({
+          category:category
+        })
+      }
+    })
+  },
+  //选择分类
+  selectCategory:function(e){
+    let select = e.detail.value
+    if(select == this.data.cid){
+      return
+    }
+    this.setData({
+      p:1,
+      list:[],
+      cid:select
+    })
+    this.getList()
   }
 })
