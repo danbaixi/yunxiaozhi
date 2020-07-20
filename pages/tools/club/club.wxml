@@ -11,6 +11,7 @@
   </view>
   <view style="margin-top:{{customBar}}px">
     <list-loading loading="{{loading}}"></list-loading>
+    <notice page="club"></notice>
     <view class="cu-list bg-white menu-avatar">
       <view class="cu-item" wx:for="{{list}}" wx:key="key">
         <view class="cu-avatar lg" style="background-image:url({{item.logo}});"></view>
@@ -24,7 +25,7 @@
           <view class="text-red text-xs">
             <text class="icon-hotfill"></text> {{item.star}}
           </view>
-          <view class="cu-tag radius text-white bg-theme sm">点 赞</view>
+          <view class="cu-tag radius text-white bg-theme sm" bindtap="star">点 赞</view>
         </view>
       </view>
     </view>

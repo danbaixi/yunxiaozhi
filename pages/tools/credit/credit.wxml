@@ -39,9 +39,9 @@
           <view class="action">
             <text class="text-theme">{{item.score}} </text>
             <text class="text-gray">学分:</text>
-            <text class="text-theme">{{item.credit}}</text>
+            <text class="text-theme">{{item.course_credit}}</text>
             <text class="text-gray">绩点:</text>
-            <text class="text-yellow">{{item.gpa}}</text>
+            <text class="text-yellow">{{item.gpa?item.gpa:0}}</text>
           </view>
         </view>
       </view>

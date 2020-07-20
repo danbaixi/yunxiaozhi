@@ -111,5 +111,9 @@ Page({
         _this.setData(res.data.data)
       }
     })
+  },
+  star:function(){
+    app.msg("暂未开放")
+    return
   }
 })
