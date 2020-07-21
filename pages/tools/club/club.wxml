@@ -77,7 +77,7 @@
             <text class="text-theme"> 联系　</text>
           </view>
           <view class="content">
-            <text class="text-black">{{list[activeId].linker?list[activeId].linker:''}}{{list[activeId].phone?list[activeId].phone:'无'}}</text>
+            <text class="text-black">{{list[activeId].linker?list[activeId].linker:''}}{{list[activeId].phone?'（'+list[activeId].phone+'）':'无'}}</text>
           </view>
         </view>
       </view>
