@@ -50,9 +50,13 @@
         <view class='cu-item' style="min-height: {{type==0?84:100}}rpx;" wx:for="{{type==0?score:original_score}}" wx:for-item="s" wx:key="key" wx:if="{{s.term == year[year_index]+'-'+item}}" bindtap='itemData' data-index="{{index}}">
           <view class="content" wx:if="{{type==0}}">
             <text class="text-black">{{s.name}}</text>
+            <text class="text-grey" wx:if="{{s.mark!=''&&s.mark!=null}}">({{s.mark}})</text>
           </view>
           <view class="content" wx:else>
-            <view><text class="text-black">{{s.name}}</text></view>
+            <view>
+              <text class="text-black">{{s.name}}</text>
+              <text class="text-grey" wx:if="{{s.mark!=''&&s.mark!=null}}">({{s.mark}})</text>
+            </view>
             <view class="text-sm">
               <text class="text-grey" wx:if="{{s.performance>0}}">平时:<text class="text-theme">{{s.performance}} </text></text>
               <text class="text-grey" wx:if="{{s.middle>0}}">期中:<text class="text-theme">{{s.middle}} </text></text>
@@ -61,7 +65,7 @@
             </view>
           </view>
           <view class="action">
-            <text class="text-theme text-lg">{{s.score}}</text>
+            <text class="text-{{s.score>=60?'theme':'red'}} text-lg">{{s.score}}</text>
           </view>
         </view>
       </view>

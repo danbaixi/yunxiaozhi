@@ -62,6 +62,7 @@ Page({
             top[i].color = num;
           }
           that.setData({
+            className: res.data.data.className,
             avg: res.data.data.avg,
             max: res.data.data.max,
             fail_rate: res.data.data.fail_rate,

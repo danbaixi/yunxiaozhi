@@ -28,10 +28,13 @@
   <view class="text-center text-lg">绩点排行榜</view>
   <view class="text-center text-grey padding-xs" style="position:relative">
     {{termName}}
-    <text class="text-theme view-all" bindtap="viewAll">查看生涯排行<text class="icon-right"></text></text>
+  </view>
+  <view class="text-center text-theme">
+    <text class="text-yellow">{{className}}</text>
+    <text bindtap="viewAll">查看生涯排行<text class="icon-right"></text></text>
   </view>
   <list-loading loading="{{loading}}"></list-loading>
-  <view class="cu-list menu" wx:if="{{user.is_display_name!=1}}">
+  <view class="cu-list menu margin-top-sm" wx:if="{{user.is_display_name!=1}}">
     <view class="cu-item" wx:for="{{top}}" wx:key="key">
       <view class="content">
         <view class="rankNum bg-{{item.rank<=3?rankColor[item.rank-1]:'grey'}}">{{item.rank}}</view>

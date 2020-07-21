@@ -4,3 +4,12 @@
 .cu-list.menu-avatar>.cu-item .flex .text-cut{
   max-width: 100%;
 }
+
+.showItem .cu-list.menu>.cu-item .content {
+  font-size: 26rpx;
+}
+
+.item-content{
+  letter-spacing: 2rpx;
+  line-height: 1.3;
+}

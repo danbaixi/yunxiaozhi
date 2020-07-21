@@ -157,5 +157,17 @@ Page({
       cid:select
     })
     this.getList()
+  },
+  showItem:function(e){
+    let id = e.currentTarget.dataset.index
+    this.setData({
+      showItem:true,
+      activeId: id
+    })
+  },
+  hideItem:function(){
+    this.setData({
+      showItem: false
+    })
   }
 })
