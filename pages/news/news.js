@@ -22,11 +22,11 @@ Page({
   onLoad: function (options) {
     var that = this;
     that.getList(that.data.types[0],20);
-    if (wx.getStorageSync('showRedDot') != 1) {
-      wx.hideTabBarRedDot({
-        index: 2
+    let src = options.src
+    if(src){
+      wx.navigateTo({
+        url: '/pages/article/article?src=' + src,
       })
-      wx.setStorageSync('showRedDot', 1)
     }
   },
 

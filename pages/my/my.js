@@ -247,5 +247,15 @@ Page({
     wx.navigateTo({
       url: '/pages/article/article?src=' + encodeURIComponent(this.data.question_article),
     })
+  },
+  showAddTip:function(){
+    this.setData({
+      add_tips: true
+    })
+  },
+  closeAddTip:function(){
+    this.setData({
+      add_tips: false
+    })
   }
 })

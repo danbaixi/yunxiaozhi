@@ -61,16 +61,43 @@ Page({
         needLogin: true,
         url: '../tools/yct/yct?from=index',
       }, 
+      // {
+      //   icon: 'apps',
+      //   color: 'theme',
+      //   badge: 1,
+      //   needLogin: false,
+      //   tab:true,
+      //   name: '全部应用',
+      //   icon: 'apps',
+      //   url: '../tool/tool?from=index',
+      // }
       {
-        icon: 'apps',
-        color: 'theme',
-        badge: 1,
+        icon: 'evaluate',
+        color: 'red',
+        badge: '新',
+        name: '光速搜题',
+        icon: 'questions',
+        needLogin: true,
+        url: '../tools/question/question?from=index',
+      },
+      {
+        icon: 'bad',
+        color: 'red',
+        badge: '',
+        name: '早起打卡',
+        icon: 'clockin',
         needLogin: false,
-        tab:true,
-        name: '全部应用',
-        icon: 'apps',
-        url: '../tool/tool?from=index',
-      }
+        url: '/pages/tools/clockin/clockin',
+      },
+      {
+        icon: 'bad',
+        color: 'red',
+        badge: '',
+        name: '毕业报告',
+        icon: 'summary',
+        needLogin: false,
+        url: '/pages/tools/summary/summary',
+      }, 
       // {
       //   icon: 'bad',
       //   color: 'red',
@@ -83,7 +110,7 @@ Page({
       //   url: '/pages/tools/summary/summary',
       // },
     ],
-    gridCol: 4,
+    gridCol: 5,
     news_loading:false,
     course_loading:false,
     message_loading:false,
@@ -109,10 +136,13 @@ Page({
     customBar: app.globalData.customBar,
     bgHeight: 180,//背景高度
     bgFix:false,//是否固定背景
-    newVersionTip:false,//新版本提示
+    newVersionTip:false,//新版本提示,
+    articleBanners:[],
+    showNewsList: true
   },
 
   onLoad: function () {
+    this.getArticleBanner()
     //新版本更新提示
     let login_session = wx.getStorageSync('login_session')
     let user_id = wx.getStorageSync('user_id')
@@ -121,17 +151,9 @@ Page({
         newVersionTip: true
       })
     }
-    var add_tips = wx.getStorageSync('add_my_tips')
-    let system = wx.getSystemInfoSync()
-    var time = (new Date).getTime()
-    let add_tips_display = false
-    if ((time - add_tips) / 1000 >= 30 * 24 * 60 * 60){
-      add_tips_display = true
-    }
     this.setData({
       winHeight:system.windowHeight,
       winWidth: system.windowWidth,
-      add_tips: add_tips_display
     })
   },
 
@@ -173,7 +195,7 @@ Page({
     that.getWeekday();//获取星期几
     that.getCourse(that.data.now_week);//获取课表
     that.getMyExam();//获取我的考试
-    that.getNews()
+    //that.getNews()
 
     //判断是否为本班课表
     var tmpClass = wx.getStorageSync('tmp_class')
@@ -663,5 +685,39 @@ Page({
     this.setData({
       newVersionTip:false
     })
+  },
+  //获取文章轮播
+  getArticleBanner:function(){
+    let _this = this
+    app.httpRequest({
+      url: 'article/getArticleBanner',
+      needLogin: false,
+      success:function(res){
+        if(res.data.status == 0){
+          _this.setData({
+            articleBanners:res.data.data
+          })
+        }
+      }
+    })
+  },
+  //点击轮播的文章
+  viewArticle:function(e){
+    let index = e.currentTarget.dataset.index
+    let article = this.data.articleBanners[index]
+    if(this.data.showNewsList){
+      wx.navigateTo({
+        url: '/pages/news/news?src=' + encodeURIComponent(article.src),
+      })
+      this.setData({
+        showNewsList:false
+      })
+    }else{
+      wx.navigateTo({
+        url: '/pages/article/article?src=' + encodeURIComponent(article.src) + '&title=' + article.title + '&img=' + encodeURIComponent(article.img),
+      })
+    }
+
+    
   }
 })

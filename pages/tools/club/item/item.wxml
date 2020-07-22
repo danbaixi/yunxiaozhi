@@ -60,7 +60,7 @@
       </view>
       <view class="cu-item">
         <view class="action">
-          <text class="icon-phone text-theme"></text>
+          <text class="icon-pic text-theme"></text>
           <text class="text-theme"> 相册　</text>
         </view>
         <view class="content text-black">

@@ -16,7 +16,6 @@ page{
 }
 .screen-swiper {
   min-height: 320rpx;
-  border-radius:20rpx;
   overflow: hidden;
   -webkit-backface-visibility: hidden;
   -webkit-transform: translate3d(0, 0, 0);
@@ -219,28 +218,6 @@ page{
   font-weight: bold;
   color: var(--theme);
   padding: 0 10rpx;
-}
-.add_tips{
-  position: absolute;
-  right: 10px;
-  padding: 4px 10px;
-  background: var(--theme);
-  color: #fff;
-  border-radius: 4px;
-  z-index: 9999;
-}
-.add_tips .icon-close{
-  padding: 10px 2px;
-}
-.add_tips::before{
-  content: " ";
-  position: absolute;
-  top: -22px;
-  right: 50px;
-  border-width: 14px;
-  border-style: solid;
-  border-color: transparent var(--theme) transparent transparent;
-  transform: rotate(90deg);
 }
 .like{
   padding: 10rpx 20rpx;

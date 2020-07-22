@@ -19,7 +19,7 @@
     </view>
   </view>
   <view style="margin-top:100rpx">
-    <notice page="club"></notice>
+    <view class="padding-sm"><notice page="club"></notice></view>
     <empty display="{{!loading&&list.length==0}}"></empty>
     <view class="cu-list bg-white menu-avatar">
       <view class="cu-item" wx:for="{{list}}" wx:key="key">

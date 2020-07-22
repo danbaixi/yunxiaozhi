@@ -23,7 +23,7 @@ Page({
     app.isLogin('/' + this.route).then((res) => {
       if (res) {
         this.init()
-        this.showTips()
+        // this.showTips()
       }
     })
 

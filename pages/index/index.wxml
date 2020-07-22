@@ -1,10 +1,9 @@
- <view class="bg" style="display:flex;">
-  <image src='/pages/assets/imgs/other/index_bg.png' mode='aspectFill' class='png' style='width:{{winWidth}}px;height:{{bgHeight}}px'></image>
-  <view class="add_tips shadow" style="top:{{customBar + 8}}px" wx:if="{{add_tips}}">
-    点击<text class="icon-more"></text>添加到"我的小程序"，随时随地看课表
-    <text class="icon-close" bindtap="close_tips"></text>
-  </view>
-</view>
+<swiper class="screen-swiper square-dot" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500">
+  <swiper-item wx:for="{{articleBanners}}" wx:key bindtap="viewArticle" data-index="{{index}}">
+    <image src="{{item.img}}" mode="aspectFill"></image>
+    <view><text>{{item.title}}</text></view>
+  </swiper-item>
+</swiper>
 <view class="container">
   <view class="cu-list grid col-{{gridCol}} no-border tools">
     <view class="cu-item" wx:for="{{tools}}" wx:key="key" data-tab="{{item.tab}}" data-url="{{item.url}}"  data-appid="{{item.appid}}" data-path="{{item.path}}" data-needLogin="{{item.needLogin}}" bindtap='openTool'>
@@ -81,7 +80,7 @@
     </view>
   </view>
 
-  <view class='box' wx:if="{{display_news}}" bindtap='viewAllNews'>
+  <!-- <view class='box' wx:if="{{display_news}}" bindtap='viewAllNews'>
     <view class="cu-bar bg-white solid-bottom arrow">
       <view class="action">
         <text class="text-black text-xl text-bold">校园头条</text>
@@ -96,7 +95,7 @@
       </view>
       <view class="padding-top-xs text-black text-lg">{{news.title}}</view>
     </view>
-  </view>
+  </view> -->
 </view>
 
 <view class="cu-modal {{newVersionTip?'show':''}}">
