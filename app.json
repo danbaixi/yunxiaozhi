@@ -56,7 +56,8 @@
     "pages/tools/clockin/list/list",
     "pages/tools/guide/index",
     "pages/tools/lost/lost",
-    "pages/tools/club/club"
+    "pages/tools/club/club",
+    "pages/tools/club/item/item"
   ],
   "window": {
     "navigationStyle": "custom",

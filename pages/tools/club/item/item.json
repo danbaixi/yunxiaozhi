@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "copy" : "/pages/components/copy/copy"
+  },
+  "navigationBarTitleText": "找社团 - 云小智"
+}

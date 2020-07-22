@@ -1,0 +1,38 @@
+.logo{
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 50%;
+  box-shadow: 0 0 2px 2px rgba(0,0,0,.2);
+}
+.cu-list.menu>.cu-item .content {
+  font-size: 28rpx;
+}
+.header{
+  width: 100%;
+  height: 340rpx;
+  position: relative;
+  overflow: hidden;
+}
+.name{
+  letter-spacing: 4px;
+  font-weight: bold;
+  padding: 8px 20px;
+  border-radius: 30rpx;
+}
+.bg{
+  width: 100%;
+  height: 340rpx;
+  position: absolute;
+  top: 0;
+  left: 0;
+  filter: blur(4px);
+  z-index: -1;
+}
+.star{
+  position: absolute;
+  top: 20rpx;
+  right: 20rpx;
+}
+.star-btn{
+  border: 1px solid var(--red);
+}

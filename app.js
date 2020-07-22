@@ -76,7 +76,7 @@ App({
    * 获取请求domain
    */
   getDomain:function(){
-    return this.globalData.isDebug ? (this.globalData.isTest ? 'https://www.yunxiaozhi.cn/test/public/api/' : 'https://danbaixi.utools.club/yxz_v1/public/index.php/api/') : 'https://www.yunxiaozhi.cn/v1/public/api/'
+    return this.globalData.isDebug ? (this.globalData.isTest ? 'https://www.yunxiaozhi.cn/test/public/api/' : 'http://yxz.cn/api/') : 'https://www.yunxiaozhi.cn/v1/public/api/'
   },
 
   getSign:function(){
@@ -367,5 +367,18 @@ App({
   //判断是否是默认昵称
   isDefaultNickname:function(nickname){
     return nickname.indexOf('yxz_') === -1 ? false : true
+  },
+  //函数防抖
+  debounce:function(fn,delay){
+    let timer = null
+    return function(args){
+      let _this = this
+      clearInterval(timer)
+      timer = setTimeout(function(){
+        fn.call(_this,args)
+      },delay)
+    }
   }
+  //函数节流
+
 })

@@ -381,6 +381,14 @@
 					"id": -1,
 					"name": "找社团",
 					"pathName": "pages/tools/club/club",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "社团详情",
+					"pathName": "pages/tools/club/item/item",
+					"query": "id=2",
 					"scene": null
 				}
 			]

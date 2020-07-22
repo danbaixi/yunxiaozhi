@@ -17,7 +17,7 @@ Page({
       id:0,
       name:"全部分类"
     }],
-    cid:0
+    cid:0,
   },
 
   /**
@@ -101,6 +101,7 @@ Page({
   },
   getList:function(){
     let _this = this 
+    let stu_id = wx.getStorageSync('user_id')
     _this.setData({
       loading: true
     })
@@ -111,7 +112,8 @@ Page({
         search:_this.data.search,
         cid: _this.data.category[_this.data.cid].id,
         p: _this.data.p,
-        length: _this.data.length
+        length: _this.data.length,
+        stu_id:stu_id
       },
       success:function(res){
         let list = _this.data.list
@@ -125,10 +127,6 @@ Page({
         _this.setData(res.data.data)
       }
     })
-  },
-  star:function(){
-    app.msg("暂未开放")
-    return
   },
   //获取分类
   getCategory:function(){
@@ -159,15 +157,42 @@ Page({
     this.getList()
   },
   showItem:function(e){
-    let id = e.currentTarget.dataset.index
-    this.setData({
-      showItem:true,
-      activeId: id
+    let id = e.currentTarget.dataset.id
+    wx.navigateTo({
+      url: '/pages/tools/club/item/item?id=' + id,
     })
   },
-  hideItem:function(){
-    this.setData({
-      showItem: false
+  star:function(e){
+    let _this = this
+    let stu_id = wx.getStorageSync('user_id')
+    let index = e.currentTarget.dataset.index
+    let cid = _this.data.list[index].id
+    if(stu_id == ''){
+      app.msg("登录后才能点赞哦")
+      return
+    }
+    if(_this.data.list[index].stared == 1){
+      app.msg("你已经点过赞啦！")
+      return
+    }
+    app.httpRequest({
+      url: 'club/star',
+      method: 'POST',
+      data:{
+        cid:cid,
+        stu_id:stu_id
+      },
+      success:function(res){
+        app.msg(res.data.message)
+        if(res.data.status == 0){
+          let list = _this.data.list
+          list[index].star++
+          list[index].stared = 1
+          _this.setData({
+            list:list
+          })
+        }
+      }
     })
   }
 })

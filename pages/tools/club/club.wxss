@@ -1,5 +1,5 @@
 .cu-list.menu-avatar>.cu-item .content{
-  width: calc(100% - 96rpx - 60rpx - 10rpx);
+  width: calc(100% - 96rpx - 120rpx - 60rpx - 10rpx);
 }
 .cu-list.menu-avatar>.cu-item .flex .text-cut{
   max-width: 100%;

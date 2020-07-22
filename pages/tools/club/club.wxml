@@ -22,9 +22,9 @@
     <notice page="club"></notice>
     <empty display="{{!loading&&list.length==0}}"></empty>
     <view class="cu-list bg-white menu-avatar">
-      <view class="cu-item" wx:for="{{list}}" wx:key="key" bindtap="showItem" data-index="{{index}}">
-        <view class="cu-avatar lg" style="background-image:url({{item.logo}});"></view>
-        <view class="content">
+      <view class="cu-item" wx:for="{{list}}" wx:key="key">
+        <view class="cu-avatar lg" style="background-image:url({{item.logo}});" bindtap="showItem" data-id="{{item.id}}"></view>
+        <view class="content" bindtap="showItem" data-id="{{item.id}}">
           <view class="text-theme">
             {{item.name}}
             <text class="text-xs padding-left-sm text-gray">[{{item.category}}类]</text>
@@ -33,57 +33,13 @@
             <text class="text-cut">{{item.desc}}</text>
           </view>
         </view>
-        <!-- <view class="action">
+        <view class="action" bindtap="star" data-index="{{index}}">
           <view class="text-red">
-            <text class="icon-hotfill"></text> {{item.star}}
+            <text class="icon-like{{item.stared==1?'fill':''}}"></text> {{item.star}}
           </view>
-        </view> -->
+        </view>
       </view>
     </view>
     <view wx:if="{{loading||notMore}}" class="cu-load {{!notMore?'loading':(p>1?'over':'')}}"></view>
-  </view>
-</view>
-<view class="cu-modal {{showItem?'show':''}}">
-  <view class="cu-dialog">
-    <view class="cu-bar bg-gray justify-end">
-      <view class="content">{{list[activeId].name}}</view>
-      <view class="action" bindtap="hideItem">
-        <text class="icon-close text-yellow"></text>
-      </view>
-    </view>
-    <view class="showItem bg-white text-left padding-bottom-sm">
-      <view class="cu-list menu sm-border">
-        <view class="cu-item">
-          <view class="action">
-            <text class="icon-apps text-theme"></text>
-            <text class="text-theme"> 类型　</text>
-          </view>
-          <view class="content">
-            <text class="text-black">{{list[activeId].category}}</text>
-          </view>
-        </view>
-        <view class="cu-item">
-          <view class="action">
-            <text class="icon-newshot text-theme"></text>
-            <text class="text-theme"> 简介　</text>
-          </view>
-          <view class="content">
-            <text class="text-black">{{list[activeId].desc}}</text>
-          </view>
-        </view>
-        <view class="cu-item">
-          <view class="action">
-            <text class="icon-phone text-theme"></text>
-            <text class="text-theme"> 联系　</text>
-          </view>
-          <view class="content">
-            <text class="text-black">{{list[activeId].linker?list[activeId].linker:''}}{{list[activeId].phone?'（'+list[activeId].phone+'）':'无'}}</text>
-          </view>
-        </view>
-      </view>
-      <view class="bg-white padding-left padding-right item-content">
-        <text class="text-black">{{list[activeId].content}}</text>
-      </view>
-    </view>
   </view>
 </view>
