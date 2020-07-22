@@ -8,13 +8,23 @@
   <view class="header text-center padding">
     <image class="bg" src="{{club.logo}}" mode="widthFix"></image>
     <view><image class="logo shadow-blur" mode="widthFix" src="{{club.logo}}"></image></view>
-    <view class="padding-sm margin-top-sm">
-      <text class="text-white bg-yellow name shadow-blur">{{club.name}}</text>
+    <view class="padding-sm">
+      <view><text class="text-white bg-yellow name shadow-blur">{{club.name}}</text></view>
+      <view class="margin-top">
+        <button class="cu-btn text-red bg-white star-btn" bindtap="star">
+          <text class="icon-like{{stared==1?'fill':''}}"></text>
+          <text class="padding-left-xs">{{club.star}}</text>
+        </button>
+      </view>
     </view>
-    <view class="star">
-      <button class="cu-btn text-red bg-white star-btn" bindtap="star">
-        <text class="icon-like{{stared==1?'fill':''}}"></text>
-        <text class="padding-left-xs">{{club.star}}</text>
+    <view class="share-btn options">
+      <button class="cu-btn text-theme padding-xs bg-white sm" open-type='share'>
+        <text class="icon-share"></text><text class="padding-left-xs">分享</text>
+      </button>
+    </view>
+    <view class="edit-btn options">
+      <button class="cu-btn text-yellow padding-xs bg-white sm" bindtap="edit">
+        <text class="icon-edit"></text><text class="padding-left-xs">编辑</text>
       </button>
     </view>
   </view>
@@ -27,7 +37,6 @@
         </view>
         <view class="content">
           <text class="text-black">{{club.category_name}}</text>
-          <text class="fr text-theme shadow-blur" bindtap="edit"><text class="icon-edit"></text> 编辑</text>
         </view>
       </view>
       <view class="cu-item">

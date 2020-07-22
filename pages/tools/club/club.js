@@ -81,7 +81,9 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: '找社团 - 上云小智'
+    }
   },
   searchInput:function(e){
     this.setData({

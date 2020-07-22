@@ -74,7 +74,10 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: "欢迎加入我们" + this.data.club.name,
+      imageUrl: this.data.club.logo
+    }
   },
   //获取详情
   getItem:function(){
