@@ -76,7 +76,7 @@ Page({
         color: 'red',
         badge: '新',
         name: '光速搜题',
-        icon: 'questions',
+        icon: 'question',
         needLogin: true,
         url: '../tools/question/question?from=index',
       },
@@ -151,10 +151,6 @@ Page({
         newVersionTip: true
       })
     }
-    this.setData({
-      winHeight:system.windowHeight,
-      winWidth: system.windowWidth,
-    })
   },
 
   onShow:function(){
