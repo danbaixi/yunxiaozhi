@@ -58,7 +58,8 @@
     "pages/tools/lost/lost",
     "pages/tools/club/club",
     "pages/tools/club/item/item",
-    "pages/tools/course/category/category"
+    "pages/tools/course/category/category",
+    "pages/tools/city/city"
   ],
   "window": {
     "navigationStyle": "custom",

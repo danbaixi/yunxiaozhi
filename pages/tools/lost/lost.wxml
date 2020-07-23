@@ -10,7 +10,7 @@
       <input type="text" placeholder="搜索物品、地址、特征" confirm-type="search" bindinput="search"></input>
     </view>
   </view>
-  <view class="padding" style="margin-top:{{customBar}}px">
+  <view class="padding" style="margin-top:100rpx">
     <view class="text-theme bg-gray padding-sm y-radius">{{notice}}</view>
   </view>
   <view style="margin-top:6px" wx:if="{{!isNull}}">

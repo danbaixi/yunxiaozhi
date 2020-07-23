@@ -1,5 +1,6 @@
 {
   "usingComponents": {
+    "notice": "/pages/components/notice/notice",
     "copy" : "/pages/components/copy/copy"
   },
   "navigationBarTitleText": "找社团 - 云小智"

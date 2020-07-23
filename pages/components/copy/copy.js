@@ -7,7 +7,7 @@ Component({
     content:{
       type: 'String',
       value: ''
-    }
+    },
   },
 
   /**

@@ -18,9 +18,7 @@
   </view>
   <list-loading loading="{{loading}}"></list-loading>
   <view class="container" wx:if="{{!isNull && !loading}}">
-    <view class="score" style="padding:0">
-      <notice page="score"></notice>
-    </view>
+    <notice page="score"></notice>
     <view class="info score">
       <view class="padding-bottom-sm">
         <text class="text-black">上次更新：</text>

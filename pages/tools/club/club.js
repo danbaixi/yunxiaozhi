@@ -82,7 +82,7 @@ Page({
    */
   onShareAppMessage: function () {
     return {
-      title: '找社团 - 上云小智'
+      title: '找社团，上云小智'
     }
   },
   searchInput:function(e){

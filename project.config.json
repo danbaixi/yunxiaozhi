@@ -390,6 +390,13 @@
 					"pathName": "pages/tools/club/item/item",
 					"query": "id=2",
 					"scene": null
+				},
+				{
+					"id": 50,
+					"name": "找同乡",
+					"pathName": "pages/tools/city/city",
+					"query": "",
+					"scene": null
 				}
 			]
 		}

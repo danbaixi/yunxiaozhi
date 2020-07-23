@@ -18,8 +18,8 @@
       <button class="cu-btn bg-theme round" bindtap="search">搜索</button>
     </view>
   </view>
-  <view style="margin-top:100rpx">
-    <view class="padding-sm"><notice page="club"></notice></view>
+  <view style="margin-top:120rpx">
+    <notice page="club"></notice>
     <empty display="{{!loading&&list.length==0}}"></empty>
     <view class="cu-list bg-white menu-avatar">
       <view class="cu-item" wx:for="{{list}}" wx:key="key">
