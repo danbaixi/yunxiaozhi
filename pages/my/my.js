@@ -65,6 +65,9 @@ Page({
   },
 
   onPullDownRefresh: function () {
+    if (!app.getUserId()) {
+      return
+    }
     this.getUserInfo();
     this.getCountData();
     setTimeout(() => {
@@ -233,6 +236,9 @@ Page({
 
   //获取水电
   getQuantityData: function () {
+    if (!app.getUserId()) {
+      return
+    }
     let _this = this
     app.httpRequest({
       url: 'dormitory/getQuantityDetail',

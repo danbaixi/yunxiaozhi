@@ -521,6 +521,9 @@ Page({
   },
   //获取考试列表
   getMyExam: function (e) {
+    if (!app.getUserId()){
+      return
+    }
     var that = this,displayExam = false;
     var now = util.formatTime2(new Date());
     app.httpRequest({
