@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "copy": "/pages/components/copy/copy",
+    "notice": "/pages/components/notice/notice"
+  },
+  "navigationBarTitleText": "找同乡 - 云小智"
+}

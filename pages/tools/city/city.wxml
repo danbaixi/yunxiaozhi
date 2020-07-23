@@ -1,0 +1,35 @@
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">找同乡</view>
+</cu-custom>
+<view class="container" style="top:{{customBar}}px">
+  <view class="cu-bar bg-white search fixed" style="top:{{customBar}}px">
+    <view class="search-form round">
+      <text class="icon-search"></text>
+      <input type="text" placeholder="搜索地区名称" confirm-type="search" bindinput="searchInput"></input>
+    </view>
+    <view class="action">
+      <button class="cu-btn bg-theme round" bindtap="search">搜索</button>
+    </view>
+  </view>
+  <view style="margin-top:120rpx">
+    <notice page="city"></notice>
+    <empty display="{{!loading&&list.length==0}}"></empty>
+    <view class="cu-list menu sm-border">
+      <view class="cu-item arrow" wx:for="{{list}}" wx:key="key" bindtap="viewItem" data-index="{{index}}">
+        <view class="content padding-tb-sm">
+          <view class="text-theme">{{item.name}}</view>
+          <view class="text-gray text-sm">
+            <text class="padding-right-sm">负责人：<text class="text-yellow">{{item.linker}}</text></text>
+            <text>微信：<text class="text-green">{{item.phone}}</text></text>
+            <copy content="{{item.phone}}"></copy>
+          </view>
+        </view>
+        <view class="action">
+          <view>群二维码</view>
+        </view>
+      </view>
+    </view>
+    <view wx:if="{{loading||notMore}}" class="cu-load {{!notMore?'loading':(p>1?'over':'')}}"></view>
+  </view>
+</view>
