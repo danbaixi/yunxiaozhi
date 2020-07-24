@@ -243,7 +243,7 @@ Page({
         name: '找同乡',
         icon: 'tongxiang',
         needLogin: false,
-        url: '/pages/tools/club/club'
+        url: '/pages/tools/city/city'
       }, 
       // {
       //   icon: 'bad',

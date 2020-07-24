@@ -14,9 +14,14 @@ Page({
   onLoad: function (options) {
     this.setData({
       src: decodeURIComponent(options.src),
-      img: decodeURIComponent(options.img),
+      img: options.img === undefined ? '' : decodeURIComponent(options.img),
       title: options.title
     })
+    if(options.title !== undefined){
+      wx.setNavigationBarTitle({
+        title:options.title
+      })
+    }
   },
 
   /**
