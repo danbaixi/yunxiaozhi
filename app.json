@@ -59,7 +59,8 @@
     "pages/tools/club/club",
     "pages/tools/club/item/item",
     "pages/tools/course/category/category",
-    "pages/tools/city/city"
+    "pages/tools/city/city",
+    "pages/tools/guide/west/west"
   ],
   "window": {
     "navigationStyle": "custom",
