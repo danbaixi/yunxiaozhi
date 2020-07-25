@@ -75,7 +75,7 @@ Page({
    */
   onShareAppMessage: function () {
     return {
-      title: '快速找到白云同乡会'
+      title: '快来找到你的白云同乡会'
     }
   },
   searchInput: function (e) {
@@ -122,14 +122,12 @@ Page({
   },
   viewItem:function(e){
     let index = e.currentTarget.dataset.index
-    if(this.data.list[index].qrcode == ''){
-      app.msg("暂无群信息")
+    if(this.data.list[index].url == ''){
+      app.msg("信息待补充")
       return
     }
-    app.msg("长按识别直接加群")
-    wx.previewImage({
-      current: this.data.list[index].qrcode,
-      urls: [this.data.list[index].qrcode]
+    wx.navigateTo({
+      url: '/pages/article/article?src=' + encodeURIComponent(this.data.list[index].url) + '&title=' + this.data.list[index].name + '详情',
     })
   }
 })

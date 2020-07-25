@@ -2,6 +2,22 @@
 var app = getApp();
 Page({
   data: {
+    display:false,
+    area:[
+      {
+        id:1,
+        title:'西校区',
+        img: 'west',
+        color:'theme'
+      },
+      {
+        id:2,
+        title:'北校区',
+        img: 'north',
+        color:'yellow'
+      },
+    ],
+    areaId:0,
     subkey:"5FSBZ-ZRAWW-JXRRH-O7TQF-2QDUH-2YFHU",//腾讯地图样式key
     fullscreen: false,//全屏
     latitude: 23.272355,//纬度
@@ -26,7 +42,7 @@ Page({
   onLoad: function () {
     var self = this;
     //载入学校位置数据
-    self.loadSchoolConf()
+    self.loadData()
     //如果已经授权，提前获取定位信息
     wx.getSetting({
       success(res) {
@@ -142,66 +158,29 @@ Page({
   },
 
   //读取地图数据
-  loadNetWorkScoolConf: function () {
+  loadData: function () {
     var self = this
-    return new Promise(function (resolve, reject) {
-      if (!app.globalData.isDebug) {
-        // 优先读取缓存信息
-        var map = wx.getStorageSync('map')
-        if (map) {
-          self.setData({
-            buildlData:map
-          })
-        }
-        // 再加载网络数据
-        wx.request({
-          url: app.globalData.markers_json,
-          header: {
-            'content-type': 'application/json'
-          },
-          success: function (res) {
-            if (res.data.map && res.data.map.length > 0) {
-              //刷新数据
-              self.setData({
-                buildlData: res.data.map
-              })
-              // 存储学校位置数据于缓存中
-              wx.setStorage({
-                key: "map",
-                data: res.data.map
-              })
+    wx.request({
+      url: app.globalData.markers_json,
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+        console.log(res)
+        if (res.data.map && res.data.map.length > 0) {
+          let maps = res.data.map
+          for (let i = 0; i < maps.length; i++) {
+            for (let b = 0; b < maps[i].data.length; b++) {
+              maps[i].data[b].id = b + 1;
             }
-          },
-          complete: function (info) {
-            resolve();
           }
-        })
-      } else {
-        resolve();
-      }
-    });
-  },
-
-
-  loadSchoolConf: function () {
-    var self = this
-    // 载入本地数据
-    var maps = require('../../../pages/assets/resources/markers.js');
-    // console.log(JSON.stringify(maps))
-    maps = maps.map
-    self.loadNetWorkScoolConf().then(function () {
-      // 渲染id
-      for (let i = 0; i < maps.length; i++) {
-        for (let b = 0; b < maps[i].data.length; b++) {
-          maps[i].data[b].id = b + 1;
+          self.setData({
+            buildlData:maps
+          })
+          self.getPoints(self.data.isSelectedBuildType)
         }
       }
-      self.setData({
-        buildlData:maps
-      })
-      self.getPoints(self.data.isSelectedBuildType)
     })
-
   },
   hideModal:function(){
     this.setData({
@@ -217,6 +196,17 @@ Page({
     var url = "/pages/tools/guide/item/item?name=" + item['name'] + '&info=' + encodeURIComponent(item.info) + '&imgs=' + encodeURIComponent(JSON.stringify(item.imgs))
     wx.navigateTo({
       url: url,
+    })
+  },
+  //选择校区
+  selectArea:function(e){
+    let index = e.currentTarget.dataset.index
+    if(index == 1){
+      app.msg("正在完善数据，尽情期待")
+      return
+    }
+    this.setData({
+      areaId:this.data.area[index].id
     })
   }
 })
