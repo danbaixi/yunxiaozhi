@@ -109,6 +109,7 @@ Page({
     var that = this;
     wx.showLoading({
       title: '加载中...',
+      mask: true
     })
     app.httpRequest({
       url: 'exam/getlist',

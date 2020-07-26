@@ -89,6 +89,7 @@ Page({
     let _this = this
     wx.showLoading({
       title: '正在加载',
+      mask: true
     })
     app.httpRequest({
       url: 'clockin/getListForMonth',

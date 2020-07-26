@@ -7,7 +7,7 @@
   </view>
 
   <view class="cu-list grid col-{{gridCol}}">
-    <view class="cu-item" wx:for="{{study}}" wx:key="key" data-url="{{item.url}}" data-needLogin="{{item.needLogin}}" data-appid="{{item.appid}}" data-path="{{item.path}}" bindtap='openTool'>
+    <view class="cu-item" wx:for="{{study}}" wx:key="key" data-url="{{item.url}}" data-needLogin="{{item.needLogin}}" data-appid="{{item.appid}}" data-path="{{item.path}}" data-needlogin="{{item.needLogin}}" bindtap='openTool'>
       <view class="app-icon">
         <image mode="widthFix" src="/pages/assets/imgs/app_icon/{{item.icon}}.png"></image>
         <view class="cu-tag badge" wx:if="{{item.badge!=0}}">

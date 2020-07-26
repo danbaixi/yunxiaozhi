@@ -221,6 +221,7 @@ Page({
         let src = tempFilePaths[0]
         wx.showLoading({
           title: '正在加载...',
+          mask: true
         })
         wx.navigateTo({
           url: `../../cropper/cropper?type=course&src=${src}`,

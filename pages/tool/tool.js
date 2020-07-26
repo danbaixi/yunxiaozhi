@@ -166,7 +166,7 @@ Page({
         badge: '',
         name: '早起打卡',
         icon: 'clockin',
-        needLogin: false,
+        needLogin: true,
         url: '/pages/tools/clockin/clockin',
       }, 
       {
@@ -184,7 +184,7 @@ Page({
         badge: '',
         name: '毕业报告',
         icon: 'summary',
-        needLogin: false,
+        needLogin: true,
         url: '/pages/tools/summary/summary',
       },  
       {
@@ -222,6 +222,15 @@ Page({
         icon: 'bad',
         color: 'red',
         badge: '',
+        name: '白云全景',
+        icon: 'quanjing',
+        needLogin: false,
+        url: '../article/article?src=' + encodeURIComponent('http://mp.weixin.qq.com/s?__biz=MzI1NTUwNDIzNQ==&mid=100002341&idx=1&sn=1d54568ca181716cd011a2d444803254&chksm=6a35b0215d4239373e29ce64ccaceb9f3b9e4522065e4e2cf58c5c3a50ff27b030ca03f5abb2#rd') + '&title=广东白云学院校园全景',
+      },
+      {
+        icon: 'bad',
+        color: 'red',
+        badge: '',
         name: '找社团',
         icon: 'club',
         needLogin: false,
@@ -234,7 +243,7 @@ Page({
         name: '找群聊',
         icon: 'qunliao',
         needLogin: false,
-        url: '../article/article?src=' + encodeURIComponent('http://mp.weixin.qq.com/s?__biz=MzI1NTUwNDIzNQ==&mid=100002002&idx=1&sn=79069994b1793c33e8ce49431c1d0bd6&chksm=6a35b2d65d423bc097f66072ce82aa4aecc9a1b12da127418eb273f43ce16b4b68f8cde2afc4#rd'),
+        url: '../article/article?src=' + encodeURIComponent('http://mp.weixin.qq.com/s?__biz=MzI1NTUwNDIzNQ==&mid=100002002&idx=1&sn=79069994b1793c33e8ce49431c1d0bd6&chksm=6a35b2d65d423bc097f66072ce82aa4aecc9a1b12da127418eb273f43ce16b4b68f8cde2afc4#rd' + "&title=云小智邀请你加入群聊"),
       }, 
       {
         icon: 'bad',
@@ -253,7 +262,7 @@ Page({
       //   icon: 'dianhua',
       //   needLogin: false,
       //   url: '/pages/tools/club/club',
-      // }, 
+      // },  
     ]
   },
 
@@ -275,12 +284,13 @@ Page({
     var that = this;
     var url = e.currentTarget.dataset.url;
     var user_id = wx.getStorageSync('user_id');
+    console.log(user_id)
     var appid = e.currentTarget.dataset.appid
     var path = e.currentTarget.dataset.path
-    var needLogin = e.currentTarget.dataset.needLogin
-    if (!user_id && needLogin) {
+    var needLogin = e.currentTarget.dataset.needlogin
+    if (user_id == '' && needLogin) {
       app.msg("请先登录")
-      return;
+      return
     }
     if(appid){
       wx.navigateToMiniProgram({

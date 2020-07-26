@@ -46,7 +46,10 @@ Page({
    */
   getNewsItem:function(num){
     var that = this;
-    wx.showLoading({title:"加载中"})
+    wx.showLoading({
+      title: "加载中",
+      mask: true
+    })
     wx.request({
       url: app.globalData.domain + 'news/getitem',
       data:{

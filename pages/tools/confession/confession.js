@@ -95,6 +95,7 @@ Page({
     }
     wx.showLoading({
       title: '正在提交',
+      mask: true
     })
     app.httpRequest({
       url:'confession/add',

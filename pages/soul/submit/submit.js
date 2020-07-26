@@ -39,6 +39,7 @@ Page({
     let _this = this
     wx.showLoading({
       title: '提交中',
+      mask: true
     })
     app.httpRequest({
       url:'soul/create',

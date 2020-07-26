@@ -41,25 +41,6 @@ Page({
   },
   onLoad: function () {
     var self = this;
-    //载入学校位置数据
-    self.loadData()
-    //如果已经授权，提前获取定位信息
-    wx.getSetting({
-      success(res) {
-        if (res.authSetting['scope.userLocation']) {
-          //获取地理位置
-          wx.getLocation({
-            type: 'wgs84', // 默认为 wgs84 返回 gps 坐标，gcj02 返回可用于 wx.openLocation 的坐标  
-            success: function (res) {
-              self.globalData.latitude = res.latitude;
-              self.globalData.longitude = res.longitude;
-              self.globalData.islocation = true
-            }
-          })
-        }
-      }
-    })
-    
     wx.getSystemInfo({
       success: function (res) {
         //获取当前设备宽度与高度，用于定位控键的位置
@@ -160,13 +141,17 @@ Page({
   //读取地图数据
   loadData: function () {
     var self = this
+    wx.showLoading({
+      title: '正在加载...',
+      mask: true
+    })
     wx.request({
-      url: app.globalData.markers_json,
+      url: self.getUrl(),
       header: {
         'content-type': 'application/json'
       },
       success: function (res) {
-        console.log(res)
+        wx.hideLoading()
         if (res.data.map && res.data.map.length > 0) {
           let maps = res.data.map
           for (let i = 0; i < maps.length; i++) {
@@ -208,5 +193,19 @@ Page({
     this.setData({
       areaId:this.data.area[index].id
     })
+    this.loadData()
+  },
+  getUrl:function(){
+    let url = 'http://danbaixi.utools.club/yxz_v1/resource/guide/'
+    if (!app.globalData.isDebug){
+      url = 'https://www.yunxiaozhi.cn/v1/resource/guide/'
+    }
+    if(this.data.areaId == 0){
+      return false;
+    }else if(this.data.areaId == 1){
+      return url + 'west.json'
+    }else if(this.data.areaId == 2){
+      return url + 'north.json'
+    }
   }
 })

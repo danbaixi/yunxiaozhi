@@ -128,6 +128,7 @@ Page({
   select: function (e) {
     wx.showLoading({
       title: '正在加载',
+      mask: true
     })
     var that = this
     var number = e.currentTarget.dataset.number
@@ -162,6 +163,7 @@ Page({
       if(resolve){
         wx.showLoading({
           title: '正在切换',
+          mask: true
         })
         app.promiseRequest({
           url: 'course/getList'

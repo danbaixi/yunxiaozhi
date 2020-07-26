@@ -97,6 +97,7 @@ Page({
     }
     wx.showLoading({
       title: '努力评教中...',
+      mask: true
     })
     app.httpRequest({
       url: 'access/accessing',
@@ -214,6 +215,7 @@ Page({
     }else{
       wx.showLoading({
         title: '加载中',
+        mask: true
       })
     }
     var user_id = wx.getStorageSync('user_id');

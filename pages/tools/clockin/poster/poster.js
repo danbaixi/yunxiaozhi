@@ -69,6 +69,7 @@ Page({
     let _this = this
     wx.showLoading({
       title: '生成中...',
+      mask: true
     })
     app.httpRequest({
       url:'clockin/getPoster',

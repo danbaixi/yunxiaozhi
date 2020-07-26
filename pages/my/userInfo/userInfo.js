@@ -145,6 +145,7 @@ Page({
     }
     wx.showLoading({
       title: '提交中',
+      mask: true
     })
     app.promiseRequest({
       url: 'user/alternickname',
@@ -166,6 +167,7 @@ Page({
     let _this = this 
     wx.showLoading({
       title: '正在更新',
+      mask: true
     })
     app.httpRequest({
       url:'user/updateInfo',
@@ -185,6 +187,7 @@ Page({
         let code = res.code
         wx.showLoading({
           title: '更新中',
+          mask: true
         })
         app.httpRequest({
           url: 'wechat/wechatLogin',

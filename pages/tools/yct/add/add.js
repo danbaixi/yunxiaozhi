@@ -29,6 +29,7 @@ Page({
     }
     wx.showLoading({
       title: '提交中...',
+      mask: true
     })
     app.httpRequest({
       url: 'yct/addlist',

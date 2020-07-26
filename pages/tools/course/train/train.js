@@ -50,6 +50,7 @@ Page({
     let _this = this
     wx.showLoading({
       title: '更新中...',
+      mask: true
     })
     app.httpRequest({
       url:'course/updateTrainCourse',

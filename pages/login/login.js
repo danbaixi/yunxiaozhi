@@ -128,7 +128,8 @@ Page({
     wx.getUserInfo({
       success: (userInfo) => {
         wx.showLoading({
-          title: '正在登录'
+          title: '正在登录',
+          mask: true
         })
         if(_this.data.code){
           _this.wechatLogin(_this.data.code).then((resolve) => {

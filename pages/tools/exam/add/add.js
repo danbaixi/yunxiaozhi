@@ -95,7 +95,10 @@ Page({
     if(name==""||date==""){
       app.msg("请输入必填信息")
     }else{
-      wx.showLoading({title:"加载中"})
+      wx.showLoading({
+        title: "加载中",
+        mask: true
+      })
       if(that.data.action =="修改"){
         app.httpRequest({
           url: 'exam/editlist',
@@ -166,7 +169,10 @@ Page({
       content: '确定要删除此记录吗？',
       success: function (res) {
         if (res.confirm) {
-          wx.showLoading({title:"加载中"})
+          wx.showLoading({
+            title: "加载中",
+            mask: true
+          })
           app.httpRequest({
             url: 'exam/dellist',
             data: {

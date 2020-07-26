@@ -135,6 +135,7 @@ Page({
     let _this = this
     wx.showLoading({
       title: '正在加载中...',
+      mask: true
     })
     _this.setData({
       loading:true
@@ -162,6 +163,7 @@ Page({
     let _this = this
     wx.showLoading({
       title: '正在加载中...',
+      mask: true
     })
     _this.setData({
       loading: true

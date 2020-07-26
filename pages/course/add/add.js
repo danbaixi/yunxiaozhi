@@ -313,7 +313,8 @@ Page({
   getCourse: function (id) {
     let _this = this
     wx.showLoading({
-      title:'正在加载...'
+      title:'正在加载...',
+      mask: true
     })
     app.httpRequest({
       url:'course/getCourseById',
@@ -350,6 +351,7 @@ Page({
         if (res.confirm){
           wx.showLoading({
             title: '正在删除',
+            mask: true
           })
           app.httpRequest({
             url: 'course/deleteCourseById',

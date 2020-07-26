@@ -52,10 +52,10 @@ image{
   font-size: 12px;
 }
 .week{
-  width: 17.68%;
+  width: 14%;
 }
 .weekly{
-  width: 11.76%;
+  width: calc(86% / 7);
 }
 .zhoushu{
   position: relative;

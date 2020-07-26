@@ -633,6 +633,7 @@ Page({
       if (resolve) {
         wx.showLoading({
           title: '正在切换',
+          mask: true
         })
         app.promiseRequest({
           url: 'course/getList'

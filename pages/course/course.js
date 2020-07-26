@@ -612,6 +612,7 @@ Page({
 
     wx.showLoading({
       title: '更新中',
+      mask: true
     })
     wx.removeStorageSync('tmp_class')
     app.httpRequest({
@@ -827,6 +828,9 @@ Page({
   },
   
   getConfigData:function(){
+    if (!app.getLoginStatus()){
+      return
+    }
     var that = this
     var display_course_time = wx.getStorageSync('display_course_time')
     var area = wx.getStorageSync('user_area')

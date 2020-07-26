@@ -120,6 +120,7 @@ Page({
     }
     wx.showLoading({
       title: '正在绑定...',
+      mask: true
     })
 
     if(that.data.systemType == 1){

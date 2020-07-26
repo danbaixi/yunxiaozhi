@@ -113,7 +113,10 @@ Page({
       app.msg('请在' + season + '秒后更新')
       return
     }
-    wx.showLoading({ title: "更新中" })
+    wx.showLoading({
+      title: "更新中",
+      mask: true
+    })
     app.httpRequest({
       url: 'attendance/update',
       success: function (res) {

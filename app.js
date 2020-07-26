@@ -59,7 +59,7 @@ App({
     domain:'https://www.yunxiaozhi.cn/v1/public/api/',
     key:'ihzoaixnuy4f8835032505e8a45ac102c52d58593e',
     amap_key: "67c20c2c7db08923379123500b656adf",
-    markers_json: "https://www.yunxiaozhi.cn/v1/resource/markers.json",
+    markers_json: "markers.json",
     adTime: 24,//小时出现一次
     fileDomain:"http://file.yunxiaozhi.cn/mini/",
     fileUrl: "https://yunxiaozhi-1251388077.cos.ap-guangzhou.myqcloud.com/mini",

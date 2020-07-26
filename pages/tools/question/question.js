@@ -198,6 +198,7 @@ Page({
     // }
     wx.showLoading({
       title: '正在查询',
+      mask: true
     })
     _this.apiQuery().then((resolve)=>{
       wx.hideLoading()

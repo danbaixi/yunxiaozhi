@@ -70,7 +70,10 @@ Page({
     if (touchTime > 350) {
       that.delete(num);
     }else{
-      wx.showLoading({title:"查询中"})
+      wx.showLoading({
+        title: "查询中",
+        mask: true
+      })
       wx.request({
         url: "https://r2.gzyct.com/gw/base",
         method: "POST",
