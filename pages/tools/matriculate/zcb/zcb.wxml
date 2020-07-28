@@ -1,0 +1,56 @@
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">专插本录取查询</view>
+</cu-custom>
+<view class="cu-card">
+  <view class="cu-item">
+    <view class="cu-form-group">
+      <view class="title">姓名</view>
+      <input placeholder="请输入考生姓名" bindinput="nameInput"></input>
+    </view>
+    <view class="cu-form-group">
+      <view class="title">身份证</view>
+      <input placeholder="请输入考生身份证" bindinput="sfzInput"></input>
+    </view>
+  </view>
+  <view class="padding flex flex-direction">
+    <button class="cu-btn bg-theme lg" bindtap="query">查询</button>
+  </view>
+</view>
+<view class="cu-card" wx:if="{{display}}">
+  <view class="cu-item">
+    <view class="padding bg-white text-theme radius text-center text-lg">查询结果</view>
+    <view class="cu-list menu sm-border" wx:if="{{!result.isNull}}">
+      <view class="cu-item">
+        <view class="content">
+          <text class="text-grey">准考证号</text>
+        </view>
+        <view class="action">{{result.num}}</view>
+      </view>
+      <view class="cu-item">
+        <view class="content">
+          <text class="text-grey">姓名</text>
+        </view>
+        <view class="action">{{result.name}}</view>
+      </view>
+      <view class="cu-item">
+        <view class="content">
+          <text class="text-grey">身份证</text>
+        </view>
+        <view class="action">{{result.sfz}}</view>
+      </view>
+      <view class="cu-item">
+        <view class="content">
+          <text class="text-grey">录取专业</text>
+        </view>
+        <view class="action">{{result.major}}</view>
+      </view>
+    </view>
+    <view wx:else>
+      <empty display="true" top="0" content="很遗憾，没查到记录"></empty>
+    </view>
+  </view>
+</view>
+<view class="padding bg-white text-theme margin-left margin-right y-radius text-center">
+  结果仅供参考，请以官网查询的为准！
+</view>
