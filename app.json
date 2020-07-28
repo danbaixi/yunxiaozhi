@@ -60,7 +60,8 @@
     "pages/tools/club/item/item",
     "pages/tools/course/category/category",
     "pages/tools/city/city",
-    "pages/tools/guide/west/west"
+    "pages/tools/guide/west/west",
+    "pages/tools/matriculate/matriculate"
   ],
   "window": {
     "navigationStyle": "custom",

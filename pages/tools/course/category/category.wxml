@@ -2,7 +2,7 @@
   <view slot="back">返回</view>
 	<view slot="content">课程管理</view>
 </cu-custom>
-<view class="cu-card">
+<view class="cu-card y-typelist">
   <view class="cu-item shadow-blur" style="background:var(--{{item.color}})" bindtap="toCourse" data-index="{{index}}" wx:for="{{list}}" wx:key>
     <view class="cardTitle">
       {{item.title}}
