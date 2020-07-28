@@ -5,8 +5,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    zcb:"http://mp.weixin.qq.com/s?__biz=MzI1NTUwNDIzNQ==&mid=100002376&idx=1&sn=81c8f818a30a9209b1d9fce11bdc450c&chksm=6a35b04c5d42395ab46821849bc838a0594519dd2fb607182c0aec7e9ca7f1292e7b7312b127#rd",
     tzs:"http://mp.weixin.qq.com/s?__biz=MzI1NTUwNDIzNQ==&mid=100002372&idx=1&sn=c6d1d66a075b36c7487cfac12f97502c&chksm=6a35b0405d423956885847d84eb6091ef01802c17d12ec411af4a1fc05e62580a4a18a9b103d#rd",
-    type : 0,
     list:[
       {
         title:'普通本科',
@@ -86,6 +86,10 @@ Page({
     if(index == 2){
       wx.navigateTo({
         url: '/pages/article/article?src=' + encodeURIComponent(this.data.tzs),
+      })
+    }else if(index == 1){
+      wx.navigateTo({
+        url: '/pages/article/article?src=' + encodeURIComponent(this.data.zcb),
       })
     }else{
       app.msg("即将上线，尽请期待")

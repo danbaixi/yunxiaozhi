@@ -1,7 +1,7 @@
 {
 	"description": "项目配置文件。",
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
 		"enhance": false,
 		"postcss": true,
@@ -16,13 +16,13 @@
 		"checkInvalidKey": true,
 		"checkSiteMap": true,
 		"uploadWithSourceMap": true,
-		"compileHotReLoad": false,
 		"babelSetting": {
 			"ignore": [],
 			"disablePlugins": [],
 			"outputPath": ""
 		},
 		"bundle": true,
+		"compileHotReLoad": false,
 		"useIsolateContext": true,
 		"useCompilerModule": false,
 		"userConfirmedUseCompilerModuleSwitch": false
@@ -402,6 +402,14 @@
 					"id": -1,
 					"name": "录取查询",
 					"pathName": "pages/tools/matriculate/matriculate",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "专插本查询",
+					"pathName": "pages/tools/matriculate/zcb/zcb",
+					"query": "",
 					"scene": null
 				}
 			]
