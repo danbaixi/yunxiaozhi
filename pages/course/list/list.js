@@ -18,17 +18,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var tmpClass = wx.getStorageSync('tmp_class')
-    if(tmpClass){
-      app.msg("不能管理非本班的课表")
-      setTimeout(function(){
-        wx.switchTab({
-          url: '/pages/course/course',
-        })
-      },1000)
-      return
-    }
-    this.getData()
+    
   },
 
   /**
@@ -42,7 +32,17 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    var tmpClass = wx.getStorageSync('tmp_class')
+    if(tmpClass){
+      app.msg("不能管理非本班的课表")
+      setTimeout(function(){
+        wx.switchTab({
+          url: '/pages/course/course',
+        })
+      },1000)
+      return
+    }
+    this.getData()
   },
 
   /**
@@ -185,11 +185,11 @@ Page({
     let id = e.currentTarget.dataset.id
     if(id){
       wx.navigateTo({
-        url: '/pages/course/add/add?id=' + id,
+        url: '/pages/course/add/add?id=' + id + '&from=list',
       })
     }
     wx.navigateTo({
-      url: '/pages/course/add/add',
+      url: '/pages/course/add/add?from=list',
     })
   },
   stopAnimation:function(){

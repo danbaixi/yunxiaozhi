@@ -47,4 +47,19 @@
       <text>{{item.name}}</text>
     </view>
   </view>
+
+  <view class='top'>
+    <text class='title'>娱乐</text>
+  </view>
+  <view class="cu-list grid col-{{gridCol}}">
+    <view class="cu-item" wx:for="{{play}}" wx:key data-url="{{item.url}}" data-needLogin="{{item.needLogin}}" data-appid="{{item.appid}}" data-path="{{item.path}}" bindtap='openTool'>
+      <view class="app-icon">
+        <image mode="widthFix" src="/pages/assets/imgs/app_icon/{{item.icon}}.png"></image>
+        <view class="cu-tag badge" wx:if="{{item.badge!=0}}">
+          <block wx:if="{{item.badge!=1}}">{{item.badge>99?"99+":item.badge}}</block>
+        </view>
+      </view>
+      <text>{{item.name}}</text>
+    </view>
+  </view>
 </view>  

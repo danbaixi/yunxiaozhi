@@ -64,7 +64,9 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: "白云专插本录取查询"
+    }
   },
   nameInput:function(e){
     this.setData({

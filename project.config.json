@@ -16,13 +16,13 @@
 		"checkInvalidKey": true,
 		"checkSiteMap": true,
 		"uploadWithSourceMap": true,
+		"compileHotReLoad": false,
 		"babelSetting": {
 			"ignore": [],
 			"disablePlugins": [],
 			"outputPath": ""
 		},
 		"bundle": true,
-		"compileHotReLoad": false,
 		"useIsolateContext": true,
 		"useCompilerModule": false,
 		"userConfirmedUseCompilerModuleSwitch": false
@@ -410,6 +410,13 @@
 					"name": "专插本查询",
 					"pathName": "pages/tools/matriculate/zcb/zcb",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": 53,
+					"name": "舔狗日记",
+					"pathName": "pages/tools/tiangou/tiangou",
+					"query": "id=103",
 					"scene": null
 				}
 			]

@@ -145,13 +145,13 @@ Page({
     })
   },
 
-  alert:function(){
+  edit:function(){
     if(this.data.course.id == 0){
       app.msg('获取课程信息失败，请先更新课表')
       return
     }
     wx.navigateTo({
-      url: '/pages/course/add/add?id=' + this.data.course.id,
+      url: '/pages/course/add/add?id=' + this.data.course.id + '&from=info',
     })
   }
 })

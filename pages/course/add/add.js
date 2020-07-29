@@ -40,6 +40,7 @@ Page({
   onLoad: function (options) {
     app.isLogin()
     let id = options.id || 0
+    let from = options.from || 'info'
     let weeklys = []
     //初始化数据
     let multiArray = [],arr1 = [],arr2 = []
@@ -58,6 +59,7 @@ Page({
     }
     this.setData({
       id: id,
+      from: from,
       multiArray: multiArray,
       weeklys: weeklys
     })
@@ -204,18 +206,6 @@ Page({
       app.msg("哪有只上一节的课程？如果有请反馈给客服")
       return
     }
-    // if(result[1] < 4 && result[2] >= 4){
-    //   app.msg("中午可是要休息的哦，这课程不合理")
-    //   return
-    // }
-    // if (result[1] < 8 && result[2] >= 8) {
-    //   app.msg("下午可是要吃饭的呀，这课程不合理")
-    //   return
-    // }
-    // if(result[1] % 2 == 1 && result[2]-result[1] == 1){
-    //   app.msg("白云还没有" + (result[1]+1) + '-' + (result[2]+1) + "节这样的课程")
-    //   return
-    // }
     this.setData({
       week: result[0],
       section: (result[1]+1) + '-' + (result[2]+1)
@@ -293,11 +283,7 @@ Page({
               app.msg("保存成功，获取课表失败，请手动更新课表")
             }
           })
-          setTimeout(() => {
-            wx.switchTab({
-              url: '/pages/course/course',
-            })
-          }, 1000)
+          _this.comeBack()
         }
       }
     })
@@ -369,11 +355,7 @@ Page({
                   } else {
                     app.msg("删除成功，更新课表失败，请手动更新课表")
                   }
-                  setTimeout(() => {
-                    wx.switchTab({
-                      url: '/pages/course/course',
-                    })
-                  }, 1000)
+                  _this.comeBack()
                 })
               } else {
                 app.msg(res.data.message)
@@ -384,6 +366,20 @@ Page({
       }
     })
 
+  },
+  comeBack:function(){
+    let _this = this
+    setTimeout(function(){
+      if(_this.data.from == 'info'){
+        wx.switchTab({
+          url: '/pages/course/course',
+        })
+      }else{
+        wx.navigateBack({
+          delta: 0,
+        })
+      }
+    },1000)
   },
 
   //解析周次

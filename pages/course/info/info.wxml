@@ -5,7 +5,7 @@
 <view class="cu-bar bg-white solid-bottom">
   <view class="text-black action">
     {{course.fullName || course.name}}
-    <view wx:if="{{course.type == 2}}" bindtap="alert" class="margin-left cu-tag line-theme radius">编辑</view>
+    <view wx:if="{{course.type == 2}}" bindtap="edit" class="margin-left cu-tag line-theme radius">编辑</view>
   </view>
 </view>
 <view class="cu-list menu sm-border">

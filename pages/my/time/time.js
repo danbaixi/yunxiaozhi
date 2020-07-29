@@ -31,6 +31,9 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
+    that.setData({
+      from: options.from || 'index'
+    })
     app.isLogin('/' + that.route).then(function (res) {
       that.setData({
         login: true
@@ -233,8 +236,14 @@ Page({
     app.goLogin(this.route)
   },
   back:function(){
-    wx.switchTab({
-      url: '/pages/index/index',
-    })
+    if(this.data.from == 'index'){
+      wx.switchTab({
+        url: '/pages/index/index',
+      })
+    }else{
+      wx.navigateBack({
+        delta: 0,
+      })
+    }
   }
 })
