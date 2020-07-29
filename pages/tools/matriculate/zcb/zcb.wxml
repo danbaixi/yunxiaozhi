@@ -2,6 +2,9 @@
   <view slot="back">返回</view>
 	<view slot="content">专插本录取查询</view>
 </cu-custom>
+<view class="padding bg-white text-theme margin-top margin-left margin-right y-radius text-center">
+  数据来源官网，请以官网查询的为准！
+</view>
 <view class="cu-card">
   <view class="cu-item">
     <view class="cu-form-group">
@@ -50,7 +53,4 @@
       <empty display="true" top="0" content="很遗憾，没查到记录"></empty>
     </view>
   </view>
-</view>
-<view class="padding bg-white text-theme margin-left margin-right y-radius text-center">
-  结果仅供参考，请以官网查询的为准！
 </view>

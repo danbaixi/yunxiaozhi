@@ -88,8 +88,11 @@ Page({
         url: '/pages/article/article?src=' + encodeURIComponent(this.data.tzs),
       })
     }else if(index == 1){
+      // wx.navigateTo({
+      //   url: '/pages/article/article?src=' + encodeURIComponent(this.data.zcb),
+      // })
       wx.navigateTo({
-        url: '/pages/article/article?src=' + encodeURIComponent(this.data.zcb),
+        url: '/pages/tools/matriculate/zcb/zcb',
       })
     }else{
       app.msg("即将上线，尽请期待")
