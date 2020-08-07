@@ -78,9 +78,38 @@ function formatNumber(n) {
   n = n.toString()
   return n[1] ? n : '0' + n
 }
+
+//函数防抖
+function debounce(fn,delay,immediate){
+  let timeout,result
+  return function(){
+    let context = this
+    let args = arguments
+
+    if(timeout){
+      clearTimeout(timeout)
+    }
+    if(immediate){
+      let callNow = !timeout
+      timeout = setTimeout(function(){
+        timeout = null
+      },delay)
+      if(callNow){
+        result = fn.apply(context,args)
+      }
+    }else{
+      timeout = setTimeout(function(){
+        fn.apply(context,args)
+      },delay)
+    }
+    return result
+  }
+}
+
 module.exports = {
   formatTime: formatTime,
   formatTime2: formatTime2,
   formatTime3: formatTime3,
   encodeInp: encodeInp,
+  debounce: debounce
 }

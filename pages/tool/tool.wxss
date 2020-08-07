@@ -14,7 +14,7 @@
 }
 .title{
   position: relative;
-  padding: 10px;
+  padding: 4rpx 10px;
   justify-content: center;
   font-size: 14px;
   color: #706f75;
@@ -24,4 +24,7 @@
 }
 .cu-item{
   text-align: center
+}
+.cu-list.grid>.cu-item{
+  padding: 10rpx 0 16rpx;
 }

@@ -58,26 +58,15 @@ Page({
    */
   onLoad: function (options) {
     this.getQuantityData()
+    this.getCountData();
   },
 
   onShow:function(){
-    this.onPullDownRefresh();
+    this.getUserInfo();
   },
 
   onPullDownRefresh: function () {
-    if (!app.getUserId()) {
-      return
-    }
-    this.getUserInfo();
-    this.getCountData();
-    setTimeout(() => {
-      wx.hideNavigationBarLoading({
-        complete: (res) => {},
-      })
-      wx.stopPullDownRefresh({
-        complete: (res) => {},
-      })
-    }, 1000);
+    
   },
 
   onShareAppMessage:function () {
