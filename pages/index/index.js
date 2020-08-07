@@ -703,6 +703,9 @@ Page({
   },
   //点击轮播的文章
   viewArticle:function(e){
+    if (this.data.articleBanners.length <= 1){
+      return
+    }
     let index = e.currentTarget.dataset.index
     let article = this.data.articleBanners[index]
     if(this.data.showNewsList){
