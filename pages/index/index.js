@@ -89,26 +89,26 @@ Page({
         needLogin: false,
         url: '/pages/tools/clockin/clockin',
       },
-      {
-        icon: 'bad',
-        color: 'red',
-        badge: '',
-        name: '毕业报告',
-        icon: 'summary',
-        needLogin: false,
-        url: '/pages/tools/summary/summary',
-      }, 
       // {
       //   icon: 'bad',
       //   color: 'red',
-      //   badge: '新',
-      //   name: '云小圈',
-      //   icon: 'quanzi',
+      //   badge: '',
+      //   name: '毕业报告',
+      //   icon: 'summary',
       //   needLogin: false,
-      //   appid: "wxb036cafe2994d7d0",
-      //   path: "/portal/group-profile/group-profile?group_id=13104375827371700&invite_ticket=BgAAOQPnZwBIXbie9VzbA61wtWz6QPMmh78lsDF6ofDhQxYeLwki4LGpz1Ns33MyJffI00v6&fromScene=bizArticle",
       //   url: '/pages/tools/summary/summary',
-      // },
+      // }, 
+      {
+        icon: 'bad',
+        color: 'red',
+        badge: '新',
+        name: '云小圈',
+        icon: 'quanzi',
+        needLogin: false,
+        appid: "wxb036cafe2994d7d0",
+        path: "/portal/group-profile/group-profile?group_id=13104375827371700&invite_ticket=BgAAOQPnZwBIXbie9VzbA61wtWz6QPMmh78lsDF6ofDhQxYeLwki4LGpz1Ns33MyJffI00v6&fromScene=bizArticle",
+        url: '/pages/tools/summary/summary',
+      },
     ],
     gridCol: 5,
     news_loading:false,
@@ -708,19 +708,8 @@ Page({
     }
     let index = e.currentTarget.dataset.index
     let article = this.data.articleBanners[index]
-    if(this.data.showNewsList){
-      wx.navigateTo({
-        url: '/pages/news/news?src=' + encodeURIComponent(article.src),
-      })
-      this.setData({
-        showNewsList:false
-      })
-    }else{
-      wx.navigateTo({
-        url: '/pages/article/article?src=' + encodeURIComponent(article.src) + '&title=' + article.title + '&img=' + encodeURIComponent(article.img),
-      })
-    }
-
-    
+    wx.navigateTo({
+      url: '/pages/news/news?src=' + encodeURIComponent(article.src),
+    })
   }
 })

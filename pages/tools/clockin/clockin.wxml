@@ -56,7 +56,7 @@
       </scroll-view>
 
       <view class="cu-list bg-white menu-avatar">
-        <view class="cu-item you" wx:if="{{type==0&&status==1&&todayState.top>1}}">
+        <view class="cu-item you" wx:if="{{type==0&&status==1&&todayState.top>1}}" bindtap="goList">
           <view class="rank-num">{{todayState.top}}</view>
           <view class="cu-avatar round lg" style="background-image:url({{userInfo.user_img?headImgUrl+userInfo.user_img:userInfo.avatar}});"></view>
           <view class="content">
@@ -70,7 +70,7 @@
             <view class="cu-tag round text-white bg-theme sm">第{{totalState.total}}天</view>
           </view>
         </view>
-        <view class="cu-item {{type>0&&item.stu_id == userInfo.stu_id ? 'myself':''}}" wx:for="{{list}}" wx:key="key">
+        <view class="cu-item {{type>0&&item.stu_id == userInfo.stu_id ? 'myself':''}}" wx:for="{{list}}" wx:key="key" data-stu_id="{{item.stu_id}}" bindtap="detail">
           <view class="rank-num">{{index+1}}</view>
           <view class="cu-avatar round lg" style="background-image:url({{item.user_img?headImgUrl+item.user_img:item.avatar}});"></view>
           <view class="content">

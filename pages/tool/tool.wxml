@@ -49,7 +49,7 @@
   </view>
 
   <view class='top'>
-    <text class='title'>娱乐</text>
+    <text class='title'>娱乐互动</text>
   </view>
   <view class="cu-list grid col-{{gridCol}}">
     <view class="cu-item" wx:for="{{play}}" wx:key data-url="{{item.url}}" data-needLogin="{{item.needLogin}}" data-appid="{{item.appid}}" data-path="{{item.path}}" bindtap='openTool'>

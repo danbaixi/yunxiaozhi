@@ -3,7 +3,6 @@
 	<view slot="content">校园导览</view>
 </cu-custom>
 <view wx:if="{{areaId==0}}">
-  <view class="padding bg-white text-theme margin-top margin-left margin-right y-radius text-center">请选择校区</view>
   <view class="cu-card">
     <view class="cu-item" style="background:var(--{{item.color}})" 
     bindtap="selectArea" data-index="{{index}}" wx:for="{{area}}" wx:key>

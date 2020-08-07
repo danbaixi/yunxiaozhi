@@ -244,7 +244,13 @@ Page({
   },
   goList:function(){
     wx.navigateTo({
-      url: '/pages/tools/clockin/list/list?state=' + JSON.stringify(this.data.totalState),
+      url: '/pages/tools/clockin/list/list',
+    })
+  },
+  //查看打卡记录
+  detail:function(e){
+    wx.navigateTo({
+      url: '/pages/tools/clockin/list/list?stu_id=' + e.currentTarget.dataset.stu_id,
     })
   }
 })

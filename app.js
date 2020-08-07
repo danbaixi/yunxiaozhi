@@ -76,7 +76,7 @@ App({
    * 获取请求domain
    */
   getDomain:function(){
-    return this.globalData.isDebug ? (this.globalData.isTest ? 'https://www.yunxiaozhi.cn/test/public/api/' : 'http://danbaixi.utools.club/yxz_v1/public/index.php/api/') : 'https://www.yunxiaozhi.cn/v1/public/api/'
+    return this.globalData.isDebug ? (this.globalData.isTest ? 'https://www.yunxiaozhi.cn/test/public/api/' : 'http://danbaixi1.utools.club/yxz_v1/public/index.php/api/') : 'https://www.yunxiaozhi.cn/v1/public/api/'
   },
 
   getSign:function(){
@@ -371,6 +371,7 @@ App({
   //函数防抖
   debounce:function(fn,delay){
     let timer = null
+    delay = delay || 1000
     return function(args){
       let _this = this
       clearInterval(timer)

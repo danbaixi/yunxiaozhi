@@ -10,6 +10,7 @@ Page({
     month:0,
     days:[],
     list:[],
+    getState:1,
     active:-1
   },
 
@@ -18,14 +19,14 @@ Page({
    */
   onLoad: function (options) {
     let _this = this
-    let state = options.state ? JSON.parse(options.state) : ''
+    let stu_id = options.stu_id || 0
     let date = new Date()
     let year = date.getFullYear()
     let month = date.getMonth() + 1
     _this.setData({
+      stu_id:stu_id,
       year:year,
-      month:month,
-      state:state,
+      month:month
     })
     app.isLogin('/'+this.route).then(function(){
       _this.getList()
@@ -94,6 +95,8 @@ Page({
     app.httpRequest({
       url: 'clockin/getListForMonth',
       data: {
+        state:_this.data.getState,
+        stu_id: _this.data.stu_id,
         year: _this.data.year,
         month: _this.data.month
       },
@@ -151,7 +154,9 @@ Page({
     }
     this.setData({
       year:year,
-      month:month
+      month:month,
+      getState:0,
+      list:[]
     })
     this.getDays()
     this.getList()

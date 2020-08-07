@@ -179,18 +179,17 @@ Page({
         needLogin: true,
         url: '/pages/tools/summary/summary',
       },  
-      
-      // {
-      //   icon: 'bad',
-      //   color: 'red',
-      //   badge: '新',
-      //   name: '云小圈',
-      //   icon: 'quanzi',
-      //   needLogin: false,
-      //   appid: "wxb036cafe2994d7d0",
-      //   path: "/portal/group-profile/group-profile?group_id=13104375827371700&invite_ticket=BgAARwqnU-49GW8g92KH3E7WFA&fromScene=bizArticle",
-      //   url: '/pages/tools/summary/summary',
-      // },
+      {
+        icon: 'bad',
+        color: 'red',
+        badge: '新',
+        name: '云小圈',
+        icon: 'quanzi',
+        needLogin: false,
+        appid: "wxb036cafe2994d7d0",
+        path: "/portal/group-profile/group-profile?group_id=13104375827371700&invite_ticket=BgAARwqnU-49GW8g92KH3E7WFA&fromScene=bizArticle",
+        url: '/pages/tools/summary/summary',
+      },
     ],
     query:[
       {
@@ -210,15 +209,6 @@ Page({
         icon: 'guide',
         needLogin: false,
         url: '../tools/guide/index?from=index',
-      },
-      {
-        icon: 'bad',
-        color: 'red',
-        badge: '',
-        name: '白云全景',
-        icon: 'quanjing',
-        needLogin: false,
-        url: '../article/article?src=' + encodeURIComponent('http://mp.weixin.qq.com/s?__biz=MzI1NTUwNDIzNQ==&mid=100002341&idx=1&sn=1d54568ca181716cd011a2d444803254&chksm=6a35b0215d4239373e29ce64ccaceb9f3b9e4522065e4e2cf58c5c3a50ff27b030ca03f5abb2#rd') + '&title=广东白云学院校园全景',
       },
       {
         icon: 'bad',

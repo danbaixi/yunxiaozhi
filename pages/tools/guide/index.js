@@ -16,6 +16,12 @@ Page({
         img: 'north',
         color:'yellow'
       },
+      {
+        id:3,
+        title:'校园全景',
+        img: 'quanjing',
+        color:'olive'
+      },
     ],
     areaId:0,
     subkey:"5FSBZ-ZRAWW-JXRRH-O7TQF-2QDUH-2YFHU",//腾讯地图样式key
@@ -188,6 +194,12 @@ Page({
     let index = e.currentTarget.dataset.index
     if(index == 1){
       app.msg("正在完善数据，尽情期待")
+      return
+    }
+    if(index == 2){
+      wx.navigateTo({
+        url: '/pages/article/article?src=' + encodeURIComponent('http://mp.weixin.qq.com/s?__biz=MzI1NTUwNDIzNQ==&mid=100002341&idx=1&sn=1d54568ca181716cd011a2d444803254&chksm=6a35b0215d4239373e29ce64ccaceb9f3b9e4522065e4e2cf58c5c3a50ff27b030ca03f5abb2#rd') + '&title=广东白云学院校园全景',
+      })
       return
     }
     this.setData({

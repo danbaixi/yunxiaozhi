@@ -1,6 +1,6 @@
 <cu-custom bgColor="bg-white" isBack="true">
   <view slot="back">返回</view>
-	<view slot="content">打卡轨迹</view>
+	<view slot="content">早起记录</view>
 </cu-custom>
 <view class="container padding margin-top">
   <view class="head text-lg grid col-2">
