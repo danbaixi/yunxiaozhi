@@ -1,5 +1,6 @@
 const app = getApp()
 var md5 = require('../../utils/md5.js');
+const courseFn = require('../../utils/course')
 Page({
 
   /**
@@ -130,7 +131,7 @@ Page({
       title: '正在加载',
       mask: true
     })
-    var that = this
+    var _this = this
     var number = e.currentTarget.dataset.number
     var name = e.currentTarget.dataset.name
     var tmpClass = {
@@ -138,17 +139,26 @@ Page({
       name:name
     }
     app.httpRequest({
-      url: 'course/getCourseFromSchool',
+      url: 'data/getCourseFromSchool',
       data: {
         number: number,
         className: name
       },
+      needLogin:false,
       success: function (res) {
         wx.hideLoading()
         if (res.data.status !== 0) {
           app.msg(res.data.message)
           return
         }
+        let term = app.getConfig('term')
+        //还原到最新学期
+        let nowTerm = {
+          term: term,
+          name: courseFn.term2Name(term),
+          term_date: app.getConfig('termDate')
+        }
+        wx.setStorageSync('course_term', nowTerm)
         wx.setStorageSync('tmp_class', tmpClass)
         wx.setStorageSync('course', res.data.data.course)
         wx.switchTab({

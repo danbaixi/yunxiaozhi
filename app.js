@@ -1,7 +1,7 @@
 const md5 = require('/utils/md5.js');
 App({
   onLaunch: function () {
-    let updateTime = 3 * 60 * 1000 // 3分钟更新一次config
+    let updateTime = 5 * 60 * 1000 // 5分钟更新一次config
     let time = (new Date()).getTime()
     let configUpdateTime = wx.getStorageSync('config_update_time')
     if (!configUpdateTime || time - configUpdateTime >= updateTime) {
@@ -379,7 +379,30 @@ App({
         fn.call(_this,args)
       },delay)
     }
-  }
+  },
   //函数节流
-
+  
+  //是否是tab页
+  isTabPage:function(page){
+    let pages = [
+      '/pages/index/index',
+      '/pages/course/course',
+      '/pages/tool/tool',
+      '/pages/my/my',
+    ]
+    if(!page){
+      return false
+    }
+    if(pages.indexOf(page) === -1){
+      return false
+    }
+    return true
+  },
+  getConfig:function(key){
+    let configs = wx.getStorageSync('configs')
+    if(key){
+      return configs[key]
+    }
+    return configs
+  }
 })

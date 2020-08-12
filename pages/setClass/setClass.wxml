@@ -13,7 +13,7 @@
     </view>
   </view>
   <view class="cu-list menu">
-    <view class="cu-item arrow" wx:if="{{tmpClass!=''}}" bindtap="restore">
+    <view class="cu-item arrow" wx:if="{{tmpClass!='' && userId}}" bindtap="restore">
       <view class="content">
         <text class="text-orange">切换回个人课表</text>
       </view>

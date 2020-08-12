@@ -1,4 +1,7 @@
-<view class="container" style="padding-top:{{customBar}}px;width:{{winWidth}}px;height:{{winHeight}}px">
+<cu-custom bgColor="bg-transparent" isBack="true">
+  <view slot="back">返回</view>
+</cu-custom>
+<view class="container" style="width:{{winWidth}}px;height:{{winHeight}}px">
   <view class="login-img">
     <image src="/pages/assets/imgs/other/login.png" mode="widthFix"></image>
   </view>

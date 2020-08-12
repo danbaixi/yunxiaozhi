@@ -1,5 +1,6 @@
 const app = getApp()
 const TIMES = require('../../../utils/course-time.js')
+const courseFn = require('../../../utils/course')
 Page({
 
   /**
@@ -118,9 +119,11 @@ Page({
   getStudent:function(data){
     var that = this
     var section = data.jie + '-' + (parseInt(data.jie) + parseInt(data.jieshu) - 1)
+    let courseTerm = courseFn.getNowCourseTerm()
     app.httpRequest({
       url: "course/getSameCourseStudent",
       data:{
+        term:courseTerm.term,
         name:(data.fullName || data.name),
         weekly:data.zhoushu,
         section:section,

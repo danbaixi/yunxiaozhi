@@ -1,8 +1,11 @@
-<image class="bg" mode="widthFix" src="/pages/assets/imgs/other/by1.jpg"></image>
-<view class="container" style="padding-top:{{customBar}}px">
+<cu-custom bgColor="bg-transparent" isBack="true">
+  <view slot="back">返回</view>
+</cu-custom>
+<image class="bg" mode="widthFix" src="https://mmbiz.qpic.cn/mmbiz_png/YWKTC18p77JpsbMIEeKeaD54MUVydoyupdkFpDHzXiaq2Utb0aSET9z355FCK0feIKju3lNJicwL5bajbOBib1Kibg/0?wx_fmt=png"></image>
+<view class="container">
   <view class="header">
     <image class="logo" mode="widthFix" src="/pages/assets/imgs/other/logo_radius.png"></image>
-    <view class="padding"><text class="text-xl text-white">绑定教务系统账号</text></view>
+    <view class="padding"><text class="text-xl text-white text-shadow">绑定教务系统账号</text></view>
   </view>
   <view class="login">
     <view wx:if="{{rebind}}" class="yxz-tips margin-bottom">
@@ -29,7 +32,7 @@
       </view>
       
       <view class="padding-top-xl text-center">
-        <text bindtap="help" class="text-gray">对此有疑问？</text>
+        <text bindtap="help" class="text-gray">新生登录指南</text>
       </view>
 
     </form>

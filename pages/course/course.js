@@ -1,6 +1,7 @@
 var md5 = require('../../utils/md5.js');
 var colors = require('../../utils/colors.js')
 const TIMES = require('../../utils/course-time.js')
+const courseFn = require('../../utils/course')
 const app = getApp()
 Page({
   /**
@@ -47,7 +48,8 @@ Page({
     fileUrl: app.globalData.fileUrl,
     courseFileUrl: 'https://yunxiaozhi-1251388077.cos.ap-guangzhou.myqcloud.com/course_bg/',
     clickScreenTime:0,
-    scrollTop:""
+    scrollTop:"",
+    courseTerm:null
   },
 
   /**
@@ -55,7 +57,6 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-
     //设置默认参数
     if (wx.getStorageSync('Kopacity') == '') {
       wx.setStorageSync('Kopacity', 90)
@@ -79,7 +80,8 @@ Page({
       startDay:startDay,
       colorArrays: colors
     });
-
+    //课表学期
+    that.getCourseTerm()
     var week = that.getNowWeek();
     var day = that.getDayOfWeek(week,startDay)
     var zhou_num = that.data.zhou_num;
@@ -111,21 +113,6 @@ Page({
       }
       wx.setStorageSync('score_ad_display', time)
     }
-    
-    // var tmpClass = wx.getStorageSync('tmp_class');//临时设置班级
-    // that.setData({
-    //   tmpClass:tmpClass
-    // })
-    // // that.getCourseList()
-    // //获取当前日期
-    // that.getTodayDate();
-    // //获取课表
-    // that.getCourse(week, true,animation);
-    // //获取公告
-    // // that.getNotice();
-    // if (typeof options.ad == "undefined" || options.ad){
-    //   // that.getAd()
-    // }
     
   },
 
@@ -171,8 +158,12 @@ Page({
         }
       })
     }
-
+    //课表学期
+    _this.getCourseTerm()
+    var startDay = wx.getStorageSync('start_day')
+    var day = this.getDayOfWeek(this.getNowWeek(),startDay)
     _this.setData({
+      now_day: day,
       imageUrl: wx.getStorageSync('bg_img'),
       list_is_display: false,
       tmpClass: tmpClass,
@@ -195,13 +186,7 @@ Page({
    * 获取第几周后的月份
    */
   getMonth:function(days) {
-    if(this.data.startDay == 0){
-      days = days - 7
-    }
-    let configs = wx.getStorageSync('configs')
-    let termDate = configs.termDate
-    let data = termDate.split('-')
-    let [year,month,day] = [data[0],data[1],data[2]]  
+    let [year,month,day] = this.getTermDate()
     var date = new Date(year,month-1,day);    
     date.setDate(date.getDate() + days);//获取n天后的日期      
     var m = (date.getMonth() + 1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1);        
@@ -211,11 +196,7 @@ Page({
    * 获取第几周后的星期几的日期
    */
   getDay: function (days) {
-    let configs = wx.getStorageSync('configs')
-    let termDate = configs.termDate
-    let data = termDate.split('-')
-    let [year, month, day] = [data[0], data[1], data[2]]
-
+    let [year, month, day] = this.getTermDate()
     var date = new Date(year, month-1, day);
     date.setDate(date.getDate() + days);//获取n天后的日期      
     var d = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();//获取当前几号，不足10补0    
@@ -226,10 +207,7 @@ Page({
    */
   getNowWeek:function(){
     var date = new Date();
-    let configs = wx.getStorageSync('configs')
-    let termDate = configs.termDate
-    let data = termDate.split('-')
-    let [year, month, day] = [data[0], data[1], data[2]]  
+    let [year, month, day] = this.getTermDate()
 
     //这里减1，不知道为什么输出的月份比原来的大1..
     var start = new Date(year, month-1, day);
@@ -828,7 +806,7 @@ Page({
   },
   
   getConfigData:function(){
-    if (!app.getLoginStatus()){
+    if (!app.getUserId()){
       return
     }
     var that = this
@@ -1080,13 +1058,26 @@ Page({
     this.selectWeek(week)
   },
   courseList:function(){
-    var tmpClass = wx.getStorageSync('tmp_class')
-    if(tmpClass){
-      app.msg("不能管理非本班课表")
-      return
-    }
     wx.navigateTo({
       url: '/pages/course/list/list',
     })
+  },
+  getCourseTerm:function(){
+    let nowTerm = courseFn.getNowCourseTerm()
+    let configs = wx.getStorageSync('configs')
+    if(configs.term != nowTerm.term){
+      this.setData({
+        courseTerm: nowTerm
+      })
+    }
+  },
+  //获取当前学期开学时间
+  getTermDate:function(){
+    let configs = wx.getStorageSync('configs')
+    let termDate = configs.termDate
+    if(this.data.courseTerm){
+      termDate = this.data.courseTerm.term_date
+    }
+    return termDate.split('-')
   }
 })

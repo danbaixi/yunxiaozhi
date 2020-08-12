@@ -107,7 +107,7 @@ Page({
     let userInfo = wx.getStorageSync('user_info')
     let session = app.getLoginStatus()
     let user_id = app.getUserId()
-    if (userInfo){
+    if (userInfo && user_id){
       user_name = userInfo.nickName
       user_img = userInfo.avatarUrl
       app.promiseRequest({
@@ -189,6 +189,9 @@ Page({
 
   //获取汇总数据
   getCountData:function(){
+    if (!app.getUserId()) {
+      return
+    }
     let _this = this
     app.httpRequest({
       url:'user/getCountData',
@@ -201,6 +204,14 @@ Page({
   },
   //打开应用
   openTool:function(e){
+    if(!app.getLoginStatus()){
+      app.msg("请先登录")
+      return
+    }
+    if (!app.getUserId()) {
+      app.msg("请先绑定账号")
+      return
+    }
     let index = e.currentTarget.dataset.index
     let tool = this.data.tools[index]
     if(tool.needLogin){

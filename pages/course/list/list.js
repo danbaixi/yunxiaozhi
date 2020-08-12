@@ -1,5 +1,6 @@
 const app = getApp()
-var colors = require('../../../utils/colors.js')
+let colors = require('../../../utils/colors')
+let course = require('../../../utils/course')
 Page({
 
   /**
@@ -7,18 +8,31 @@ Page({
    */
   data: {
     fiter:0,
-    fiters:['全部','必修课','选修课','统考科目','非统考科目','自定义课程'],
+    fiters:['全部','必修','选修','统考','非统考','自定义'],
+    counts:[0,0,0,0,0,0],
     courses:[],
     displayCourses:[],
     displayCount:0,
-    toggleDelay:false
+    toggleDelay:false,
+    tmpClass:null,
+    courseTerm:null,
+    terms:[],
+    termIndex:0
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    let tmpClass = wx.getStorageSync('tmp_class')
+    let userId = app.getUserId()
+    let courseTerm = course.getNowCourseTerm()
+    this.setData({
+      tmpClass: tmpClass,
+      userId: userId,
+      courseTerm: courseTerm
+    })
+    this.getTerms()
   },
 
   /**
@@ -32,17 +46,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    var tmpClass = wx.getStorageSync('tmp_class')
-    if(tmpClass){
-      app.msg("不能管理非本班的课表")
-      setTimeout(function(){
-        wx.switchTab({
-          url: '/pages/course/course',
-        })
-      },1000)
-      return
-    }
     this.getData()
+    this.getCounts()
+    this.setData({
+      fiter:0
+    })
   },
 
   /**
@@ -80,10 +88,10 @@ Page({
 
   },
   getData:function(){
-    var data = wx.getStorageSync('course')
-    var courses = []
+    let data = wx.getStorageSync('course')
+    let courses = []
     for(let i = 0;i<data.length;i++){
-      var item = data[i]
+      let item = data[i]
       let course_item = {
         'course_teacher': item.course_teacher,
         'course_weekly': item.course_weekly,
@@ -123,7 +131,6 @@ Page({
   },
   fiterCourse:function(e){
     let index = e.currentTarget.dataset.index
-    let displayCount = 0
     let displayCourses = []
     if(index == this.data.fiter){
       return
@@ -133,16 +140,14 @@ Page({
       let display = this.displayCourse(index,courses[i])
       if(display){
         displayCourses.push(courses[i])
-        displayCount++
       }
       courses[i].display = display
     }
     this.setData({
-      toggleDelay:displayCount > 0,
+      toggleDelay:displayCourses.length > 0,
       fiter:index,
       courses:courses,
       displayCourses:displayCourses,
-      displayCount:displayCount
     })
     this.stopAnimation()
   },
@@ -181,12 +186,49 @@ Page({
         break
     }
   },
+  getCounts:function(){
+    let courses = wx.getStorageSync('course')
+    let counts = [0,0,0,0,0,0]
+    let oldName = ''
+    for(let i=0;i<courses.length;i++){
+      let course = courses[i]
+      if(course.course_name == oldName){
+        continue
+      }
+      oldName = course.course_name
+      if(course.course_category && course.course_category.indexOf('必修课') != -1){
+        counts[1]++
+      }
+      if(course.course_category && course.course_category.indexOf('任选课') != -1){
+        counts[2]++
+      }
+      if(course.course_method == '统考'){
+        counts[3]++
+      }else{
+        counts[4]++
+      }
+      if(course.course_type == 2){
+        counts[5]++
+      }
+      counts[0]++
+    }
+    this.setData({
+      counts:counts
+    })
+  },
   addCourse:function(e){
     let id = e.currentTarget.dataset.id
     if(id){
       wx.navigateTo({
         url: '/pages/course/add/add?id=' + id + '&from=list',
       })
+      return
+    }
+    let nowTerm = app.getConfig('term')
+
+    if(this.data.courseTerm.term != nowTerm){
+      app.msg("学期都结束了，你还要添加课程？")
+      return
     }
     wx.navigateTo({
       url: '/pages/course/add/add?from=list',
@@ -200,5 +242,110 @@ Page({
         })
       },1000)
     }
+  },
+  changeClass:function(){
+    wx.navigateTo({
+      url: '/pages/setClass/setClass',
+    })
+  },
+  //获取学期
+  getTerms:function(){
+    let _this = this
+    wx.showLoading({
+      title: '正在加载',
+      mask: true
+    })
+    app.promiseRequest({
+      url:'data/getTermsByClassname',
+      data:{
+        stu_id: wx.getStorageSync('user_id'),
+        classname: _this.data.tmpClass && _this.data.tmpClass.name ? _this.data.tmpClass.name : ''
+      },
+      needLogin:false,
+    }).then((result) =>{
+      wx.hideLoading()
+      let terms = result.data
+      let termIndex = 0
+      if(_this.data.courseTerm){
+        terms.forEach((element,index) => {
+          if(element.term == _this.data.courseTerm.term){
+            termIndex = index
+          } 
+        });
+      }
+      _this.setData({
+        terms: result.data,
+        termIndex:termIndex
+      })
+    })
+  },
+  //获取当前学期的课表
+  getNowTermCourse:function(){
+    app.httpRequest({
+      url: 'data/getCourseFromSchool',
+      data: {
+        number: number,
+        className: name
+      },
+      needLogin:false,
+      success: function (res) {
+        wx.hideLoading()
+        if (res.data.status !== 0) {
+          app.msg(res.data.message)
+          return
+        }
+        wx.setStorageSync('tmp_class', tmpClass)
+        wx.setStorageSync('course', res.data.data.course)
+        wx.switchTab({
+          url: '/pages/course/course'
+        })
+      }
+    })
+  },
+  //切换学期
+  changeTerm:function(e){
+    let _this = this
+    let index = e.detail.value
+    let term = _this.data.terms[index]
+    let nowTerm = course.getNowTerm()
+    let stu_id = app.getUserId()
+    let url = '',data = {},needLogin = false
+    if(!stu_id){
+      url = 'data/getCourseByClassname'
+      data = {
+
+      }
+      if(term == nowTerm.term){
+        url = 'data/getCourseFromSchool'
+        data = {
+
+        }
+      }
+    }else{
+      url = 'course/getList'
+      data = {term: term.term}
+      needLogin = true
+    }
+    wx.showLoading({
+      title: '正在加载',
+      mask: true
+    })
+    app.promiseRequest({
+      url:url,
+      data:data,
+      needLogin:needLogin
+    }).then((result) =>{
+      wx.hideLoading()
+      wx.setStorageSync('course', result.data.course)
+      wx.setStorageSync('course_term', term)
+      let courseTerm = course.getNowCourseTerm()
+      _this.setData({
+        courseTerm: courseTerm
+      })
+      _this.getData()
+      _this.getCounts()
+    }).catch((error)=>{
+      app.msg(error.message)
+    })
   }
 })

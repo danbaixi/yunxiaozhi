@@ -2,7 +2,7 @@
   text-align: center;
   padding: 30rpx;
 }
-.img{
+.empty-img{
   width: 240rpx;
   height: 238rpx;
 }

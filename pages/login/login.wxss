@@ -2,8 +2,10 @@ page{
   overflow: hidden;
 }
 .container{
+  top: 0;
+  left: 0;
+  position: fixed;
   padding-top: 100rpx;
-  position: relative;
   background: linear-gradient(180deg, #1380ff, #7dbeec);
 }
 .login-img{

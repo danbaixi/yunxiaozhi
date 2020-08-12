@@ -54,12 +54,15 @@ page{
   /* line-height: 32px; */
   transition: 0.5s;
 }
-.train{
+.course-labels{
   position: fixed;
   bottom: 10px;
   right: 10px;
+}
+.course-labels > .label{
+  margin-top: 12rpx;
   padding: 8rpx 10px;
-  background: rgba(0,0,0,.5);
+  background: rgba(0,0,0,.4);
   color: #fff;
   border-radius: 8rpx;
 }

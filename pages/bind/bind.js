@@ -139,9 +139,15 @@ Page({
           })
           setTimeout(function () {
             if (that.data.url != '') {
-              wx.redirectTo({
-                url: that.data.url,
-              })
+              if(app.isTabPage(that.data.url)){
+                wx.switchTab({
+                  url: that.data.url
+                })
+              }else{
+                wx.redirectTo({
+                  url: that.data.url,
+                })
+              }
               return
             }
             wx.switchTab({

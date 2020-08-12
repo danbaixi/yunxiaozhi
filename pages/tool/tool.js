@@ -304,6 +304,10 @@ Page({
       app.msg("请先登录")
       return
     }
+    if (needLogin && !app.getUserId()) {
+      app.msg("请先绑定教务系统账号")
+      return;
+    }
     if(appid){
       wx.navigateToMiniProgram({
         appId:appid,
