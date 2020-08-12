@@ -66,6 +66,10 @@ Page({
 
   getData:function(){
     var that = this
+    wx.showLoading({
+      title: '正在加载',
+      mask: true
+    })
     app.promiseRequest({
       url:'user/getareainfo'
     }).then((data) => {

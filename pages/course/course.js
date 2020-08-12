@@ -794,9 +794,9 @@ Page({
       url: '/pages/loginTips/loginTips',
     })
   },
-  setClass:function(){
+  shareCourse:function(){
     wx.navigateTo({
-      url: '/pages/setClass/setClass',
+      url: '/pages/course/share/share?term=' + this.data.courseTerm.term + '&term_name=' + this.data.courseTerm.name,
     })
   },
   setTime:function(){
@@ -1064,12 +1064,9 @@ Page({
   },
   getCourseTerm:function(){
     let nowTerm = courseFn.getNowCourseTerm()
-    let configs = wx.getStorageSync('configs')
-    if(configs.term != nowTerm.term){
-      this.setData({
-        courseTerm: nowTerm
-      })
-    }
+    this.setData({
+      courseTerm: nowTerm
+    })
   },
   //获取当前学期开学时间
   getTermDate:function(){

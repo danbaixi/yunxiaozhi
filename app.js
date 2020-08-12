@@ -51,7 +51,7 @@ App({
   },
   /** 全局变量 */
   globalData:{
-    isDebug:false,
+    isDebug:true,
     isTest:false,
     isLocal:false,
     themeColor: '#1380ff',
@@ -76,7 +76,7 @@ App({
    * 获取请求domain
    */
   getDomain:function(){
-    return this.globalData.isDebug ? (this.globalData.isTest ? 'https://www.yunxiaozhi.cn/test/public/api/' : 'http://danbaixi1.utools.club/yxz_v1/public/index.php/api/') : 'https://www.yunxiaozhi.cn/v1/public/api/'
+    return this.globalData.isDebug ? (this.globalData.isTest ? 'https://www.yunxiaozhi.cn/test/public/api/' : 'http://danbaixi2.utools.club/yxz_v1/public/index.php/api/') : 'https://www.yunxiaozhi.cn/v1/public/api/'
   },
 
   getSign:function(){
@@ -268,6 +268,7 @@ App({
           'content-type': contentType
         },
         success:function(res){
+          wx.hideLoading()
           if(res.data.status == 0){
             resolve(res.data)
           }else if(res.data.status == 4003){

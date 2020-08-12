@@ -59,8 +59,7 @@ page{
   bottom: 10px;
   right: 10px;
 }
-.course-labels > .label{
-  margin-top: 12rpx;
+.course-labels .label{
   padding: 8rpx 10px;
   background: rgba(0,0,0,.4);
   color: #fff;
@@ -440,4 +439,7 @@ input-holder {
     transform:scale(100,100);
     opacity: 0;
  }
+}
+.course-options.grid>.cu-item [class*=icon] {
+  margin-top: 0px;
 }

@@ -1,4 +1,7 @@
 {
   "navigationBarTitleText": "云小智",
-  "enablePullDownRefresh": true
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "skeleton": "/pages/components/skeleton/skeleton"
+  }
 }

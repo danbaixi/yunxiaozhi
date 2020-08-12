@@ -13,7 +13,7 @@
 <view class="mask" bindtap="hideMask" style='height:{{winHeight-customBar}}px;top:{{customBar}}px' wx:if="{{list_is_display}}"></view>
 <view class="list" style='height:{{7*55+4+customBar}}px;top:{{list_is_display?0:-(7*55+4+customBar)}}px'>
   <view style="height:{{customBar}}px;width:100%;background:#fff"></view>
-  <view class="cu-list grid col-4">
+  <view class="course-options cu-list grid col-4">
     <view class="cu-item" bindtap='update'>
       <view class="course-icon">
         <image mode="widthFix" src="/pages/assets/imgs/course_icon/update.png"></image>
@@ -30,13 +30,13 @@
       <view class="course-icon">
         <image mode="widthFix" src="/pages/assets/imgs/course_icon/time.png"></image>
       </view>
-      <text>设置上课时间</text>
+      <text>设置时间</text>
     </view>
-    <view class="cu-item" bindtap='setClass'>
+    <view class="cu-item" bindtap='shareCourse'>
       <view class="course-icon">
-        <image mode="widthFix" src="/pages/assets/imgs/course_icon/class.png"></image>
+        <image mode="widthFix" src="/pages/assets/imgs/course_icon/share.png"></image>
       </view>
-      <text>切换班级</text>
+      <text>分享课表</text>
     </view>
   </view>
   <view class="cu-list menu sm-border">
@@ -141,10 +141,9 @@
 
         <view class='train' data-id="{{train_course_id}}" bindtap='train' wx:if="{{tmpClass==''&&train_course_id!=0}}">本周是实训周</view>
         <view class="course-labels">
-          <view class="label" wx:if="{{tmpClass!=''}}">{{tmpClass.name}}</view>
-          <view class="label" wx:if="{{courseTerm}}">{{courseTerm.name}}</view>
+          <view class="margin-top-sm text-right" wx:if="{{tmpClass!=''}}"><text class="label">{{tmpClass.name}}</text></view>
+          <view class="margin-top-sm text-right" wx:if="{{courseTerm}}"><text class="label">{{courseTerm.name}}</text></view>
         </view>
-        <!-- <text class="train" wx:if="{{!internet_course_time && tmpClass!=''}}">{{tmpClass.name}}</text> -->
       </view>
     </view>
   </scroll-view>

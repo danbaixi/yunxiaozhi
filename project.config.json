@@ -418,6 +418,13 @@
 					"pathName": "pages/tools/tiangou/tiangou",
 					"query": "id=103",
 					"scene": null
+				},
+				{
+					"id": 54,
+					"name": "分享课表",
+					"pathName": "pages/course/share/share",
+					"query": "term=20191&term_name=2019-2020学年 第二学期",
+					"scene": null
 				}
 			]
 		}
