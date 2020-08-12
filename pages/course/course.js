@@ -1064,8 +1064,12 @@ Page({
   },
   getCourseTerm:function(){
     let nowTerm = courseFn.getNowCourseTerm()
+    let thisTerm = app.getConfig('term')
+    let userTerm = wx.getStorageSync('course_stu')
     this.setData({
-      courseTerm: nowTerm
+      courseTerm: nowTerm,
+      thisTerm: thisTerm,
+      userTerm: userTerm
     })
   },
   //获取当前学期开学时间

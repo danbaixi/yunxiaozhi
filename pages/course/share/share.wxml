@@ -4,15 +4,15 @@
 </cu-custom>
 <view class="container">
   <view class="margin padding text-center">
-    <image style="width:70%" mode="widthFix" src="https://mmbiz.qpic.cn/mmbiz_png/YWKTC18p77JpsbMIEeKeaD54MUVydoyuJbYJS6fZR2UO7f3lhoibXichN3YLeZYlRaZCfP9FV9OmdnxicVRBQJ5TQ/0?wx_fmt=png"></image>
-  </view>
-  <view class="bg-white padding margin-sm y-radius">
-    <picker header-text="请选择学期" range="{{terms}}" range-key="name" bindchange="changeTerm" value="{{termIndex}}">
-      <text>课表学期：</text><text class="text-theme">{{term_name}}</text>
-      <text class="text-yellow fr">切换 <text class="icon-right"></text></text>
-    </picker>
+    <image style="width:70%" mode="widthFix" src="{{image}}"></image>
   </view>
   <view wx:if="{{share}}" class="share">
+    <view class="bg-white padding margin-sm y-radius">
+      <picker header-text="请选择学期" range="{{terms}}" range-key="name" bindchange="changeTerm" value="{{termIndex}}">
+        <text>课表学期：</text><text class="text-theme">{{term_name}}</text>
+        <text class="text-yellow fr">切换 <text class="icon-right"></text></text>
+      </picker>
+    </view>
     <view class="margin">
       <button class="cu-btn block bg-theme lg" open-type="share">
         <text class="icon-share"></text> <text class="padding-left">分享我的课表</text>
@@ -20,6 +20,16 @@
     </view>
   </view>
   <view wx:else class="course">
-
+    <view class="bg-white padding margin-sm y-radius text-cut">
+      <text>姓名：</text><text class="text-theme">{{name}}<text class="text-black">({{classname}})</text></text>
+    </view>
+    <view class="bg-white padding margin-sm y-radius">
+      <text>学期：</text><text class="text-theme">{{term_name}}</text>
+    </view>
+    <view class="margin">
+      <button class="cu-btn block bg-theme lg" bindtap="viewCourse">
+        <text class="padding-left">查看TA的课表</text>
+      </button>
+    </view>
   </view>
 </view>

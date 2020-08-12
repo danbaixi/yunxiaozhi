@@ -425,6 +425,13 @@
 					"pathName": "pages/course/share/share",
 					"query": "term=20191&term_name=2019-2020学年 第二学期",
 					"scene": null
+				},
+				{
+					"id": 55,
+					"name": "查看分享课表",
+					"pathName": "pages/course/share/share",
+					"query": "stu_id=201902151133&term=20190&term_name=2019-2020学年 第一学期",
+					"scene": null
 				}
 			]
 		}
