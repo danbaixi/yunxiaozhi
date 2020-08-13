@@ -19,7 +19,8 @@ Page({
     let internet_course_time = options.internet_course_time || 1
     //判断是否是本班课程
     var tmp_class = wx.getStorageSync('tmp_class')
-    if (tmp_class == "" && data.type == 1) {
+    var course_stu = wx.getStorageSync('course_stu')
+    if (tmp_class == "" && !course_stu && cou && data.type == 1) {
       this.setData({
         showStudent: true
       })

@@ -569,12 +569,12 @@ Page({
    */
   update: function (e) {
     var that = this;
-    that.setData({ list_is_display: false })
     var user_id = wx.getStorageSync('user_id');
     if (!user_id) {
       app.msg("请先登录")
       return;
     }
+    that.setData({ list_is_display: false })
     var time = (new Date()).getTime();
     if (wx.getStorageSync('course_update_time') != "") {
       var update_time = wx.getStorageSync('course_update_time');
@@ -795,11 +795,19 @@ Page({
     })
   },
   shareCourse:function(){
+    if(!app.getUserId()){
+      app.msg("你还没有登录哦")
+      return
+    }
     wx.navigateTo({
       url: '/pages/course/share/share?term=' + this.data.courseTerm.term + '&term_name=' + this.data.courseTerm.name,
     })
   },
   setTime:function(){
+    if (!app.getUserId()) {
+      app.msg("你还没有登录哦")
+      return
+    }
     wx.navigateTo({
       url: '/pages/course/setTime/setTime',
     })

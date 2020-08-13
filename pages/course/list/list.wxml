@@ -10,7 +10,7 @@
     </picker>
   </view>
   <view class="bg-white padding margin-sm y-radius" bindtap="changeClass">
-    <text>当前班级：{{tmpClass && tmpClass.name ? tmpClass.name: '本班'}}</text>
+    <text>当前班级：{{tmpClass && tmpClass.name ? tmpClass.name: (courseStu && courseStu.classname ? courseStu.classname : '本班')}}</text>
     <text class="text-yellow fr">切换 <text class="icon-right"></text></text>
   </view>
   <view class="fiter padding-sm">

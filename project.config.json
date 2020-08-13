@@ -432,6 +432,13 @@
 					"pathName": "pages/course/share/share",
 					"query": "stu_id=201902151133&term=20190&term_name=2019-2020学年 第一学期",
 					"scene": null
+				},
+				{
+					"id": 56,
+					"name": "本科查询",
+					"pathName": "pages/tools/matriculate/bk/bk",
+					"query": "",
+					"scene": null
 				}
 			]
 		}

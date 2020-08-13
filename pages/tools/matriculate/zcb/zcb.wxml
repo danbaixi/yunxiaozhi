@@ -1,20 +1,22 @@
 <cu-custom bgColor="bg-white" isBack="true">
   <view slot="back">返回</view>
-	<view slot="content">专插本录取查询</view>
+	<view slot="content">专插本录取结果查询</view>
 </cu-custom>
 <view class="padding bg-white text-theme margin-top margin-left margin-right y-radius text-center">
   数据来源官网，请以官网查询的为准！
 </view>
 <view class="cu-card">
   <view class="cu-item">
-    <view class="cu-form-group">
-      <view class="title">姓名</view>
-      <input placeholder="请输入考生姓名" bindinput="nameInput"></input>
-    </view>
-    <view class="cu-form-group">
-      <view class="title">身份证</view>
-      <input placeholder="请输入考生身份证" bindinput="sfzInput"></input>
-    </view>
+    <form>
+      <view class="cu-form-group">
+        <view class="title">姓名</view>
+        <input placeholder="请输入考生姓名" bindinput="nameInput"></input>
+      </view>
+      <view class="cu-form-group">
+        <view class="title">身份证</view>
+        <input placeholder="请输入考生身份证" bindinput="sfzInput"></input>
+      </view>
+    </form>
   </view>
   <view class="padding flex flex-direction">
     <button class="cu-btn bg-theme lg" bindtap="query">查询</button>

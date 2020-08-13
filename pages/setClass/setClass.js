@@ -158,6 +158,8 @@ Page({
           name: courseFn.term2Name(term),
           term_date: app.getConfig('termDate')
         }
+        //清空course_stu
+        wx.setStorageSync('course_stu',null)
         wx.setStorageSync('course_term', nowTerm)
         wx.setStorageSync('tmp_class', tmpClass)
         wx.setStorageSync('course', res.data.data.course)

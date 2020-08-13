@@ -63,6 +63,7 @@
     "pages/tools/guide/west/west",
     "pages/tools/matriculate/matriculate",
     "pages/tools/matriculate/zcb/zcb",
+    "pages/tools/matriculate/bk/bk",
     "pages/tools/tiangou/tiangou",
     "pages/course/share/share"
   ],

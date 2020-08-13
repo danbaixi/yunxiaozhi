@@ -25,10 +25,12 @@ Page({
    */
   onLoad: function (options) {
     let tmpClass = wx.getStorageSync('tmp_class')
+    let courseStu = wx.getStorageSync('course_stu')
     let userId = app.getUserId()
     let courseTerm = course.getNowCourseTerm()
     this.setData({
       tmpClass: tmpClass,
+      courseStu: courseStu,
       userId: userId,
       courseTerm: courseTerm
     })
@@ -251,6 +253,15 @@ Page({
   //获取学期
   getTerms:function(){
     let _this = this
+    let stu_id = wx.getStorageSync('user_id')
+    let classname = _this.data.tmpClass && _this.data.tmpClass.name ? _this.data.tmpClass.name : ''
+    if(stu_id == '' && classname == ''){
+      let term = course.getNowCourseTerm()
+      _this.setData({
+        terms:[term]
+      })
+      return
+    }
     wx.showLoading({
       title: '正在加载',
       mask: true
@@ -258,8 +269,8 @@ Page({
     app.promiseRequest({
       url:'data/getTermsByClassname',
       data:{
-        stu_id: wx.getStorageSync('user_id'),
-        classname: _this.data.tmpClass && _this.data.tmpClass.name ? _this.data.tmpClass.name : ''
+        stu_id: stu_id,
+        classname: classname
       },
       needLogin:false,
     }).then((result) =>{
@@ -309,21 +320,19 @@ Page({
     let term = _this.data.terms[index]
     let nowTerm = course.getNowTerm()
     let stu_id = app.getUserId()
-    let url = '',data = {},needLogin = false
+    let tmp_class = wx.getStorageSync('tmp_class')
+    if(stu_id == '' && !tmp_class){
+      return
+    }
+    let url = '', data = { term: term.term },needLogin = false
     if(!stu_id){
       url = 'data/getCourseByClassname'
-      data = {
-
-      }
+      data.classname = tmp_class.name
       if(term == nowTerm.term){
         url = 'data/getCourseFromSchool'
-        data = {
-
-        }
       }
     }else{
       url = 'course/getList'
-      data = {term: term.term}
       needLogin = true
     }
     wx.showLoading({

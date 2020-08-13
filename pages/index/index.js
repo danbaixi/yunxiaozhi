@@ -86,7 +86,7 @@ Page({
         badge: '',
         name: '早起打卡',
         icon: 'clockin',
-        needLogin: false,
+        needLogin: true,
         url: '/pages/tools/clockin/clockin',
       },
       // {

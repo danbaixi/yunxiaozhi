@@ -74,6 +74,7 @@ page{
 
 .smalltext {
   height: 100%;
+  width: 100%;
   margin: 0 4rpx;
   font-size: 24rpx;
   line-height: 36rpx;
