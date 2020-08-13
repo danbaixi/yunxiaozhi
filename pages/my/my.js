@@ -58,11 +58,11 @@ Page({
    */
   onLoad: function (options) {
     this.getQuantityData()
-    this.getCountData();
   },
 
   onShow:function(){
     this.getUserInfo();
+    this.getCountData();
   },
 
   onPullDownRefresh: function () {
