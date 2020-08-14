@@ -163,8 +163,8 @@ Page({
         wx.setStorageSync('course_term', nowTerm)
         wx.setStorageSync('tmp_class', tmpClass)
         wx.setStorageSync('course', res.data.data.course)
-        wx.switchTab({
-          url: '/pages/course/course'
+        wx.navigateBack({
+          delta: 0,
         })
       }
     })

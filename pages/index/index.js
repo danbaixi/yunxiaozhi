@@ -138,7 +138,13 @@ Page({
     bgFix:false,//是否固定背景
     newVersionTip:false,//新版本提示,
     articleBanners:[],
-    showNewsList: true
+    showNewsList: true,
+    articleBanners:[
+      {
+        src:"",
+        img:"https://mmbiz.qpic.cn/mmbiz_jpg/YWKTC18p77JNk4Iyh99tsRmnHLUFunCcic5ZqFABFAtmqfT4DBuAH4sDsbTCugj9o8JJsRoBfbotQLgAllHAfDQ/0?wx_fmt=jpeg"
+      }
+    ]
   },
 
   onLoad: function () {
@@ -522,6 +528,10 @@ Page({
   //获取考试列表
   getMyExam: function (e) {
     if (!app.getUserId()){
+      this.setData({
+        my_exams:[],
+        displayExam:false
+      })
       return
     }
     var that = this,displayExam = false;

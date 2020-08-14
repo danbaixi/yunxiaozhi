@@ -67,6 +67,11 @@ Page({
       })
     }
   },
+  onUnload:function(){
+    if(!app.getUserId){
+      wx.setStorageSync('login_session', null)
+    }
+  },
   /**
    * 用户点击右上角分享
    */

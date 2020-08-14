@@ -19,7 +19,7 @@
       </view>
     </view>
     <view class="list">
-      <view class="li radius text-center {{list[item].top>0?'active':''}}" wx:for="{{days}}" wx:key="key">
+      <view class="li radius text-center {{dates[item] == 1?'active':''}}" wx:for="{{days}}" wx:key="key">
         <view class="item" hidden="{{item==0}}"><text>{{item}}</text></view>
       </view>
     </view>
@@ -35,7 +35,7 @@
     <view class="cu-list menu">
       <view class="cu-item" wx:for="{{list}}" wx:key="key">
         <view class="content">
-          <text>{{month}}/{{index}} </text>
+          <text>{{month}}/{{item.date}} </text>
           <text>打卡时间: {{item.time}} </text>
         </view>
         <view class="action">

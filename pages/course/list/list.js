@@ -24,16 +24,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let tmpClass = wx.getStorageSync('tmp_class')
-    let courseStu = wx.getStorageSync('course_stu')
-    let userId = app.getUserId()
-    let courseTerm = course.getNowCourseTerm()
-    this.setData({
-      tmpClass: tmpClass,
-      courseStu: courseStu,
-      userId: userId,
-      courseTerm: courseTerm
-    })
     this.getTerms()
   },
 
@@ -48,6 +38,17 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    let tmpClass = wx.getStorageSync('tmp_class')
+    let courseStu = wx.getStorageSync('course_stu')
+    let userId = app.getUserId()
+    let courseTerm = course.getNowCourseTerm()
+    this.setData({
+      tmpClass: tmpClass,
+      courseStu: courseStu,
+      userId: userId,
+      courseTerm: courseTerm
+    })
+
     this.getData()
     this.getCounts()
     this.setData({
