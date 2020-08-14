@@ -20,7 +20,7 @@ Page({
     //判断是否是本班课程
     var tmp_class = wx.getStorageSync('tmp_class')
     var course_stu = wx.getStorageSync('course_stu')
-    if (tmp_class == "" && !course_stu && cou && data.type == 1) {
+    if (tmp_class == "" && !course_stu && data.type == 1) {
       this.setData({
         showStudent: true
       })
