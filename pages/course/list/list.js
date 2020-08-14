@@ -24,7 +24,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getTerms()
+    
   },
 
   /**
@@ -48,7 +48,7 @@ Page({
       userId: userId,
       courseTerm: courseTerm
     })
-
+    this.getTerms()
     this.getData()
     this.getCounts()
     this.setData({
@@ -95,6 +95,9 @@ Page({
     let courses = []
     for(let i = 0;i<data.length;i++){
       let item = data[i]
+      if(!item.course_weekly){
+        continue
+      }
       let course_item = {
         'course_teacher': item.course_teacher,
         'course_weekly': item.course_weekly,
@@ -195,7 +198,7 @@ Page({
     let oldName = ''
     for(let i=0;i<courses.length;i++){
       let course = courses[i]
-      if(course.course_name == oldName){
+      if(course.course_name == oldName || !course.course_weekly){
         continue
       }
       oldName = course.course_name
