@@ -1,1 +1,9 @@
-/* pages/tools/city/city.wxss */
+.cu-list.card-menu{
+  border-radius: 0;
+  margin-right: 20rpx;
+  margin-left: 20rpx;
+}
+.cu-list>.cu-item{
+  margin-bottom: 20rpx;
+  border-radius: 12rpx;
+}

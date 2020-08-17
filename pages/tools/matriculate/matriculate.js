@@ -94,7 +94,7 @@ Page({
       })
     }else{
       wx.navigateTo({
-        url: '/pages/article/article?src=' + encodeURIComponent(this.data.bk),
+        url: '/pages/tools/matriculate/bk/bk',
       })
     }
   }

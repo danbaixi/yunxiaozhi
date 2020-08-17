@@ -18,7 +18,7 @@ Page({
     systemType: 1, // 1为青果，2为强智
     needValidate: false,
     customBar:app.globalData.customBar,
-    articleUrl:"http://mp.weixin.qq.com/s?__biz=MzI1NTUwNDIzNQ==&mid=100001298&idx=1&sn=9839487b01ae3453f89f5b6f287e16ab&chksm=6a35bc165d4235000aeaf709dcc5b7e48668c0fabea13292ce7633242a3a54bc8117a56bc5da#rd",
+    articleUrl:"http://mp.weixin.qq.com/s?__biz=MzI1NTUwNDIzNQ==&mid=100002566&idx=1&sn=9ebe399aa19d127d23b4012c10a6778c&chksm=6a35b1025d4238142979bc5868df2ec7b599f3fe7e53ea47335a38527cf4a353b1f33a49ef77#rd",
     modal_visible: false,
     hasNotice: false,
     tips_show:true

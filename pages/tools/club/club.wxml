@@ -21,7 +21,7 @@
   <view style="margin-top:120rpx">
     <notice page="club"></notice>
     <empty display="{{!loading&&list.length==0}}"></empty>
-    <view class="cu-list bg-white menu-avatar">
+    <view class="cu-list card-menu menu-avatar">
       <view class="cu-item" wx:for="{{list}}" wx:key="key">
         <view class="cu-avatar lg" style="background-image:url({{item.logo}});" bindtap="showItem" data-id="{{item.id}}"></view>
         <view class="content" bindtap="showItem" data-id="{{item.id}}">
