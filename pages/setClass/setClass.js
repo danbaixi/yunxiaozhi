@@ -159,7 +159,7 @@ Page({
           term_date: app.getConfig('termDate')
         }
         //清空course_stu
-        wx.setStorageSync('course_stu',null)
+        wx.removeStorageSync('course_stu')
         wx.setStorageSync('course_term', nowTerm)
         wx.setStorageSync('tmp_class', tmpClass)
         wx.setStorageSync('course', res.data.data.course)
@@ -180,12 +180,21 @@ Page({
         app.promiseRequest({
           url: 'course/getList'
         }).then((data) => {
-          wx.hideLoading()
+          let term = app.getConfig('term')
+          //还原到最新学期
+          let nowTerm = {
+            term: term,
+            name: courseFn.term2Name(term),
+            term_date: app.getConfig('termDate')
+          }
+          //清空course_stu
+          wx.removeStorageSync('course_stu')
           wx.removeStorageSync('tmp_class')
+          wx.setStorageSync('course_term', nowTerm)
           wx.setStorageSync('course', data.data.course);
           wx.setStorageSync('train', data.data.train_course);
-          wx.switchTab({
-            url: '/pages/course/course'
+          wx.navigateBack({
+            delta: 0,
           })
         }).catch((error) => {
           app.msg(error.message)

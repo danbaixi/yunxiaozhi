@@ -329,7 +329,7 @@ Page({
       return
     }
     let url = '', data = { term: term.term },needLogin = false
-    if(!stu_id){
+    if(!stu_id || tmp_class){
       url = 'data/getCourseByClassname'
       data.classname = tmp_class.name
       if(term == nowTerm.term){
