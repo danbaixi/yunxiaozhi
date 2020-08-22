@@ -122,6 +122,10 @@ Page({
 
   //贡献毒鸡汤
   create:function(){
+    if(!app.getUserId()){
+      app.msg("需要登录后才能提交")
+      return
+    }
     wx.navigateTo({
       url: 'submit/submit',
     })

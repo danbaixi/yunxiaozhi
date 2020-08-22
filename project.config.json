@@ -439,6 +439,12 @@
 					"pathName": "pages/tools/matriculate/bk/bk",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "新生专题",
+					"pathName": "pages/tools/newstudent/newstudent",
+					"scene": null
 				}
 			]
 		}

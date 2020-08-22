@@ -4,14 +4,22 @@
 </cu-custom>
 <list-loading loading="{{loading}}"></list-loading>
 <view class='calendar' wx:if="{{!loading}}">
-  <view class="head text-lg grid col-2">
+  <view class="head">
     <view class="text-left">
-    <picker mode="date" value="{{now_year}}-{{now_month}}" start="2015-09-01" end="2100-09-01" fields="month" bindchange="seleteDate">
-      <view class="picker">
-        <text>{{now_year}}年 <text class="text-theme">{{now_month}}月</text></text>
-      </view>
-    </picker>
-      
+      <picker mode="selector" range="{{semester}}" range-key="title" value="{{semesterIndex}}" bindchange="seleteTerm">
+        <view class="picker">
+          <text class="text-theme">{{semester[semesterIndex].title}}</text>
+          <text class="icon-triangledownfill text-black"></text>
+        </view>
+      </picker>
+    </view>
+    <view class="text-left">
+      <picker mode="date" value="{{now_year}}-{{now_month}}" start="2015-09-01" end="2100-09-01" fields="month" bindchange="seleteDate">
+        <view class="picker">
+          <text>{{now_year}}年 <text class="text-theme">{{now_month}}月</text></text>
+          <text class="icon-triangledownfill text-black"></text>
+        </view>
+      </picker>
     </view>
     <view class="text-right">
       <text class="icon-back option" data-type="reduce" bindtap="alterMonth"></text>

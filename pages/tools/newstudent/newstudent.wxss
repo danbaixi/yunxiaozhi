@@ -1,0 +1,29 @@
+.cu-list.grid.no-border{
+  padding: 0 10rpx;
+}
+.article{
+  border-radius: 4px;
+  padding-bottom: 6px;
+  margin-bottom: 20px;
+}
+.article image{
+  height: 160px;
+  width: 100%;
+  border-radius: 4px 4px 0 0;
+}
+.article .title{
+  font-size: 34rpx;
+  color: #333;
+  padding: 4px 6px;
+  overflow: hidden;
+  white-space:nowrap;
+  text-overflow: ellipsis;
+}
+.article .desc{
+  padding: 4px 6px;
+  font-size: 26rpx;
+  color: #999;
+  overflow: hidden;
+  white-space:nowrap;
+  text-overflow: ellipsis;
+}

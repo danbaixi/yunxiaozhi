@@ -25,7 +25,9 @@ Page({
     loading: true,
     customBar: app.globalData.customBar,
     statusBar: app.globalData.statusBar,
-    custom: app.globalData.custom
+    custom: app.globalData.custom,
+    semester:[],
+    semesterIndex:0
   },
 
   /**
@@ -209,11 +211,12 @@ Page({
       colorOfShijian:colorOfShijian
     })
     wx.hideLoading()
+    this.setTerm()
   },
   //上个月、下个月的实现
   alterMonth:function(e){
-    var now_year = this.data.now_year;
-    var now_month = this.data.now_month;
+    var now_year = parseInt(this.data.now_year);
+    var now_month = parseInt(this.data.now_month);
     var type = e.currentTarget.dataset.type
 
     var month = now_month
@@ -352,6 +355,34 @@ Page({
     this.setData({
       now_month:month,
       now_year:year,
+    })
+    this.getDayData(this.data.now_year, this.data.now_month);
+    this.zhouci();
+  },
+  //判定学期
+  setTerm:function(){
+    let year = this.data.now_year
+    let month = this.data.now_month < 10 ? ('0'+this.data.now_month) : this.data.now_month
+    let date = `${year}-${month}`
+    let semester = this.data.semester
+    for(let i=0,len=semester.length;i<len;i++){
+      if(semester[i].date == date){
+        this.setData({
+          semesterIndex: i
+        })
+        return
+      }
+    }
+  },
+  //选择学期
+  seleteTerm:function(e){
+    let index = e.detail.value
+    let semester = this.data.semester[index]
+    let [year,month] = semester.date.split('-')
+    this.setData({
+      semesterIndex: index,
+      now_month: month,
+      now_year: year
     })
     this.getDayData(this.data.now_year, this.data.now_month);
     this.zhouci();

@@ -65,7 +65,8 @@
     "pages/tools/matriculate/zcb/zcb",
     "pages/tools/matriculate/bk/bk",
     "pages/tools/tiangou/tiangou",
-    "pages/course/share/share"
+    "pages/course/share/share",
+    "pages/tools/newstudent/newstudent"
   ],
   "window": {
     "navigationStyle": "custom",

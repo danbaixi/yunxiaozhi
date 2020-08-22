@@ -237,3 +237,6 @@ page{
   height: 383rpx;
   border-radius: 12rpx;
 }
+.new-student-tips{
+  width: 600rpx;
+}

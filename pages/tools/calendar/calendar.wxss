@@ -10,19 +10,13 @@ page{
   background: #fff;
   padding: 0 40rpx;
 }
-.left,.right{
-  padding: 0 20px;
-  font-size: 22px;
-  height: 40px;
-  line-height: 40px;
-  position: absolute;
-  top:0px;
+.head view{
+  display: inline-block;
+  margin-right: 20rpx;
 }
-.left{
-  left: 15px;
-}
-.right{
-  right: 15px;
+.head view:last-child{
+  margin-right: 0;
+  float: right;
 }
 image{
   padding: 10px;

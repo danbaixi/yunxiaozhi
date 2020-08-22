@@ -293,10 +293,8 @@ Page({
   },
   /** 打开应用 */
   openTool: function (e) {
-    var that = this;
     var url = e.currentTarget.dataset.url;
     var user_id = wx.getStorageSync('user_id');
-    console.log(user_id)
     var appid = e.currentTarget.dataset.appid
     var path = e.currentTarget.dataset.path
     var needLogin = e.currentTarget.dataset.needlogin

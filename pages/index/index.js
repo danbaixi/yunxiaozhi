@@ -139,6 +139,7 @@ Page({
     newVersionTip:false,//新版本提示,
     articleBanners:[],
     showNewsList: true,
+    showNewStudentTips: false,
     articleBanners:[
       {
         src:"",
@@ -157,6 +158,7 @@ Page({
         newVersionTip: true
       })
     }
+    this.newStudentTips()
   },
 
   onShow:function(){
@@ -720,6 +722,26 @@ Page({
     let article = this.data.articleBanners[index]
     wx.navigateTo({
       url: '/pages/news/news?src=' + encodeURIComponent(article.src),
+    })
+  },
+  //展示新生专题提示
+  newStudentTips:function(){
+    let audit = app.getConfig('auditing')
+    let user_id = app.getUserId()
+    if(audit == 0 && !user_id){
+      this.setData({
+        showNewStudentTips:true
+      })
+    }
+  },
+  hideNewStudentTips:function(){
+    this.setData({
+      showNewStudentTips:false
+    })
+  },
+  goNewStudent:function(){
+    wx.navigateTo({
+      url: '/pages/tools/newstudent/newstudent',
     })
   }
 })
