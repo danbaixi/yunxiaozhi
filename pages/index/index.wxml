@@ -80,6 +80,13 @@
     </view>
   </view>
 
+  <view class="float-image" wx:if="{{!hideNewStudentFloat}}">
+    <image bindtap="goNewStudent" mode="widthFix" src="https://mmbiz.qpic.cn/mmbiz_png/YWKTC18p77I5Sd7C9QvPoO14xz9GEtE2xh5k1ib28iazSXw2x99HhpQibL2rhx56JaHxbjOZjLybSOn64G0mb6VrQ/0?wx_fmt=png"></image>
+    <view class="text-center margin-top-xs" bindtap="closeNewStudentFloat">
+      <text class="icon-close"></text>
+    </view>
+  </view>
+
   <!-- <view class='box' wx:if="{{display_news}}" bindtap='viewAllNews'>
     <view class="cu-bar bg-white solid-bottom arrow">
       <view class="action">
@@ -123,5 +130,10 @@
 <view class="cu-modal {{showNewStudentTips?'show':''}}" bindtap="hideNewStudentTips">
   <view class="cu-dialog new-student-tips">
     <view bindtap="goNewStudent" class="bg-img" style="height:400px;background-image: url('https://mmbiz.qpic.cn/mmbiz_png/YWKTC18p77KMycwJceMjyNQfWT4d5DXibImp9udEzVty9esBSDTyicbzDEZoibxpvDrH0kTaJX7lvfR1GpcOFHY3w/0?wx_fmt=png')"></view>
+    <view class="cu-bar bg-transparent" bindtap="closeNewStudentTips">
+      <view class="action margin-0 flex-sub solid-left">
+        <view class="margin-left-xs text-grey text-sm">不再弹出</view>
+      </view>
+    </view>
   </view>
 </view>

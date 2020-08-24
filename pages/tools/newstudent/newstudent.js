@@ -138,7 +138,9 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: '白云新生必看的校园攻略！'
+    }
   },
   openTool: function (e) {
     var url = e.currentTarget.dataset.url;

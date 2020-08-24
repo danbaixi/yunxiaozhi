@@ -239,4 +239,24 @@ page{
 }
 .new-student-tips{
   width: 600rpx;
+  background: transparent;
+}
+.new-student-tips .bg-img{
+  border-radius: 8rpx;
+}
+.float-image{
+  position: fixed;
+  bottom: 80rpx;
+  right: 20rpx;
+  width: 140rpx;
+  height: 140rpx;
+}
+.float-image image{
+  width: 100%;
+}
+.float-image .icon-close{
+  border-radius: 50%;
+  background: rgba(0,0,0,.5);
+  padding: 2rpx;
+  color: #fff;
 }

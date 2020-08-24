@@ -728,7 +728,8 @@ Page({
   newStudentTips:function(){
     let audit = app.getConfig('auditing')
     let user_id = app.getUserId()
-    if(audit == 0 && !user_id){
+    let setting = wx.getStorageSync('hide_new_studnet_tips')
+    if(audit == 0 && !user_id && !setting){
       this.setData({
         showNewStudentTips:true
       })
@@ -742,6 +743,15 @@ Page({
   goNewStudent:function(){
     wx.navigateTo({
       url: '/pages/tools/newstudent/newstudent',
+    })
+  },
+  closeNewStudentTips:function(){
+    wx.setStorageSync('hide_new_studnet_tips', true)
+    app.msg("已设置不再弹出")
+  },
+  closeNewStudentFloat:function(){
+    this.setData({
+      hideNewStudentFloat: true
     })
   }
 })
