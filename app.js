@@ -1,54 +1,15 @@
-const md5 = require('/utils/md5.js');
+const datas = require('./utils/datas')
 App({
+  /** 小程序入口 */
   onLaunch: function () {
-    let updateTime = 5 * 60 * 1000 // 5分钟更新一次config
-    let time = (new Date()).getTime()
-    let configUpdateTime = wx.getStorageSync('config_update_time')
-    if (!configUpdateTime || time - configUpdateTime >= updateTime) {
-      this.httpRequest({
-        url: 'config/getMiniConfig',
-        needLogin: false,
-        success: function (res) {
-          if (res.data.status == 0) {
-            wx.setStorageSync('config_update_time', time)
-            wx.setStorageSync('configs', res.data.data)
-          } else {
-            console.log('get config error')
-          }
-        }
-      })
-    }
-
-    //导航栏位置
-    wx.getSystemInfo({
-      success: e => {
-        this.globalData.statusBar = e.statusBarHeight;
-        let capsule = wx.getMenuButtonBoundingClientRect();
-        if (capsule) {
-          this.globalData.custom = capsule;
-          this.globalData.customBar = capsule.bottom + capsule.top - e.statusBarHeight;
-        } else {
-          this.globalData.customBar = e.statusBarHeight + 50;
-        }
-      }
-    })
-    
+    //更新配置
+    this.updateConfig()
+    //设置导航栏数据
+    this.setNavgition()
     //检查更新
-    const updateManager = wx.getUpdateManager()
-    updateManager.onCheckForUpdate(function (res) {
-    })
-    updateManager.onUpdateReady(function () {
-      wx.showModal({
-        title: '更新提示',
-        content: '新版本已经准备好，请重启应用',
-        success: function (res) {
-          if (res.confirm) {
-            updateManager.applyUpdate()
-          }
-        }
-      })
-    })
+    this.checkVersion()
   },
+
   /** 全局变量 */
   globalData:{
     isDebug:false,
@@ -66,29 +27,69 @@ App({
     headImgUrl:"https://yunxiaozhi-1251388077.cos.ap-guangzhou.myqcloud.com/user_imgs/"
   },
 
-  goLogin:function(url){
-    wx.navigateTo({
-      url: '/pages/bind/bind?url=/'+ url,
+  //配置定时更新
+  updateConfig:function(){
+    let updateTimeSSL = 3 * 60 // 更新间隔
+    let time = parseInt((new Date()).getTime() / 1000)
+    let updateTime = wx.getStorageSync('config_update_time')
+    let configs = this.getConfig()
+    if (!configs || !updateTime || time - updateTime >= updateTimeSSL) {
+      this.promiseRequest({
+        url: 'config/getMiniConfig',
+        needLogin: false
+      }).then((data) => {
+        if (data.status == 0) {
+          wx.setStorageSync('config_update_time', time)
+          wx.setStorageSync('configs', data.data)
+        } else {
+          console.log('get config error')
+        }
+      }).catch((error) => {
+        console.log(error.message)
+      })
+    }
+  },
+  //设置导航栏数据
+  setNavgition:function(){
+    wx.getSystemInfo({
+      success: e => {
+        this.globalData.statusBar = e.statusBarHeight;
+        let capsule = wx.getMenuButtonBoundingClientRect();
+        if (capsule) {
+          this.globalData.custom = capsule;
+          this.globalData.customBar = capsule.bottom + capsule.top - e.statusBarHeight;
+        } else {
+          this.globalData.customBar = e.statusBarHeight + 50;
+        }
+      }
+    })
+  },
+  //检查版本更新
+  checkVersion:function(){
+    const updateManager = wx.getUpdateManager()
+    updateManager.onCheckForUpdate(function (res) {})
+    updateManager.onUpdateReady(function () {
+      wx.showModal({
+        title: '更新提示',
+        content: '新版本已经准备好，请重启应用',
+        success: function (res) {
+          if (res.confirm) {
+            updateManager.applyUpdate()
+          }
+        }
+      })
     })
   },
 
-  /**
-   * 获取请求domain
-   */
+  //获取请求domain
   getDomain:function(){
-    return this.globalData.isDebug ? (this.globalData.isTest ? 'https://www.yunxiaozhi.cn/test/public/api/' : 'http://danbaixi1.utools.club/yxz_v1/public/index.php/api/') : 'https://www.yunxiaozhi.cn/v1/public/api/'
+    if(this.globalData.isDebug){
+      return this.globalData.isTest ? 'https://www.yunxiaozhi.cn/test/public/api/' : 'http://danbaixi1.utools.club/yxz_v1/public/index.php/api/'
+    }
+    return 'https://www.yunxiaozhi.cn/v1/public/api/'
   },
 
-  getSign:function(){
-    var uid = wx.getStorageSync('user_id')
-    var key = this.globalData.key
-    var sign = md5.hexMD5(key + uid)
-    return sign
-  },
-
-  /**
-   *  封装request 
-   */
+  //封装request 
   httpRequest: function (datas){
     datas.data = datas.data == undefined ? {} : datas.data
     datas.redirect = datas.redirect || ''
@@ -339,70 +340,28 @@ App({
     wx.setStorageSync('bg_imgs', bg_imgs)
     wx.setStorageSync('bg_img', bg_img)
   },
-  getTouchData: function(endX, endY, startX, startY) {
-    let turn = "";
-    let length = 50
-    if (endX - startX > length && Math.abs(endY - startY) < length) {
-      turn = "right";
-    } else if (endX - startX < -length && Math.abs(endY - startY) < length) {
-      turn = "left";
-    }
-    return turn;
-  },
-  //星期几转换
-  num2Week:function(num){
-    let weeks = ['日','一','二','三','四','五','六']
-    return weeks[num]
-  },
-  //格式化课表地址
-  formatAddress:function(address){
-    address = address.replace('-', '_')//把-换成_
-    var temp = address.split('_');
-    if (temp.length > 1) {
-      address = temp[0] + temp[1];
-    } else {
-      address = temp[0];
-    }
-    return address
-  },
-  //判断是否是默认昵称
-  isDefaultNickname:function(nickname){
-    return nickname.indexOf('yxz_') === -1 ? false : true
-  },
-  //函数防抖
-  debounce:function(fn,delay){
-    let timer = null
-    delay = delay || 1000
-    return function(args){
-      let _this = this
-      clearInterval(timer)
-      timer = setTimeout(function(){
-        fn.call(_this,args)
-      },delay)
-    }
-  },
-  //函数节流
-  
-  //是否是tab页
-  isTabPage:function(page){
-    let pages = [
-      '/pages/index/index',
-      '/pages/course/course',
-      '/pages/tool/tool',
-      '/pages/my/my',
-    ]
-    if(!page){
-      return false
-    }
-    if(pages.indexOf(page) === -1){
-      return false
-    }
-    return true
-  },
+
+  //获取配置，支持使用“.”
+  //key为空，返回全部
   getConfig:function(key){
     let configs = wx.getStorageSync('configs')
     if(key){
-      return configs[key]
+      let keyArr = key.split('.')
+      let result = ""
+      if(configs.hasOwnProperty(keyArr[0])){
+        result = configs[keyArr[0]]
+      }
+      if(keyArr.length == 1){
+        return result
+      }
+      for(let i=1;i<keyArr.length;i++){
+        if(result.hasOwnProperty(keyArr[i])){
+          result = result[keyArr[i]]
+        }else{
+          return false
+        }
+      }
+      return result
     }
     return configs
   }

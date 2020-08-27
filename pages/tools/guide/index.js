@@ -208,7 +208,7 @@ Page({
     this.loadData()
   },
   getUrl:function(){
-    let url = 'http://danbaixi.utools.club/yxz_v1/resource/guide/'
+    let url = 'http://danbaixi1.utools.club/yxz_v1/resource/guide/'
     if (!app.globalData.isDebug){
       url = 'https://www.yunxiaozhi.cn/v1/resource/guide/'
     }

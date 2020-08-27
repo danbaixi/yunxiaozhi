@@ -1,7 +1,7 @@
-var md5 = require('../../utils/md5.js');
 var colors = require('../../utils/colors.js')
 const TIMES = require('../../utils/course-time.js')
 const courseFn = require('../../utils/course')
+const util = require('../../utils/util')
 const app = getApp()
 Page({
   /**
@@ -11,8 +11,8 @@ Page({
     zhou: ['一', '二', '三', '四', '五', '六','日'],
     zhou_num: ['第1周', '第2周', '第3周', '第4周', '第5周', '第6周', '第7周', '第8周', '第9周', '第10周', '第11周', '第12周', '第13周', '第14周', '第15周', '第16周', '第17周', '第18周', '第19周', '第20周'],
     now_week:1,
-    now_day:[],
-    now_month:0,
+    now_day:[1,2,3,4,5,6,7],
+    now_month:1,
     course: [],
     train_course_id:0,
     list_is_display:false,
@@ -256,7 +256,7 @@ Page({
         }
         //格式化上课地点
         data[a]['full_address'] = data[a]['course_address']
-        data[a]['course_address'] = app.formatAddress(data[a]['course_address'])
+        data[a]['course_address'] = util.formatAddress(data[a]['course_address'])
         //将课程通过周次节次分组
         let key = data[a]['course_week'] + '-' + jie
         if(courseGroup[key]){
@@ -701,13 +701,10 @@ Page({
 
   getCourseList(){
     var user_id = wx.getStorageSync('user_id')
-    var str = app.globalData.key + user_id;
-    var sign = md5.hexMD5(str);
     app.httpRequest({
       url: 'course/getList',
       data: {
         stu_id: user_id,
-        sign: sign,
       },
       success: function (res) {
         if (res.data.status == 1001) {
@@ -1032,7 +1029,7 @@ Page({
     this.switchWeek(x,y)
   },
   switchWeek: function(x,y) {
-    var direction = app.getTouchData(x,y,this.data.touch.x,this.data.touch.y)
+    var direction = util.getTouchData(x,y,this.data.touch.x,this.data.touch.y)
     var week = this.data.now_week
     if(direction == ""){
       return
@@ -1072,7 +1069,7 @@ Page({
   },
   getCourseTerm:function(){
     let nowTerm = courseFn.getNowCourseTerm()
-    let thisTerm = app.getConfig('term')
+    let thisTerm = app.getConfig('nowTerm.term')
     let userTerm = wx.getStorageSync('course_stu')
     this.setData({
       courseTerm: nowTerm,
@@ -1082,11 +1079,7 @@ Page({
   },
   //获取当前学期开学时间
   getTermDate:function(){
-    let configs = wx.getStorageSync('configs')
-    let termDate = configs.termDate
-    if(this.data.courseTerm){
-      termDate = this.data.courseTerm.term_date
-    }
-    return termDate.split('-')
+    let date = app.getConfig('nowTerm.date')
+    return date.split('-')
   }
 })

@@ -18,14 +18,15 @@ Component({
   },
 
   ready: function(){
-    let configs = wx.getStorageSync('configs')
+    const app = getApp()
+    let configs = app.getConfig('floatTool')
     let floatTool = {
       display: false,
       image: '',
       src:''
     }
-    if(configs.hasOwnProperty('floatTool')){
-      floatTool = configs.floatTool
+    if(configs){
+      floatTool = configs
       let closeTime = wx.getStorageSync('float_close_time')
       let time = Math.floor((new Date()).getTime() / 1000)
       //1天内不再显示

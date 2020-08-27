@@ -62,14 +62,13 @@ Page({
       totalnum = 10
       this.getSummary(id)
     }
-    const config = wx.getStorageSync('configs')
     this.setData({
       winWidth: systemInfo.windowWidth,
       winHeight: systemInfo.windowHeight,
       myself:myself,
       id:id,
       totalnum: totalnum,
-      isAuditing:config.auditing
+      isAuditing: app.getConfig('auditing') == 1 ? true : false
     })
   },
 

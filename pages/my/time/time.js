@@ -233,7 +233,9 @@ Page({
   login:function(){
     this.audio.stop();
     wx.setStorageSync('time_data', '')
-    app.goLogin(this.route)
+    wx.navigateTo({
+      url: '/pages/bind/bind?url=/'+ this.route,
+    })
   },
   back:function(){
     if(this.data.from == 'index'){

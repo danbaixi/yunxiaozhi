@@ -1,13 +1,15 @@
+const util = require('./util')
+
 //获取当前学期名称
 function getNowTerm(){
-  let configs = wx.getStorageSync('configs')
-  if(!configs || !configs.term){
+  let nowTerm = util.getConfig('nowTerm')
+  if(nowTerm === false){
     return null
   }
   return {
-    term: configs.term,
-    name: this.term2Name(configs.term),
-    term_date: configs.termDate
+    term: nowTerm.term,
+    name: this.term2Name(nowTerm.term),
+    term_date: nowTerm.date
   }
 }
 

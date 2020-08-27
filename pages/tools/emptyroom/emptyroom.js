@@ -17,7 +17,9 @@ Page({
     floor:0,
     weekly:0,
     week:0,
-    section:0
+    section:0,
+    openStatus:1,
+    openTips:""
   },
 
   /**
@@ -25,6 +27,14 @@ Page({
    */
   onLoad: function (options) {
     var that = this
+    var functionStatus = app.getConfig('functions.emptyroom')
+    if(!functionStatus || functionStatus.status == 0){
+      that.setData({
+        openStatus:functionStatus.status,
+        openTips: functionStatus.tips
+      })
+      return
+    }
     var date = new Date()
     var week = date.getDay()
     var weekly = that.getNowWeekly()
@@ -140,8 +150,7 @@ Page({
   //获取当前周
   getNowWeekly: function () {
     var date = new Date();
-    let configs = wx.getStorageSync('configs')
-    let termDate = configs.termDate
+    let termDate = app.getConfig('nowTerm.date')
     let data = termDate.split('-')
     let [year, month, day] = [data[0], data[1], data[2]]  
     var start = new Date(year, month - 1, day);

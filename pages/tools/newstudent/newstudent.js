@@ -78,6 +78,12 @@ Page({
         desc:"20级小萌新必看",
         src:"http://mp.weixin.qq.com/s?__biz=MzI1NTUwNDIzNQ==&mid=100002566&idx=1&sn=9ebe399aa19d127d23b4012c10a6778c&chksm=6a35b1025d4238142979bc5868df2ec7b599f3fe7e53ea47335a38527cf4a353b1f33a49ef77#rd",
         img:"https://mmbiz.qlogo.cn/mmbiz_jpg/YWKTC18p77Iic2zWx07DuzGvJK5gWEtQ3YlxMrodnIGmfeAfrb91QHUBHcDLCL05LgauL9mnyib1oJkA7sPTQLzw/0?wx_fmt=jpeg"
+      },
+      {
+        title:"珍爱生命，远离营销号",
+        desc:"揭穿白云一些营销号丑恶的行为",
+        src:"https://mp.weixin.qq.com/s/wrOhRtvCp0rn21qxw1ORnA",
+        img:"http://mmbiz.qpic.cn/mmbiz_jpg/YWKTC18p77Lcpib4CGGSxcbffcRvuiaRPWxPHZ5HG8wnnFmDDicgVqeoGcqhrcGMOCfkJoXjmXGU4S1GWAoeeibiaSw/0?wx_fmt=jpeg"
       }
     ],
     p:1,

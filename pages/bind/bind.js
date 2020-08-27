@@ -1,5 +1,5 @@
-var util = require('../../utils/util.js');
-var md5 = require('../../utils/md5.js');
+const util = require('../../utils/util');
+const md5 = require('../../utils/md5');
 const app = getApp()
 Page({
 
@@ -18,7 +18,6 @@ Page({
     systemType: 1, // 1为青果，2为强智
     needValidate: false,
     customBar:app.globalData.customBar,
-    articleUrl:"http://mp.weixin.qq.com/s?__biz=MzI1NTUwNDIzNQ==&mid=100002566&idx=1&sn=9ebe399aa19d127d23b4012c10a6778c&chksm=6a35b1025d4238142979bc5868df2ec7b599f3fe7e53ea47335a38527cf4a353b1f33a49ef77#rd",
     modal_visible: false,
     hasNotice: false,
     tips_show:true
@@ -44,8 +43,8 @@ Page({
       rebind: rebind
     })
 
-    let configs = wx.getStorageSync('configs')
-    if(this.data.systemType == 1 && configs.bindNeedValidate == 1){
+    let needValidate = app.getConfig('needValidate')
+    if(this.data.systemType == 1 && needValidate == 1){
       this.setData({
         needValidate:true
       })
@@ -144,7 +143,7 @@ Page({
           })
           setTimeout(function () {
             if (that.data.url != '') {
-              if(app.isTabPage(that.data.url)){
+              if(util.isTabPage(that.data.url)){
                 wx.switchTab({
                   url: that.data.url
                 })
@@ -334,7 +333,7 @@ Page({
   //疑问
   help:function(){
     wx.navigateTo({
-      url: '/pages/article/article?src=' + encodeURIComponent(this.data.articleUrl),
+      url: '/pages/article/article?src=' + encodeURIComponent(app.getConfig('articles.bindHelp')),
     })
   },
   closeTips:function(){

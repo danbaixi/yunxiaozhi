@@ -151,12 +151,12 @@ Page({
           app.msg(res.data.message)
           return
         }
-        let term = app.getConfig('term')
+        let term = app.getConfig('nowTerm.term')
         //还原到最新学期
         let nowTerm = {
           term: term,
           name: courseFn.term2Name(term),
-          term_date: app.getConfig('termDate')
+          term_date: app.getConfig('nowTerm.date')
         }
         //清空course_stu
         wx.removeStorageSync('course_stu')
@@ -180,12 +180,12 @@ Page({
         app.promiseRequest({
           url: 'course/getList'
         }).then((data) => {
-          let term = app.getConfig('term')
+          let term = app.getConfig('nowTerm.term')
           //还原到最新学期
           let nowTerm = {
             term: term,
             name: courseFn.term2Name(term),
-            term_date: app.getConfig('termDate')
+            term_date: app.getConfig('nowTerm.date')
           }
           //清空course_stu
           wx.removeStorageSync('course_stu')

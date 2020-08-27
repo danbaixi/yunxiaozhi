@@ -1,5 +1,5 @@
-var util = require('../../utils/util.js');
-var app = getApp();
+const util = require('../../utils/util');
+const app = getApp();
 Page({
 
   /**
@@ -114,7 +114,7 @@ Page({
         url: 'user/getInfo'
       }).then((result) => {
         let data = result.data
-        user_name = app.isDefaultNickname(data.user_name) ? data.nickname : data.user_name
+        user_name = util.isDefaultNickname(data.user_name) ? data.nickname : data.user_name
         user_img = data.user_img ? app.globalData.headImgUrl + data.user_img : data.avatar
         that.setData({
           user_name: user_name,

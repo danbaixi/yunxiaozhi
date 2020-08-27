@@ -1,6 +1,7 @@
 const app = getApp()
-let colors = require('../../../utils/colors')
-let course = require('../../../utils/course')
+const colors = require('../../../utils/colors')
+const course = require('../../../utils/course')
+const util = require('../../../utils/util')
 Page({
 
   /**
@@ -101,10 +102,10 @@ Page({
       let course_item = {
         'course_teacher': item.course_teacher,
         'course_weekly': item.course_weekly,
-        'course_week': app.num2Week(item.course_week),
+        'course_week': util.num2Week(item.course_week),
         'course_section': item.course_section,
         'course_danshuang': item.course_danshuang,
-        'course_address': app.formatAddress(item.course_address),
+        'course_address': util.formatAddress(item.course_address),
       }
       if(courses[item.num-1]){
         courses[item.num-1].items.push(course_item)
@@ -230,7 +231,7 @@ Page({
       })
       return
     }
-    let nowTerm = app.getConfig('term')
+    let nowTerm = app.getConfig('nowTerm.term')
 
     if(this.data.courseTerm.term != nowTerm){
       app.msg("学期都结束了，你还要添加课程？")

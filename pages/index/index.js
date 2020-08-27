@@ -1,5 +1,4 @@
 var app = getApp()
-var md5 = require('../../utils/md5.js');
 var util = require('../../utils/util.js');
 Page({
   data: {
@@ -268,15 +267,14 @@ Page({
   getNowWeek: function () {
     var that = this;
     var date = new Date();
-    let configs = wx.getStorageSync('configs')
-    if(!configs){
+    let termDate = app.getConfig('nowTerm.date')
+    if(termDate === false){
       that.setData({
         now_week: 1,
         now_week_text: '第1周'
       })
       return
     }
-    let termDate = configs.termDate
     let data = termDate.split('-')
     let [year, month, day] = [data[0], data[1], data[2]]  
     var start = new Date(year, month - 1, day);

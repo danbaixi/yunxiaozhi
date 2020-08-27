@@ -2,7 +2,8 @@
   <view slot="back">返回</view>
 	<view slot="content">空教室查询</view>
 </cu-custom>
-<view class="cu-card">
+<empty display="{{openStatus == 0}}" content="{{openTips}}"></empty>
+<view wx:if="{{openStatus == 1}}" class="cu-card">
   <view class="cu-item shadow">
     <form>
       <view class="cu-form-group">

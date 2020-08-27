@@ -74,6 +74,7 @@ function encodeInp(input) {
   return output
 }
 
+//数字补零
 function formatNumber(n) {
   n = n.toString()
   return n[1] ? n : '0' + n
@@ -106,10 +107,92 @@ function debounce(fn,delay,immediate){
   }
 }
 
+//判断滑动方向
+function getTouchData(endX, endY, startX, startY) {
+  let turn = "";
+  let length = 50
+  if (endX - startX > length && Math.abs(endY - startY) < length) {
+    turn = "right";
+  } else if (endX - startX < -length && Math.abs(endY - startY) < length) {
+    turn = "left";
+  }
+  return turn;
+}
+  //星期几转换
+function num2Week(num){
+  let weeks = ['日','一','二','三','四','五','六']
+  return weeks[num]
+}
+
+//格式化课表地址
+function formatAddress(address){
+  address = address.replace('-', '_')//把-换成_
+  var temp = address.split('_');
+  if (temp.length > 1) {
+    address = temp[0] + temp[1];
+  } else {
+    address = temp[0];
+  }
+  return address
+}
+
+//判断是否是默认昵称
+function isDefaultNickname(nickname){
+  return nickname.indexOf('yxz_') === -1 ? false : true
+}
+
+//获取配置，支持使用“.”
+//key为空，返回全部
+function getConfig(key){
+  let configs = wx.getStorageSync('configs')
+  if(key){
+    let keyArr = key.split('.')
+    let result = ""
+    if(configs.hasOwnProperty(keyArr[0])){
+      result = configs[keyArr[0]]
+    }
+    if(keyArr.length == 1){
+      return result
+    }
+    for(let i=1;i<keyArr.length;i++){
+      if(result.hasOwnProperty(keyArr[i])){
+        result = result[keyArr[i]]
+      }else{
+        return false
+      }
+    }
+    return result
+  }
+  return configs
+}
+
+//是否是tab页
+function isTabPage(page){
+  let pages = [
+    '/pages/index/index',
+    '/pages/course/course',
+    '/pages/tool/tool',
+    '/pages/my/my',
+  ]
+  if(!page){
+    return false
+  }
+  if(pages.indexOf(page) === -1){
+    return false
+  }
+  return true
+}
+
 module.exports = {
   formatTime: formatTime,
   formatTime2: formatTime2,
   formatTime3: formatTime3,
   encodeInp: encodeInp,
-  debounce: debounce
+  debounce: debounce,
+  getTouchData: getTouchData,
+  num2Week:num2Week,
+  formatAddress:formatAddress,
+  isDefaultNickname:isDefaultNickname,
+  getConfig:getConfig,
+  isTabPage:isTabPage
 }

@@ -1,4 +1,5 @@
 const app = getApp()
+const util = require('../../../utils/util')
 import WxCountUp from '../../../utils/wxCountUp.js'
 Page({
 
@@ -156,7 +157,7 @@ Page({
       url: 'user/getInfo'
     }).then((result) => {
       let info = result.data
-      info.name = app.isDefaultNickname(info.user_name) ? info.nickname : info.user_name
+      info.name = util.isDefaultNickname(info.user_name) ? info.nickname : info.user_name
       _this.setData({
         userInfo:result.data
       })
@@ -185,7 +186,7 @@ Page({
         for(let i =0;i<data.length;i++){
           let name = data[i].stu_name
           if(data[i].hidden_clockin_name == 1){
-            if(app.isDefaultNickname(data[i].user_name)){
+            if(util.isDefaultNickname(data[i].user_name)){
               name = data[i].nickname
             }else{
               name = data[i].user_name

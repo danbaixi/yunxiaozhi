@@ -131,9 +131,8 @@ Page({
     })
   },
   display:function(){
-    let config = wx.getStorageSync('configs')
     this.setData({
-      display:!config.auditing
+      display: app.getConfig('auditing') == 1 ? false : true
     })
   }
 })
