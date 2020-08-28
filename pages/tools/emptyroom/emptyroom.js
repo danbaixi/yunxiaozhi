@@ -151,6 +151,9 @@ Page({
   getNowWeekly: function () {
     var date = new Date();
     let termDate = app.getConfig('nowTerm.date')
+    if(termDate === false){
+      termDate = '2020-03-02'
+    }
     let data = termDate.split('-')
     let [year, month, day] = [data[0], data[1], data[2]]  
     var start = new Date(year, month - 1, day);

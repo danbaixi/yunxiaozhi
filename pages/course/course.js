@@ -130,13 +130,14 @@ Page({
           if (res.errMsg != 'access:ok') {
             //图片被删了，重新下载
             let bg_type = wx.getStorageSync('bg_type')
+            let url
             if(!bg_type){
               app.msg("课表背景图片不存在，请重新设置")
               return
             }else if (bg_type == 'diy') {
-              let url = _this.data.courseFileUrl + wx.getStorageSync('upload_course_bg')
+              url = _this.data.courseFileUrl + wx.getStorageSync('upload_course_bg')
             } else {
-              let url = _this.data.fileUrl + '/course_bg/' + bg_type + '.jpg'
+              url = _this.data.fileUrl + '/course_bg/' + bg_type + '.jpg'
             }
             if(!url){
               return
@@ -160,10 +161,14 @@ Page({
     }
     //课表学期
     _this.getCourseTerm()
+    var week = _this.getNowWeek();
     var startDay = wx.getStorageSync('start_day')
-    var day = this.getDayOfWeek(this.getNowWeek(),startDay)
+    var day = _this.getDayOfWeek(_this.getNowWeek(),startDay)
+    var month = _this.getMonth((week - 1) * 7);
     _this.setData({
       now_day: day,
+      now_month: month,
+      now_month_number: month / 1, // 当前月份数字类型，用于数字运算
       imageUrl: wx.getStorageSync('bg_img'),
       list_is_display: false,
       tmpClass: tmpClass,
@@ -1079,7 +1084,10 @@ Page({
   },
   //获取当前学期开学时间
   getTermDate:function(){
-    let date = app.getConfig('nowTerm.date')
+    let date = this.data.courseTerm ? this.data.courseTerm.term_date : this.data.thisTerm.date
+    if(date === false){
+      date = '2020-03-02'
+    }
     return date.split('-')
   }
 })

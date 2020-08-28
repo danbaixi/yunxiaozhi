@@ -269,6 +269,7 @@ Page({
     var date = new Date();
     let termDate = app.getConfig('nowTerm.date')
     if(termDate === false){
+      termDate = '2020-03-02' // 配置过渡
       that.setData({
         now_week: 1,
         now_week_text: '第1周'

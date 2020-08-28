@@ -1,5 +1,5 @@
 <swiper class="screen-swiper square-dot" indicator-dots="{{articleBanners.length>1?true:false}}" circular="true" autoplay="true" interval="5000" duration="500">
-  <swiper-item wx:for="{{articleBanners}}" wx:key bindtap="viewArticle" data-index="{{index}}">
+  <swiper-item wx:for="{{articleBanners}}" wx:key="key" bindtap="viewArticle" data-index="{{index}}">
     <image src="{{item.img}}" mode="aspectFill"></image>
     <view><text>{{item.title}}</text></view>
   </swiper-item>

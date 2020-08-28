@@ -323,7 +323,6 @@ Page({
     let _this = this
     let index = e.detail.value
     let term = _this.data.terms[index]
-    let nowTerm = course.getNowTerm()
     let stu_id = app.getUserId()
     let tmp_class = wx.getStorageSync('tmp_class')
     if(stu_id == '' && !tmp_class){
@@ -333,9 +332,6 @@ Page({
     if(!stu_id || tmp_class){
       url = 'data/getCourseByClassname'
       data.classname = tmp_class.name
-      if(term == nowTerm.term){
-        url = 'data/getCourseFromSchool'
-      }
     }else{
       url = 'course/getList'
       needLogin = true

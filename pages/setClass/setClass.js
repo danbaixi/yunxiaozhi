@@ -131,18 +131,19 @@ Page({
       title: '正在加载',
       mask: true
     })
-    var _this = this
     var number = e.currentTarget.dataset.number
     var name = e.currentTarget.dataset.name
     var tmpClass = {
       number:number,
       name:name
     }
+    let courseTerm = courseFn.getNowCourseTerm()
     app.httpRequest({
-      url: 'data/getCourseFromSchool',
+      url: 'data/getCourseByClassname',
       data: {
         number: number,
-        className: name
+        term:courseTerm.term,
+        classname: name
       },
       needLogin:false,
       success: function (res) {
@@ -152,15 +153,13 @@ Page({
           return
         }
         let term = app.getConfig('nowTerm.term')
-        //还原到最新学期
-        let nowTerm = {
-          term: term,
-          name: courseFn.term2Name(term),
-          term_date: app.getConfig('nowTerm.date')
+        let date = app.getConfig('nowTerm.date')
+        if(term === false){
+          term = '20191'
+          date = '2020-03-02'
         }
         //清空course_stu
         wx.removeStorageSync('course_stu')
-        wx.setStorageSync('course_term', nowTerm)
         wx.setStorageSync('tmp_class', tmpClass)
         wx.setStorageSync('course', res.data.data.course)
         wx.navigateBack({
