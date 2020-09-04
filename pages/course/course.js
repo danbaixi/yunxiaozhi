@@ -1085,7 +1085,7 @@ Page({
   //获取当前学期开学时间
   getTermDate:function(){
     let date = this.data.courseTerm ? this.data.courseTerm.term_date : this.data.thisTerm.date
-    if(date === false){
+    if(!date){
       date = '2020-03-02'
     }
     return date.split('-')
