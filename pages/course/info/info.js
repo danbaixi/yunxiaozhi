@@ -16,7 +16,8 @@ Page({
    */
   onLoad: function (options) {
     var data = JSON.parse(decodeURIComponent(options.data))
-    let internet_course_time = options.internet_course_time || 1
+    console.log(options)
+    let internet_course_time = options.internet_course_time || 0
     //判断是否是本班课程
     var tmp_class = wx.getStorageSync('tmp_class')
     var course_stu = wx.getStorageSync('course_stu')
@@ -31,7 +32,7 @@ Page({
     var jie = parseInt(data.jie)
     var jieshu = parseInt(data.jieshu)
 
-    if (internet_course_time){
+    if (internet_course_time == 1){
       if(jieshu == 2){
         time = TIMES[2][jie - 1][0] + '~' + TIMES[2][jie][1]
       }else if(jieshu == 4){

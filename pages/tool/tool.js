@@ -304,6 +304,14 @@ Page({
         needLogin: false,
         url: '/pages/tools/tiangou/tiangou',
       },
+      {
+        color: 'red',
+        badge: '新',
+        name: '外卖红包',
+        icon: 'waimai',
+        needLogin: false,
+        url: '../article/article?src=' + encodeURIComponent('http://mp.weixin.qq.com/s?__biz=MzI1NTUwNDIzNQ==&mid=100002861&idx=1&sn=bc55ac93a14feb1025bbe9e93d74d8d5&chksm=6a35b6295d423f3f5ee553af9eed5f63582bf5853db8c8cfa9e17cf9aba27647d745a0c9137c#rd'),
+      },
     ]
   },
 

@@ -822,10 +822,7 @@ Page({
     var that = this
     var display_course_time = wx.getStorageSync('display_course_time')
     var area = wx.getStorageSync('user_area')
-    //更新网上学习时间
-    // var internet_course_time = wx.getStorageSync('internet_course_time')
-    var internet_course_time = 0
-    if (internet_course_time === '' || display_course_time === '' || area === ''){
+    if (display_course_time === '' || area === ''){
       app.httpRequest({
         url: 'user/getareainfo',
         success: function (res) {
@@ -840,7 +837,6 @@ Page({
           })
           wx.setStorageSync('display_course_time',res.data.data.display)
           wx.setStorageSync('user_area',res.data.data.area)
-          wx.setStorageSync('internet_course_time', res.data.data.internet_course_time)
           that.displayTime()
         }
       })
@@ -848,7 +844,7 @@ Page({
       that.setData({
         display_course_time: display_course_time,
         area: area,
-        internet_course_time: internet_course_time
+        internet_course_time: 0
       })
       that.displayTime()
     }
@@ -1086,7 +1082,7 @@ Page({
   getTermDate:function(){
     let date = this.data.courseTerm ? this.data.courseTerm.term_date : this.data.thisTerm.date
     if(!date){
-      date = '2020-03-02'
+      date = '2020-09-07'
     }
     return date.split('-')
   }
