@@ -259,7 +259,9 @@ Page({
       success:function(res){
         app.msg(res.data.message)
         if(res.data.status == 0){
-          _this.getInfo()
+          _this.setData({
+            dormitory: name
+          })
           var pages = getCurrentPages();
           var currPage = pages[pages.length - 1];
           var prevPage = pages[pages.length - 2];

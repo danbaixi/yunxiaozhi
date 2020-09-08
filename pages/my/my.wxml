@@ -89,6 +89,12 @@
           <text class="text-black">官方社区</text>
         </navigator>
       </view>
+      <view class="cu-item arrow" bindtap="clearStorage">
+        <view class="content">
+          <text class="icon-delete lg text-black"></text>
+          <text class="text-black">清除缓存</text>
+        </view>
+      </view>
       <view class="cu-item arrow" bindtap="exit">
         <view class="content">
           <text class="icon-exit lg text-black"></text>

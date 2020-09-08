@@ -141,9 +141,9 @@
 
         <view class='train' data-id="{{train_course_id}}" bindtap='train' wx:if="{{tmpClass==''&&train_course_id!=0}}">本周是实训周</view>
         <view class="course-labels">
-          <view class="margin-top-sm text-right" wx:if="{{tmpClass!=''}}"><text class="label">{{tmpClass.name}}</text></view>
-          <view class="margin-top-sm text-right" wx:if="{{userTerm}}"><text class="label">{{userTerm.name}}({{userTerm.classname}})</text></view>
-          <view class="margin-top-sm text-right" wx:if="{{courseTerm.term!=thisTerm}}"><text class="label">{{courseTerm.name}}</text></view>
+          <view class="margin-top-sm text-right tmp-class" wx:if="{{tmpClass!=''}}"><text class="label">{{tmpClass.name}}</text></view>
+          <view class="margin-top-sm text-right user-term" wx:if="{{userTerm}}"><text class="label">{{userTerm.name}}({{userTerm.classname}})</text></view>
+          <view class="margin-top-sm text-right course-term" wx:if="{{courseTerm && courseTerm.term && courseTerm.term != thisTerm}}"><text class="label">{{courseTerm.name}}</text></view>
         </view>
       </view>
     </view>

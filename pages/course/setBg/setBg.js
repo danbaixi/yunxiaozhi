@@ -49,14 +49,19 @@ Page({
     let _this = this
     if (_this.data.uploadFile != ''){
       //设置背景
+      wx.showLoading({
+        title: '正在设置...',
+      })
       let src = _this.data.courseFileUrl + _this.data.uploadFile
       wx.setStorageSync('upload_course_bg', _this.data.uploadFile)
       //缓存背景
-      _this.download(src).then((url) => {
-        _this.setBg('diy',url)
-      }).catch((error) => {
-        app.msg(error)
-      })
+      setTimeout(()=>{
+        _this.download(src).then((url) => {
+          _this.setBg('diy',url)
+        }).catch((error) => {
+          app.msg(error)
+        })
+      },1000)
     }
   },
 
@@ -96,7 +101,6 @@ Page({
         url: url,
         success: function (res) {
           if (res.statusCode === 200) {
-            console.log(res.tempFilePath)
             const fs = wx.getFileSystemManager()
             _this.checkMaxSize().then((result) => {
               if(result){
@@ -106,7 +110,6 @@ Page({
                     return resolve(res.savedFilePath)
                   },
                   fail(res) {
-                    console.log(res)
                     return reject('保存失败，请联系客服解决')
                   }
                 })
@@ -211,7 +214,6 @@ Page({
 
   //diy背景
   diy:function(){
-    let _this = this
     wx.chooseImage({
       count: 1,
       sizeType: ['original'],

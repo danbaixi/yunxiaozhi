@@ -16,7 +16,7 @@ App({
     isTest:false,
     isLocal:false,
     themeColor: '#1380ff',
-    xdebug:"?XDEBUG_SESSION_START=10978",
+    xdebug:"?XDEBUG_SESSION_START=11889",
     domain:'https://www.yunxiaozhi.cn/v1/public/api/',
     key:'ihzoaixnuy4f8835032505e8a45ac102c52d58593e',
     amap_key: "67c20c2c7db08923379123500b656adf",
@@ -34,20 +34,24 @@ App({
     let updateTime = wx.getStorageSync('config_update_time')
     let configs = this.getConfig()
     if (!configs || !updateTime || time - updateTime >= updateTimeSSL) {
-      this.promiseRequest({
-        url: 'config/getMiniConfig',
-        needLogin: false
-      }).then((data) => {
-        if (data.status == 0) {
-          wx.setStorageSync('config_update_time', time)
-          wx.setStorageSync('configs', data.data)
-        } else {
-          console.log('get config error')
-        }
-      }).catch((error) => {
-        console.log(error.message)
-      })
+      this.updateConfigRequest()
     }
+  },
+  updateConfigRequest:function(){
+    let time = parseInt((new Date()).getTime() / 1000)
+    this.promiseRequest({
+      url: 'config/getMiniConfig',
+      needLogin: false
+    }).then((data) => {
+      if (data.status == 0) {
+        wx.setStorageSync('config_update_time', time)
+        wx.setStorageSync('configs', data.data)
+      } else {
+        console.log('get config error')
+      }
+    }).catch((error) => {
+      console.log(error.message)
+    })
   },
   //设置导航栏数据
   setNavgition:function(){
@@ -332,13 +336,12 @@ App({
   //退出保存的数据
   exitSaveData:function(){
     //保留配置信息
-    let configs = wx.getStorageSync('configs')
     let bg_imgs = wx.getStorageSync('bg_imgs')
     let bg_img = wx.getStorageSync('bg_img')
     wx.clearStorageSync()
-    wx.setStorageSync('configs', configs)
     wx.setStorageSync('bg_imgs', bg_imgs)
     wx.setStorageSync('bg_img', bg_img)
+    this.updateConfigRequest()
   },
 
   //获取配置，支持使用“.”

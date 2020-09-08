@@ -59,4 +59,17 @@
       </view>
     </view>
   </view>
+  <view class="cu-bar bg-white solid-bottom">
+    <view class="action">
+      账号设置
+    </view>
+  </view>
+  <view class="cu-list menu sm-border">
+    <view class="cu-item arrow" bindtap="untieWechat">
+      <view class="content">
+        <text class="cuIcon-circlefill text-grey"></text>
+        <text class="text-grey">解绑微信账号</text>
+      </view>
+    </view>
+  </view>
 </view>

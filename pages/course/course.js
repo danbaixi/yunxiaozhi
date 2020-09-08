@@ -1085,5 +1085,38 @@ Page({
       date = '2020-09-07'
     }
     return date.split('-')
-  }
+  },
+  //下载背景
+  download:function(url){
+    let _this = this
+    let promise = new Promise((resolve,reject) => {
+      wx.downloadFile({
+        url: url,
+        success: function (res) {
+          if (res.statusCode === 200) {
+            console.log(res.tempFilePath)
+            const fs = wx.getFileSystemManager()
+            _this.checkMaxSize().then((result) => {
+              if(result){
+                fs.saveFile({
+                  tempFilePath: res.tempFilePath,
+                  success(res) {
+                    return resolve(res.savedFilePath)
+                  },
+                  fail(res) {
+                    console.log(res)
+                    return reject('保存失败，请联系客服解决')
+                  }
+                })
+              }
+            })
+            
+          } else {
+            return reject('下载失败')
+          }
+        }
+      })
+    })
+    return promise
+  },
 })

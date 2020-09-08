@@ -18,6 +18,8 @@ Page({
     credit:0,
     attendance:0,
     exam:0,
+    electricity:0,
+    water:0,
     gridCol:4,
     tools:[
       {
@@ -57,12 +59,20 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getQuantityData()
-    this.getCountData()
+    // this.getQuantityData()
+    // this.getCountData()
   },
 
   onShow:function(){
     this.getUserInfo();
+    if(app.getUserId()){
+      if(this.data.credit == 0 && this.data.attendance == 0 && this.data.exam == 0){
+        this.getCountData()
+      }
+      if(this.data.water == 0 && this.data.electricity == 0){
+        this.getQuantityData()
+      }
+    }
   },
 
   onPullDownRefresh: function () {
@@ -262,6 +272,28 @@ Page({
   closeAddTip:function(){
     this.setData({
       add_tips: false
+    })
+  },
+  //清空缓存
+  clearStorage:function(){
+    app.promiseRequest({
+      url: 'config/getMiniConfig',
+      needLogin: false
+    }).then((data) => {
+      console.log()
+      if (data.status == 0) {
+        let time = parseInt((new Date()).getTime() / 1000)
+        wx.setStorageSync('config_update_time', time)
+        wx.setStorageSync('configs', data.data)
+        app.msg("已清除缓存")
+        return
+      } else {
+        app.msg("清除失败，请重试")
+        console.log('get config error')
+      }
+    }).catch((error) => {
+      app.msg("清除失败，请重试")
+      console.log(error.message)
     })
   }
 })
