@@ -206,6 +206,7 @@ Page({
         name: '录取查询',
         icon: 'matriculate',
         needLogin: false,
+        auditing: true,
         url: '../tools/matriculate/matriculate?from=index',
       },
       {
@@ -319,7 +320,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that = this;
+    let auditing = app.getConfig('auditing')
+    this.setData({
+      auditing: auditing
+    })
   },
 
   /**

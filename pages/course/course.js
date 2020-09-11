@@ -49,7 +49,8 @@ Page({
     courseFileUrl: 'https://yunxiaozhi-1251388077.cos.ap-guangzhou.myqcloud.com/course_bg/',
     clickScreenTime:0,
     scrollTop:"",
-    courseTerm:null
+    courseTerm:null,
+    noticeDisplay:false
   },
 
   /**
@@ -113,7 +114,8 @@ Page({
       }
       wx.setStorageSync('score_ad_display', time)
     }
-    
+    //获取公告
+    that.getNotice()
   },
 
   onShow:function(){
@@ -678,25 +680,61 @@ Page({
     });
   },
   getNotice:function(){
-    var that = this;
-    wx.request({
-      url: app.globalData.domain + 'notice/getnotice',
+    let that = this
+    let notice_time_course = wx.getStorageSync('notice_time_course')
+    app.httpRequest({
+      url: 'notice/getnotice',
       data:{
         page:'course'
       },
+      needLogin: false,
       success:function(res){
-        if(res.data.status == 1001){
-          that.setData({
-          course_notice_display : res.data.data.display==1?true:false,
-            course_notice: res.data.data.content
-          })
-        }else{
-          that.setData({
-            course_notice_display: false
-          })
+        if(!res.data.data){
+          return
         }
+        let noticeDisplay = true
+        if(notice_time_course >= res.data.data.add_time || res.data.data.display == 0){
+          noticeDisplay = false
+        }
+        that.setData({
+          noticeDisplay: noticeDisplay,
+          notice: res.data.data
+        })
       }
     })
+  },
+  closeNotice:function(){
+    let now = parseInt(new Date().getTime() / 1000)
+    wx.setStorageSync('notice_time_course', now)
+    this.setData({
+      noticeDisplay: false
+    })
+  },
+  clickNotice:function(){
+    if(this.data.notice.url == ''){
+      return
+    }
+    switch(this.data.notice.type){
+      case 1:
+        wx.navigateTo({
+          url: '/pages/article/article?src=' + encodeURIComponent(this.data.notice.url),
+        })
+        break
+      case 2:
+        wx.navigateTo({
+          url: this.data.notice.url,
+        })
+        break
+      case 3:
+        wx.navigateToMiniProgram({
+          appId:this.data.notice.appid,
+          path: this.data.notice.url
+        })
+        break
+      default:
+        app.msg("暂不支持跳转")
+        break
+    }
   },
   hideMask:function(){
     this.setData({
@@ -852,37 +890,27 @@ Page({
 
   //显示上课时间
   displayTime:function(){
+    //暂时隐藏上课时间
+    return
     if(this.data.display_course_time == 0){
       return
     }
-    if(this.data.internet_course_time){
-      this.setData({
-        course_time: TIMES[2]
-      })
-      return
-    }
+    let times = util.deepCopyArray(TIMES)
+
     if(this.data.area == '' || this.data.area == 0){
       app.msg("您未设置校区，无法显示上课时间")
       return
     }
-    //北校区不需要处理
-    if(this.data.area == 2){
-      this.setData({
-        course_time : TIMES[1]
-      })
-      return
-    }
-    //西校区要根据教学楼和是否连上处理
     //先判断今天是否有课，没课显示默认的
     var week = (new Date()).getDay()
     if(week == 0 || week == 6){
       this.setData({
-        course_time : TIMES[0]
+        course_time : times[this.data.area - 1]
       })
+      return
     }
+
     var courses = wx.getStorageSync('course');
-    var todayCourse = []
-    var times = TIMES
     for(var i=0;i<courses.length;i++){
       if (typeof courses[i].course_weekly == "undefined"){
         continue
@@ -914,28 +942,38 @@ Page({
         }
         var floor = tmpName[0]
         var floorNum = tmpName[1].substr(0, 1)
-        if (course.jie == 1 && (floor == '思齐' || floor == '至善' || floor == '信达') && (floorNum >= 2 && floorNum <= 4)) {
-          //1-2节连上
-          times[0][0][1] = ""
-          times[0][1][0] = ""
-          times[0][1][1] = "09:50"
-        } else if (course.jie == 3) {
-          if (floor == '博雅' || floor == '德艺' || floor == '躬行') {
-            //3-4节连上
-            times[0][2][1] = ""
-            times[0][3][0] = ""
-            times[0][3][1] = "11:50"
-          } else if ((floor == '思齐' || floor == '至善' || floor == '信达') && (floorNum >= 2 && floorNum <= 4)) {
-            //课间只休息五分钟，提前五分钟放学
-            times[0][2][1] = "11:05"
-            times[0][3][0] = "11:10"
-            times[0][3][1] = "11:55"
+        //西校区
+        if(this.data.area == 1){
+          if(course.jie == 3 && course.jieshu == 2 || course.jie == 1 && course.jieshu == 4){
+            if((floor == '思齐' || floor == '至善' || floor == '信达') && (floorNum >= 2 && floorNum <= 4)){
+              //3-4节连上
+              times[0][2][0] = "10:10"
+              times[0][2][1] = ""
+              times[0][3][0] = ""
+              times[0][3][1] = "11:40"
+            }else if (floor == '博雅' || floor == '德艺' || floor == '躬行') {
+              //3-4节分开上
+              times[0][2][0] = "10:20"
+              times[0][2][1] = "11:05"
+              times[0][3][0] = "11:10"
+              times[0][3][1] = "11:55"
+            }
+          }
+        }else if(this.data.area == 2){
+          //北校区
+          if((course.jie == 3 && course.jieshu == 2 || course.jie == 1 && course.jieshu == 4) && floorNum > 4){
+            //楼层>4的情况，三四节分开上
+            times[1][2][0] = "10:20"
+            times[1][2][1] = "11:05"
+            times[1][3][0] = "11:10"
+            times[1][3][1] = "11:55"
           }
         }
+        
       }
     }
     this.setData({
-      course_time: times[0]
+      course_time: times[this.data.area - 1]
     })
   },
 
@@ -1118,5 +1156,5 @@ Page({
       })
     })
     return promise
-  },
+  }
 })

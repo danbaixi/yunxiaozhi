@@ -158,23 +158,26 @@ Page({
                 }).then((result) => {
                   if (result.status == 0) {
                     app.msg("登录成功", "success")
+                    wx.removeStorageSync('course_term')
+                    wx.removeStorageSync('tmp_class')
                     wx.setStorageSync('course', result.data.course);
                     wx.setStorageSync('train', result.data.train_course);
                   } else {
                     app.msg("登录成功，获取课表失败，请手动更新课表")
                   }
+                  setTimeout(()=> {
+                    if (_this.data.redirect != '') {
+                      wx.redirectTo({
+                        url: _this.data.redirect,
+                      })
+                    }else{
+                      wx.switchTab({
+                        url: '/pages/index/index',
+                      })
+                    }
+                  },1000)
                 })
-                setTimeout(()=> {
-                  if (_this.data.redirect != '') {
-                    wx.redirectTo({
-                      url: _this.data.redirect,
-                    })
-                  }else{
-                    wx.switchTab({
-                      url: '/pages/index/index',
-                    })
-                  }
-                },1000)
+                
               }
               return
             }

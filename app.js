@@ -3,7 +3,7 @@ App({
   /** 小程序入口 */
   onLaunch: function () {
     //更新配置
-    this.updateConfig()
+    this.updateConfigRequest()
     //设置导航栏数据
     this.setNavgition()
     //检查更新
@@ -12,11 +12,11 @@ App({
 
   /** 全局变量 */
   globalData:{
-    isDebug:false,
+    isDebug:true,
     isTest:false,
     isLocal:false,
     themeColor: '#1380ff',
-    xdebug:"?XDEBUG_SESSION_START=11889",
+    xdebug:"?XDEBUG_SESSION_START=12672",
     domain:'https://www.yunxiaozhi.cn/v1/public/api/',
     key:'ihzoaixnuy4f8835032505e8a45ac102c52d58593e',
     amap_key: "67c20c2c7db08923379123500b656adf",
@@ -25,17 +25,6 @@ App({
     fileDomain:"http://file.yunxiaozhi.cn/mini/",
     fileUrl: "https://yunxiaozhi-1251388077.cos.ap-guangzhou.myqcloud.com/mini",
     headImgUrl:"https://yunxiaozhi-1251388077.cos.ap-guangzhou.myqcloud.com/user_imgs/"
-  },
-
-  //配置定时更新
-  updateConfig:function(){
-    let updateTimeSSL = 3 * 60 // 更新间隔
-    let time = parseInt((new Date()).getTime() / 1000)
-    let updateTime = wx.getStorageSync('config_update_time')
-    let configs = this.getConfig()
-    if (!configs || !updateTime || time - updateTime >= updateTimeSSL) {
-      this.updateConfigRequest()
-    }
   },
   updateConfigRequest:function(){
     let time = parseInt((new Date()).getTime() / 1000)

@@ -276,24 +276,32 @@ Page({
   },
   //清空缓存
   clearStorage:function(){
-    app.promiseRequest({
-      url: 'config/getMiniConfig',
-      needLogin: false
-    }).then((data) => {
-      console.log()
-      if (data.status == 0) {
-        let time = parseInt((new Date()).getTime() / 1000)
-        wx.setStorageSync('config_update_time', time)
-        wx.setStorageSync('configs', data.data)
-        app.msg("已清除缓存")
-        return
-      } else {
-        app.msg("清除失败，请重试")
-        console.log('get config error')
+    wx.showModal({
+      title: '温馨提示',
+      content:'真的要清除缓存吗？',
+      success: function(res){
+        if(res.confirm){
+          app.promiseRequest({
+            url: 'config/getMiniConfig',
+            needLogin: false
+          }).then((data) => {
+            console.log()
+            if (data.status == 0) {
+              let time = parseInt((new Date()).getTime() / 1000)
+              wx.setStorageSync('config_update_time', time)
+              wx.setStorageSync('configs', data.data)
+              app.msg("已清除缓存")
+              return
+            } else {
+              app.msg("清除失败，请重试")
+              console.log('get config error')
+            }
+          }).catch((error) => {
+            app.msg("清除失败，请重试")
+            console.log(error.message)
+          })
+        }
       }
-    }).catch((error) => {
-      app.msg("清除失败，请重试")
-      console.log(error.message)
     })
   }
 })

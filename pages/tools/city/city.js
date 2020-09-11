@@ -20,6 +20,10 @@ Page({
    */
   onLoad: function (options) {
     this.getList()
+    let auditing = app.getConfig('auditing')
+    this.setData({
+      auditing:auditing
+    })
   },
 
   /**
@@ -121,6 +125,9 @@ Page({
     })
   },
   viewItem:function(e){
+    if(this.data.auditing == 1){
+      return
+    }
     let index = e.currentTarget.dataset.index
     if(this.data.list[index].url == ''){
       app.msg("信息待补充")

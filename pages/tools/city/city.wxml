@@ -16,7 +16,7 @@
     <notice page="city"></notice>
     <empty display="{{!loading&&list.length==0}}"></empty>
     <view class="cu-list menu card-menu">
-      <view class="cu-item arrow" wx:for="{{list}}" wx:key="key" bindtap="viewItem" data-index="{{index}}">
+      <view class="cu-item {{auditing!=1?'arrow':''}}" wx:for="{{list}}" wx:key="key" bindtap="viewItem" data-index="{{index}}">
         <view class="content padding-tb-sm">
           <view class="text-theme">{{item.name}}</view>
           <view class="text-gray text-sm">
@@ -25,7 +25,7 @@
             <copy content="{{item.phone}}"></copy>
           </view>
         </view>
-        <view class="action">
+        <view class="action" wx:if="{{auditing != 1}}">
           <view>查看详情</view>
         </view>
       </view>

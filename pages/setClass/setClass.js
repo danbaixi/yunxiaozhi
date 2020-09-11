@@ -13,7 +13,8 @@ Page({
     search:'',
     loading:true,
     finish:false,
-    tmpClass:''
+    tmpClass:'',
+    collects:[]
   },
 
   /**
@@ -27,6 +28,7 @@ Page({
       tmpClass: tmp_class,
       userId:user_id
     })
+    this.getCollectClass()
   },
 
   /**
@@ -73,13 +75,6 @@ Page({
       loading:true
     })
     this.getClass()
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
   },
   getClass:function(){
     var that = this
@@ -200,5 +195,99 @@ Page({
         })
       }
     })
+  },
+  //获取已收藏的班级
+  getCollectClass:function(){
+    if(!app.getUserId()){
+      return
+    }
+    let _this = this
+    app.httpRequest({
+      url: 'course/getCollectClasses',
+      success:function(res){
+        if(res.data.status != 0){
+          app.msg(res.data.message)
+          return
+        }
+        _this.setData({
+          collects: res.data.data
+        })
+      }
+    })
+  },
+  //收藏班级
+  collect:function(e){
+    if(!app.getUserId()){
+      app.msg("登录后才能收藏哦")
+      return
+    }
+    let number = e.currentTarget.dataset.number,
+        name = e.currentTarget.dataset.name
+    let _this = this
+    //检测是否已经收藏
+    let collects = _this.data.collects
+    let collected = collects.some((item) => {
+      if(item.number == number){
+        return true
+      }
+    })
+    if(collected){
+      app.msg("你已收藏过这个班的课表啦")
+      return
+    }
+    app.httpRequest({
+      url:'course/collectClass',
+      data:{
+        class_id: number
+      },
+      success:function(res){
+        app.msg(res.data.message)
+        if(res.data.status != 0){
+          return
+        }
+        collects.push({
+          name: name,
+          number: number
+        })
+        _this.setData({
+          collects:collects
+        })
+      }
+    })
+  },
+  //删除收藏班级
+  delectCollect:function(e){
+    let _this = this
+    let number = e.currentTarget.dataset.number
+    wx.showModal({
+      title: '温馨提示',
+      content: '确定要删除此收藏记录吗？',
+      success:function(res){
+        if(res.confirm){
+          app.httpRequest({
+            url:'course/deleteCollect',
+            data:{
+              class_id: number
+            },
+            success:function(res){
+              app.msg(res.data.message)
+              if(res.data.status == 0){
+                let collects = _this.data.collects
+                collects.map((item,index) => {
+                  if(item.number == number){
+                    collects.splice(index,1)
+                    return
+                  }
+                })
+                _this.setData({
+                  collects
+                })
+              }
+            }
+          })
+        }
+      }
+    })
+    
   }
 })

@@ -139,6 +139,13 @@
           <view bindtap="closeAd" class="ad-close icon-roundclose text-center text-grey"></view>
         </view>
 
+        <view class="course-notice kcb-item" style="width:calc(92% / 7 * 2);margin-left:{{5*92/7}}%;margin-top:4rpx" wx:if="{{noticeDisplay}}">
+          <view class="notice-content text-white" bindtap="clickNotice">{{notice.content}}</view>
+          <view class="notice-close text-yellow margin-top-xs" bindtap="closeNotice">
+            我知道了
+          </view>
+        </view>
+
         <view class='train' data-id="{{train_course_id}}" bindtap='train' wx:if="{{tmpClass==''&&train_course_id!=0}}">本周是实训周</view>
         <view class="course-labels">
           <view class="margin-top-sm text-right tmp-class" wx:if="{{tmpClass!=''}}"><text class="label">{{tmpClass.name}}</text></view>

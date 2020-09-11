@@ -1,6 +1,7 @@
 const app = getApp()
 const TIMES = require('../../../utils/course-time.js')
 const courseFn = require('../../../utils/course')
+const util = require('../../../utils/util')
 Page({
 
   /**
@@ -16,8 +17,6 @@ Page({
    */
   onLoad: function (options) {
     var data = JSON.parse(decodeURIComponent(options.data))
-    console.log(options)
-    let internet_course_time = options.internet_course_time || 0
     //判断是否是本班课程
     var tmp_class = wx.getStorageSync('tmp_class')
     var course_stu = wx.getStorageSync('course_stu')
@@ -25,47 +24,70 @@ Page({
       this.setData({
         showStudent: true
       })
-      this.getStudent(data)
+      //不获取同堂同学数量，减少数据库查询
+      // this.getStudent(data)
     }
-    var area = wx.getStorageSync('user_area')
+    var area = wx.getStorageSync('user_area') || 1 //默认为西校区
     var time, week
     var jie = parseInt(data.jie)
     var jieshu = parseInt(data.jieshu)
-
-    if (internet_course_time == 1){
-      if(jieshu == 2){
-        time = TIMES[2][jie - 1][0] + '~' + TIMES[2][jie][1]
-      }else if(jieshu == 4){
-        time = TIMES[2][jie - 1][0] + '~' + TIMES[2][jie+2][1]
-      }else{
-        time = TIMES[2][jie - 1][0] + '~' + TIMES[2][jieshu-1][1]
-      }
-    }else if(area == 1){
-      //正常情况
-      if (jieshu == 2) {
-        if(jie < 5) {
-          time = TIMES[0][jie - 1][0] + '~' + TIMES[0][jie - 1][1] + ',' + TIMES[0][jie][0] + '~' + TIMES[0][jie][1]
-        }else{
-          time = TIMES[0][jie - 1][0] + '~' + TIMES[0][jie][1]
-        }
-        
-      } else if (jieshu == 4) {
-        if(jie < 5){
-          time = TIMES[0][jie - 1][0] + '~' + TIMES[0][jie - 1][1] + ',' + TIMES[0][jie][0] + '~' + TIMES[0][jie][1] + '、' + TIMES[0][jie + 1][0] + '~' + TIMES[0][jie + 1][1] + ',' + TIMES[0][jie + 2][0] + '~' + TIMES[0][jie + 2][1]
-        }else{
-          time = TIMES[0][jie - 1][0] + '~' + TIMES[0][jie][1] + '、' + TIMES[0][jie + 1][0] + '~' + TIMES[0][jie + 2][1]
-        }
-        
-      } else if (jieshu == 1) {
-        time = TIMES[0][jie - 1][0] + '~' + TIMES[0][jie - 1][1]
-      } else {
-        time = "获取失败"
-      }
-
-    }else if(area == 2 && jie > 0){
-      time = jieshu == 2 ? (TIMES[1][jie - 1][0] + '~' + TIMES[1][jie - 1][1] + ',' + TIMES[1][jie][0] + '~' + TIMES[1][jie][1]) : (TIMES[1][jie - 1][0] + "~" + TIMES[1][jie + jieshu - 2][1])
-    }
     
+    let tmpName = data.address.split("楼")
+    let floor = '' //教学楼
+    let floorNum = 0 //第几层
+    let timesData = util.deepCopyArray(TIMES) //数组深拷贝
+    if(tmpName.length == 2){
+      floor = tmpName[0]
+      floorNum = tmpName[1].substr(0, 1)
+
+      //西校区
+      if(area == 1){
+        if(jie == 3 && jieshu == 2 || jie == 1 && jieshu == 4){
+          if((floor == '思齐' || floor == '至善' || floor == '信达') && (floorNum >= 2 && floorNum <= 4)){
+            //3-4节连上
+            timesData[0][2][0] = "10:10"
+            timesData[0][2][1] = ""
+            timesData[0][3][0] = ""
+            timesData[0][3][1] = "11:40"
+          }else if (floor == '博雅' || floor == '德艺' || floor == '躬行') {
+            //3-4节分开上
+            timesData[0][2][0] = "10:20"
+            timesData[0][2][1] = "11:05"
+            timesData[0][3][0] = "11:10"
+            timesData[0][3][1] = "11:55"
+          }
+        }
+      //北校区
+      }else if(area == 2){
+        if((jie == 3 && jieshu == 2 || jie == 1 && jieshu == 4) && floorNum > 4){
+          //楼层>4的情况，三四节分开上
+          timesData[1][2][0] = "10:20"
+          timesData[1][2][1] = "11:05"
+          timesData[1][3][0] = "11:10"
+          timesData[1][3][1] = "11:55"
+        }
+      }
+    }
+    let courseTimes = [];
+    if(area > 0){
+      courseTimes = timesData[area - 1].slice(jie - 1,jie - 1 + jieshu)
+    }
+    //格式化时间
+    if(courseTimes.length > 0){
+      let times = []
+      for(let i=0,len=courseTimes.length;i<len;i++){
+        let t = courseTimes[i]
+        if(t[1] == ''){
+          times.push(`${t[0]}~${courseTimes[i+1][1]}`)
+          i++
+        }else{
+          times.push(`${t[0]}~${t[1]}`)
+        }
+      }
+      time = times.join(',')
+    }else{
+      time = '未知'
+    }
 
     switch (parseInt(data.week)) {
       case 1: week = '周一'; break;

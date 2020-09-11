@@ -1,0 +1,22 @@
+<cu-custom bgColor="bg-run" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">运动排名</view>
+</cu-custom>
+<view class="container">
+  <view class="header">
+    <image class="bg" mode="widthFix" src="https://mmbiz.qpic.cn/mmbiz_png/YWKTC18p77L0W89tlS5BFM9keiaJyjekengC7upq0NaSVSGy0N3OeWr5lQBlM3A9lgmkRmtXBbVb5TzHTKibZ8Hg/0?wx_fmt=png">
+    </image>
+    <view class="step text-center padding">
+      <view class="today padding-sm">
+        <text class="today-step">{{todayStep}}</text>
+      </view>
+      <view class="padding-sm">
+        <button class="cu-btn bg-theme round" bindtap="getData">刷新步数</button>
+        <view class="padding-sm" wx:if="{{updateTime}}">
+          <text class="text-xs text-grey">上次刷新时间：{{updateTime}}</text>
+        </view>
+      </view>
+
+    </view>
+  </view>
+</view>

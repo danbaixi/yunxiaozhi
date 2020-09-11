@@ -29,9 +29,11 @@ Page({
     if(bg_img != '' && bg_type == ''){
       bg_type = 'diy'
     }
+    let auditing = app.getConfig('auditing')
     this.setData({
       bg_type: bg_type,
-      bg_img: bg_img
+      bg_img: bg_img,
+      auditing: auditing
     })
   },
 

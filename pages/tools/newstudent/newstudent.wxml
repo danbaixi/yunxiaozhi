@@ -11,7 +11,7 @@
     </view>
   </view>
   <view class="cu-list grid col-5 no-border apps">
-    <view class="cu-item" wx:for="{{tools}}" wx:key data-url="{{item.url}}" data-needLogin="{{item.needLogin}}" data-appid="{{item.appid}}" data-path="{{item.path}}" bindtap='openTool'>
+    <view class="cu-item" wx:if="{{auditing == 0 || !item.auditing}}" wx:for="{{tools}}" wx:key data-url="{{item.url}}" data-needLogin="{{item.needLogin}}" data-appid="{{item.appid}}" data-path="{{item.path}}" bindtap='openTool'>
       <view class="app-icon">
         <image mode="widthFix" src="/pages/assets/imgs/app_icon/{{item.icon}}.png"></image>
         <view class="cu-tag badge" wx:if="{{item.badge!=0}}">
@@ -21,19 +21,22 @@
       <text>{{item.name}}</text>
     </view>
   </view>
-  <view class="cu-bar bg-white margin-top-sm">
-    <view class="action sub-title">
-      <text class="text-xl text-bold text-yellow">新生攻略</text>
-      <text class="bg-yellow" style="width:4rem"></text>
+  <view wx:if="{{auditing!=1}}">
+    <view class="cu-bar bg-white margin-top-sm">
+      <view class="action sub-title">
+        <text class="text-xl text-bold text-yellow">新生攻略</text>
+        <text class="bg-yellow" style="width:4rem"></text>
+      </view>
+    </view>
+    <view class="padding-sm bg-white">
+      <view class='article bg-white shadow-lg' wx:for="{{articles}}" wx:key="key" bindtap='viewArticle' data-src='{{item.src}}'>
+        <image mode='aspectFill' src='{{item.img}}'></image>
+        <view class='title'>{{item.title}}</view>
+        <view class='desc'>{{item.desc}}</view>
+        <view style='clear:both'></view>
+      </view>
+      <view wx:if="{{loading}}" class="cu-load {{!finish?'loading':'over'}}"></view>
     </view>
   </view>
-  <view class="padding-sm bg-white">
-    <view class='article bg-white shadow-lg' wx:for="{{articles}}" wx:key="key" bindtap='viewArticle' data-src='{{item.src}}'>
-      <image mode='aspectFill' src='{{item.img}}'></image>
-      <view class='title'>{{item.title}}</view>
-      <view class='desc'>{{item.desc}}</view>
-      <view style='clear:both'></view>
-    </view>
-    <view wx:if="{{loading}}" class="cu-load {{!finish?'loading':'over'}}"></view>
-  </view>
+  
 </view>

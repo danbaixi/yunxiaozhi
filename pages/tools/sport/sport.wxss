@@ -1,0 +1,19 @@
+.bg-run{
+  background:#bae3f9;
+  color: #fff;
+}
+
+.header{
+  width: 100%;
+  position: relative;
+}
+.header .bg{
+  width: 100%;
+  position: fixed;
+  z-index: -1;
+}
+.today-step{
+  font-size: 100rpx;
+  color: #fff;
+  line-height: 100rpx;
+}

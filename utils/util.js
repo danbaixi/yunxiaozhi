@@ -183,6 +183,18 @@ function isTabPage(page){
   return true
 }
 
+//数组的深拷贝
+function deepCopyArray(obj){
+  if(!obj instanceof Array){
+    return obj
+  }
+  var newObj = []
+  for(let i=0,len=obj.length;i<len;i++){
+    newObj[i] = typeof obj[i] == 'object' ? deepCopyArray(obj[i]) : obj[i]
+  }
+  return newObj
+}
+
 module.exports = {
   formatTime: formatTime,
   formatTime2: formatTime2,
@@ -194,5 +206,6 @@ module.exports = {
   formatAddress:formatAddress,
   isDefaultNickname:isDefaultNickname,
   getConfig:getConfig,
-  isTabPage:isTabPage
+  isTabPage:isTabPage,
+  deepCopyArray: deepCopyArray
 }

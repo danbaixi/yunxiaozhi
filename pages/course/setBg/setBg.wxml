@@ -8,7 +8,7 @@
       <view class="image defalut {{bg_type==''?'selected':''}}"></view>
       <text class="text-sm">无</text>
     </view>
-    <view class="li" bindtap="diy">
+    <view class="li" bindtap="diy" wx:if="{{auditing != 1}}">
       <view class="image {{bg_type=='diy'?'selected':''}}" wx:if="{{bg_type =='diy'}}">
         <image mode="aspectFit" src="{{bg_img}}"></image>
       </view>

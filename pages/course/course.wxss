@@ -444,3 +444,15 @@ input-holder {
 .course-options.grid>.cu-item [class*=icon] {
   margin-top: 0px;
 }
+.course-notice{
+  flex-direction: column;
+  padding: 8rpx;
+  background: rgba(0, 0, 0, .5);
+  border-radius: 8rpx;
+}
+.course-notice .notice-content{
+  text-align: justify;
+}
+.course-notice .notice-close{
+  text-align: center;
+}

@@ -63,7 +63,7 @@
     <view class="content">
       <text class="icon-post text-theme"></text>
       <text class="text-theme">考查　</text>
-      <text class="text-{{course.categroy?'black':'grey'}}">{{course.method ? course.method : '未知'}}</text>
+      <text class="text-{{course.method?'black':'grey'}}">{{course.method ? course.method : '未知'}}</text>
     </view>
   </view>
 </view>

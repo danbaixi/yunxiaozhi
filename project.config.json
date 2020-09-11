@@ -24,7 +24,7 @@
 		},
 		"bundle": true,
 		"useIsolateContext": true,
-		"useCompilerModule": true,
+		"useCompilerModule": false,
 		"userConfirmedUseCompilerModuleSwitch": false
 	},
 	"compileType": "miniprogram",
@@ -444,6 +444,14 @@
 					"id": -1,
 					"name": "新生专题",
 					"pathName": "pages/tools/newstudent/newstudent",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 58,
+					"name": "运动排名",
+					"pathName": "pages/tools/sport/sport",
+					"query": "",
 					"scene": null
 				}
 			]

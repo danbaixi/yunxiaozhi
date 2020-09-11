@@ -12,6 +12,7 @@ Page({
         name: '录取查询',
         icon: 'matriculate',
         needLogin: false,
+        auditing: true,
         url: '/pages/tools/matriculate/matriculate?from=index',
       },
       {
@@ -97,6 +98,10 @@ Page({
    */
   onLoad: function (options) {
     this.getArticles()
+    let auditing = app.getConfig('auditing')
+    this.setData({
+      auditing: auditing
+    })
   },
 
   /**
