@@ -108,7 +108,9 @@ Page({
         var interstitialAd = wx.createInterstitialAd({
           adUnitId: 'adunit-fa394b5b086dc048'
         })
-        interstitialAd.show()
+        setTimeout(()=>{
+          interstitialAd.show()
+        },2000)
       } else {
         app.msg("您当前微信版本较低，建议升级到最新版本")
       }
@@ -890,8 +892,6 @@ Page({
 
   //显示上课时间
   displayTime:function(){
-    //暂时隐藏上课时间
-    return
     if(this.data.display_course_time == 0){
       return
     }

@@ -2,17 +2,17 @@ const datas = require('./utils/datas')
 App({
   /** 小程序入口 */
   onLaunch: function () {
-    //更新配置
-    this.updateConfigRequest()
     //设置导航栏数据
     this.setNavgition()
+    //更新配置
+    this.updateConfigRequest()
     //检查更新
     this.checkVersion()
   },
 
   /** 全局变量 */
   globalData:{
-    isDebug:true,
+    isDebug:false,
     isTest:false,
     isLocal:false,
     themeColor: '#1380ff',
@@ -77,7 +77,7 @@ App({
   //获取请求domain
   getDomain:function(){
     if(this.globalData.isDebug){
-      return this.globalData.isTest ? 'https://www.yunxiaozhi.cn/test/public/api/' : 'http://danbaixi1.utools.club/yxz_v1/public/index.php/api/'
+      return this.globalData.isTest ? 'https://www.yunxiaozhi.cn/test/public/api/' : 'http://danbaixi.utools.club/yxz_v1/public/index.php/api/'
     }
     return 'https://www.yunxiaozhi.cn/v1/public/api/'
   },
