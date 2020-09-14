@@ -2,12 +2,11 @@
   width: calc(100% / 7);
   display: inline-block;
   position: relative;
-  padding: 14rpx;
+  padding: 4rpx;
 }
 .li .item{
-  width: 60rpx;
-  height: 60rpx;
-  border-radius: 100%;
+  width: 100%;
+  height: 100rpx;
   text-align: center;
   line-height: 60rpx;
   margin: 0 auto;

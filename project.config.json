@@ -18,8 +18,6 @@
 		"checkSiteMap": true,
 		"uploadWithSourceMap": true,
 		"compileHotReLoad": false,
-		"useMultiFrameRuntime": true,
-		"useApiHook": true,
 		"babelSetting": {
 			"ignore": [],
 			"disablePlugins": [],
@@ -29,6 +27,8 @@
 		"useIsolateContext": true,
 		"useCompilerModule": false,
 		"userConfirmedUseCompilerModuleSwitch": false,
+		"useMultiFrameRuntime": true,
+		"useApiHook": true,
 		"packNpmManually": false,
 		"packNpmRelationList": []
 	},
@@ -457,6 +457,12 @@
 					"name": "运动排名",
 					"pathName": "pages/tools/sport/sport",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "运动详情",
+					"pathName": "pages/tools/sport/detail/detail",
 					"scene": null
 				}
 			]

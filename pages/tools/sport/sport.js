@@ -8,7 +8,7 @@ Page({
   data: {
     todayStep:0,
     updateTime: '',
-    updateInterval: 20 // 20秒更新一次
+    updateInterval: 60 // 更新间隔
   },
 
   /**

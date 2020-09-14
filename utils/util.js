@@ -194,7 +194,14 @@ function deepCopyArray(obj){
   }
   return newObj
 }
-
+// 计算每月有多少天
+function getThisMonthDays(year,month) {
+    return new Date(year,month,0).getDate();
+}
+// 计算每月第一天是星期几
+function getFirstDayOfWeek(year,month) {
+    return new Date(Date.UTC(year,month-1, 1)).getDay();
+}
 module.exports = {
   formatTime: formatTime,
   formatTime2: formatTime2,
@@ -207,5 +214,7 @@ module.exports = {
   isDefaultNickname:isDefaultNickname,
   getConfig:getConfig,
   isTabPage:isTabPage,
-  deepCopyArray: deepCopyArray
+  deepCopyArray: deepCopyArray,
+  getThisMonthDays: getThisMonthDays,
+  getFirstDayOfWeek: getFirstDayOfWeek,
 }

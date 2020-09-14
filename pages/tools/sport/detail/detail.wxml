@@ -1,0 +1,30 @@
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">运动统计</view>
+</cu-custom>
+<view class="container padding margin-top">
+  <view class="head text-lg grid col-2">
+    <view class="text-left">
+      <text>{{year}}年 <text class="text-theme">{{month}}月</text></text>
+    </view>
+    <view class="text-right">
+      <text class="icon-back option" bindtap="setMonth" data-type="pre"></text>
+      <text class="icon-right option" bindtap="setMonth" data-type="next"></text>
+    </view>
+  </view>
+  <view class="date bg-white padding-sm margin-top radius">
+    <view class="head">
+      <view class="li text-center" wx:for="{{weeks}}" wx:key="key">
+        <text>{{item}}</text>
+      </view>
+    </view>
+    <view class="list">
+      <view class="li radius text-center {{item==day?'active':''}}" wx:for="{{days}}" wx:key="key">
+        <view class="item" hidden="{{item==0}}">
+          <view>{{item}}</view>
+          <view>{{list[item-1].step}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

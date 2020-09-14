@@ -1,4 +1,5 @@
 const app = getApp()
+const util = require('../../../../utils/util')
 Page({
 
   /**
@@ -110,17 +111,10 @@ Page({
       }
     })
   },
-  // 计算每月有多少天
-  getThisMonthDays() {
-    return new Date(this.data.year, this.data.month, 0).getDate();
-  },
-  // 计算每月第一天是星期几
-  getFirstDayOfWeek() {
-    return new Date(Date.UTC(this.data.year, this.data.month-1, 1)).getDay();
-  },
+
   getDays:function(){
-    let len = this.getThisMonthDays()
-    let dayStart = this.getFirstDayOfWeek()
+    let len = util.getThisMonthDays(this.data.year,this.data.month)
+    let dayStart = util.getFirstDayOfWeek(this.data.year,this.data.month)
     let days = new Array(len+dayStart-1).fill(0)
     let num = 1
     for(let i=dayStart-1;i<days.length;i++){
