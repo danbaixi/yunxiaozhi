@@ -110,7 +110,7 @@ Page({
         })
         setTimeout(()=>{
           interstitialAd.show()
-        },2000)
+        },1000)
       } else {
         app.msg("您当前微信版本较低，建议升级到最新版本")
       }

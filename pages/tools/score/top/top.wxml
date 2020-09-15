@@ -36,5 +36,5 @@
       </view>
     </view>
   </view> 
-  <view class='ad'><ad unit-id="adunit-3eba2eaa58f27073"></ad></view>
+  <ad unit-id="adunit-25c3fd607170bf38" ad-type="grid" grid-opacity="0.8" grid-count="5" ad-theme="white"></ad>
 </view>

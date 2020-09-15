@@ -19,6 +19,9 @@
       </view>
     </view>
     <view class="padding-top">
+      <ad-custom unit-id="adunit-8c15c22fe518b1e7"></ad-custom>
+    </view>
+    <view class="padding-top">
         <view class="cu-form-group">
           <view class="title">自动获取剪贴板内容</view>
           <switch checked="{{clip}}" bindchange="switchClip"></switch>

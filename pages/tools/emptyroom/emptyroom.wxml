@@ -51,7 +51,7 @@
   <view class="padding flex flex-direction" style="padding-top:0">
     <button bindtap="getList" class="cu-btn bg-theme margin-tb-sm lg">查询</button>
   </view>
-  <view class="padding">
-    <ad unit-id="adunit-e67cddfbc6eaebf3"></ad>
+  <view class="padding-left padding-right">
+    <ad unit-id="adunit-899535add9fafad7" ad-type="video" ad-theme="white"></ad>
   </view>
 </view>
