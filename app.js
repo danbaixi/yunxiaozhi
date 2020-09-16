@@ -6,13 +6,14 @@ App({
     this.setNavgition()
     //更新配置
     this.updateConfigRequest()
+    this.setFileUrl()
     //检查更新
     this.checkVersion()
   },
 
   /** 全局变量 */
   globalData:{
-    isDebug:true,
+    isDebug:false,
     isTest:false,
     isLocal:false,
     themeColor: '#1380ff',
@@ -22,9 +23,9 @@ App({
     amap_key: "67c20c2c7db08923379123500b656adf",
     markers_json: "markers.json",
     adTime: 24,//小时出现一次
-    fileDomain:"http://file.yunxiaozhi.cn/mini/",
-    fileUrl: "https://yunxiaozhi-1251388077.cos.ap-guangzhou.myqcloud.com/mini",
-    headImgUrl:"https://yunxiaozhi-1251388077.cos.ap-guangzhou.myqcloud.com/user_imgs/"
+    // fileDomain:"http://file.yunxiaozhi.cn/mini/",
+    // fileUrl: "http://file.yunxiaozhi.cn/mini",
+    // headImgUrl:"http://file.yunxiaozhi.cn/user_imgs/"
   },
   updateConfigRequest:function(){
     let time = parseInt((new Date()).getTime() / 1000)
@@ -41,6 +42,19 @@ App({
     }).catch((error) => {
       console.log(error.message)
     })
+  },
+  //设置存储文件地址
+  setFileUrl:function(){
+    let url = this.getConfig('fileUrl')
+    if(url){
+      this.globalData.fileDomain = url + '/mini/'
+      this.globalData.fileUrl = url + '/mini/'
+      this.globalData.headImgUrl = url + '/user_imgs/'
+    }else{
+      this.globalData.fileDomain = 'http://file.yunxiaozhi.cn/mini/'
+      this.globalData.fileUrl = 'http://file.yunxiaozhi.cn/mini'
+      this.globalData.headImgUrl = 'http://file.yunxiaozhi.cn/user_imgs/'
+    }
   },
   //设置导航栏数据
   setNavgition:function(){
