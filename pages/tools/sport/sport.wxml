@@ -4,7 +4,7 @@
 </cu-custom>
 <view class="container">
   <view class="header">
-    <image class="bg" mode="widthFix" src="https://mmbiz.qpic.cn/mmbiz_png/YWKTC18p77L0W89tlS5BFM9keiaJyjekengC7upq0NaSVSGy0N3OeWr5lQBlM3A9lgmkRmtXBbVb5TzHTKibZ8Hg/0?wx_fmt=png">
+    <image class="bg" mode="widthFix" src="https://mmbiz.qpic.cn/mmbiz_png/YWKTC18p77K4Lvg3rkpicicbVFrVRgBRt10TjWeibkdkm11jrq4x5y1xJ5Ivkl0xdcticAUv3icvwxjPGlDebVpwaBg/0?wx_fmt=png">
     </image>
     <view class="step text-center padding">
       <view class="today padding-sm">

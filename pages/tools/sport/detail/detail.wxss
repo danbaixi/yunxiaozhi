@@ -1,3 +1,6 @@
+page{
+  overflow-x: hidden;
+}
 .list{
   display: flex;
   flex-direction: row;
@@ -50,4 +53,22 @@
 }
 .option:nth-child(1){
   margin-right: 24rpx;
+}
+.label{
+  flex-basis: 25%;
+}
+.cu-progress{
+  flex-basis: 65%;
+}
+.day-count{
+  flex-basis: 10%;
+}
+.group .cu-progress{
+  margin-top: 8rpx;
+}
+.analazy{
+  border-right: 1px solid #f3f3f3;
+}
+.analazy:last-child{
+  border-right: 0px;
 }

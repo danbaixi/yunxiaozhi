@@ -16,7 +16,6 @@ Page({
    */
   onLoad: function (options) {
     this.init()
-    this.getData()
   },
 
   /**

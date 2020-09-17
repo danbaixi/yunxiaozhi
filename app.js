@@ -17,7 +17,7 @@ App({
     isTest:false,
     isLocal:false,
     themeColor: '#1380ff',
-    xdebug:"?XDEBUG_SESSION_START=12672",
+    xdebug:"?XDEBUG_SESSION_START=12398",
     domain:'https://www.yunxiaozhi.cn/v1/public/api/',
     key:'ihzoaixnuy4f8835032505e8a45ac102c52d58593e',
     amap_key: "67c20c2c7db08923379123500b656adf",

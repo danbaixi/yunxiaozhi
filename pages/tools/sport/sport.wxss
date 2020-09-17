@@ -1,8 +1,10 @@
+page{
+  background: #0c7679;
+}
 .bg-run{
   background:#bae3f9;
   color: #fff;
 }
-
 .header{
   width: 100%;
   position: relative;
