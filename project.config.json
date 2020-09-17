@@ -25,7 +25,7 @@
 		},
 		"bundle": true,
 		"useIsolateContext": true,
-		"useCompilerModule": false,
+		"useCompilerModule": true,
 		"userConfirmedUseCompilerModuleSwitch": false,
 		"useMultiFrameRuntime": true,
 		"useApiHook": true,
@@ -463,6 +463,14 @@
 					"id": -1,
 					"name": "运动详情",
 					"pathName": "pages/tools/sport/detail/detail",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "电话本",
+					"pathName": "pages/tools/phone/phone",
+					"query": "",
 					"scene": null
 				}
 			]

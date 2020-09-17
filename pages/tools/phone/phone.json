@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "copy": "/pages/components/copy/copy"
+  },
+  "navigationBarTitleText": "校园电话本 - 云小智"
+}

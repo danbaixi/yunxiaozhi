@@ -189,13 +189,32 @@ Page({
       }, 
       {
         color: 'red',
-        badge: '新',
+        badge: '',
         name: '523现状',
         icon: '523',
         needLogin: false,
         appid: "wxb036cafe2994d7d0",
         path: "/portal/topic-profile/topic-profile?group_id=13104375827371700&invite_ticket=BgAARwqnU-49GW8g92KH3E7WFA&topic_id=14&fromScene=bizArticle",
         url: '/pages/tools/summary/summary',
+      },
+      {
+        color: 'red',
+        badge: '新',
+        name: '闲置转让',
+        icon: 'xianzhi',
+        needLogin: false,
+        appid: "wxb036cafe2994d7d0",
+        path: "/portal/topic-profile/topic-profile?group_id=13104375827371700&invite_ticket=BgAARwqnU-49GW8g92KH3E7WFA&topic_id=3&fromScene=bizArticle",
+        url: '/pages/tools/summary/summary',
+      },
+      {
+        icon: 'bad',
+        color: 'red',
+        badge: '新',
+        name: '校园电话本',
+        icon: 'dianhua',
+        needLogin: false,
+        url: '/pages/tools/phone/phone',
       },
     ],
     query:[
@@ -244,16 +263,7 @@ Page({
         icon: 'tongxiang',
         needLogin: false,
         url: '/pages/tools/city/city'
-      }, 
-      // {
-      //   icon: 'bad',
-      //   color: 'red',
-      //   badge: '新',
-      //   name: '找电话',
-      //   icon: 'dianhua',
-      //   needLogin: false,
-      //   url: '/pages/tools/phone/phone',
-      // },  
+      },   
     ],
     huzhu:[
       {
