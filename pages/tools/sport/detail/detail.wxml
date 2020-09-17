@@ -19,10 +19,11 @@
       </view>
     </view>
     <view class="list data">
-      <view class="li radius text-center {{item==day?'active':''}}" wx:for="{{days}}" wx:key="key">
-        <view class="item">
+      <view class="li radius text-center {{thisMonth&&item==day?'active':''}}" wx:for="{{days}}" wx:key="key">
+        <view class="item {{index<(lineCount-1)*7?'table-border':'not-bottom-border'}}">
           <view class="text-sm text-gray">{{item>0?item:''}}</view>
-          <view class="text-theme text-bold">{{list[item-1].step}}</view>
+          <view wx:if="{{list[year+'-'+month+'-'+item]}}" class="text-theme text-bold">{{list[year+'-'+month+'-'+item]}}</view>
+          <!-- <view wx:if="{{!list[year+'-'+month+'-'+item] && item>0}}" class="icon-title text-grey text-xs"></view> -->
         </view>
       </view>
     </view>
