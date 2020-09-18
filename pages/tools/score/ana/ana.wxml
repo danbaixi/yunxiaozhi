@@ -2,8 +2,8 @@
   <view slot="back">返回</view>
 	<view slot="content">学业报告</view>
 </cu-custom>
-<view class="container">
-  <update-tips></update-tips>
+<update-tips></update-tips>
+<view class="container" wx:if="{{!isNull}}">
   <view class="total grid col-3 text-center padding bg-white margin-top" style="position:relative">
     <text class="question icon-question" bindtap="help"></text>
     <view bindtap="goPage" data-page="/pages/tools/rank/rank">
@@ -21,7 +21,7 @@
   </view>
   <view class="bg-white margin-top padding-top padding-bottom">
     <list-loading loading="{{loading}}"></list-loading>
-    <view wx:if="{{!loading}}">
+    <view wx:if="{{!loading && !isNull}}">
       <view class="text-center">
         <view class="text-theme text-lg">学习趋势</view>
         <view class="text-grey text-sm padding-top-xs">绩点和排名学期变化</view>
@@ -33,7 +33,7 @@
   </view>
   <view class="bg-white margin-top padding-top padding-bottom">
     <list-loading loading="{{loading}}"></list-loading>
-    <view wx:if="{{!loading}}">
+    <view wx:if="{{!loading && !isNull}}">
       <view class="text-center">
         <view class="text-theme text-lg">成绩分布</view>
         <view class="text-grey text-sm padding-top-xs">成绩分数段的分布</view>
@@ -44,4 +44,4 @@
     </view>
   </view>
 </view>
-<view wx:if="{{isNull}}" style='margin-top:40px;text-align:center'>没有数据，请在成绩页面更新后再进入</view>
+<empty display="{{isNull}}" content="暂无学业报告数据"></empty>

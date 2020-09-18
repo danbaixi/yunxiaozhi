@@ -266,7 +266,7 @@ Page({
       success: function (res) {
         wx.hideLoading()
         if (res.data.status == 0) {
-          app.msg('更新成功','success') 
+          app.msg(res.data.message,'success') 
           wx.setStorageSync('scores', '')
           that.getScore(true);
           wx.setStorageSync('score_update_time', time);

@@ -36,8 +36,8 @@
     </view>  
   </block>
 </view>
-<view style="margin-top:40%" wx:if="{{isNull}}">
-  <view class="text-center padding">没有记录，请点击更新记录</view>
+<empty display="{{isNull}}" content="没有记录，请点击更新记录"></empty>
+<view wx:if="{{isNull}}">
   <view class="text-center">若还是没有，那你很优秀哦</view>
   <view class="text-center margin-top">
     <button class="cu-btn round bg-theme" bindtap="update">更新记录</button> 

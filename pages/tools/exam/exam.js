@@ -227,6 +227,9 @@ Page({
   //获取班级
   getClassList:function(){
     let _this = this
+    if(_this.data.term.length == 0){
+      return
+    }
     app.httpRequest({
       url:'exam/getClassList',
       data:{

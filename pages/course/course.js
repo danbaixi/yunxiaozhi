@@ -110,11 +110,11 @@ Page({
         })
         setTimeout(()=>{
           interstitialAd.show()
-        },1000)
+        },1500)
+        wx.setStorageSync('score_ad_display', time)
       } else {
         app.msg("您当前微信版本较低，建议升级到最新版本")
       }
-      wx.setStorageSync('score_ad_display', time)
     }
     //获取公告
     that.getNotice()

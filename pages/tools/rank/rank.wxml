@@ -10,15 +10,17 @@
     <view class="text-lg text-bold text-black padding-sm">{{names[grade-1]}}</view>
     <view class="grid col-2">
       <view>
-        <view class="text-theme text-xl padding-bottom-xs">{{user.gpa}}</view>
+        <view wx:if="{{user.gpa}}" class="text-theme text-xl padding-bottom-xs">{{user.gpa}}</view>
+        <view class="padding-bottom-xs" wx:else>无</view>
         <view class="text-gray">大学生涯绩点</view>
       </view>
       <view>
-        <view class="padding-bottom-xs">
+        <view class="padding-bottom-xs" wx:if="{{user.rank}}">
           <text class="text-theme text-xl">{{user.rank}}</text>
           <text class="text-gray"> / </text>
           <text class="text-black">{{total}}</text>
         </view>
+        <view class="padding-bottom-xs" wx:else>无</view>
         <view class="text-gray">班级排名</view>
       </view>
     </view>
@@ -27,7 +29,7 @@
 <view class="rank bg-white padding-sm margin-top-sm">
   <view class="text-center text-lg padding-xs">大学生涯绩点排行榜</view>
   <list-loading loading="{{loading}}"></list-loading>
-  <view class="cu-list menu" wx:if="{{user.is_display_name!=1}}">
+  <view class="cu-list menu" wx:if="{{user.is_display_name!=1 && top.length>0}}">
     <view class="cu-item" wx:for="{{top}}" wx:key="key">
       <view class="content">
         <view class="rankNum bg-{{item.rank<=3?rankColor[item.rank-1]:'grey'}}">{{item.rank}}</view>
@@ -44,6 +46,7 @@
       </view>
     </view>
   </view>
+  <empty display="{{top.length==0}}" content="暂无排行榜"></empty>
 </view>
 <view wx:if="{{user.is_display_name==1}}" class="text-center padding-sm">
   <view class="padding-sm"><text class="icon-attentionforbid text-grey" style="font-size:60rpx"></text></view>

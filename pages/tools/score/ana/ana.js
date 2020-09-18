@@ -55,19 +55,19 @@ Page({
           loading: false
         })
         if (res.data.status == 0) {
+          that.setData(res.data.data)
+          data = res.data.data
           if (res.data.data.terms.length == 0) {
             that.setData({
               isNull: true
             })
             return
           }
-          that.setData(res.data.data)
-          data = res.data.data
-          return
+        }else{
+          that.setData({
+            isNull: true,
+          })
         }
-        that.setData({
-          isNull: true,
-        })
       }
     })
   },
