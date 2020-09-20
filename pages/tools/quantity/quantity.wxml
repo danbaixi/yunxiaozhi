@@ -10,6 +10,9 @@
         <view class="text-yellow" bindtap="setDormitory">设置</view>
       </view>
     </view>
+    <view class="cu-bar bg-white margin-sm padding-sm radius" bindtap="viewArticle">
+      <text>仅北区支持查水费，暂不支持充值，点击进入充值</text>
+    </view>
     <view class="item">
       <view class="header"></view>
       <view class="electricity box {{electricityGrade=='null'?'null':''}}">

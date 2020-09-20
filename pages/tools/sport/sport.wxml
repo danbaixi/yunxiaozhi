@@ -1,20 +1,113 @@
 <cu-custom bgColor="bg-run" isBack="true">
   <view slot="back">返回</view>
-	<view slot="content">运动排名</view>
+	<view slot="content">白云运动排行榜</view>
 </cu-custom>
 <view class="container">
   <view class="header">
     <image class="bg" mode="widthFix" src="https://mmbiz.qpic.cn/mmbiz_png/YWKTC18p77K4Lvg3rkpicicbVFrVRgBRt10TjWeibkdkm11jrq4x5y1xJ5Ivkl0xdcticAUv3icvwxjPGlDebVpwaBg/0?wx_fmt=png">
     </image>
-    <view class="step text-center padding">
+    <view class="step text-center padding-sm">
       <view class="today padding-sm">
-        <text class="today-step">{{todayStep}}</text>
+        <text class="today-step text-shadow">{{todayStep}}</text>
+        <view class="text-sm text-grey">今日步数</view>
       </view>
       <view class="padding-sm">
-        <button class="cu-btn bg-theme round" bindtap="getData">刷新步数</button>
+        <button class="cu-btn bg-theme round" bindtap="getData">同步微信步数</button>
         <view class="padding-sm" wx:if="{{updateTime}}">
           <text class="text-xs text-grey">上次刷新时间：{{updateTime}}</text>
         </view>
+      </view>
+    </view>
+    <view class="margin y-radius padding-xs bg-white grid col-4 shadow">
+      <view class="padding-sm text-center" bindtap="viewDetail">
+        <view class="text-xxl"><text class="icon-footprint text-theme"></text></view>
+        <view class="text-sm text-grey margin-top-xs">步数统计</view>
+      </view>
+      <view class="padding-sm text-center" bindtap="viewClockin">
+        <view class="text-xxl"><text class="icon-countdown text-theme"></text></view>
+        <view class="text-sm text-grey margin-top-xs">早起打卡</view>
+      </view>
+      <view class="padding-sm text-center" style="position:relative">
+        <button class="tr-btn" open-type="share"></button>
+        <view class="text-xxl"><text class="icon-share text-theme"></text></view>
+        <view class="text-sm text-grey margin-top-xs">邀请好友</view>
+      </view>
+      <view class="padding-sm text-center" bindtap="viewSetting">
+        <view class="text-xxl"><text class="icon-settings text-theme"></text></view>
+        <view class="text-sm text-grey margin-top-xs">隐私设置</view>
+      </view>
+    </view>
+    <view class="margin padding-tb-sm bg-white y-radius">
+      <view class="text-center text-lg padding-bottom">全校步数排行榜</view>
+      <view class="top3 grid col-3">
+        <view class="rank-item padding-tb-xs top2">
+          <view class="avator">
+            <image class="avator-image" mode="aspectFill" src="{{list[1]?(list[1].user_img?headImgUrl + list[1].user_img : list[1].avatar):'/pages/assets/imgs/other/gzh-logo.jpg'}}">
+            </image>
+            <image class="top-icon" mode="widthFix" src="{{top2}}"></image>
+          </view>
+          <view class="nickname text-theme">
+            {{list[1]?(list[1].hidden_sport_name==1?list[1].name:list[1].stu_name):'无'}}
+          </view>
+          <view wx:if="{{list[1]}}">
+            <view class="text-gray text-xs">{{list[1].stu_department}}</view>
+            <view class="step-data">
+              {{list[1]?list[1].step:0}}
+            </view>
+          </view>
+        </view>
+        <view class="rank-item padding-tb-xs top1">
+          <view class="avator">
+            <image class="avator-image" mode="aspectFill" src="{{list[0]?(list[0].user_img?headImgUrl + list[0].user_img : list[0].avatar):'/pages/assets/imgs/other/gzh-logo.jpg'}}">
+            </image>
+            <image class="top-icon" mode="widthFix" src="{{top1}}"></image>
+          </view>
+          <view class="nickname text-yellow">
+            {{list[0]?(list[0].hidden_sport_name==1?list[0].name:list[0].stu_name):'无'}}
+          </view>
+          <view wx:if="{{list[0]}}">
+            <view class="text-gray text-xs">{{list[0].stu_department}}</view>
+            <view class="step-data">
+              {{list[0]?list[0].step:0}}
+            </view>
+          </view>
+        </view>
+        <view class="rank-item padding-tb-xs top3">
+          <view class="avator">
+            <image class="avator-image" mode="aspectFill" src="{{list[2]?(list[2].user_img?headImgUrl + list[2].user_img : list[2].avatar):'/pages/assets/imgs/other/gzh-logo.jpg'}}">
+            </image>
+            <image class="top-icon" mode="widthFix" src="{{top3}}"></image>
+          </view>
+          <view class="nickname text-theme">
+            {{list[2]?(list[2].hidden_sport_name==1?list[2].name:list[2].stu_name):'无'}}
+          </view>
+          <view wx:if="{{list[2]}}">
+            <view class="text-gray text-xs">{{list[2].stu_department}}</view>
+            <view class="step-data">
+              {{list[2]?list[2].step:0}}
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="margin-top-sm">
+         <view class="cu-list bg-white menu-avatar">
+            <view class="cu-item y-radius margin-lr-xs {{item.stu_id == stuId ? 'myself':''}}" wx:if="{{index>2}}" wx:for="{{list}}" wx:key="key" data-stu_id="{{item.stu_id}}" bindtap="detail">
+            <view class="rank-num">{{index+1}}</view>
+            <view class="cu-avatar round lg" style="background-image:url({{item.user_img?headImgUrl+item.user_img:item.avatar}});"></view>
+            <view class="content">
+              <view class="text-grey">{{item.hidden_sport_name==1?item.name:item.stu_name}}</view>
+              <view class="text-gray text-sm flex">
+                <text class="text-cut">{{item.stu_department}}</text>
+              </view>
+            </view>
+            <view class="action">
+              <view class="text-yellow text-xl">{{item.step}}</view>
+            </view>
+          </view>
+         </view>
+         <view class="margin-top">
+          <view class="text-center text-sm text-gray">1分钟更新一次排行榜，仅显示前{{rankCount}}名</view>
+         </view>
       </view>
 
     </view>

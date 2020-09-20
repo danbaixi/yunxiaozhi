@@ -30,6 +30,16 @@
         </switch>
       </view>
     </view>
+    <view class="cu-item">
+      <view class="content">
+        <text class="cuIcon-circlefill text-grey"></text>
+        <text class="text-grey">步数排行榜隐藏真实姓名</text>
+      </view>
+      <view class="action">
+        <switch class="theme sm" checked="{{settings.hidden_sport_name == 1}}" data-field="hidden_sport_name" bindchange="displayName">
+        </switch>
+      </view>
+    </view>
   </view>
   <view class="cu-bar bg-white solid-bottom">
     <view class="action">

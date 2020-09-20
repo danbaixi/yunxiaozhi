@@ -27,7 +27,7 @@ Page({
       //不获取同堂同学数量，减少数据库查询
       // this.getStudent(data)
     }
-    var area = wx.getStorageSync('user_area') || 1 //默认为西校区
+    var area = wx.getStorageSync('user_area') || 0
     var time, week
     var jie = parseInt(data.jie)
     var jieshu = parseInt(data.jieshu)

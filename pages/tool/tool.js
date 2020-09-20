@@ -199,7 +199,7 @@ Page({
       },
       {
         color: 'red',
-        badge: '新',
+        badge: '',
         name: '闲置转让',
         icon: 'xianzhi',
         needLogin: false,
@@ -210,11 +210,19 @@ Page({
       {
         icon: 'bad',
         color: 'red',
-        badge: '新',
-        name: '校园电话本',
+        badge: '',
+        name: '白云电话本',
         icon: 'dianhua',
         needLogin: false,
         url: '/pages/tools/phone/phone',
+      },
+      {
+        color: 'red',
+        badge: '新',
+        name: '运动排行',
+        icon: 'run',
+        needLogin: true,
+        url: '/pages/tools/sport/sport',
       },
     ],
     query:[

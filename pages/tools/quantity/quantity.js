@@ -12,7 +12,8 @@ Page({
     area_id: '',
     electricity: 0,
     water: 0,
-    isFresh: false
+    isFresh: false,
+    articleUrl:'http://mp.weixin.qq.com/s?__biz=MzI1NTUwNDIzNQ==&mid=100003016&idx=1&sn=5d3dc0dcc63f5691c7bf98ec4146fbf8&chksm=6a35b6cc5d423fdaf32d2718d2df9c0c83ef11e08af49def86ba18300d261d587ce6bfa81a6f#rd'
   },
 
   /**
@@ -127,5 +128,10 @@ Page({
   startElectricityUp:function(number){
     this.countUp = new WxCountUp('electricity', number, { decimalPlaces:2}, this)
     this.countUp.start()
+  },
+  viewArticle:function(){
+    wx.navigateTo({
+      url: '/pages/article/article?src=' + encodeURIComponent(this.data.articleUrl),
+    })
   }
 })

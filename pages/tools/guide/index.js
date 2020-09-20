@@ -7,19 +7,19 @@ Page({
       {
         id:1,
         title:'西校区',
-        img: 'west',
+        img: 'https://mmbiz.qpic.cn/mmbiz_png/YWKTC18p77IXCxFpXwo31LIxHxGjFXey9qXXssawA07EVuN5FxjqGHF59SkLicjmR6qBQMZvRV1mB4JCe5326icw/0?wx_fmt=png',
         color:'theme'
       },
       {
         id:2,
         title:'北校区',
-        img: 'north',
+        img: 'https://mmbiz.qpic.cn/mmbiz_png/YWKTC18p77IXCxFpXwo31LIxHxGjFXeylJPEbTFs58ibc6kZVchkF35Y5rX7KznC0GOOib2bNgiaVL1OjfdSsMjyA/0?wx_fmt=png',
         color:'yellow'
       },
       {
         id:3,
         title:'校园全景',
-        img: 'quanjing',
+        img: 'https://mmbiz.qpic.cn/mmbiz_png/YWKTC18p77IXCxFpXwo31LIxHxGjFXeyrTXEleDXfatljb5EFA1lGlp7QPIuVQbrH8tjp3FEg2t4FyR2tvLQVA/0?wx_fmt=png',
         color:'olive'
       },
     ],

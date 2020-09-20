@@ -9,7 +9,7 @@
       <view class="cardTitle">
         {{item.title}}
       </view>
-      <image class="icon" src="/pages/assets/imgs/other/{{item.img}}.png" mode="widthFix"></image>
+      <image class="icon" src="{{item.img}}" mode="widthFix"></image>
     </view>
   </view>
 </view>
