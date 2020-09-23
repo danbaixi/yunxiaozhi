@@ -1156,5 +1156,29 @@ Page({
       })
     })
     return promise
-  }
+  },
+  //判断缓存文件是否>10M，预留4m空间
+  checkMaxSize:function(){
+    let maxSize = (10-2) * 1024 * 1024 / 2
+    let promise = new Promise((resolve) => {
+      wx.getSavedFileList({
+        success(res) {
+          let files = res.fileList
+          let total = 0
+          for (let i = 0; i < files.length; i++) {
+            total = total + files[i].size
+          }
+          if (total > maxSize) {
+            for (let i = 0; i < files.length; i++) {
+              wx.removeSavedFile({
+                filePath: files[i].filePath
+              })
+            }
+          }
+          return resolve(true)
+        }
+      })
+    })
+    return promise
+  },
 })

@@ -11,7 +11,10 @@
       </view>
     </view>
     <view class="cu-bar bg-white margin-sm padding-sm radius" bindtap="viewArticle">
-      <text>仅北区支持查水费，暂不支持充值，点击进入充值</text>
+      <text>仅北区支持查水费，暂不支持充值</text>
+      <view class="action">
+        <view class="text-yellow">点击进入充值</view>
+      </view>
     </view>
     <view class="item">
       <view class="header"></view>

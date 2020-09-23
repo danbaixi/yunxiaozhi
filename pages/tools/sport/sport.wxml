@@ -1,6 +1,6 @@
 <cu-custom bgColor="bg-run" isBack="true">
   <view slot="back">返回</view>
-	<view slot="content">白云运动排行榜</view>
+	<view slot="content">白云步数排行榜</view>
 </cu-custom>
 <view class="container">
   <view class="header">
@@ -89,7 +89,7 @@
           </view>
         </view>
       </view>
-      <view class="margin-top-sm">
+      <view class="margin-tb-sm">
          <view class="cu-list bg-white menu-avatar">
             <view class="cu-item y-radius margin-lr-xs {{item.stu_id == stuId ? 'myself':''}}" wx:if="{{index>2}}" wx:for="{{list}}" wx:key="key" data-stu_id="{{item.stu_id}}" bindtap="detail">
             <view class="rank-num">{{index+1}}</view>
@@ -106,7 +106,7 @@
           </view>
          </view>
          <view class="margin-top">
-          <view class="text-center text-sm text-gray">1分钟更新一次排行榜，仅显示前{{rankCount}}名</view>
+          <view class="text-center text-sm text-gray">仅显示前{{rankCount}}名</view>
          </view>
       </view>
 
