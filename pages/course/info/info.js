@@ -43,7 +43,7 @@ Page({
       //西校区
       if(area == 1){
         if(jie == 3 && jieshu == 2 || jie == 1 && jieshu == 4){
-          if((floor == '思齐' || floor == '至善' || floor == '信达') && (floorNum >= 2 && floorNum <= 4)){
+          if(floor == '思齐' || floor == '至善' || (floor == '信达' && floorNum >= 2 && floorNum <= 4)){
             //3-4节连上
             timesData[0][2][0] = "10:10"
             timesData[0][2][1] = ""

@@ -182,8 +182,8 @@ Page({
     _this.getTodayDate();
     //获取课表
     _this.getCourse(_this.data.now_week, true, false);
-    //获取设置
-    _this.getConfigData()
+    //获取设置，隐藏上课时间
+    //_this.getConfigData()
   },
   /**
    * 用户点击右上角分享
