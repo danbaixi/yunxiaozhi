@@ -138,6 +138,9 @@ function formatAddress(address){
 
 //判断是否是默认昵称
 function isDefaultNickname(nickname){
+  if(nickname === null || typeof nickname === undefined){
+    return false
+  }
   return nickname.indexOf('yxz_') === -1 ? false : true
 }
 
