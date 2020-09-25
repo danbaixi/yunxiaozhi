@@ -574,23 +574,27 @@ Page({
       yzm: e.detail.value,
     })
   },
+  getCourseListRequest(){
+    let that = this
+    app.httpRequest({
+      url: 'course/getList',
+      success: function (res) {
+        let time = (new Date()).getTime();
+        wx.setStorageSync('course_update_time', time);
+        app.msg("更新成功", 'success')
+        wx.setStorageSync('course', res.data.data.course);
+        wx.setStorageSync('train', res.data.data.train_course);
+        that.onShow();
+      },
+    })
+  },
   updateCourseRequest(){
     let that = this
     app.httpRequest({
       url: 'course/updateV1',
       success: function (res) {
         if (res.data.status == 0) {
-          app.httpRequest({
-            url: 'course/getList',
-            success: function (res) {
-              let time = (new Date()).getTime();
-              wx.setStorageSync('course_update_time', time);
-              app.msg("更新成功", 'success')
-              wx.setStorageSync('course', res.data.data.course);
-              wx.setStorageSync('train', res.data.data.train_course);
-              that.onShow();
-            },
-          })
+          that.getCourseListRequest()
         } else {
           if(res.data.status == 1005){
             //再获取一遍
