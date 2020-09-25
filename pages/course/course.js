@@ -574,6 +574,40 @@ Page({
       yzm: e.detail.value,
     })
   },
+  updateCourseRequest(){
+    let that = this
+    app.httpRequest({
+      url: 'course/updateV1',
+      success: function (res) {
+        if (res.data.status == 0) {
+          app.httpRequest({
+            url: 'course/getList',
+            success: function (res) {
+              let time = (new Date()).getTime();
+              wx.setStorageSync('course_update_time', time);
+              app.msg("更新成功", 'success')
+              wx.setStorageSync('course', res.data.data.course);
+              wx.setStorageSync('train', res.data.data.train_course);
+              that.onShow();
+            },
+          })
+        } else {
+          if(res.data.status == 1005){
+            //再获取一遍
+            that.updateCourseRequest()
+          }else if (res.data.status == 1002) {
+            app.msg(res.data.message)
+            that.freshYzm()
+          } else if (res.data.status == 1006){
+            app.msg(res.data.message)
+            that.setData({
+              showModal:false
+            })
+          }
+        }
+      }
+    })
+  },
   /**
    * 对话框确认按钮点击事件
    */
@@ -603,32 +637,7 @@ Page({
       mask: true
     })
     wx.removeStorageSync('tmp_class')
-    app.httpRequest({
-      url: 'course/updateV1',
-      success: function (res) {
-        if (res.data.status == 0) {
-          app.httpRequest({
-            url: 'course/getList',
-            success: function (res) {
-              wx.setStorageSync('course_update_time', time);
-              app.msg("更新成功", 'success')
-              wx.setStorageSync('course', res.data.data.course);
-              wx.setStorageSync('train', res.data.data.train_course);
-              that.onShow();
-            },
-          })
-        } else {
-          if (res.data.status == 1002) {
-            that.freshYzm()
-          } else if (res.data.status == 1006){
-            that.setData({
-              showModal:false
-            })
-          }
-          app.msg(res.data.message)
-        }
-      }
-    })
+    that.updateCourseRequest()
   },
   /** 刷新验证码 */
   freshYzm: function () {

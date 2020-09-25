@@ -198,10 +198,10 @@
   </view>
 </view>
 
-<view class="stop-course" wx:if="{{courseConfig.status==0}}">
+<!-- <view class="stop-course" wx:if="{{courseConfig.status==0}}">
   <view class="stop-content">
     <view class="text-theme text-center">
       {{courseConfig.tips}}
     </view>
   </view>
-</view>
+</view> -->
