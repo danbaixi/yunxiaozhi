@@ -58,6 +58,7 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
+    that.isStop()
     //设置默认参数
     if (wx.getStorageSync('Kopacity') == '') {
       wx.setStorageSync('Kopacity', 90)
@@ -1181,4 +1182,11 @@ Page({
     })
     return promise
   },
+  //是否停用
+  isStop:function(){
+    let setting = app.getConfig('functions.course')
+    this.setData({
+      courseConfig: setting
+    })
+  }
 })
