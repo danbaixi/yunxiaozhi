@@ -728,6 +728,8 @@ Page({
     let audit = app.getConfig('auditing')
     let user_id = app.getUserId()
     let setting = wx.getStorageSync('hide_new_studnet_tips')
+    //不再弹出
+    setting = 1
     if(audit == 0 && !user_id && !setting){
       this.setData({
         showNewStudentTips:true

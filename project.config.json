@@ -472,6 +472,12 @@
 					"pathName": "pages/tools/phone/phone",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "使用条款",
+					"pathName": "pages/terms/terms",
+					"scene": null
 				}
 			]
 		}
