@@ -18,7 +18,7 @@
     </view>
   </view>
 
-  <view class='top'>
+  <!-- <view class='top'>
     <text class='title'>新生服务</text>
   </view>
   <view class="cu-list grid col-{{gridCol}}">
@@ -31,7 +31,7 @@
       </view>
       <text>{{item.name}}</text>
     </view>
-  </view>
+  </view> -->
 
   <!-- <view class='top'>
     <text class='title'>校园互助</text>

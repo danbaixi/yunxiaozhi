@@ -13,7 +13,7 @@ App({
 
   /** 全局变量 */
   globalData:{
-    isDebug:true,
+    isDebug:false,
     isTest:false,
     isLocal:false,
     themeColor: '#1380ff',
@@ -377,6 +377,9 @@ App({
   },
   //弹出条款内容
   acceptTerms:function(){
+    if(!this.getUserId()){
+      return
+    }
     let accept_terms = this.getConfig('accept_terms')
     if(accept_terms == 0){
       wx.navigateTo({

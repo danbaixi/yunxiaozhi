@@ -14,7 +14,7 @@
 <view class="list" style='height:{{7*55+4+customBar}}px;top:{{list_is_display?0:-(7*55+4+customBar)}}px'>
   <view style="height:{{customBar}}px;width:100%;background:#fff"></view>
   <view class="course-options cu-list grid col-4">
-    <view class="cu-item" bindtap='update'>
+    <view class="cu-item" bindtap='updateCourseModal'>
       <view class="course-icon">
         <image mode="widthFix" src="/pages/assets/imgs/course_icon/update.png"></image>
       </view>
@@ -112,7 +112,7 @@
       <view class='jie' style="background-color:rgba(220,220,220,{{(100-Kopacity)/100}})">
         <view wx:for="{{12}}" wx:key="key" wx:index="index" class="left">
           <view class="number">{{item+1}}</view>
-          <view class="course-time" wx:if="{{display_course_time == 1}}">
+          <view class="course-time" wx:if="{{display_course_time == 1 && !((index == 2 || index == 3) && area == 1)}}">
             <view class="text-grey text-xs time-start">{{course_time[index][0] != "" ? course_time[index][0] : '堂'}}</view>
             <view class="text-grey text-xs time-end">{{course_time[index][1] != "" ? course_time[index][1] : '连'}}</view>
           </view>
@@ -205,3 +205,31 @@
     </view>
   </view>
 </view> -->
+
+<view class="cu-modal {{updatingCourse?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">同步教务系统课表</view>
+      <view class="action" bindtap="closeUpdateCourseModal">
+        <text class="icon-close text-red"></text>
+      </view>
+    </view>
+    <view class="padding-xs">
+      <view class="text-center padding-sm bg-white y-radius text-left margin-sm">
+        <view class="text-yellow text-center text-lg">请认真阅读以下使用条款</view>
+        <view class="margin-top-sm">
+          云小智课表是通过非官方渠道从教务系统获取的数据，我们无法保证课表完整无误，请以老师发的课表为准！
+          <text class="text-theme">云小智只负责搬运和整理数据，此功能产生的一切后果由使用者自负！</text>
+        </view>
+        <view class="margin-top-sm text-grey text-left">
+          <radio-group bindchange="acceptTerms">
+            <radio value="acceptTerms" class="theme"></radio><text class="padding-left-xs">本人已阅读条款并愿承担任何风险</text>
+          </radio-group>
+        </view>
+      </view>
+      <view class="margin-top-sm padding-sm">
+          <button class="cu-btn block bg-theme lg" bindtap="update">点击同步个人课表</button>
+      </view>
+    </view>
+  </view>
+</view>

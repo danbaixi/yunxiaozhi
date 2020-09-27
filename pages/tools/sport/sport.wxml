@@ -2,7 +2,7 @@
   <view slot="back">返回</view>
 	<view slot="content">白云步数排行榜</view>
 </cu-custom>
-<view class="container">
+<view class="container padding-bottom">
   <view class="header">
     <image class="bg" mode="widthFix" src="https://mmbiz.qpic.cn/mmbiz_png/YWKTC18p77K4Lvg3rkpicicbVFrVRgBRt10TjWeibkdkm11jrq4x5y1xJ5Ivkl0xdcticAUv3icvwxjPGlDebVpwaBg/0?wx_fmt=png">
     </image>
@@ -106,7 +106,7 @@
           </view>
          </view>
          <view class="margin-top">
-          <view class="text-center text-sm text-gray">仅显示前{{rankCount}}名</view>
+          <view class="text-center text-sm text-gray">仅显示前{{rankCount}}名，异常数据将不会出现在榜单</view>
          </view>
       </view>
 

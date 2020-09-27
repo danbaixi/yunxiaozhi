@@ -113,5 +113,11 @@ Page({
     this.setData({
       showDetail: false
     })
+  },
+  goQuanzi(){
+    wx.navigateToMiniProgram({
+      appId: "wxb036cafe2994d7d0",
+      path: "/portal/topic-profile/topic-profile?group_id=13104375827371700&invite_ticket=BgAARwqnU-49GW8g92KH3E7WFA&topic_id=1&fromScene=bizArticle",
+    })
   }
 })

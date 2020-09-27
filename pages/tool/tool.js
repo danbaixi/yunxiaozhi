@@ -88,14 +88,14 @@ Page({
       },
     ],
     life:[
-      // {
-      //   color: 'olive',
-      //   badge: 0,
-      //   name: '新生指南',
-      //   icon: 'new_student',
-      //   needLogin: false,
-      //   url: '/pages/tools/newstudent/newstudent',
-      // },
+      {
+        color: 'olive',
+        badge: 0,
+        name: '新生必看',
+        icon: 'new_student',
+        needLogin: false,
+        url: '/pages/tools/newstudent/newstudent',
+      },
       {
         icon: 'search',
         color: 'olive',
@@ -205,8 +205,6 @@ Page({
         name: '失物招领',
         icon: 'lost',
         needLogin: false,
-        appid: "wxb036cafe2994d7d0",
-        path: "/portal/topic-profile/topic-profile?group_id=13104375827371700&invite_ticket=BgAARwqnU-49GW8g92KH3E7WFA&topic_id=1&fromScene=bizArticle",
         url: '/pages/tools/lost/lost',
       },  
       {

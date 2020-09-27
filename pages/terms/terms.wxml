@@ -1,8 +1,8 @@
 <cu-custom bgColor="bg-white" isBack="true">
   <view slot="back">返回</view>
-	<view slot="content">使用条款</view>
+	<view slot="content">云小智使用条款</view>
 </cu-custom>
-<view class="container">
+<view class="container padding-bottom-sm">
   <view class="padding margin bg-white text-theme text-center y-radius">
     为了让你更好地使用云小智，请认真阅读以下条款
   </view>
@@ -11,7 +11,7 @@
   </view>
   <view class="padding margin-xs">
     <button disabled="{{is_accept == 1 || time > 0 ? true : false}}"  type="" class="cu-btn block lg bg-theme" bindtap="acceptTerms">
-      {{is_accept == 1 ? '您已接受了此条款' : (time > 0 ? '阅读条款' + time + '秒后可操作': '我接受此条款')}}
+      {{is_accept == 1 ? '您已接受了此条款' : ('接受条款并愿承担风险' + (time > 0 ? '('+time+'秒后可操作)' : ''))}}
     </button>
   </view>
 </view>

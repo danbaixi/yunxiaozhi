@@ -6,7 +6,7 @@ Page({
    */
   data: {
     content: '',
-    time: 2 //30秒阅读时间
+    time: 60 //阅读时间
   },
 
   /**

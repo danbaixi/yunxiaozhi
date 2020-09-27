@@ -142,6 +142,7 @@ Page({
             }
           })
           setTimeout(function () {
+            app.updateConfigRequest()
             if (that.data.url != '') {
               if(util.isTabPage(that.data.url)){
                 wx.switchTab({

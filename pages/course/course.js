@@ -50,7 +50,8 @@ Page({
     clickScreenTime:0,
     scrollTop:"",
     courseTerm:null,
-    noticeDisplay:false
+    noticeDisplay:false,
+    acceptTerms: false
   },
 
   /**
@@ -184,7 +185,7 @@ Page({
     //获取课表
     _this.getCourse(_this.data.now_week, true, false);
     //获取设置，隐藏上课时间
-    //_this.getConfigData()
+    _this.getConfigData()
   },
   /**
    * 用户点击右上角分享
@@ -579,9 +580,6 @@ Page({
     app.httpRequest({
       url: 'course/getList',
       success: function (res) {
-        let time = (new Date()).getTime();
-        wx.setStorageSync('course_update_time', time);
-        app.msg("更新成功", 'success')
         wx.setStorageSync('course', res.data.data.course);
         wx.setStorageSync('train', res.data.data.train_course);
         that.onShow();
@@ -595,6 +593,9 @@ Page({
       success: function (res) {
         if (res.data.status == 0) {
           that.getCourseListRequest()
+          let time = (new Date()).getTime();
+          wx.setStorageSync('course_update_time', time);
+          app.msg("更新成功", 'success')
         } else {
           if(res.data.status == 1005){
             //再获取一遍
@@ -602,7 +603,7 @@ Page({
           }else if (res.data.status == 1002) {
             app.msg(res.data.message)
             that.freshYzm()
-          } else if (res.data.status == 1006){
+          } else {
             app.msg(res.data.message)
             that.setData({
               showModal:false
@@ -622,7 +623,13 @@ Page({
       app.msg("请先登录")
       return;
     }
-    that.setData({ list_is_display: false })
+    if(!that.data.acceptTerms){
+      app.msg("请先接受使用条款")
+      return;
+    }
+    that.setData({
+      list_is_display: false
+    })
     var time = (new Date()).getTime();
     if (wx.getStorageSync('course_update_time') != "") {
       var update_time = wx.getStorageSync('course_update_time');
@@ -635,7 +642,9 @@ Page({
       app.msg('请在' + season + '秒后更新')
       return
     }
-
+    that.setData({
+      updatingCourse: false
+    })
     wx.showLoading({
       title: '更新中',
       mask: true
@@ -851,6 +860,8 @@ Page({
     })
   },
   shareCourse:function(){
+    app.msg("此功能正在优化中")
+    return
     if(!app.getUserId()){
       app.msg("你还没有登录哦")
       return
@@ -959,28 +970,30 @@ Page({
         //西校区
         if(this.data.area == 1){
           if(course.jie == 3 && course.jieshu == 2 || course.jie == 1 && course.jieshu == 4){
-            if((floor == '思齐' || floor == '至善' || floor == '信达') && (floorNum >= 2 && floorNum <= 4)){
-              //3-4节连上
-              times[0][2][0] = "10:10"
-              times[0][2][1] = ""
-              times[0][3][0] = ""
-              times[0][3][1] = "11:40"
-            }else if (floor == '博雅' || floor == '德艺' || floor == '躬行') {
-              //3-4节分开上
-              times[0][2][0] = "10:20"
-              times[0][2][1] = "11:05"
-              times[0][3][0] = "11:10"
-              times[0][3][1] = "11:55"
-            }
+            //有争议的时间，暂不显示
+
+            // if((floor == '思齐' || floor == '至善' || floor == '信达') && (floorNum >= 2 && floorNum <= 4)){
+            //   //3-4节连上
+            //   times[0][2][0] = "10:10"
+            //   times[0][2][1] = ""
+            //   times[0][3][0] = ""
+            //   times[0][3][1] = "11:40"
+            // }else if (floor == '博雅' || floor == '德艺' || floor == '躬行') {
+            //   //3-4节分开上
+            //   times[0][2][0] = "10:20"
+            //   times[0][2][1] = "11:05"
+            //   times[0][3][0] = "11:10"
+            //   times[0][3][1] = "11:55"
+            // }
           }
         }else if(this.data.area == 2){
           //北校区
           if((course.jie == 3 && course.jieshu == 2 || course.jie == 1 && course.jieshu == 4) && floorNum > 4){
             //楼层>4的情况，三四节分开上
-            times[1][2][0] = "10:20"
-            times[1][2][1] = "11:05"
-            times[1][3][0] = "11:10"
-            times[1][3][1] = "11:55"
+            // times[1][2][0] = "10:20"
+            // times[1][2][1] = "11:05"
+            // times[1][3][0] = "11:10"
+            // times[1][3][1] = "11:55"
           }
         }
         
@@ -1200,6 +1213,26 @@ Page({
     let setting = app.getConfig('functions.course')
     this.setData({
       courseConfig: setting
+    })
+  },
+  updateCourseModal(){
+    if(!app.getUserId()){
+      app.msg("请先登录")
+      return
+    }
+    this.setData({
+      list_is_display: false,
+      updatingCourse: true
+    })
+  },
+  closeUpdateCourseModal(){
+    this.setData({
+      updatingCourse: false
+    })
+  },
+  acceptTerms:function(e){
+    this.setData({
+      acceptTerms: true
     })
   }
 })

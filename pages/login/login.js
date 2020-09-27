@@ -166,6 +166,7 @@ Page({
                     app.msg("登录成功，获取课表失败，请手动更新课表")
                   }
                   setTimeout(()=> {
+                    app.updateConfigRequest()
                     if (_this.data.redirect != '') {
                       wx.redirectTo({
                         url: _this.data.redirect,

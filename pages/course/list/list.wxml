@@ -3,7 +3,7 @@
 	<view slot="content">课程管理</view>
 </cu-custom>
 <view class="container">
-  <view class="bg-white padding margin-sm y-radius">
+  <!-- <view class="bg-white padding margin-sm y-radius">
     <picker header-text="请选择学期" range="{{terms}}" range-key="name" bindchange="changeTerm" value="{{termIndex}}">
       <text>当前学期：{{courseTerm && courseTerm.name ? courseTerm.name : '未知'}}</text>
       <text class="text-yellow fr"><text>切换</text> <text class="icon-right"></text></text>
@@ -12,6 +12,9 @@
   <view class="bg-white padding margin-sm y-radius" bindtap="changeClass">
     <text>当前班级：{{tmpClass && tmpClass.name ? tmpClass.name: (courseStu && courseStu.classname ? courseStu.classname : '本班')}}</text>
     <text class="text-yellow fr">切换 <text class="icon-right"></text></text>
+  </view> -->
+  <view class="bg-white padding margin-sm y-radius text-center">
+    <text>暂停学期与班级切换，仅支持查看本学期的个人课表</text>
   </view>
   <view class="fiter padding-sm">
     <button wx:for="{{fiters}}" wx:key="key" bindtap="fiterCourse" data-index="{{index}}"

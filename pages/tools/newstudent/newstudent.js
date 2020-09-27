@@ -6,15 +6,15 @@ Page({
    */
   data: {
     tools:[
-      {
-        color: 'theme',
-        badge: 0,
-        name: '录取查询',
-        icon: 'matriculate',
-        needLogin: false,
-        auditing: true,
-        url: '/pages/tools/matriculate/matriculate?from=index',
-      },
+      // {
+      //   color: 'theme',
+      //   badge: 0,
+      //   name: '录取查询',
+      //   icon: 'matriculate',
+      //   needLogin: false,
+      //   auditing: true,
+      //   url: '/pages/tools/matriculate/matriculate?from=index',
+      // },
       {
         color: 'theme',
         badge: 0,
@@ -143,7 +143,10 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    this.setData({
+      p: this.data.p + 1
+    })
+    this.getArticles()
   },
 
   /**

@@ -17,7 +17,7 @@ Page({
       img: options.img === undefined ? '' : decodeURIComponent(options.img),
       title: options.title || '云小智'
     })
-    if(typeof options.title !== undefined){
+    if(options.title !== undefined){
       wx.setNavigationBarTitle({
         title:options.title
       })

@@ -20,8 +20,8 @@
   <view class='text-center margin-bottom text-lg  text-black'>关于上课时间的一些问题</view>
   <view class='text-content'>
     <view class='margin-top-sm text-bold'>2020/9/14，西校区和北校区的作息时间都有改动，云小智课表上课时间已经同步最新作息表。</view>
-    <view class='margin-top-sm text-bold'>注意：课表界面将不再显示上课时间，可以点击某个课程进入详情页查看上课时间</view>
-    <view class='margin-top-sm'>上课时间与教学楼和楼层有关，因此云小智会根据当天课程智能显示上课时间。</view>
+    <view class='margin-top-sm text-bold text-yellow'>注意：第3-4节课的上课时间有争议，不再显示时间</view>
+    <view class='margin-top-sm'>具体上课时间还是得看上课老师，如果与作息表的不一致，听老师的就好了。</view>
     <view class='margin-top-sm'>如果你对此有疑问，可在公众号私信给我们。</view>
   </view>
 </view>

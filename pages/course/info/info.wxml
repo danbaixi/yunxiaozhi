@@ -27,9 +27,10 @@
     <view class="content">
       <text class="icon-time text-theme"></text>
       <text class="text-theme">时间　</text>
-      <text>具体上课时间请参考作息表</text>
-      <!-- <text wx:if="{{area!=''}}" class="text-black">{{course.time}}</text>
-      <text wx:else bindtap="setTime" class="text-black">设置校区后可查看 <text class="text-blue">点击设置</text></text> -->
+      <!-- <text>具体上课时间请参考作息表</text> -->
+      <text wx:if="{{area!=''}}" class="text-black">{{area == 1 && (course.jie==1 && course.jieshu==4 || course.jie==3 && course.jieshu==2) ? "第3-4节上课时间有争议，暂不显示" : course.time}}
+      </text>
+      <text wx:else bindtap="setTime" class="text-black">设置校区后可查看 <text class="text-blue">点击设置</text></text>
     </view>
   </view>
   <view class="cu-item">
