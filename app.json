@@ -69,7 +69,9 @@
     "pages/tools/newstudent/newstudent",
     "pages/tools/sport/sport",
     "pages/tools/sport/detail/detail",
-    "pages/tools/phone/phone"
+    "pages/tools/phone/phone",
+    "pages/course/update/update",
+    "pages/terms/terms"
   ],
   "window": {
     "navigationStyle": "custom",

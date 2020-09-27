@@ -31,11 +31,15 @@ App({
     let time = parseInt((new Date()).getTime() / 1000)
     this.promiseRequest({
       url: 'config/getMiniConfig',
-      needLogin: false
+      needLogin: false,
+      data:{
+        stu_id : wx.getStorageSync('user_id') || ''
+      }
     }).then((data) => {
       if (data.status == 0) {
         wx.setStorageSync('config_update_time', time)
         wx.setStorageSync('configs', data.data)
+        this.acceptTerms()
       } else {
         console.log('get config error')
       }
@@ -370,5 +374,14 @@ App({
       return result
     }
     return configs
+  },
+  //弹出条款内容
+  acceptTerms:function(){
+    let accept_terms = this.getConfig('accept_terms')
+    if(accept_terms == 0){
+      wx.navigateTo({
+        url: '/pages/terms/terms',
+      })
+    }
   }
 })
