@@ -231,7 +231,7 @@ Page({
     let _this = this
     let promise = new Promise((resolve,reject) => {
       wx.request({
-        url: _this.data.url + _this.data.question,
+        url: _this.data.url + encodeURIComponent(_this.data.question),
         method: 'GET',
         success:function(res){
           if(res.statusCode != 200){
