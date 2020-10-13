@@ -18,7 +18,7 @@
       <view class="course-icon">
         <image mode="widthFix" src="/pages/assets/imgs/course_icon/update.png"></image>
       </view>
-      <text>同步课表</text>
+      <text>更新课表</text>
     </view>
     <view class="cu-item" bindtap='courseList'>
       <view class="course-icon">
