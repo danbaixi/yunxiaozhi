@@ -23,10 +23,11 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-    if(options)
-    that.setData({
-      from:options.from
-    })
+    if(options){
+      that.setData({
+        from:options.from
+      })
+    }
     app.isLogin('/' + that.route).then(function (res) {
       that.getData()
     })
