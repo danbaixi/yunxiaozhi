@@ -72,6 +72,7 @@ Page({
             return
           }
           let uploadResult = uploadFn.upload(src, fileName, dir_name);
+          console.log(uploadResult)
           if(uploadResult === false){
             app.msg("上传失败，请重试")
             return

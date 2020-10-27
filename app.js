@@ -13,11 +13,11 @@ App({
 
   /** 全局变量 */
   globalData:{
-    isDebug:false,
+    isDebug:true,
     isTest:false,
-    isLocal:false,
+    isLocal:true,
     themeColor: '#1380ff',
-    xdebug:"?XDEBUG_SESSION_START=12398",
+    xdebug:"?XDEBUG_SESSION_START=14473",
     domain:'https://www.yunxiaozhi.cn/v1/public/api/',
     key:'ihzoaixnuy4f8835032505e8a45ac102c52d58593e',
     amap_key: "67c20c2c7db08923379123500b656adf",
