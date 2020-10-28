@@ -10,9 +10,8 @@
 </div>
 
 ## 简介
-一款广东白云学院教务查询微信小程序，由学生自主开发，非官方应用。    
-部分界面预览图：     
-<img src="http://qiniu.yunxiaozhi.cn/preview1.png"/>
+一款广东白云学院教务查询微信小程序，由学生自主开发，非官方应用。
+<img src="http://qiniu.yunxiaozhi.cn/preview2.png">
 
 ## 预览
 <img width="200" src="http://qiniu.yunxiaozhi.cn/9978f799-bf6d-45d7-9ff8-a1befb9243bd.jpg">
@@ -27,15 +26,25 @@
 
 ## 交流
 
+<<<<<<< HEAD
 <img width="200" src="http://qiniu.yunxiaozhi.cn/fd7c26d6474ccf4ddffc546bb337f14.jpg"/>
 <img width="200" src="http://qiniu.yunxiaozhi.cn/d546032939d0c0546bc44d681666ef8.jpg"/>
+=======
+<img width="500" src="http://qiniu.yunxiaozhi.cn/wechat.png"/>
+>>>>>>> main
 
 欢迎大家一起学习交流，顺便点个Star
 
 ## 许可证
 
 请认真阅读并遵守以下开源协议
+<<<<<<< HEAD
 `GPL` [GNU General Public License v3.0](https://github.com/danbaixi/yunxiaozhi/blob/main/LICENSE)
+=======
+
+`GPL` [GNU General Public License v3.0](https://github.com/danbaixi/yunxiaozhi/blob/main/LICENSE)
+
+>>>>>>> main
 云小智微信小程序源码仅用于学习交流，禁止私用、商用，违者必究。
 
 
