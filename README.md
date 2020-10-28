@@ -10,8 +10,8 @@
 </div>
 
 ## 简介
-一款广东白云学院教务查询微信小程序，由学生自主开发，非官方应用。       
-![](http://qiniu.yunxiaozhi.cn/preview2.png)
+一款广东白云学院教务查询微信小程序，由学生自主开发，非官方应用。
+<img src="http://qiniu.yunxiaozhi.cn/preview2.png">
 
 ## 预览
 <img width="200" src="http://qiniu.yunxiaozhi.cn/9978f799-bf6d-45d7-9ff8-a1befb9243bd.jpg">
