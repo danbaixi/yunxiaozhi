@@ -1,0 +1,39 @@
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">本科录取结果查询</view>
+</cu-custom>
+<empty display="{{status == 0}}" content="{{tips}}"></empty>
+<view class="container" wx:if="{{status == 1}}">
+  <view class="padding bg-white text-theme margin-top margin-left margin-right y-radius text-center">
+    数据来源官网，请以官网查询的为准！
+  </view>
+  <view class="cu-card">
+    <view class="cu-item">
+      <form>
+        <view class="cu-form-group" wx:for="{{params}}" wx:key="key">
+          <view class="title">{{item.name}}</view>
+          <input placeholder="请输入{{item.name}}" data-key="{{item.key}}" bindinput="input"></input>
+        </view>
+      </form>
+    </view>
+    <view class="padding flex flex-direction">
+      <button class="cu-btn bg-theme lg" bindtap="query">查询</button>
+    </view>
+  </view>
+  <view class="cu-card" wx:if="{{display}}">
+    <view class="cu-item">
+      <view class="padding bg-white text-theme radius text-center text-lg">查询结果</view>
+      <view class="cu-list menu sm-border" wx:if="{{!result.isNull}}">
+        <view class="cu-item" wx:for="{{result}}" wx:key="key">
+          <view class="content">
+            <text class="text-grey">{{item.key}}</text>
+          </view>
+          <view class="action">{{item.value}}</view>
+        </view>
+      </view>
+      <view wx:else>
+        <empty display="true" top="0" content="很遗憾，没查到记录"></empty>
+      </view>
+    </view>
+  </view>
+</view>

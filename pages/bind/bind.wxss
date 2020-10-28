@@ -1,0 +1,52 @@
+page{
+  background: #fff;
+}
+.container{
+  position: relative;
+}
+.header{
+  width: 100%;
+  text-align: center;
+  margin: 0 auto;
+  padding: 60rpx 0 100rpx;
+}
+.header .logo{
+  width: 140rpx;
+  height: 140rpx;
+}
+
+.bg{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 600rpx;
+  filter: blur(2rpx)
+}
+.bg image{
+  width: 100%;
+  height: 100%;
+}
+
+.login{
+  position: relative;
+  padding: 30rpx 8%;
+  background: #fff;
+  top: -60rpx;
+  border-radius: 40rpx 40rpx 0 0;
+}
+.validate{
+  width: 150rpx;
+  height: 70rpx;
+}
+
+.cu-form-group{
+  padding: 1rpx 0;
+  border-bottom: 1rpx solid #eee;
+}
+.cu-form-group+.cu-form-group {
+  border-top: none;
+}
+.cu-form-group input{
+  color: var(--black)
+}

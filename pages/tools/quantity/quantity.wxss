@@ -1,0 +1,167 @@
+.unset{
+  margin: 200rpx auto;
+  text-align: center;
+}
+.item{
+  position: relative;
+  box-sizing: border-box;
+  padding: 20rpx;
+  width: 100%;
+}
+
+.box{
+  position: relative;
+  margin: 24rpx auto;
+  width: 300rpx;
+  height: 360rpx;
+  border: 14rpx solid #fff;
+  border-radius: 20rpx;
+  overflow: hidden;
+}
+.box .wave{
+  position: relative;
+  width: 300rpx;
+  height: 360rpx;
+  animation: height .8s ease-out 1;
+}
+.box .wave::before,
+.box .wave::after{
+  content: "";
+  position: absolute;
+  width: 260px;
+  height: 260px;
+  top: 0;
+  left: 50%;
+  background-color: rgba(255, 255, 255, .4);
+  border-radius: 40%;
+  z-index: 10;
+}
+.box .wave::after {
+  border-radius: 45%;
+  background-color: rgba(255, 255, 255, .9);
+  z-index: 20;
+}
+
+
+
+/** 电量效果 */
+.electricity{
+  box-shadow: 0 14px 28px rgba(168,255,120, 0.1), 0 10px 10px rgba(120,255,214, 0.4);
+}
+.header{
+  width: 60rpx;
+  height: 30rpx;
+  background: #fff;
+  border-radius: 16rpx;
+  position: absolute;
+  top: 30rpx;
+  left: calc((100% - 60rpx) / 2);
+}
+
+.electricity .wave {
+  background: linear-gradient(to bottom, #a8ff78, #78ffd6);
+}
+
+.water{
+  width: 360rpx;
+  height: 300rpx;
+  box-shadow: 0 14px 28px rgba(79,172,254, 0.1), 0 10px 10px rgba(0,242,254, 0.4);
+}
+/** 水量效果 */
+.water .wave {
+  width: 360rpx;
+  height: 300rpx;
+  background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+}
+.water .wave::before{
+  border-radius: 35%;
+}
+.water .wave::after{
+  border-radius: 40%;
+}
+
+.a::before{
+  transform: translate(-50%, -50%) rotate(0);
+  animation: rotate-a 6s linear infinite;
+}
+.a::after{
+  transform: translate(-50%, -50%) rotate(0);
+  animation: rotate-a 8s linear -5s infinite;
+}
+
+.b::before{
+  transform: translate(-50%, -60%) rotate(0);
+  animation: rotate-b 6s linear infinite;
+}
+.b::after{
+  transform: translate(-50%, -60%) rotate(0);
+  animation: rotate-b 8s linear -5s infinite;
+}
+
+.c::before{
+  transform: translate(-50%, -70%) rotate(0);
+  animation: rotate-c 6s linear infinite;
+}
+.c::after{
+  transform: translate(-50%, -70%) rotate(0);
+  animation: rotate-c 8s linear -5s infinite;
+}
+
+.d::before{
+  transform: translate(-50%, -80%) rotate(0);
+  animation: rotate-d 6s linear infinite;
+}
+.d::after{
+  transform: translate(-50%, -80%) rotate(0);
+  animation: rotate-d 8s linear -5s infinite;
+}
+
+@keyframes height {
+  0% {
+      transform: translateY(100%)
+  } 100% {
+      transform: translateY(0)
+  }
+}
+
+@keyframes rotate-a {
+  50% {
+      transform: translate(-50%, -53%) rotate(180deg);
+  } 100% {
+      transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+@keyframes rotate-b {
+  50% {
+      transform: translate(-50%, -63%) rotate(180deg);
+  } 100% {
+      transform: translate(-50%, -60%) rotate(360deg);
+  }
+}
+@keyframes rotate-c {
+  50% {
+      transform: translate(-50%, -73%) rotate(180deg);
+  } 100% {
+      transform: translate(-50%, -70%) rotate(360deg);
+  }
+}
+@keyframes rotate-d {
+  50% {
+      transform: translate(-50%, -83%) rotate(180deg);
+  } 100% {
+      transform: translate(-50%, -80%) rotate(360deg);
+  }
+}
+
+.wave.null{
+  width: 0;
+  height: 0;
+}
+.box .null::before,
+.box .null::after{
+  width: 0;
+  height: 0;
+}
+.null{
+  box-shadow: 0 14px 28px rgba(69,58,148, 0.1), 0 10px 10px rgba(244,59,71, 0.8);
+}

@@ -1,0 +1,104 @@
+page{
+  background: #fff;
+}
+.yct{
+  width: 100%;
+  margin: 10px auto;
+}
+.div{
+  height: 1px; 
+  margin: 25px 0;
+  text-align: center; 
+  border-top: 1px solid #ccc;
+}
+.div .title{
+  position: relative;
+  color: #ccc;
+  top:-13px;
+  background: #fff;
+  padding: 0 8px;
+  display: inline-block;
+}
+.yct_list{
+  width: 100%;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+  box-shadow: 0 -2px 2px #ddd inset;  
+}
+.li{
+  width: 90%;
+  height: 70px;
+  margin: 0 auto;
+  background: #f8ab2b;
+  color: #fff;
+  font-size: 16px;
+  border-radius: 5px 5px 0 0;
+}
+.logo{
+  width: 40px;
+  height: 40px;
+  float: left;
+}
+.logo_text{
+  padding-left: 20px;
+  line-height: 40px;
+}
+.num{
+  margin-top: 46px;
+  float: right;
+  margin-right: 10px;
+  text-shadow: 0 0 10px #444;
+}
+.span{
+  display: block;
+  float: left;
+  margin-right: 10px;
+}
+.index{
+  line-height: 1;
+  display: inline-block;
+  padding: 4px 8px;
+  color: #6ed4e6;
+  border-radius: 100px;
+  background:	#f2f2f2;
+}
+.none{
+  text-align: center;
+  margin: 30px auto;
+}
+.inputView{
+    border:  1px solid #ddd;
+    margin: 10px auto;
+}
+.info{
+  font-size: 16px;
+  line-height: 34px;
+  color: #fff;
+}
+.btn_press{
+  background: #02a0e9;
+}
+.delete{
+  position: relative;
+  float: left;
+  margin: 10px 4px 0 0;
+  width: 20px;
+  height: 20px;
+}
+.result{
+  width: 90%;
+  height: 200px;
+  background: #f8ab2b;
+  margin: 20px auto;
+  border-radius: 10px;
+  text-shadow: 0 0 10px #444;
+}
+.result_text{
+  margin-top: 20px;
+}
+.center{
+  text-align: center;
+}
+.left{
+  margin-left: 20px;
+}

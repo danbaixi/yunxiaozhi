@@ -1,0 +1,25 @@
+.cu-list.menu-avatar>.cu-item .content{
+  width: calc(100% - 96rpx - 120rpx - 60rpx - 10rpx);
+}
+.cu-list.menu-avatar>.cu-item .flex .text-cut{
+  max-width: 100%;
+}
+
+.showItem .cu-list.menu>.cu-item .content {
+  font-size: 26rpx;
+}
+
+.item-content{
+  letter-spacing: 2rpx;
+  line-height: 1.3;
+}
+
+.cu-list.card-menu{
+  border-radius: 0;
+  margin-right: 20rpx;
+  margin-left: 20rpx;
+}
+.cu-list.menu-avatar>.cu-item{
+  margin-bottom: 20rpx;
+  border-radius: 12rpx;
+}

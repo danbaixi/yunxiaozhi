@@ -1,0 +1,6 @@
+{
+  "usingComponents" : {
+    "focus" : "/pages/components/focus/focus"
+  },
+  "navigationBarTitleText": "新生专题 - 云小智"
+}

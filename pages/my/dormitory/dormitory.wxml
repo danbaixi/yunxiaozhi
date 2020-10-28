@@ -1,0 +1,54 @@
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">设置宿舍信息</view>
+</cu-custom>
+<view class="container">
+  <view class="cu-bar bg-white solid-bottom margin-top">
+    <view class="action">
+      当前宿舍信息
+    </view>
+    <view class="action">
+      {{dormitory?dormitory:'未设置'}}
+    </view>
+  </view>
+  <view class="margin-top">
+    <form>
+      <view class="cu-form-group">
+        <view class="title">校区</view>
+        <picker bindchange="select" data-optype="1" value="{{area>=0?area:0}}" range="{{areas}}" range-key="name">
+          <view class="picker">
+            {{area >=0 ? areas[area].name : '请选择'}}
+          </view>
+        </picker>
+      </view>
+      <view class="cu-form-group">
+        <view class="title">宿舍楼</view>
+        <picker bindchange="select" data-optype="2" value="{{build>=0?build:0}}" range="{{builds}}" range-key="name">
+          <view class="picker">
+            {{build>=0?builds[build].name:'请选择'}}
+          </view>
+        </picker>
+      </view>
+      <view class="cu-form-group">
+        <view class="title">楼层</view>
+        <picker bindchange="select" data-optype="3"  value="{{level>=0?level:0}}" range="{{levels}}" range-key="name">
+          <view class="picker">
+            {{level>=0?levels[level].name:'请选择'}}
+          </view>
+        </picker>
+      </view>
+      <view class="cu-form-group">
+        <view class="title">房号</view>
+        <picker bindchange="select" data-optype="4"  value="{{room>=0?room:0}}" range="{{dormitorys}}" range-key="name">
+          <view class="picker">
+            {{room>=0?dormitorys[room].name:'请选择'}}
+          </view>
+        </picker>
+      </view>
+      <view class="padding flex flex-direction">
+        <button bindtap="save" class="cu-btn bg-theme lg">保存</button>
+      </view>
+    </form>
+  </view>
+
+</view>

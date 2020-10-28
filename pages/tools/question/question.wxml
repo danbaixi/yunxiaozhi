@@ -1,0 +1,72 @@
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">光速搜题</view>
+</cu-custom>
+<view class="container" wx:if="{{!loading&&display}}">
+  <view class="padding bg-white" wx:if="{{false}}">
+    <text>当前剩余查询次数：<text class="text-theme text-bold">{{info.stock}}</text></text>
+    <button class="cu-btn bg-yellow text-white margin-left sm" bindtap="add">增加次数</button>
+  </view>
+  <view class="">
+    <view class="cu-bar bg-theme search">
+      <view class="search-form radius">
+        <text class="icon-search"></text>
+        <input type="text" placeholder="输入题目" disabled="{{auto}}" confirm-type="search" bindinput="inputing" value="{{question}}"></input>
+      </view>
+      <view class="action text-white" bindtap="clear">
+        <text class="icon-close"></text>
+        <text>清空</text>
+      </view>
+    </view>
+    <view class="padding-top">
+      <ad-custom unit-id="adunit-8c15c22fe518b1e7"></ad-custom>
+    </view>
+    <view class="padding-top">
+        <view class="cu-form-group">
+          <view class="title">自动获取剪贴板内容</view>
+          <switch checked="{{clip}}" bindchange="switchClip"></switch>
+        </view>
+        <view class="cu-form-group">
+          <view class="title">光速查题模式 <text class="text-yellow" bindtap="help">查看使用教程</text></view>
+          <switch checked="{{auto}}" bindchange="switchAuto"></switch>
+        </view>
+      </view>
+    <view class="padding">
+      <button class="cu-btn bg-theme block lg" bindtap="query">查询</button>
+    </view>
+  </view>
+  <view class="bg-white answer" wx:if="{{answer.length>0}}">
+    <view class="padding">
+      <view class="text-yellow">最佳匹配</view>
+      <view>问题：<text class="text-grey">{{answer[0].ques}}</text></view>
+      <view wx:if="{{answer[0].ch!=''}}">选项：<text class="text-grey">{{answer[0].ch}}</text></view>
+      <view>答案：{{answer[0].ans}}</view>
+    </view>
+    <view class="padding-left padding-right">
+      <view class="text-theme">参考问题</view>
+      <view class="padding-bottom-sm" wx:for="{{answer}}" wx:key="key" wx:if="{{answer.length>1 && index > 0}}">
+        <view>问题{{index}}：<text class="text-grey">{{item.ques}}</text></view>
+        <view wx:if="{{item.ch!=''}}">选项：<text class="text-grey">{{item.ch}}</text></view>
+        <view>答案：{{item.ans}}</view>
+      </view>
+    </view>
+
+  </view>
+</view>
+<list-loading loading="{{loading}}"></list-loading>
+<empty display="{{!loading && !display}}" content="{{notice}}"></empty>
+<view class="cu-modal {{tips&&display&&displayTips=='yes'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">请认真阅读以下内容</view>
+      <view class="action" bindtap="hideTips">
+        <text class="icon-close text-red"></text>
+      </view>
+    </view>
+    <view class="padding text-left">
+      <view class="padding-xs">1.本功能的题库均来源网络，题目和答案不一定准确，仅供参考；</view>
+      <view class="padding-xs">2.7月5日至10日、12~17日考试期间暂停本功能，仅晚上7点至次日9点开放；</view>
+      <view class="padding-xs">3.请勿利用此功能做违法违规的事情，比如考试作弊，造成一切后果由使用者负责，与云小智无关。</view>
+    </view>
+  </view>
+</view>

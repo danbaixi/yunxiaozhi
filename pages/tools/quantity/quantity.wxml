@@ -1,0 +1,46 @@
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">水电查询</view>
+</cu-custom>
+<view wx:if="{{!loading}}">
+  <view class="info" wx:if="{{dormitory}}">
+    <view class="cu-bar bg-white margin-sm padding-sm radius">
+      <text>当前宿舍：<text class="text-theme">{{dormitory.dormitory_name}}</text></text>
+      <view class="action">
+        <view class="text-yellow" bindtap="setDormitory">设置</view>
+      </view>
+    </view>
+    <view class="cu-bar bg-white margin-sm padding-sm radius" bindtap="viewArticle">
+      <text>仅北区支持查水费，暂不支持充值</text>
+      <view class="action">
+        <view class="text-yellow">点击进入充值</view>
+      </view>
+    </view>
+    <view class="item">
+      <view class="header"></view>
+      <view class="electricity box {{electricityGrade=='null'?'null':''}}">
+        <view class="wave {{electricityGrade}}"></view>
+      </view>
+      <view class="text-center text-sm text-theme padding-top-xs">剩余电量</view>
+      <view class="text-center text-xxl padding-top-sm text-{{electricity>0?'black':'red'}}">
+        {{electricity}}
+        <text class="text-sm text-gray">度</text>
+      </view>
+    </view>
+    <view class="item" wx:if="{{dormitory.area_id == 1}}">
+      <view class="water box {{waterGrade=='null'?'null':''}}">
+          <view class="wave {{waterGrade}}"></view>
+      </view>
+      <view class="text-center text-sm text-theme padding-top-xs">剩余水量</view>
+      <view class="text-center text-xxl padding-top-sm  text-{{water>0?'black':'red'}}">
+        {{water}}
+        <text class="text-sm text-gray">吨</text>
+      </view>
+    </view>
+  </view>
+  <view class="unset" wx:else>
+      <empty display="true" content="您未设置宿舍信息"></empty>
+      <button class="cu-btn bg-theme" bindtap="setDormitory">设置宿舍信息</button>
+  </view>
+</view>
+<list-loading loading="{{loading}}"></list-loading>

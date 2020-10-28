@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "update-tips": "/pages/components/update-tips/update-tips"
+  }
+}

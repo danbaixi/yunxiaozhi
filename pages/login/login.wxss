@@ -1,0 +1,25 @@
+page{
+  overflow: hidden;
+}
+.container{
+  top: 0;
+  left: 0;
+  position: fixed;
+  padding-top: 100rpx;
+  background: linear-gradient(180deg, #1380ff, #7dbeec);
+}
+.login-img{
+  padding-top: 40rpx;
+  text-align: center;
+  width: 72%;
+  margin: 0 auto;
+}
+.welcome{
+  position: absolute;
+  bottom: -40rpx;
+  left: 40rpx;
+  width: 200rpx;
+}
+.cu-btn{
+  padding: 20px 40px;
+}

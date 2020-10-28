@@ -1,0 +1,20 @@
+<cu-custom bgColor="bg-transparent" isBack="true">
+  <view slot="back">返回</view>
+</cu-custom>
+<view class="container" style="width:{{winWidth}}px;height:{{winHeight}}px">
+  <view class="login-img">
+    <image src="/pages/assets/imgs/other/login.png" mode="widthFix"></image>
+  </view>
+  <view class="text-center padding-xl">
+    <view><text class="text-white text-xxl">白云智慧校园小程序</text></view>
+    <view class="padding-sm"><text style="color:#eee;font-size:32rpx;letter-spacing:3px">校园生活，从云小智开始</text></view>
+  </view>
+  <view class="welcome">
+    <image src="/pages/assets/imgs/other/contact.png" mode="widthFix"></image>
+  </view>
+  <view class='login text-center'>
+    <button open-type="getUserInfo" bindgetuserinfo='doWechatLogin' class="cu-btn bg-yellow text-white">
+      <text class="icon-weixin" style="margin-right:10px;font-size:44rpx"></text> 微信登录
+    </button>
+  </view>
+</view>

@@ -1,0 +1,23 @@
+.cu-list.menu-avatar.sm-border>.cu-item:after {
+  left: 30rpx;
+  width: calc(200% - 120rpx);
+}
+
+.cu-list.menu-avatar>.cu-item:last-child:after {
+  border: none;
+}
+
+.cu-list.menu-avatar>.cu-item:after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  width: 200%;
+  height: 200%;
+  border-bottom: 1rpx solid #ddd;
+  border-radius: inherit;
+  content: " ";
+  transform: scale(0.5);
+  transform-origin: 0 0;
+  pointer-events: none;
+}

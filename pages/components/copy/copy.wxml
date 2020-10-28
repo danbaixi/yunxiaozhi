@@ -1,0 +1,3 @@
+<view class="copy" catchtap="copy">
+  <text class="icon-copy"></text>
+</view>

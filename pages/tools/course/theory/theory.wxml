@@ -1,0 +1,60 @@
+<view class="cu-custom" style="height:{{customBar}}px">
+  <view class="cu-bar fixed bg-white" style="height:{{customBar}}px;padding-top:{{statusBar}}px">
+    <view class="action border-custom" style="width:{{custom.width}}px;height:{{custom.height}}px;margin-left:calc(750rpx - {{custom.right}}px)">
+      <text class="icon-back text-bold text-black" bindtap="backPage"></text>
+      <text class="icon-refresh text-bold text-black" bindtap="update"></text>
+    </view>
+    <view class="content" style="top:{{statusBar}}px">理论课程</view>
+  </view>
+</view>
+<list-loading loading="{{loading}}"></list-loading>
+<view class="container bg-white padding-bottom" wx:if="{{!loading&&course.length>0}}">
+  <block wx:for="{{term}}" wx:key="key" wx:for-item="xueqi" wx:for-index="termNum">   
+    <view class="yxz-cel">
+      <view class='title'>{{xueqi}}</view>
+      <view class="tr bg-w">
+        <view class="th b">名称</view>
+        <view class="th s">学分</view>
+        <view class="th b">类型</view>
+        <view class="th">考核</view>
+        <view class="th">学时</view>
+      </view>
+      <block wx:for="{{course}}" wx:key="key">
+        <view class="tr" wx:if="{{item.term == termNum}}" bindtap="viewDetail" data-index="{{index}}">
+          <view class="td b">{{item.name}}</view>
+          <view class="td s">{{item.credit}}</view>
+          <view class="td b">{{item.type}}</view>
+          <view class="td">{{item.method}}</view>
+          <view class="td">{{item.hour_total}}</view>
+        </view>
+      </block>
+    </view>  
+  </block>
+</view>
+<empty display="{{course.length==0}}" content="无记录，请在左上角更新"></empty>
+<view class="cu-modal {{showDetail?'show':''}}" bindtap="hideModal">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">课程详情</view>
+      <view class="action" bindtap="hideModal">
+        <text class="icon-close text-red"></text>
+      </view>
+    </view>
+    <view class="padding text-left">
+      <view class="padding-bottom-xs">名称：<text class="text-theme">{{course[detailIndex].name}}</text></view>
+      <view class="padding-bottom-xs">学期：<text class="text-theme">{{term[course[detailIndex].term]}}</text></view>
+      <view class="padding-bottom-xs">学分：<text class="text-theme">{{course[detailIndex].credit}}</text></view>
+      <view class="padding-bottom-xs">类型：<text class="text-theme">{{course[detailIndex].type}}</text></view>
+      <view class="padding-bottom-xs">考核：<text class="text-theme">{{course[detailIndex].method}}</text></view>
+      <view class="padding-bottom-xs">学时：<text class="text-theme">{{course[detailIndex].hour_total}}</text></view>
+      <view class="padding-bottom-xs text-sm">
+        (讲授 {{course[detailIndex].hour_teach? course[detailIndex].hour_teach : 0}}
+        实验 {{course[detailIndex].hour_test? course[detailIndex].hour_test : 0}}
+        上机 {{course[detailIndex].hour_computer? course[detailIndex].hour_computer : 0}}
+        其他 {{course[detailIndex].hour_other? course[detailIndex].hour_other : 0}}
+        )
+        <!-- 周学时 {{course[detailIndex].hour_week? course[detailIndex].hour_week : 0}} -->
+      </view>
+    </view>
+  </view>
+</view>

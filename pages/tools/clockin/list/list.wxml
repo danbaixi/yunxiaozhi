@@ -1,0 +1,50 @@
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">早起记录</view>
+</cu-custom>
+<view class="container padding margin-top">
+  <view class="head text-lg grid col-2">
+    <view class="text-left">
+      <text>{{year}}年 <text class="text-theme">{{month}}月</text></text>
+    </view>
+    <view class="text-right">
+      <text class="icon-back option" bindtap="setMonth" data-type="pre"></text>
+      <text class="icon-right option" bindtap="setMonth" data-type="next"></text>
+    </view>
+  </view>
+  <view class="date bg-white padding-sm margin-top radius">
+    <view class="head">
+      <view class="li text-center" wx:for="{{weeks}}" wx:key="key">
+        <text>{{item}}</text>
+      </view>
+    </view>
+    <view class="list">
+      <view class="li radius text-center {{dates[item] == 1?'active':''}}" wx:for="{{days}}" wx:key="key">
+        <view class="item" hidden="{{item==0}}"><text>{{item}}</text></view>
+      </view>
+    </view>
+  </view>
+  <view class="margin-top bg-white radius" wx:if="{{state != '' && state != null}}">
+    <view class="padding">
+      <text class="padding-right-sm">累计早起：<text class="text-theme text-bold">{{state.total}} 天</text></text>
+      <text>最长连续打卡：<text class="text-theme text-bold">{{state.max_continuous}} 天</text></text>
+    </view>
+  </view>
+  <view class="margin-top bg-white radius">
+    <view class="padding">本月累计早起：<text class="text-theme text-bold">{{count}} 天</text></view>
+    <view class="cu-list menu">
+      <view class="cu-item" wx:for="{{list}}" wx:key="key">
+        <view class="content">
+          <text>{{month}}/{{item.date}} </text>
+          <text>打卡时间: {{item.time}} </text>
+        </view>
+        <view class="action">
+          <text>排名: {{item.top}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="margin-top bg-white" wx:if="{{active!=-1}}">
+    <view class="padding">打卡时间：{{list[active].top>0?list[active].time+' 第'+list[active].top+'名':'未打卡'}}</view>
+  </view>
+</view>

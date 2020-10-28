@@ -1,0 +1,28 @@
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">白云电话本</view>
+</cu-custom>
+<list-loading loading="{{loading}}"></list-loading>
+<view class="container" wx:if="{{!loading&&list.length>0}}">
+  <view class="cu-bar bg-white search fixed" style="top:{{customBar}}px">
+    <view class="search-form round">
+      <text class="icon-search"></text>
+      <input type="text" placeholder="搜索名称或电话号码" confirm-type="search" bindinput="search"></input>
+    </view>
+  </view>
+  <view class="cu-list menu" style="padding-top:100rpx">
+    <view class="cu-item" wx:for="{{list}}" wx:key="key" wx:if="{{item.isShow}}">
+      <view class="content padding-tb-sm">
+        <view class="text-theme">{{item.title}}</view>
+        <view class="text-gray text-sm">
+          <text class="text-yellow"><text class="icon-phone padding-right-xs"></text><text>{{item.phone}}{{item.mark?'('+item.mark+')':''}}</text></text>
+        </view>
+      </view>
+      <view class="action">
+        <button bindtap="copy" data-phone="{{item.phone}}" class="cu-btn bg-grey round margin-right-sm shadow">复制</button>
+        <button bindtap="call" data-phone="{{item.phone}}" class="cu-btn bg-blue round shadow">拨打</button>
+      </view>
+    </view>
+  </view>
+</view>
+<empty display="{{!loading&&list.length ==0 || isNull}}" content="暂无记录"></empty>

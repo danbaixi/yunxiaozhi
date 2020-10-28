@@ -1,0 +1,16 @@
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">同堂同学</view>
+</cu-custom>
+<view class="cu-list menu-avatar sm-border">
+  <view class="cu-item" wx:for="{{list}}" wx:key="key" wx:if="{{item.stu_name || item.stu_department}}">
+    <view class="cu-avatar round lg" style="background-image:url({{item.user_img?img_pre +item.user_img : (item.avatar?item.avatar:img_pre+'defalut.png')}});"></view>
+    <view class="content">
+      <view class="text-grey">{{item.stu_name?item.stu_name:'匿名'}}</view>
+      <view class="text-gray text-sm">
+        {{item.stu_department}}
+      </view>
+    </view>
+  </view>
+</view>
+<view wx:if="{{loading}}" class="cu-load {{!finish?'loading':'over'}}"></view>

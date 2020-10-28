@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "推文",
+  "usingComponents" : {
+    "focus" : "/pages/components/focus/focus"
+  }
+}

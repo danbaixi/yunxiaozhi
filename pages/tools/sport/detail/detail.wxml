@@ -1,0 +1,61 @@
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">运动统计</view>
+</cu-custom>
+<view class="container margin-top">
+  <view class="head text-lg padding-left padding-right grid col-2">
+    <view class="text-left">
+      <text>{{year}}年 <text class="text-theme">{{month}}月</text></text>
+    </view>
+    <view class="text-right">
+      <text class="icon-back option" bindtap="setMonth" data-type="pre"></text>
+      <text class="icon-right option" bindtap="setMonth" data-type="next"></text>
+    </view>
+  </view>
+  <view class="date bg-white margin-top radius">
+    <view class="list padding-top-sm padding-bottom-sm">
+      <view class="li text-center" wx:for="{{weeks}}" wx:key="key">
+        <text>{{item}}</text>
+      </view>
+    </view>
+    <view class="list data">
+      <view class="li radius text-center {{thisMonth&&item==day?'active':''}}" wx:for="{{days}}" wx:key="key">
+        <view class="item {{index<(lineCount-1)*7?'table-border':'not-bottom-border'}}">
+          <view class="text-sm text-gray">{{item>0?item:''}}</view>
+          <view wx:if="{{list[year+'-'+month+'-'+item]}}" class="text-theme text-bold">{{list[year+'-'+month+'-'+item]}}</view>
+          <!-- <view wx:if="{{!list[year+'-'+month+'-'+item] && item>0}}" class="icon-title text-grey text-xs"></view> -->
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="grid col-4 bg-white text-center padding-tb margin-top">
+    <view class="text-gray text-sm analazy">
+      <view><text class="text-yellow text-xl text-bold">{{max}}</text> 步</view>
+      <view class="padding-top-xs">本月最高</view>
+    </view>
+    <view class="text-gray text-sm analazy">
+      <view><text class="text-yellow text-xl text-bold">{{avg}}</text> 步</view>
+      <view class="padding-top-xs">日均步数</view>
+    </view>
+    <view class="text-gray text-sm analazy">
+      <view><text class="text-yellow text-xl text-bold">{{km}}</text> 公里</view>
+      <view class="padding-top-xs">本月距离</view>
+    </view>
+    <view class="text-gray text-sm analazy">
+      <view><text class="text-yellow text-xl text-bold">{{calorie}}</text> 大卡</view>
+      <view class="padding-top-xs">消耗热量</view>
+    </view>
+  </view>
+  <view class="margin-tb bg-white">
+    <view class="cu-bar solid-bottom">
+      <view class="action">步数分布统计</view>
+    </view>
+    <view class="padding flex flex-warp group" wx:for="{{group}}" wx:key="key">
+      <view class="label">{{index}}</view>
+      <view class="cu-progress round sm">
+        <view class="bg-theme" style="width:{{item / count * 100}}%;"></view>
+      </view>
+      <view class="day-count text-center">{{item}}天</view>
+    </view>
+  </view>
+</view>

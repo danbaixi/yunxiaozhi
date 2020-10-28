@@ -1,0 +1,57 @@
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">失物招领</view>
+</cu-custom>
+<list-loading loading="{{loading}}"></list-loading>
+<view class="container" wx:if="{{!loading&&list.length>0}}">
+  <view class="cu-bar bg-white search fixed" style="top:{{customBar}}px">
+    <view class="search-form round">
+      <text class="icon-search"></text>
+      <input type="text" placeholder="搜索物品、地址、特征" confirm-type="search" bindinput="search"></input>
+    </view>
+  </view>
+  <view class="padding" style="margin-top:100rpx">
+    <view class="text-theme bg-gray padding-sm y-radius">{{notice}}</view>
+  </view>
+  <view class="margin-bottom padding-lr">
+    <button class="cu-btn bg-theme block" bindtap="goQuanzi">去发布失物招领信息</button>
+  </view>
+  <view style="margin-top:6px" wx:if="{{!isNull}}">
+    <view class="yxz-cel">
+      <view class="tr bg-w">
+        <view class="th">失物</view>
+        <view class="th">拾到时间</view>
+        <view class="th">拾物地点</view>
+        <view class="th">特征</view>
+      </view>
+      <block wx:for="{{list}}" wx:key="key">
+        <view class="tr" wx:if="{{item.isShow}}" bindtap="viewItem" data-index="{{index}}">
+          <view class="td">{{item.name}}</view>
+          <view class="td">{{item.time}}</view>
+          <view class="td">{{item.address}}</view>
+          <view class="td">{{item.feature}}</view>
+        </view>
+      </block>
+    </view>  
+  </view>
+  <view class="padding">
+    <view class="text-theme bg-gray padding-sm y-radius text-center">数据来源：广东白云学院失物招领处</view>
+  </view>
+</view>
+<empty display="{{!loading&&list.length ==0 || isNull}}"></empty>
+<view class="cu-modal {{showDetail?'show':''}}" bindtap="hideModal">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">失物详情</view>
+      <view class="action" bindtap="hideModal">
+        <text class="icon-close text-red"></text>
+      </view>
+    </view>
+    <view class="padding text-left">
+      <view class="padding-bottom-xs">失物：<text class="text-theme">{{list[detailIndex].name}}</text></view>
+      <view class="padding-bottom-xs">特征：<text class="text-theme">{{list[detailIndex].feature}}</text></view>
+      <view class="padding-bottom-xs">拾到地点：<text class="text-theme">{{list[detailIndex].address}}</text></view>
+      <view class="padding-bottom-xs">拾到时间：<text class="text-theme">{{list[detailIndex].time}}</text></view>
+    </view>
+  </view>
+</view>

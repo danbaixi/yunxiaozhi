@@ -1,0 +1,53 @@
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">课程管理</view>
+</cu-custom>
+<view class="container">
+  <view class="bg-white padding margin-sm y-radius">
+    <picker header-text="请选择学期" range="{{terms}}" range-key="name" bindchange="changeTerm" value="{{termIndex}}">
+      <text>当前学期：{{courseTerm && courseTerm.name ? courseTerm.name : '未知'}}</text>
+      <text class="text-yellow fr"><text>切换</text> <text class="icon-right"></text></text>
+    </picker>
+  </view>
+  <view class="bg-white padding margin-sm y-radius" bindtap="changeClass">
+    <text>当前班级：{{tmpClass && tmpClass.name ? tmpClass.name: (courseStu && courseStu.classname ? courseStu.classname : '本班')}}</text>
+    <text class="text-yellow fr">切换 <text class="icon-right"></text></text>
+  </view>
+  <!-- <view class="bg-white padding margin-sm y-radius text-center">
+    <text>暂停学期与班级切换，仅支持查看本学期的个人课表</text>
+  </view> -->
+  <view class="fiter padding-sm">
+    <button wx:for="{{fiters}}" wx:key="key" bindtap="fiterCourse" data-index="{{index}}"
+      class="cu-btn margin-right-sm margin-bottom-sm {{fiter==index?'bg-theme':''}}">
+      {{item}}({{counts[index]}})
+    </button>
+    <button wx:if="{{!tmpClass && userId}}" bindtap="addCourse" class="cu-btn margin-right-sm margin-bottom-sm bg-yellow text-white">添加课程</button>
+  </view>
+  <view class="list" wx:if="{{displayCourses.length > 0}}">
+    <view class="grid col-1">
+      <view class="padding-sm" wx:for="{{displayCourses}}" wx:key="key" wx:if="{{item.display}}">
+        <view class="course shadow-blur {{toggleDelay?'animation-slide-right':''}}" style="background-color:rgb({{colors[item.num]}});animation-delay:{{0.1*(index+1)}}s" data-num='{{item.num}}'>
+          <view class="text-white text-xl text-cut">
+            {{item.course_type==2?'[自定义]':''}}{{item.course_name}}
+            <view class="cu-tag bg-white radius fr" bindtap="addCourse" data-id="{{item.course_id}}" wx:if="{{item.course_type==2 && !tmpClass && userId}}">编辑</view>
+          </view>
+          <view class="text-white text-l text-cut" wx:if="{{item.course_type == 1}}">
+            [{{item.course_category||'无'}}] [{{item.course_method||'无'}}] [{{item.course_credit||'未知'}}学分] [{{item.course_hours||'未知'}}学时]
+          </view>
+          <view class="item text-white margin-top-sm">
+            <view class="item-course margin-bottom-xs text-cut" wx:for="{{item.items}}" wx:for-item="course" wx:for-index="itemIndex" wx:key="key">
+              {{item.items.length>1 ? (itemIndex+1) + '. ':''}} 
+              <view class="cu-tag radius line-white" wx:if="{{course.course_danshuang>0}}">
+                {{course.course_danshuang==1?'单周':(course.course_danshuang==2?'双周':'')}}
+              </view>
+              周{{course.course_week}} {{course.course_section}}节 
+              {{course.course_weekly}}周 
+              {{course.course_teacher}} {{course.course_address == '' ? '上课地址未知' : course.course_address}}
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <empty display="{{displayCourses.length == 0}}" content="空空如也~"></empty>
+</view>

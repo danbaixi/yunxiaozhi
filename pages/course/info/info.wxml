@@ -1,0 +1,87 @@
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">课程详情</view>
+</cu-custom>
+<view class="cu-bar bg-white solid-bottom">
+  <view class="text-black action">
+    {{course.fullName || course.name}}
+    <view wx:if="{{course.type == 2}}" bindtap="edit" class="margin-left cu-tag line-theme radius">编辑</view>
+  </view>
+</view>
+<view class="cu-list menu sm-border">
+  <view class="cu-item">
+    <view class="content">
+      <text class="icon-calendar text-theme"></text>
+      <text class="text-theme">周数　</text>
+      <text class="text-black">{{course.zhoushu}}{{course.danshuang == 1 ? '(单)' : (course.danshuang == 2 ? '(双)' : '')}}</text>
+    </view>
+  </view>
+  <view class="cu-item">
+    <view class="content">
+      <text class="icon-list text-theme"></text>
+      <text class="text-theme">节数　</text>
+      <text class="text-black">{{course.section}}</text>
+    </view>
+  </view>
+  <view class="cu-item">
+    <view class="content">
+      <text class="icon-time text-theme"></text>
+      <text class="text-theme">时间　</text>
+      <!-- <text>具体上课时间请参考作息表</text> -->
+      <text wx:if="{{area!=''}}" class="text-black">{{area == 1 && (course.jie==1 && course.jieshu==4 || course.jie==3 && course.jieshu==2) ? "第3-4节上课时间有争议，暂不显示" : course.time}}
+      </text>
+      <text wx:else bindtap="setTime" class="text-black">设置校区后可查看 <text class="text-blue">点击设置</text></text>
+    </view>
+  </view>
+  <view class="cu-item">
+    <view class="content">
+      <text class="icon-location text-theme"></text>
+      <text class="text-theme">地点　</text>
+      <text class="text-{{course.address?'black':'grey'}}">{{course.address ? course.address : '未知'}}</text>
+    </view>
+  </view>
+  <view class="cu-item">
+    <view class="content">
+      <text class="icon-people text-theme"></text>
+      <text class="text-theme">老师　</text>
+      <text class="text-{{course.teacher?'black':'grey'}}">{{course.teacher ? course.teacher : '未知'}}</text>
+    </view>
+  </view>
+  <view class="cu-item">
+    <view class="content">
+      <text class="icon-tag text-theme"></text>
+      <text class="text-theme">学分　</text>
+      <text class="text-{{course.credit?'black':'grey'}}">{{course.credit ? course.credit : '未知'}}</text>
+    </view>
+  </view>
+  <view class="cu-item">
+    <view class="content">
+      <text class="icon-apps text-theme"></text>
+      <text class="text-theme">类型　</text>
+      <text class="text-{{course.category?'black':'grey'}}">{{course.category ? course.category : '未知'}}</text>
+    </view>
+  </view>
+  <view class="cu-item">
+    <view class="content">
+      <text class="icon-post text-theme"></text>
+      <text class="text-theme">考查　</text>
+      <text class="text-{{course.method?'black':'grey'}}">{{course.method ? course.method : '未知'}}</text>
+    </view>
+  </view>
+</view>
+<view class="cu-list menu sm-border" wx:if="{{showStudent}}">
+  <view class="cu-item arrow" bindtap="goStudents">
+    <view class="content">
+      <text class="icon-peoplelist text-theme"></text>
+      <text class="text-theme">同堂同学</text>
+    </view>
+    <view class="action">
+      <text class="text-grey text-sm">{{sameCount > 0?sameCount + ' 人' :''}}</text>
+    </view>
+  </view>
+</view>
+
+<view class='margin-top text-sm text-center'>
+  <text class="icon-info text-red"></text>上课时间与校区和教学楼有关，具体上课时间请看
+  <text bindtap="rest" class="text-blue">白云作息表</text>
+</view>

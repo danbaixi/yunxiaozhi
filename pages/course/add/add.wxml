@@ -1,0 +1,59 @@
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">添加课程</view>
+</cu-custom>
+<form>
+  <view class="cu-form-group">
+    <view class="title">课程名称</view>
+    <input placeholder="请输入课程名称" value="{{name}}" bindinput="nameInput"></input>
+  </view>
+  <view class="cu-form-group">
+    <view class="title">上课地点</view>
+    <input placeholder="请输入上课地点" value="{{address}}" bindinput="addressInput"></input>
+  </view>
+  <view class="cu-form-group">
+    <view class="title">授课老师</view>
+    <input placeholder="请输入授课老师(选填)" value="{{teacher}}" bindinput="teacherInput"></input>
+  </view>
+  <view class="cu-form-group arrow" bindtap="showModal">
+    <view class="title">课程周数</view>
+    <view class="action text-black">{{weeklysResult?'第'+weeklysResult+'周':'点击选择课程周数'}}</view>
+  </view>
+  <view class="cu-form-group">
+    <view class="title">课程节数</view>
+    <picker mode="multiSelector" bindchange="multiChange" bindcolumnchange="multiColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
+      <view class="picker">
+        {{week>=0&&section!=''?'周'+numbers[week]+'，'+section+'节':'点击选择课程节数'}}
+      </view>
+    </picker>
+  </view>
+  <view class="padding flex flex-direction text-center">
+    <button class="cu-btn bg-theme lg margin-bottom" bindtap='save'>保存</button>
+    <text class="text-red" wx:if="{{id}}" bindtap="deleteCourse">删除此课程</text>
+  </view>
+</form>
+
+<view class="cu-modal bottom-modal {{modalName=='weekly'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white">
+      <view class="action text-grey" bindtap="hideModal">取消</view>
+      <view class="action text-theme" bindtap="selectWeeklys">确定</view>
+    </view>
+    <view class="padding-sm">
+      <view class="padding-left padding-right padding-bottom">
+        <view class="grid col-3 padding-sm">
+          <view class="weelySelect {{weeklyMode==item.value?'select':''}}" bindtap="selectWeeklyMode" wx:for="{{weeklySelect}}" wx:key="key" data-value="{{item.value}}">
+          <text>{{item.name}}</text>
+          </view>
+        </view>
+      </view>
+      <view>
+        <view class="grid col-5">
+          <view class="padding-sm" wx:for="{{20}}" wx:key="key">
+            <view bindtap="selectWeekly" data-index="{{index+1}}" class="weekly {{weeklys[index+1] == true?'select':''}}">{{index+1}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

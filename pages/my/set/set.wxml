@@ -1,0 +1,85 @@
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">设置</view>
+</cu-custom>
+<list-loading loading="{{loading}}"></list-loading>
+<view class="container" wx:if="{{!loading}}">
+  <view class="cu-bar bg-white solid-bottom">
+    <view class="action">
+      隐私设置
+    </view>
+  </view>
+  <view class="cu-list menu sm-border">
+    <view class="cu-item">
+      <view class="content">
+        <text class="cuIcon-circlefill text-grey"></text>
+        <text class="text-grey">成绩排名隐藏真实姓名</text>
+      </view>
+      <view class="action">
+        <switch class="theme sm" checked="{{settings.is_display_name == 1}}" data-field="is_display_name" bindchange="displayName">
+        </switch>
+      </view>
+    </view>
+    <view class="cu-item">
+      <view class="content">
+        <text class="cuIcon-circlefill text-grey"></text>
+        <text class="text-grey">早起排行榜隐藏真实姓名</text>
+      </view>
+      <view class="action">
+        <switch class="theme sm" checked="{{settings.hidden_clockin_name == 1}}" data-field="hidden_clockin_name" bindchange="displayName">
+        </switch>
+      </view>
+    </view>
+    <view class="cu-item">
+      <view class="content">
+        <text class="cuIcon-circlefill text-grey"></text>
+        <text class="text-grey">步数排行榜隐藏真实姓名</text>
+      </view>
+      <view class="action">
+        <switch class="theme sm" checked="{{settings.hidden_sport_name == 1}}" data-field="hidden_sport_name" bindchange="displayName">
+        </switch>
+      </view>
+    </view>
+  </view>
+  <view class="cu-bar bg-white solid-bottom">
+    <view class="action">
+      其他设置
+    </view>
+  </view>
+  <view class="cu-list menu sm-border">
+    <view class="cu-item">
+      <view class="content">
+        <text class="cuIcon-circlefill text-grey"></text>
+        <text class="text-grey">隐藏毒鸡汤</text>
+      </view>
+      <view class="action">
+        <switch class="theme sm" checked="{{settings.hide_soul == 1}}" data-field="hide_soul" bindchange="hideSoul"></switch>
+      </view>
+    </view>
+    <view class="cu-item arrow" bindtap="setTime">
+      <view class="content">
+        <text class="cuIcon-circlefill text-grey"></text>
+        <text class="text-grey">校区与上课时间</text>
+      </view>
+    </view>
+    <view class="cu-item arrow" bindtap="setDormitory">
+      <view class="content">
+        <text class="cuIcon-circlefill text-grey"></text>
+        <text class="text-grey">宿舍信息</text>
+      </view>
+    </view>
+  </view>
+  <view class="cu-bar bg-white solid-bottom">
+    <view class="action">
+      账号设置
+    </view>
+  </view>
+  <view class="cu-list menu sm-border">
+    <view class="cu-item arrow" bindtap="untieWechat">
+      <view class="content">
+        <text class="cuIcon-circlefill text-grey"></text>
+        <text class="text-grey">解绑微信账号</text>
+      </view>
+    </view>
+  </view>
+</view>

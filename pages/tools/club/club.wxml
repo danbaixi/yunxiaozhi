@@ -1,0 +1,45 @@
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">找社团</view>
+</cu-custom>
+<view class="container" style="top:{{customBar}}px">
+  <view class="cu-bar bg-white search fixed" style="top:{{customBar}}px">
+    <view class="action">
+      <picker mode="selector" range="{{category}}" range-key="name" bindchange="selectCategory" value="{{cid}}">
+        <text class="padding-right-xs">{{category[cid].name}}</text>
+        <text class="icon-triangledownfill"></text>
+      </picker>
+    </view>
+    <view class="search-form round">
+      <text class="icon-search"></text>
+      <input type="text" placeholder="搜索社团名称" confirm-type="search" bindinput="searchInput"></input>
+    </view>
+    <view class="action">
+      <button class="cu-btn bg-theme round" bindtap="search">搜索</button>
+    </view>
+  </view>
+  <view style="margin-top:120rpx">
+    <notice page="club"></notice>
+    <empty display="{{!loading&&list.length==0}}"></empty>
+    <view class="cu-list card-menu menu-avatar">
+      <view class="cu-item" wx:for="{{list}}" wx:key="key">
+        <view class="cu-avatar lg" style="background-image:url({{item.logo}});" bindtap="showItem" data-id="{{item.id}}"></view>
+        <view class="content" bindtap="showItem" data-id="{{item.id}}">
+          <view class="text-theme">
+            {{item.name}}
+            <text class="text-xs padding-left-sm text-gray">[{{item.category}}类]</text>
+          </view>
+          <view class="text-gray text-sm flex">
+            <text class="text-cut">{{item.desc}}</text>
+          </view>
+        </view>
+        <view class="action" bindtap="star" data-index="{{index}}">
+          <view class="text-red">
+            <text class="icon-like{{item.stared==1?'fill':''}}"></text> {{item.star}}
+          </view>
+        </view>
+      </view>
+    </view>
+    <view wx:if="{{loading||notMore}}" class="cu-load {{!notMore?'loading':(p>1?'over':'')}}"></view>
+  </view>
+</view>

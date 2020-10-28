@@ -1,0 +1,22 @@
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">毒鸡汤</view>
+</cu-custom>
+<view class="container">
+  <view class="yxz-content text-center" wx:if="{{soul}}">
+    <view class="soul text-black">{{soul.title}}</view>
+
+    <view class="like margin-top-sm text-right" data-id="{{soul.id}}" bindtap="likeSoul">
+      <text class="icon-{{likeSoul?'likefill':'like'}} text-pink"></text>
+      <text class="text-pink"> {{soul.like_count}}</text>
+    </view>
+  </view>
+  <view class="options">
+    <button open-type="share" class="cu-btn bg-theme">分享</button>
+    <button bindtap="getSoul" class="cu-btn bg-theme">再来一碗</button>
+  </view>
+  <view class="create" wx:if="{{display}}">
+    <text>来源<text class="text-bold">{{soul.source == null || soul.source == ''?"网络": soul.source}}</text>，</text>
+    <text class="text-blue" bindtap="create">我也要贡献</text>
+  </view>
+</view>

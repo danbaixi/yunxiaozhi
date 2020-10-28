@@ -1,0 +1,73 @@
+page{
+  background: #fff
+}
+.tr {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  height: 3rem;
+  align-items: center;
+  border-bottom: 1px solid #f4f5f7;
+}
+.td {
+  display: block;
+  width:20%;
+  color: #848b91;
+  justify-content: center;
+  text-align: center;
+  font-size: 24rpx;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.bg-w{
+  background: #f5f5f5;
+  border-radius: 8rpx;
+  border-color: transparent;
+}
+.bg-g{
+  background: #f6f6f6;
+}
+.th {
+  width: 22.5%;
+  justify-content: center;
+  background: f9f9f9;
+  color: #848b91;
+  display: flex;
+  height: 3rem;
+  font-size: 28rpx;
+  align-items: center;
+}
+.s{
+  width: 10%;
+}
+.accessing{
+  width: 94%;
+  margin: 40rpx 3% ;
+  background: linear-gradient(to left, #0cebeb, #20e3b2, #29ffc6);
+  color: #fff;
+  font-size: 16px;
+}
+.ana{
+  text-align:center;
+  margin: 0 0 30rpx 0;
+  font-size: 28rpx;
+  color: #0978f7;
+}
+.null{
+  font-size:32rpx;
+  text-align:center;
+  margin:200rpx 0;
+  line-height: 2;
+}
+button{
+  margin:20rpx 20rpx;
+}
+.assess{
+  padding: 30rpx 20rpx;
+}
+.assessing{
+  position: absolute;
+  top: 0;
+  right: 0;
+}

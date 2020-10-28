@@ -1,0 +1,25 @@
+@import "/pages/assets/colorui/icon.wxss";
+
+.float-tool{
+  position: fixed;
+  bottom: 60rpx;
+  right: 30rpx;
+  z-index: 999;
+}
+.float-tool-image{
+  width: 80rpx;
+  height: 80rpx;
+}
+
+.icon-close{
+  position: absolute;
+  right: 2rpx;
+  top: -40rpx;
+  background: #ccc;
+  border-radius: 100%;
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+  text-align: center;
+  color: #fff;
+}

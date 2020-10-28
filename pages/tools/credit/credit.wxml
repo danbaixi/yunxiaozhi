@@ -1,0 +1,50 @@
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">已修科目</view>
+</cu-custom>
+<list-loading loading="{{loading}}"></list-loading>
+<view class="container" wx:if="{{!loading&&credit.length>0}}">
+  <view class="cu-bar bg-white search fixed" style="top:{{customBar}}px">
+    <view class="search-form round">
+      <text class="icon-search"></text>
+      <input type="text" placeholder="搜索科目" confirm-type="search" bindinput="search"></input>
+    </view>
+    <view class="margin-right-xs" bindtap="onlyXuanxiu">
+      <button class="cu-btn round line-{{xuanxiu?'theme':'gray'}}">仅看选修</button>
+    </view>
+  </view>
+  <view  style="padding-top:100rpx">
+    <update-tips></update-tips>
+    <view class="cu-list menu">
+      <view class="cu-item" wx:if="{{!isNull}}">
+        <view class="content text-bold">总计学分</view>
+        <view class="action">
+          <text class="text-theme text-bold">{{total}}</text>
+        </view>
+      </view>
+    </view>
+      <view class="cu-list menu" style="margin-top:0px" wx:for="{{term}}" wx:key="key" wx:for-item="t">
+        <view class="bg-gray padding-sm text-center" wx:if="{{search==''}}">{{t.name}}</view>
+        <view class="cu-item" wx:if="{{search==''}}">
+          <view class="content text-grey text-center">
+            <text class="text-grey">总学分绩点：</text><text class="text-theme text-bold">{{t.creditGpaSum}} </text> 
+            <text class="text-grey"> 总学分：</text><text class="text-theme text-bold">{{t.creditSum}} </text>
+            <text class="text-grey"> 平均绩点：</text><text class="text-yellow text-bold">{{t.gpa}} </text>
+          </view>
+        </view>
+        <view class="cu-item" wx:for="{{credit}}" wx:key="key" wx:if="{{item.isShow&&t.num==item.term}}" bindtap="itemData" data-index="{{index}}">
+          <view class="content">
+            {{item.name}}
+          </view>
+          <view class="action">
+            <text class="text-theme">{{item.score}} </text>
+            <text class="text-gray">学分:</text>
+            <text class="text-theme">{{item.course_credit}}</text>
+            <text class="text-gray">绩点:</text>
+            <text class="text-yellow">{{item.gpa?item.gpa:0}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+<empty display="{{!loading&&isNull}}"></empty>

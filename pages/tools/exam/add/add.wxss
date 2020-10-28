@@ -1,0 +1,26 @@
+.form-group{
+  padding: 20rpx;
+  border-bottom: 1px solid #f1f1f1;
+  height: 50rpx;
+  background: #fff;
+}
+.form-group label{
+  float: left;
+  min-width: 180rpx;
+  line-height: 50rpx;
+}
+.form-group input{
+  float: left;
+  width: 500rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+}
+.del{
+  color: #999;
+  text-align: center;
+  margin-top: 30rpx;
+  font-size: 30rpx;
+}
+.cu-form-group .title {
+  min-width: calc(4em + 30rpx);
+}

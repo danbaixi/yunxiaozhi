@@ -1,0 +1,98 @@
+page{
+  background: #fff
+}
+.content{
+  width: 100%;
+}
+.head{
+  width: 100%;
+  height: 70px;
+}
+.left{
+  width: 70%;
+  text-align: center;
+  float: left;
+}
+.right{
+  width: 25%;
+  float: right;
+  text-align: center;
+}
+.course{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow:ellipsis;
+}
+.xuefen{
+  display: flex;
+  font-size: 18px;
+  margin-top: 12px;
+  justify-content: center;
+  align-items: center;
+}
+.score{
+  margin-top: 10px;
+  font-weight: 700;
+  font-size: 20px;
+}
+.body{
+  width: 100%;
+  color: #333;
+  font-size: 1.2  rem;
+}
+.tr {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  height: 3rem;
+  align-items: center;
+}
+.bg-g{
+  background: #f6f6f6;
+  justify-content: left;
+  padding-left: 16px;
+  font-size: 16px;
+}
+.item{
+  position: relative;
+  width: 45%;
+  padding: 10px 0 10px 16px;
+  float: left;
+}
+.blue{
+  color: var(--theme);
+}
+.top{
+  position: relative;
+  padding: 10px 16px;
+}
+.top_item{
+  display: flex;
+  height: 3rem;
+  padding-left: 16px;
+  align-items: center;
+}
+.bottom{
+  padding: 0 16px;
+}
+.info_title{
+  color: red;
+}
+.info{
+  display:block;
+  white-space: pre-line;
+  line-height: 24px;
+}
+.index{
+  line-height: 1;
+  display: inline-block;
+  padding: 4px 10px;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700px;
+  border-radius: 6px;
+}
+.name{
+  width: 70px;
+  margin: 0 30rpx;
+}

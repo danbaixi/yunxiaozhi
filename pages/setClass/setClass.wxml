@@ -1,0 +1,45 @@
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">切换班级</view>
+</cu-custom>
+<view class="container">
+  <view class="cu-bar bg-white search">
+    <view class="search-form radius">
+      <text class="icon-search"></text>
+      <input type="text" value="{{search}}" placeholder="输入班级，如计算机" bindinput="searchInput" confirm-type="search"></input>
+    </view>
+    <view class="action">
+      <button class="cu-btn bg-cyan text-white shadow-blur" bindtap="search">搜索</button>
+    </view>
+  </view>
+  <view class="padding-tb-xs padding-lr bg-white text-yellow text-sm">温馨提示：班级课表不包括体育课和选修课</view>
+  <view class="bg-white padding-sm" wx:if="{{userId}}">
+    <view class="text-grey text-sm">已收藏的班级 {{collects.length==0?'：无':''}}</view>
+    <view>
+      <view wx:if="{{collects.length>0}}">
+        <button class="cu-btn sm text-xs text-gray margin-top-xs margin-right-xs" 
+          wx:for="{{collects}}" wx:key="key" data-name="{{item.name}}" data-number="{{item.number}}" bindtap="select" bindlongtap="delectCollect"
+        >
+          {{item.name}}
+        </button>
+      </view>
+    </view>
+  </view>
+  <view class="cu-list menu">
+    <view class="cu-item arrow" wx:if="{{tmpClass!='' && userId}}" bindtap="restore">
+      <view class="content">
+        <text class="text-orange">切换回个人课表</text>
+      </view>
+    </view>
+    <view class="cu-item" wx:for="{{classes}}" wx:key="key">
+      <view class="content">
+        <text class="text-grey">{{item.name}}</text>
+      </view>
+      <view class="action">
+        <button class="cu-btn line-yellow radius margin-right-sm" wx:if="{{userId}}" data-number="{{item.number}}" data-name="{{item.name}}" bindtap="collect">收藏</button>
+        <button class="cu-btn bg-theme text-white" data-name="{{item.name}}" data-number="{{item.number}}" bindtap="select">选择</button>
+      </view>
+    </view>
+  </view>
+  <view wx:if="{{loading}}" class="cu-load {{!finish?'loading':'over'}}"></view>
+</view>

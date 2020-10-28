@@ -1,0 +1,63 @@
+<view class="cu-custom" style="height:{{customBar}}px">
+  <view class="cu-bar fixed bg-white" style="height:{{customBar}}px;padding-top:{{statusBar}}px">
+    <view class="action border-custom" style="width:{{custom.width}}px;height:{{custom.height}}px;margin-left:calc(750rpx - {{custom.right}}px)">
+      <text class="icon-back text-bold text-black" bindtap="backPage"></text>
+      <text class="icon-refresh text-bold text-black" bindtap="update"></text>
+    </view>
+    <view class="content" style="top:{{statusBar}}px">考勤记录</view>
+  </view>
+</view>
+<list-loading loading="{{loading}}"></list-loading>
+<view class='attendance' wx:if="{{!loading}}">
+  <view class='content' wx:if="{{!isNull}}">
+   <block wx:for="{{term}}" wx:key="key" wx:for-item="xueqi" wx:for-index="index">   
+    <view class="yxz-cel">
+      <view class='title'>{{xueqi}}</view>
+      <view class="tr bg-w">
+        <view class="th">课程</view>
+        <view class="th">老师</view>
+        <view class="th s">周次</view>
+        <view class="th">节次</view>
+        <view class="th">日期</view>
+        <view class="th">记录</view>
+      </view>
+      <block wx:for="{{attendance}}" wx:key="key" wx:for-item="att" wx:for-index="index1">
+        <view class="tr" wx:if="{{att.term == xueqi}}">
+          <view class="td">{{att.course}}</view>
+          <view class="td">{{att.teacher}}</view>
+          <view class="td s">{{att.zhouci}}</view>
+          <view class="td">{{att.jieci}}</view>
+          <view class="td">{{att.date}}</view>
+          <view class="td" style="color:{{att.reason=='旷课'||att.reason=='迟到'||att.reason=='早退'?'#e54d42':'#848b91'}}">
+            {{att.reason}}
+          </view>
+        </view>
+      </block>
+    </view>  
+  </block>
+</view>
+<empty display="{{isNull}}" content="没有记录，请点击更新记录"></empty>
+<view wx:if="{{isNull}}">
+  <view class="text-center">若还是没有，那你很优秀哦</view>
+  <view class="text-center margin-top">
+    <button class="cu-btn round bg-theme" bindtap="update">更新记录</button> 
+  </view>
+</view>
+
+  <!--更新考勤输入验证码弹窗-->
+  <view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
+  <view class="modal-dialog" wx:if="{{showModal}}" class="{{input_focus == 1?'modal-dialog input_focus':'modal-dialog'}}">
+    <view class="modal-title">更新考勤记录</view>
+      <view class="modal-content">
+        <view class="modal-input">
+          <input placeholder-class="input-holder" bindfocus="inputFocus" bindblur="inputBlur" bindinput="yzmInput" maxlength="4" class="input">
+          </input>
+          <image bindtap='freshYzm' class="img_yzm" src="{{yzmUrl}}"></image>
+        </view>  
+      </view>
+      <view class="modal-footer">
+        <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
+        <view class="btn-confirm" bindtap="update" data-status="confirm">确定</view>
+      </view>
+  </view>
+</view>

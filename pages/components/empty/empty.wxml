@@ -1,0 +1,4 @@
+<view class="container" wx:if="{{display}}" style="margin-top:{{top}}rpx">
+  <image class="empty-img" mode="widthFix" src="/pages/assets/imgs/other/empty.png"></image>
+  <view class="title">{{content}}</view>
+</view>

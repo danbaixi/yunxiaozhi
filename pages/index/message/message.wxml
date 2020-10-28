@@ -1,0 +1,7 @@
+<view class='message'>
+  <view class='li' wx:for="{{messages}}" wx:key="key">
+    <text class='text content'>{{item.message}}</text>
+    <text class='text author'>{{item.author}}</text>
+    <text class='text time'>{{item.datetime}}</text>
+  </view>
+</view>

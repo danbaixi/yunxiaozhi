@@ -1,0 +1,14 @@
+.container{
+  background: #fff;
+  text-align: center;
+}
+.container image{
+  width: 100%;
+  height: 222rpx;
+}
+.error{
+  padding: 20rpx;
+}
+.error image{
+  width: 300rpx;
+}

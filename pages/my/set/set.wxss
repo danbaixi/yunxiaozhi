@@ -1,0 +1,4 @@
+.cu-bar .action:first-child{
+  font-size:24rpx;
+  color: var(--theme)
+}

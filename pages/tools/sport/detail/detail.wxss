@@ -1,0 +1,74 @@
+page{
+  overflow-x: hidden;
+}
+.list{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.list .li{
+  width: calc(100% / 7);
+  position: relative;
+}
+.li .item{
+  width: 100%;
+  overflow: hidden;
+  text-align: center;
+  margin: 0 auto;
+}
+.data .li .item{
+  height: 100rpx;
+  line-height: 50rpx;
+}
+.table-border::after{
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: " ";
+  border-right: 1px solid #f3f3f3;
+  border-bottom: 1px solid #f3f3f3;
+  width: 100%;
+  height: 100%;
+}
+.not-bottom-border::after{
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: " ";
+  border-right: 1px solid #f3f3f3;
+  width: 100%;
+  height: 100%;
+}
+
+.active .item{
+  background: #dbedff;
+  color: #fff;
+}
+.option{
+  color: #fff;
+  background: var(--theme);
+  border-radius: 50%;
+  padding: 14rpx;
+  text-align: right;
+}
+.option:nth-child(1){
+  margin-right: 24rpx;
+}
+.label{
+  flex-basis: 25%;
+}
+.cu-progress{
+  flex-basis: 65%;
+}
+.day-count{
+  flex-basis: 10%;
+}
+.group .cu-progress{
+  margin-top: 8rpx;
+}
+.analazy{
+  border-right: 1px solid #f3f3f3;
+}
+.analazy:last-child{
+  border-right: 0px;
+}

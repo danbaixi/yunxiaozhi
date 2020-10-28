@@ -1,0 +1,84 @@
+page{
+  background: #0c7679;
+}
+.bg-run{
+  background:#bae3f9;
+  color: #fff;
+}
+.header{
+  width: 100%;
+  position: relative;
+}
+.header .bg{
+  width: 100%;
+  position: fixed;
+  z-index: -1;
+}
+.today-step{
+  font-size: 100rpx;
+  color: #fff;
+  line-height: 100rpx;
+}
+.rank-item{
+  text-align: center;
+}
+.rank-item:nth-child(odd){
+  margin-top: 40rpx;
+}
+.rank-item .avator{
+  position: relative;
+  margin: 0 auto;
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 100%;
+  background: linear-gradient(to right, #12c2e9, #c471ed, #f64f59);
+}
+.rank-item.top2 .avator{
+  background: linear-gradient(to right, #c6ffdd, #fbd786, #f7797d);
+}
+.rank-item.top3 .avator{
+  background: linear-gradient(to right, #7f7fd5, #86a8e7, #91eae4);
+}
+.rank-item .avator .avator-image{
+  width: 88%;
+  height: 88%;
+  margin: 6%;
+  border-radius: 100%;
+}
+.rank-item .avator .top-icon{
+  position: absolute;
+  width: 50rpx;
+  height: auto;
+  bottom: -20rpx;
+  left: 50%;
+  margin-left: -25rpx;
+}
+.rank-item .nickname{
+  margin-top: 20rpx;
+  font-size: 30rpx;
+  color: var(--theme);
+}
+.rank-item .step-data{
+  margin-top: 16rpx;
+  font-size: 36rpx;
+  font-weight: bold;
+  color: var(--yellow);
+}
+.rank-num{
+  width: 90rpx;
+  position: absolute;
+  left: 10rpx;
+  text-align: center;
+  font-size: 36rpx;
+  color: #333;
+}
+.cu-list.menu-avatar>.cu-item>.cu-avatar{
+  left: 100rpx;
+}
+.cu-list.menu-avatar>.cu-item .content {
+  left: 216rpx;
+  width: calc(100% - 96rpx - 60rpx - 120rpx - 20rpx - 70rpx);
+}
+.cu-list.menu-avatar>.cu-item.myself{
+  background: #f1f1f1 ;
+}

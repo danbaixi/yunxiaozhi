@@ -1,0 +1,152 @@
+page{
+  background: #fff;
+}
+.head{
+  position: fixed;
+  height: 50px;
+  line-height: 50px;
+  width: 100%;
+  justify-content: center;
+  background: #fff;
+  padding: 0 40rpx;
+}
+.head view{
+  display: inline-block;
+  margin-right: 20rpx;
+}
+.head view:last-child{
+  margin-right: 0;
+  float: right;
+}
+image{
+  padding: 10px;
+  height: 20px;
+  width: 20px;
+}
+.now_month{
+  position: relative; 
+  text-align: center;
+  line-height: 40px;
+  z-index: -1;
+} 
+.data{
+  position: fixed;
+  background: #fff;
+  top: 40px;
+  width: 100%;
+  height: 286px;
+}
+.title{
+  width: 100%;
+  height: 30px;
+  background: #eee;
+  display: flex;
+  text-align: center;
+  line-height: 30px;
+  font-size: 12px;
+}
+.week{
+  width: 14%;
+}
+.weekly{
+  width: calc(86% / 7);
+}
+.zhoushu{
+  position: relative;
+  float: left;
+  width: 14%;
+  text-align: center;
+  line-height: 30px;
+}
+.zhou{
+ height: 60px;
+ color: #0099CC;
+ line-height: 60px;
+ border-bottom: 1px solid #f2f4f5;
+}
+.riqi{
+  position: relative;
+  float: left;
+  width: 86%;
+  display: block;
+  text-align: center;
+  line-height: 30px;
+}
+.ri{
+  height: 60px;
+  width: calc(100% / 7); 
+  line-height: 60px;
+  float: left;
+  border-bottom: 1px solid #f2f4f5;
+}
+.num{
+  height: 60px;
+}
+.num .text-df{
+  padding-top: 4px;
+  height: 34px;
+  line-height: 34px;
+  font-size: 32rpx;
+}
+.num .text-xs{
+  height: 14px;
+  line-height: 14px;
+}
+.spotAll{
+  height: 5px;
+  margin: -8px auto;
+}
+.spot{
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  float: left;
+}
+.spot:not(:first-child){
+  margin-left: 2px;
+}
+.empyt{
+  height: 60px;
+  float: left;
+  border-bottom: 1px solid #f2f4f5;
+}
+.shijianAll{
+  width: 100%;
+  float: left;
+}
+.shijian{
+  height: 50px;
+  width: 100%;
+  line-height: 50px;
+  border-bottom: 1px solid #f2f4f5;
+  float: left;
+  z-index: -10;
+}
+.li{
+  margin-left: 10px;
+  float: left;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow:ellipsis;
+}
+.icon-back,.icon-right{
+  border-radius: 100%;
+  padding: 16rpx;
+}
+.thisDay{
+  background: #f1f1f1;
+}
+.option{
+  color: #fff;
+  background: var(--theme);
+  border-radius: 50%;
+  padding: 14rpx;
+  text-align: right;
+  line-height: 50px;
+}
+.option:nth-child(1){
+  margin-right: 30rpx;
+}
+.clearfloat{
+  clear: both;
+}

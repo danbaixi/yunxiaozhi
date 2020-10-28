@@ -1,0 +1,44 @@
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">校园导览</view>
+</cu-custom>
+<view wx:if="{{areaId==0}}">
+  <view class="cu-card">
+    <view class="cu-item" style="background:var(--{{item.color}})" 
+    bindtap="selectArea" data-index="{{index}}" wx:for="{{area}}" wx:key>
+      <view class="cardTitle">
+        {{item.title}}
+      </view>
+      <image class="icon" src="{{item.img}}" mode="widthFix"></image>
+    </view>
+  </view>
+</view>
+<view wx:else>
+  <scroll-view scroll-x class="bg-white nav" scroll-with-animation scroll-left="{{scrollLeft}}">
+    <view class="cu-item {{index==isSelectedBuildType?'text-theme cur':''}}" wx:for="{{buildlData}}" wx:key bindtap="changePage" id="{{index}}">
+      {{item.name}}
+    </view>
+  </scroll-view>
+
+  <map include-points="{{points}}" longitude="{{longitude}}" latitude="{{latitude}}" enable-satellite="{{satellite}}" scale="{{scale}}" markers="{{buildlData[isSelectedBuildType].data}}" bindmarkertap="markertap" bindregionchange="regionchange" include-points="{{buildlData[isSelectedBuildType].data}}" enable-3D="true"
+    show-location="{{islocation? 'true': 'false'}}" enable-overlooking="true" enable-3D="true" style="width: auto; height:{{ fullscreen ? windowHeight - 80 : windowHeight - 280}}px;">
+  </map>
+  <view class="map-list">
+    <view class="list-title" bindtap="fullScreen">
+      <text class="text-lg text-black">{{fullscreen?'点击展开列表':'找到'+buildlData[isSelectedBuildType].data.length+'个结果'}} </text>
+      <text class="icon-{{fullscreen?'fold':'unfold'}} text-lg text-black"></text>
+    </view>
+    <scroll-view scroll-y="true" style="height:{{fullscreen ? 0 : 200}}px">
+      <view class="cu-list menu">
+        <view class="cu-item {{isSelectedBuild - 1 == index?'item-active':''}}"  wx:for="{{buildlData[isSelectedBuildType].data}}" wx:key="id" >
+          <view class="content" bindtap="clickMarker" data-index="{{index}}">
+            <text class="text-grey">{{item.name}}</text>
+          </view>
+          <view class="action">
+            <view class="cu-tag round bg-blue light" wx:if="{{isSelectedBuild - 1 == index}}" bindtap="item" data-index="{{index}}">查看详情</view>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+</view>

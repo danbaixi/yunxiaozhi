@@ -1,0 +1,69 @@
+page{
+  width: 100%;
+  height: 100%;
+  background: #fff;
+}
+.num{
+  text-align: center;
+  font-size: 400rpx;
+  color: var(--theme)
+}
+.list{
+  width: 100%;
+  float: left;
+}
+.li{
+  height: 140rpx;
+  border-top: 1px solid #eee;
+  
+}
+.li:last-child{
+  border-bottom: 1px solid #eee; 
+}
+.top{
+  width: 60rpx;
+  height: 60rpx;
+  float: left;
+  margin: 40rpx 0 40rpx 50rpx;
+  font-size: 30rpx;
+  line-height: 60rpx;
+  text-align: center;
+  border-radius: 100%;
+  background: var(--theme);
+  color: #fff;
+}
+.data{
+  width: 100rpx;
+  height: 100rpx;
+  font-size: 60rpx;
+  line-height: 100rpx;
+  float: right;
+  text-align: center;
+  margin: 20rpx;
+  z-index: -1;
+}
+.min{
+  background: #C5EDD7;
+}
+.tip{
+  float: left;
+  font-size: 36rpx;
+  line-height: 140rpx;
+  margin-left: 24rpx;
+}
+.info{
+  text-align: center;
+}
+.control{
+  height: 100rpx;
+  width: 80%;
+  margin: 20rpx auto;
+}
+.btn{
+  width: 25%;
+  height: 80rpx;
+  font-size: 40rpx;
+  line-height: 80rpx;
+  margin: 10rpx 20rpx;
+  float: left;
+}

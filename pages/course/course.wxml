@@ -1,0 +1,235 @@
+<view class="diy-nav" style="height:{{customBar}}px;">
+  <view class='select_week' style="height:{{customBar}}px;padding-top:{{statusBar}}px;">
+    <picker class='week_num' mode="selector" range="{{zhou_num}}" bindchange="select" value="{{now_week-1}}">
+      <view style="line-height:{{customBar-statusBar}}px;height:100%">
+        <text class="text-black text-lg">第 {{now_week}} 周 </text>
+        <text class="icon-unfold lg text-black"></text>
+      </view>
+    </picker>
+    <text class=" icon-add settings text-black" style="top:{{statusBar}}px;line-height:{{customBar-statusBar}}px;height:{{customBar-statusBar}}px;transform:rotate({{list_is_display?135:0}}deg)" bindtap='listDisplay'>
+    </text> 
+  </view>
+</view>
+<view class="mask" bindtap="hideMask" style='height:{{winHeight-customBar}}px;top:{{customBar}}px' wx:if="{{list_is_display}}"></view>
+<view class="list" style='height:{{7*55+4+customBar}}px;top:{{list_is_display?0:-(7*55+4+customBar)}}px'>
+  <view style="height:{{customBar}}px;width:100%;background:#fff"></view>
+  <view class="course-options cu-list grid col-4">
+    <view class="cu-item" bindtap='updateCourseModal'>
+      <view class="course-icon">
+        <image mode="widthFix" src="/pages/assets/imgs/course_icon/update.png"></image>
+      </view>
+      <text>更新课表</text>
+    </view>
+    <view class="cu-item" bindtap='courseList'>
+      <view class="course-icon">
+        <image mode="widthFix" src="/pages/assets/imgs/course_icon/add.png"></image>
+      </view>
+      <text>课程管理</text>
+    </view>
+    <view class="cu-item" bindtap='setTime'>
+      <view class="course-icon">
+        <image mode="widthFix" src="/pages/assets/imgs/course_icon/time.png"></image>
+      </view>
+      <text>设置时间</text>
+    </view>
+    <view class="cu-item" bindtap='shareCourse'>
+      <view class="course-icon">
+        <image mode="widthFix" src="/pages/assets/imgs/course_icon/share.png"></image>
+      </view>
+      <text>分享课表</text>
+    </view>
+  </view>
+  <view class="cu-list menu sm-border">
+    <view class="cu-item arrow" bindtap='setBg'>
+      <view class="content">
+        <text class="text-grey">课表背景</text>
+      </view>
+      <view class="action">
+        <text class="text-grey text-sm">{{imageUrl!=''?'已设置':'未设置'}}</text>
+      </view>
+    </view>
+    <view class="cu-form-group cu-item">
+      <view class="text-grey">每周起始日</view>
+      <picker bindchange="setStartDay" value="{{startDay}}" range="{{startDays}}">
+        <view class="picker text-grey">
+          {{startDay?startDays[startDay]:'周一'}}
+        </view>
+      </picker>
+    </view>
+    <view class="cu-item">
+      <view class="content">
+        <text class="text-grey">仅显示本周要上的课程</text>
+      </view>
+      <view class="action">
+        <switch class="theme sm" checked="{{onlyThisWeek}}" bindchange="displayOnlyWeek"></switch>
+      </view>
+    </view>
+    <view class="cu-item">
+      <view class="content">
+        <text class="text-grey">边框透明度</text>
+        <view class="slider">
+          <slider data-type='frime' bindchange="sliderchange" activeColor="#1380ff" value='{{Kopacity}}' min="0" max="100" show-value/>
+        </view>
+      </view>
+    </view>
+    <view class="cu-item">
+      <view class="content">
+        <text class="text-grey">课表透明度</text>
+        <view class="slider">
+          <slider data-type='course' bindchange="sliderchange" activeColor="#1380ff" value='{{Copacity}}' min="0" max="100" show-value/>
+        </view>
+      </view>
+    </view>
+    </view>
+</view>
+
+<float-tool page="course"></float-tool>
+<!-- 背景图片 -->
+<view class='bg-content'>
+  <image class="course_bg" src="{{imageUrl}}" mode="aspectFill"> </image>
+</view>
+
+<view class="top" style="background-color:rgba(220,220,220,{{(100-Kopacity)/100}})">
+    <view class='jie month'>
+      <view>{{now_month}}</view>
+      <view>月</view>
+    </view>
+    <view class="date">
+      <view class="course-table week {{(now_week==nowWeek&&todayDay==item)?'todayDate':''}}" wx:for="{{now_day}}" wx:key="key" wx:index="index">
+        <view class="week-item">周{{zhou[index]}}</view>
+        <view class="date-item">{{
+          index > 0 && ((now_day[index] == 1 && startDay == 1) || (now_day[index] == 1 && startDay==0 && zhou[index] != '日')) ? 
+          (now_month_number<12?now_month_number+1:1)+'月' : now_day[index]+'日'
+          
+          }}
+        </view>
+      </view>
+    </view>
+</view>
+
+  <scroll-view scroll-x="false" scroll-y="true" scroll-top="{{scrollTop}}" class="scroll" bindtouchstart='touchStart' bindtouchend="touchEnd">
+    <view class='course-content'>
+      <view class='jie' style="background-color:rgba(220,220,220,{{(100-Kopacity)/100}})">
+        <view wx:for="{{12}}" wx:key="key" wx:index="index" class="left">
+          <view class="number">{{item+1}}</view>
+          <view class="course-time" wx:if="{{display_course_time == 1 && !((index == 2 || index == 3) && area == 1)}}">
+            <view class="text-grey text-xs time-start">{{course_time[index][0] != "" ? course_time[index][0] : '堂'}}</view>
+            <view class="text-grey text-xs time-end">{{course_time[index][1] != "" ? course_time[index][1] : '连'}}</view>
+          </view>
+        </view>
+      </view>
+
+      <view class="course">
+        <view 
+        class="{{toggleDelay?'animation-scale-up':''}} kcb-item" 
+        wx:for="{{course}}" wx:key="key" 
+        wx:if="{{item.display}}"
+        bindtap="displayCourseInfo" 
+        data-num="{{item.indexNum}}" 
+        form-type="submit" 
+        style="animation-delay: {{(index%2==0?(index/2):(index-1)/2+1)*0.1}}s;margin-left:{{(item.week - startDay)*(92/7)}}%;margin-top:{{(item.jie-1)*110+4}}rpx;height:{{item.jieshu*110 - 4}}rpx">
+
+          <view class="smalltext {{item.courseNum>1?'moreCourse':''}}" 
+          style="color:{{!item.thisWeek?'#aab9cc':'#fff'}};background-color:rgba({{!item.thisWeek?'236,245,255':colorArrays[item.num]}},{{(100-Copacity)/100}});-webkit-line-clamp: {{item.jieshu*3}};" >{{!item.thisWeek?'[非本周]':''}}{{item.name}}{{item.address ? '@' + item.address : ''}}
+          </view>
+        </view>
+        
+        <view wx:if="{{ad.display}}" class='kcb-item' style="margin-left:{{(ad.week-1)*(92/7)}}%;margin-top:{{(ad.jie-1)*110+4}}rpx;height:{{ad.jieshu*110 - 4}}rpx">
+          <view class="smalltext" bindtap="goAd" style="background:{{ad.background}};color:{{ad.color}};" >{{ad.title}}</view>
+          <view bindtap="closeAd" class="ad-close icon-roundclose text-center text-grey"></view>
+        </view>
+
+        <view class="course-notice kcb-item" style="width:calc(92% / 7 * 2);margin-left:{{5*92/7}}%;margin-top:4rpx" wx:if="{{noticeDisplay}}">
+          <view class="notice-content text-white" bindtap="clickNotice">{{notice.content}}</view>
+          <view class="notice-close text-yellow margin-top-xs" bindtap="closeNotice">
+            我知道了
+          </view>
+        </view>
+
+        <view class='train' data-id="{{train_course_id}}" bindtap='train' wx:if="{{tmpClass==''&&train_course_id!=0}}">本周是实训周</view>
+        <view class="course-labels">
+          <view class="margin-top-sm text-right tmp-class" wx:if="{{tmpClass!=''}}"><text class="label">{{tmpClass.name}}</text></view>
+          <view class="margin-top-sm text-right user-term" wx:if="{{userTerm}}"><text class="label">{{userTerm.name}}({{userTerm.classname}})</text></view>
+          <view class="margin-top-sm text-right course-term" wx:if="{{courseTerm && courseTerm.term && courseTerm.term != thisTerm}}"><text class="label">{{courseTerm.name}}</text></view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+  <view class="water {{clickStatus}}" style="top:{{finishY}}px;left:{{finishX}}px;"></view>
+  <!--更新课表输入验证码弹窗-->
+  <view class="modal-mask" bindtap="hideModal" style='height:{{winHeight}}px;' catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
+  <view class="modal-dialog" wx:if="{{showModal}}" class="{{input_focus == 1?'modal-dialog input_focus':'modal-dialog'}}">
+    <view class="modal-title">更新课表</view>
+      <view class="modal-content">
+        <view class="modal-input">
+          <input placeholder-class="input-holder" bindfocus="inputFocus" bindblur="inputBlur" bindinput="yzmInput" maxlength="4" class="input">
+          </input>
+          <image bindtap='freshYzm' class="img_yzm" src="{{yzmUrl}}"></image>
+        </view>  
+      </view>
+      <view class="modal-footer">
+        <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
+        <view class="btn-confirm" bindtap="update" data-status="confirm">确定</view>
+      </view>
+</view>
+
+<view class="showMoreCourse" wx:if="{{showMoreCourse}}" bindtap="hideMoreCourse">
+  <view class="courseList grid col-2">
+    <!-- 本周的课程 -->
+    <view class="animation-scale-up padding" style="animation-duration: 0.2s" wx:if="{{item.thisWeek}}" wx:for="{{moreCourseList}}" wx:key="key" bindtap="displayCourseInfo" data-display="true" data-num="{{item.indexNum}}">
+      <view class="li shadow-blur text-white" style="background-color:rgba({{item.num<colorArrays.length-1?colorArrays[item.num]:colorArrays[colorArrays.length-1]}})">
+        <view>
+          <view class="cu-tag radius line-white">本周</view>
+          <text class="text-bold"> {{item.fullName}}</text>
+        </view>
+        <view class="margin-top-sm">{{item.address ? '@' + item.address : ''}}</view>
+      </view>
+    </view>
+    <!-- 非本周的课程 -->
+    <view class="animation-scale-up padding" style="animation-duration: 0.2s" wx:if="{{!item.thisWeek}}" wx:for="{{moreCourseList}}" wx:key="key" bindtap="displayCourseInfo" data-display="true" data-num="{{item.indexNum}}">
+      <view class="li shadow-blur text-grey" style="background-color:rgba(236,245,255)">
+        <view>
+          <view class="cu-tag radius line-grey">非本周</view>
+          <text class="text-bold"> {{item.fullName}}</text>
+        </view>
+        <view class="margin-top-sm">{{item.address ? '@' + item.address : ''}}</view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!-- <view class="stop-course" wx:if="{{courseConfig.status==0}}">
+  <view class="stop-content">
+    <view class="text-theme text-center">
+      {{courseConfig.tips}}
+    </view>
+  </view>
+</view> -->
+
+<view class="cu-modal {{updatingCourse?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">同步教务系统课表</view>
+      <view class="action" bindtap="closeUpdateCourseModal">
+        <text class="icon-close text-red"></text>
+      </view>
+    </view>
+    <view class="padding-xs">
+      <view class="text-center padding-sm bg-white y-radius text-left margin-sm">
+        <view class="text-yellow text-center text-lg">请认真阅读以下使用条款</view>
+        <view class="margin-top-sm">
+          云小智课表是通过非官方渠道从教务系统获取的数据，我们无法保证课表完整无误，请以老师发的课表为准！
+          <text class="text-theme">云小智只负责搬运和整理数据，此功能产生的一切后果由使用者自负！</text>
+        </view>
+        <view class="margin-top-sm text-grey text-left">
+          <radio-group bindchange="acceptTerms">
+            <radio value="acceptTerms" class="theme"></radio><text class="padding-left-xs">本人已阅读条款并愿承担任何风险</text>
+          </radio-group>
+        </view>
+      </view>
+      <view class="margin-top-sm padding-sm">
+          <button class="cu-btn block bg-theme lg" bindtap="update">点击同步个人课表</button>
+      </view>
+    </view>
+  </view>
+</view>

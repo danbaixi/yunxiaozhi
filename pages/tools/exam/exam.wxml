@@ -1,0 +1,81 @@
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">考试</view>
+</cu-custom>
+<scroll-view scroll-x class="bg-white nav text-center">
+  <view class="cu-item {{index==currentTab?'text-theme cur':''}}" wx:for="{{tab_title}}" wx:key="key" data-current="{{index}}" bindtap='swichNav'>
+    {{item}}
+  </view>
+</scroll-view>
+
+<swiper current="{{currentTab}}" class="swiper-box" duration="300" style="height:{{winHeight - customBar - 49}}px" bindchange="bindChange">
+    <swiper-item>  
+      <list-loading loading="{{loading}}"></list-loading>
+      <scroll-view scroll-y wx:if="{{!loading && course_exam.length>0}}" style="height:{{winHeight- customBar - 49}}px" >
+        <view class="text-lg padding-top-xs padding-bottom-xs padding-left padding-right" style="position:relative">
+          <view class="text-grey text-df padding-top-xs">
+            <text>当前班级：</text>
+            <picker style="display:inline-block" mode="selector" range="{{classList}}" bindchange="selectClass" value="{{0}}">
+              <text>
+                <text class="text-black text-lg">{{class_name}}</text>
+                <text class="icon-triangledownfill lg text-black"></text>
+              </text>
+            </picker>
+          </view>
+        </view>
+        <view class="text-lg padding-bottom padding-left padding-right" style="position:relative">
+          <view class="text-grey text-df padding-top-xs">
+          <text>当前学期：</text>
+            <picker style="display:inline-block" mode="selector" range="{{picker_term}}" bindchange="selectTerm" value="{{term_index}}">
+              <text>
+                <text class="text-black text-lg">{{picker_term[term_index]}}</text>
+                <text class="icon-triangledownfill lg text-black"></text>
+              </text>
+            </picker>
+            <text style="float:right" class="text-theme" bindtap="changeAll">全部{{allStatus?'收起':'展开'}}</text>
+          </view>
+        </view>
+        <view class="cu-list menu sm-border margin-bottom-sm card-menu {{item.open ==1?'':'close'}}" wx:for="{{course_exam}}" wx:key="key" wx:if="{{item.term == term[term_index].num}}" style="height:{{item.info.length*474}}rpx">
+          <view class="cu-item" style="height:152rpx" data-index="{{index}}" bindtap="open">
+            <view class="content" style="position:relative">
+                <view class="text-theme text-xl">{{item.course}}</view>
+                <view class="text-grey padding-top-sm">{{item.time}}</view>
+                <text class="open-status icon-{{item.open==1?'unfold':'fold'}} text-theme"></text>
+            </view>
+          </view>
+          <block wx:for="{{item.info}}" wx:key="key" wx:index="index" wx:for-item="list">
+            <view class="cu-item"><view class="content"><text class="text-grey">考场：{{list.address}}</text></view></view>
+            <view class="cu-item"><view class="content"><text class="text-grey">学号：{{list.stuNum}}</text></view></view>
+            <view class="cu-item"><view class="content"><text class="text-grey">人数：{{list.number}}人</text></view></view>
+            <view class="cu-item split"><view class="content"><text class="text-grey">监考：{{list.teacher1}} {{list.teacher2}}</text></view></view>
+          </block>
+        </view>
+        <view class="margin padding-sm bg-white" style="border-radius: 8rpx;">
+          <text class="text-yellow" style="line-height:1.5">温馨提示：考试安排可能会有变动，请以老师公布的为准；若数据有误，请联系客服反馈，谢谢。</text>
+        </view>
+      </scroll-view>
+      <empty display="{{course_exam.length==0}}"></empty>
+    </swiper-item> 
+
+    <swiper-item>
+      <list-loading loading="{{loading}}"></list-loading>
+      <scroll-view scroll-y wx:if="{{!loading && my_exam.length > 0}}" style="height:{{winHeight- customBar - 49}}px" >
+        <view class="grid col-2">
+          <view class="padding-sm" wx:for="{{my_exam}}" wx:key="key">
+            <view class="myexam_item bg-{{colors[index%colors.length]}} radius shadow-blur" bindtap='edit' data-id='{{index}}' wx:index="{{index}}">
+              <view class="text-white text-xxl text-cut">{{item.exam_name}}</view>
+              <view class="text-white">{{item.exam_address}}{{item.exam_position!=''?'('+item.exam_position+')':''}}</view>
+              <view class="margin-top text-white day">
+                <text wx:if="{{item.days<0}}">已过</text>
+                <text class="text-sl">{{item.days>=0?item.days:-item.days}}</text>
+                <text> 天</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+      <text class="text-white add bg-theme padding radius text-center shadow-blur"  bindtap='add'>+</text>
+
+    </swiper-item>  
+
+</swiper> 

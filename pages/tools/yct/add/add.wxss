@@ -1,0 +1,34 @@
+page{
+  background: #fff;
+}
+label{
+  color: var(--theme);
+  font-size: 16px;
+}
+.inputView{
+    border-bottom:  1px solid #ddd;
+    width: 90%;
+    margin: 10px auto;
+}
+.info{
+  height: 44px;
+  width: 90%;
+  font-size: 20px;
+  color: var(--theme);
+}
+.btn button{
+  margin: 20px auto;
+  width: 90%;
+}
+.btn_press{
+  background: var(--theme);
+}
+.img{
+  width: 260px;
+  height: 155px;
+  margin: 0 auto;
+}
+ image{
+  width: 260px;
+  height: 155px;
+} 

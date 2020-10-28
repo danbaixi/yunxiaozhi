@@ -1,0 +1,40 @@
+.weelySelect text{
+  padding: 14rpx 20rpx;
+  border-radius: 8rpx;
+  border: 1px solid var(--grey)
+}
+.weelySelect.select text{
+  border-color: var(--yellow)
+}
+.weekly{
+  background: #fff;
+  margin: 0 auto;
+  width: 60rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  border-radius: 50%;
+  transform: .5s
+}
+.weekly.select{
+  background: var(--theme);
+  color: #fff;
+}
+.cu-form-group.arrow{
+  position: relative;
+  padding-right: 60rpx;
+}
+.cu-form-group.arrow::after {
+  font-family: cuIcon;
+  display: block;
+  content: "\e6a3";
+  position: absolute;
+  font-size: 34rpx;
+  color: var(--grey);
+  line-height: 100rpx;
+  width: 60rpx;
+  text-align: center;
+  top: 0;
+  bottom: 0;
+  right: 10rpx;
+  margin: auto;
+}

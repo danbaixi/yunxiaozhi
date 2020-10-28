@@ -1,0 +1,31 @@
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">详细介绍</view>
+</cu-custom>
+<view class="container">
+  <swiper wx:if="{{imgs.length>0}}" class="screen-swiper square-dot" indicator-dots="true" circular="true" autoplay="true" interval="3000" duration="500">
+    <swiper-item wx:for="{{imgs}}" wx:key>
+      <image src="{{domain}}{{item}}" mode="aspectFill"></image>
+    </swiper-item>
+  </swiper>
+
+  <view class="cu-bar bg-white">
+    <view class="action sub-title">
+      <text class="text-xl text-bold text-green">{{name}}</text>
+      <text class="bg-green" style="width:2rem"></text>
+    </view>
+  </view>
+
+  <view wx:if="{{info!=''}}" class="text-content padding-sm" style="text-align: justify">
+    <text>{{info}}</text>
+  </view>
+
+  <view wx:else class="text-grey padding-sm">
+    暂时没有介绍
+  </view>
+
+  <view wx:if="{{imgs.length == 0 || info == ''}}" class="padding text-right text-grey">
+    <view class="padding-xs">如果此处你有素材提供</view>
+    <view class="padding-xs">欢迎在云小智公众号留言</view>
+  </view>
+</view>

@@ -1,0 +1,42 @@
+<cu-custom bgColor="bg-transparent" isBack="true">
+  <view slot="back">返回</view>
+</cu-custom>
+<view class="bg">
+  <image mode="center" src="https://mmbiz.qpic.cn/mmbiz_png/YWKTC18p77JpsbMIEeKeaD54MUVydoyupdkFpDHzXiaq2Utb0aSET9z355FCK0feIKju3lNJicwL5bajbOBib1Kibg/0?wx_fmt=png"></image>
+</view>
+<view class="container">
+  <view class="header">
+    <image class="logo" mode="widthFix" src="/pages/assets/imgs/other/logo_radius.png"></image>
+    <view class="padding"><text class="text-xl text-white text-shadow">绑定教务系统账号</text></view>
+  </view>
+  <view class="login">
+    <view wx:if="{{rebind}}" class="yxz-tips margin-bottom">
+      您已修改了教务系统密码，请使用新密码绑定账号
+    </view>
+    <form>
+      <view class="cu-form-group">
+        <input bindinput='inputUserId' placeholder='请输入学号' type='number' value='{{user_id}}'></input>
+        <text wx:if="{{user_id!=''}}" class="icon-close text-black" bindtap='clearUserId'></text>
+      </view>
+
+      <view class="cu-form-group">
+        <input bindinput='inputPwd' placeholder='请输入密码' type="{{display_password?'text':'password'}}" value='{{user_password}}'></input>
+        <text wx:if="{{user_password!=''}}" class="icon-{{display_password?'attention':'attentionforbid'}} text-black" bindtap='displayPwd'></text>
+      </view>
+
+      <view class="cu-form-group" wx:if="{{systemType==1&&needValidate}}">
+        <input placeholder='请输入验证码' maxlength="4" value='{{code}}' bindinput='inputCode' type='text'></input>
+        <image mode="widthFix" bindtap='freshYzm' bindload='imageLoad' class="validate" src="{{yzmUrl}}"></image> 
+      </view>
+
+      <view class="padding-top-xl flex flex-direction">
+        <button class="cu-btn round bg-theme shadow text-white lg" bindtap='login'>绑定</button>
+      </view>
+      
+      <view class="padding-top-xl text-center">
+        <text bindtap="help" class="text-gray">新生登录指南</text>
+      </view>
+
+    </form>
+  </view>
+</view>

@@ -1,0 +1,6 @@
+<view class="container" wx:if="{{display}}">
+  <view class="notice">
+    <view class="content" bindtap="go">{{content}}</view>
+    <text class="icon-close" bindtap="close"></text>
+  </view>
+</view>

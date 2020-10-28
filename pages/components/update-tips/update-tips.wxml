@@ -1,0 +1,5 @@
+<view wx:if="{{display}}" class="tips bg-yellow text-white padding-sm" style="position:relative">
+  <text>为确保数据准确，请将成绩更新至最新 </text>
+  <text class="text-black" bindtap="update">点击更新<text class="icon-right"></text></text>
+  <text bindtap="close" class="icon-close" style="position:absolute;top:20rpx;right:20rpx;line-height:40rpx"></text>
+</view>

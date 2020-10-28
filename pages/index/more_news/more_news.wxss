@@ -1,0 +1,24 @@
+.news_list{
+  padding-left: 20rpx;
+  background: #fff;
+  margin-bottom: 20rpx;
+}
+.news_li{
+  width: 100%; 
+  border-bottom: 1px solid #eee;
+}
+.news_li:last-child{
+  border-bottom: 0;
+}
+.news_title{
+  font-size: 30rpx;
+  line-height: 42rpx;
+  float: left;
+  padding: 14rpx 20rpx 14rpx 0;
+}
+.news_date{
+  font-size: 20rpx;
+  padding-bottom: 14rpx;
+  clear: left;
+  color: #aaa;
+}

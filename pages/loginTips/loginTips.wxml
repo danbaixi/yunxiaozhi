@@ -1,0 +1,15 @@
+<view class='margin-xl bg-white padding-xl radius shadow-lg'>
+  <view class='text-center margin-bottom text-lg  text-black'>关于部分新生无法登录的临时解决方法</view>
+  <view class='text-content'>
+    <view class='margin-top-sm text-bold'>云小智采用教务系统账号登录，但不知道什么原因，学校只给了部分新生开通了教务系统账号，导致很多同学无法登录云小智。</view>
+    <view class='margin-top-sm'>如果您是19届新生，请点击下面按钮尝试登录，初始密码为身份证后六位或学号，若两者都不可登录，说明学校还未开通您的教务系统账号，请继续往下查看临时解决方法。</view>
+    <view class="margin-top-sm">
+      <button class="cu-btn round bg-blue" bindtap="login">点击登录云小智</button>
+    </view>
+    <view class='margin-top-sm'>若您无法登录，请手动设置班级，设置后即可查看班级课表。</view>
+    <view class="margin-top-sm">
+      <button class="cu-btn round bg-green" bindtap="setClass">点击设置班级</button>
+    </view>
+    <view class='margin-top-sm'>云小智是白云教务查询第三方小程序，非学校官方应用。感谢您使用云小智！欢迎关注云小智公众号，了解更多云小智资讯！</view>
+  </view>
+</view>

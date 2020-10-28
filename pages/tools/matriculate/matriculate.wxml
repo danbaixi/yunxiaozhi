@@ -1,0 +1,13 @@
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">录取查询</view>
+</cu-custom>
+<view class="padding bg-white text-theme margin-top margin-left margin-right y-radius text-center">请选择查询类型</view>
+<view class="cu-card y-typelist">
+  <view class="cu-item shadow-blur" style="background:var(--{{item.color}})" bindtap="selectType" data-index="{{index}}" wx:for="{{list}}" wx:key>
+    <view class="cardTitle">
+      {{item.title}}
+    </view>
+    <!-- <image class="icon" src="/pages/assets/imgs/other/{{item.img}}.png" mode="widthFix"></image> -->
+  </view>
+</view>

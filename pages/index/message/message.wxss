@@ -1,0 +1,24 @@
+page{
+  background: #f2f2f2;
+}
+.li{
+  width: 94%;
+  margin: 20rpx 3%;
+  padding-bottom: 20rpx;
+  background: #fff;
+  border-radius: 10rpx;
+  box-shadow: 0 0 10rpx rgba(221,221,221,0.5);
+}
+.text{
+  padding: 10rpx 20rpx;
+}
+.content{
+  display: block;
+  font-size: 36rpx;
+}
+.author{
+  font-size: 28rpx;
+}
+ .time{
+  font-size: 28rpx;
+}

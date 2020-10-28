@@ -1,0 +1,28 @@
+page{
+  background: #fff;
+}
+.yxz-content{
+  padding: 180rpx 40rpx;
+}
+.soul{
+  text-align: left;
+  line-height: 80rpx;
+  letter-spacing: 2rpx;
+  font-size: 40rpx;
+}
+.options{
+  width: 70%;
+  position: absolute;
+  bottom: 300rpx;
+  left: 15%;
+}
+.options button{
+  width: 40%;
+  margin: 0 5%;
+}
+.create{
+  position: absolute;
+  width: 100%;
+  bottom: 100rpx;
+  text-align: center;
+}

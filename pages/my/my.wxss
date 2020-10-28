@@ -1,0 +1,192 @@
+page{
+  background: #fff;
+}
+.bg image{
+  padding-top: 60rpx;
+  width: 100%;
+  height: 360rpx;
+  z-index: -1;
+  filter: blur(2rpx)
+}
+.container{
+  position: relative;
+  top: -144rpx;
+}
+.userinfo{
+  padding: 0 3%;
+  width: 100%;
+  height: 130rpx;
+  position: relative;
+}
+.avatar {
+  width: 110rpx;
+  height: 110rpx;
+  border-radius: 100%;
+  position: absolute;
+  top: 0;
+  right: 3%;
+  box-shadow: 0 0 8rpx 4rpx rgba(0,0,0,.2)
+}
+.nickname {
+  font-size: 40rpx;
+  letter-spacing: 4rpx;
+}
+.stuId{
+  padding-top: 20rpx;
+}
+.info{
+  line-height: 30px;
+  display: block;  
+  text-align: center;   
+  font-size: 16px; 
+}
+.blue{
+  color: blue
+}
+.title{
+  font-size: 18px;
+  font-weight:bold 
+}
+.my{
+  background: #fff;
+  line-height: 50rpx;
+  margin: 30rpx 0 0;
+  padding: 12rpx 15px;
+}
+.my view:first{
+  margin-bottom: 20rpx;
+}
+.infoContent{
+  background: #fff;
+  border-radius: 30rpx;
+  padding: 10rpx 3%;
+}
+.right{
+  height: 20px;
+  width: 20px;
+  float: right;
+  margin-top: 6px;
+}
+.kefu{
+  position: absolute;
+  top:0;
+  left: 0;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+}
+button::after{
+  border-radius: 0;
+  border: 0;
+}
+.zanshang{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+.navigator-hover{
+  background: #fff;
+}
+.cu-list.menu>.cu-item{
+  padding-left: 0;
+}
+.banner{
+  padding: 14rpx 3%;
+  position: relative;
+}
+.banner button{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 188rpx;
+  background: transparent;
+}
+.banner image{
+  width: 100%;
+  height: 188rpx;
+  border-radius: 12rpx;
+  z-index: -1;
+}
+.cu-list.menu>.cu-item.arrow:before {
+  right: 0rpx!important;
+}
+.cu-list.menu.sm-border>.cu-item:after {
+  left: 12rpx;
+  width: calc(200% - 40rpx);
+}
+.counts{
+  padding: 10rpx 3%;
+}
+.counts .item{
+  display: inline-block;
+  float: left;
+  width: 84rpx;
+  margin-right: 50rpx;
+  text-align: center;
+}
+.app-icon.my-icon image{
+  width: 70rpx!important;
+  height: 70rpx!important;
+}
+.tools{
+  padding: 10rpx 3%;
+}
+.cu-list.grid.no-border{
+  background: #fafafa;
+  border-radius: 8rpx;
+}
+.cu-list.grid>.cu-item [class*=icon]{
+  margin-top: 0;
+}
+.cu-list.grid.no-border>.cu-item{
+  padding: 0;
+}
+.cu-list.grid>.cu-item text{
+  margin-top: 0;
+}
+.banners{
+  padding: 16rpx 3%;
+}
+.banners image{
+  border-radius: 12rpx;
+  width: 100%;
+  height: 120rpx;
+}
+.share-item{
+  position: relative;
+}
+.share-item button{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  z-index: 1;
+}
+.add_tips{
+  position: absolute;
+  right: 10px;
+  padding: 4px 10px;
+  background: var(--theme);
+  color: #fff;
+  border-radius: 4px;
+  z-index: 9999;
+}
+.add_tips .icon-close{
+  padding: 10px 2px;
+}
+.add_tips::before{
+  content: " ";
+  position: absolute;
+  top: -22px;
+  right: 50px;
+  border-width: 14px;
+  border-style: solid;
+  border-color: transparent var(--theme) transparent transparent;
+  transform: rotate(90deg);
+}
