@@ -13,9 +13,9 @@ App({
 
   /** 全局变量 */
   globalData:{
-    isDebug:true,
+    isDebug:false,
     isTest:false,
-    isLocal:true,
+    isLocal:false,
     themeColor: '#1380ff',
     xdebug:"?XDEBUG_SESSION_START=14473",
     domain:'https://www.yunxiaozhi.cn/v1/public/api/',

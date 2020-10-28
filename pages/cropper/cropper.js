@@ -1,8 +1,6 @@
 import WeCropper from 'we-cropper/we-cropper.js'
-var util = require('../../utils/util.js');
-var md5 = require('../../utils/md5.js');
-var uploadFn = require('../../utils/upload.js');
-var delPictureFn = require('../../utils/delPicture.js');
+const {uploadFile,delFile} = require('../../utils/cos.js');
+
 const device = wx.getSystemInfoSync()
 const width = device.windowWidth
 const height = device.windowHeight - 50
@@ -50,7 +48,7 @@ Page({
             dir_name = 'course_bg'
             //删除原来的文件
             var delImg = wx.getStorageSync('upload_course_bg');
-            var returnDel = delPictureFn(delImg,dir_name);
+            var returnDel = delFile(dir_name + '/' + delImg);
             if (returnDel) {
               console.log('删除成功');
             }
@@ -71,8 +69,7 @@ Page({
             app.msg("获取图片失败，请重试")
             return
           }
-          let uploadResult = uploadFn.upload(src, fileName, dir_name);
-          console.log(uploadResult)
+          let uploadResult = uploadFile(src, fileName, dir_name);
           if(uploadResult === false){
             app.msg("上传失败，请重试")
             return

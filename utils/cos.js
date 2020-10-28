@@ -1,14 +1,15 @@
 const COS = require('./cos-wx-sdk-v5')
+const BUCKET_NAME = 'yunxiaozhi-1251388077'
+const REGION = 'ap-guangzhou';
 const app = getApp()
 
-var cos = new COS({
+const cos = new COS({
   getAuthorization: function (options, callback) {
     // 异步获取临时密钥
     app.httpRequest({
         url: 'cos/getTempKey',
         success: function (result) {
-          console.log(result)
-          var data = result.data;
+          var data = result.data.data.credentials;
           var credentials = data && data.credentials;
           if (!data || !credentials) return console.error('credentials invalid');
           callback({
@@ -23,4 +24,39 @@ var cos = new COS({
   }
 })
 
-export default cos
+//上传文件
+function uploadFile(filePath, fileName,dirName) {
+  cos.postObject({
+    Bucket: BUCKET_NAME,
+    Region: REGION,
+    Key: dirName + '/' + fileName,
+    FilePath: filePath,
+    onProgress: function (info) {
+      console.log(JSON.stringify(info));
+    }
+  }, function (err, data) {
+      if(err){
+        return false
+      }
+      return true
+  });
+}
+
+//删除文件
+function delFile(fileName){
+  cos.deleteObject({
+    Bucket: BUCKET_NAME,
+    Region: REGION,
+    Key: fileName
+  }, function(err, data) {
+    if(err){
+      return false
+    }
+    return true
+  });
+}
+
+module.exports = {
+  uploadFile,
+  delFile
+}

@@ -1,4 +1,3 @@
-var uploadFn = require('../../../utils/upload.js');
 var util = require('../../../utils/util.js');
 var app = getApp();
 Page({
