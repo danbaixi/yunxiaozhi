@@ -163,6 +163,10 @@ Page({
 
   //更新个人信息
   updateInfo:function(){
+    if(app.getUserId() === 'test'){
+      app.msg('测试号无法更新数据')
+      return
+    }
     let _this = this 
     wx.showLoading({
       title: '正在更新',

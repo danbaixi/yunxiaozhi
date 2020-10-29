@@ -234,6 +234,10 @@ Page({
   },
   //更新成绩
   update:function(){
+    if(app.getUserId() === 'test'){
+      app.msg('测试号无法更新数据')
+      return
+    }
     var that = this;
     that.setData({ list_is_display: false })
     app.isBind()

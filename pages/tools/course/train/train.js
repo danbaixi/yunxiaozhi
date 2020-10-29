@@ -47,6 +47,10 @@ Page({
   },
   //更新
   update:function(){
+    if(app.getUserId() === 'test'){
+      app.msg('测试号无法更新数据')
+      return
+    }
     let _this = this
     wx.showLoading({
       title: '更新中...',

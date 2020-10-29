@@ -89,6 +89,10 @@ Page({
 
   },
   assess: function () {
+    if(app.getUserId() === 'test'){
+      app.msg('测试号无法更新数据')
+      return
+    }
     var that = this;
     app.isBind()
     if(that.data.finish){

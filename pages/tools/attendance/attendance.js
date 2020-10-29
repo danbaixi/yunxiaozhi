@@ -96,6 +96,10 @@ Page({
    * 对话框确认按钮点击事件
    */
   update: function (e) {
+    if(app.getUserId() === 'test'){
+      app.msg('测试号无法更新数据')
+      return
+    }
     var that = this;
     var time = (new Date()).getTime();
     if (wx.getStorageSync('attendance_update_time') != "") {

@@ -13,19 +13,15 @@ App({
 
   /** 全局变量 */
   globalData:{
-    isDebug:false,
+    isDebug:true,
     isTest:false,
     isLocal:false,
     themeColor: '#1380ff',
     xdebug:"?XDEBUG_SESSION_START=14473",
     domain:'https://www.yunxiaozhi.cn/v1/public/api/',
     key:'ihzoaixnuy4f8835032505e8a45ac102c52d58593e',
-    amap_key: "67c20c2c7db08923379123500b656adf",
     markers_json: "markers.json",
     adTime: 24,//小时出现一次
-    // fileDomain:"http://file.yunxiaozhi.cn/mini/",
-    // fileUrl: "http://file.yunxiaozhi.cn/mini",
-    // headImgUrl:"http://file.yunxiaozhi.cn/user_imgs/"
   },
   updateConfigRequest:function(){
     let time = parseInt((new Date()).getTime() / 1000)
@@ -377,7 +373,8 @@ App({
   },
   //弹出条款内容
   acceptTerms:function(){
-    if(!this.getUserId()){
+    let userId = this.getUserId()
+    if(!userId || userId === 'test'){
       return
     }
     let accept_terms = this.getConfig('accept_terms')
