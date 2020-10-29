@@ -16,6 +16,11 @@
 ## 预览
 <img width="200" src="http://qiniu.yunxiaozhi.cn/9978f799-bf6d-45d7-9ff8-a1befb9243bd.jpg">
 
+## 测试
+如果你没有白云学院教务系统账号，可使用以下测试账号绑定：
+学号：test
+密码：123456
+
 ## 功能
 1. 学业查询：
 成绩查询、绩点排行、学业分析、考勤记录、考试安排、一键评教、光速搜题
@@ -26,25 +31,16 @@
 
 ## 交流
 
-<<<<<<< HEAD
-<img width="200" src="http://qiniu.yunxiaozhi.cn/fd7c26d6474ccf4ddffc546bb337f14.jpg"/>
-<img width="200" src="http://qiniu.yunxiaozhi.cn/d546032939d0c0546bc44d681666ef8.jpg"/>
-=======
 <img width="500" src="http://qiniu.yunxiaozhi.cn/wechat.png"/>
->>>>>>> main
 
 欢迎大家一起学习交流，顺便点个Star
 
 ## 许可证
 
 请认真阅读并遵守以下开源协议
-<<<<<<< HEAD
-`GPL` [GNU General Public License v3.0](https://github.com/danbaixi/yunxiaozhi/blob/main/LICENSE)
-=======
 
 `GPL` [GNU General Public License v3.0](https://github.com/danbaixi/yunxiaozhi/blob/main/LICENSE)
 
->>>>>>> main
 云小智微信小程序源码仅用于学习交流，禁止私用、商用，违者必究。
 
 
