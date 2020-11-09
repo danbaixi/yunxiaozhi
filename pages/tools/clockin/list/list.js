@@ -115,6 +115,7 @@ Page({
   getDays:function(){
     let len = util.getThisMonthDays(this.data.year,this.data.month)
     let dayStart = util.getFirstDayOfWeek(this.data.year,this.data.month)
+    dayStart = dayStart == 0 ? 7 : dayStart
     let days = new Array(len+dayStart-1).fill(0)
     let num = 1
     for(let i=dayStart-1;i<days.length;i++){

@@ -36,6 +36,7 @@ function uploadFile(filePath, fileName,dirName) {
     }
   }, function (err, data) {
       if(err){
+        console.log('upload error:' + JSON.stringify(err))
         return false
       }
       return true
