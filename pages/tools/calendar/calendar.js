@@ -37,7 +37,7 @@ Page({
     var that = this;
     var date = new Date();
     var now_year = date.getFullYear();
-    var now_month = date.getMonth() + 1;
+    var now_month = that.formatMonth(date.getMonth() + 1);
     var now_day = date.getDate()
     that.setData({
       now_year: now_year,
@@ -362,11 +362,13 @@ Page({
   //判定学期
   setTerm:function(){
     let year = this.data.now_year
-    let month = this.data.now_month < 10 ? ('0'+this.data.now_month) : this.data.now_month
-    let date = `${year}-${month}`
+    let month = this.formatMonth(this.data.now_month)
+    let date = `${year}-${month}-01`
     let semester = this.data.semester
+    let d = new Date(date)
     for(let i=0,len=semester.length;i<len;i++){
-      if(semester[i].date == date){
+      let s = new Date(semester[i].date + '-01')
+      if(d >= s){
         this.setData({
           semesterIndex: i
         })
@@ -381,10 +383,19 @@ Page({
     let [year,month] = semester.date.split('-')
     this.setData({
       semesterIndex: index,
-      now_month: month,
+      now_month: this.formatMonth(month),
       now_year: year
     })
     this.getDayData(this.data.now_year, this.data.now_month);
     this.zhouci();
+  },
+
+  //格式化月份
+  formatMonth:function(month){
+    month = Number(month)
+    if(month < 10){
+      return '0' + month
+    }
+    return '' + month
   }
 })

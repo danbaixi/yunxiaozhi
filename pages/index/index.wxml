@@ -80,7 +80,8 @@
     </view>
   </view>
 
-  <view class="float-image" wx:if="{{!hideNewStudentFloat}}">
+  <!-- <view class="float-image" wx:if="{{!hideNewStudentFloat}}"> -->
+  <view class="float-image" wx:if="{{false}}">
     <image bindtap="goNewStudent" mode="widthFix" src="https://mmbiz.qpic.cn/mmbiz_png/YWKTC18p77I5Sd7C9QvPoO14xz9GEtE2xh5k1ib28iazSXw2x99HhpQibL2rhx56JaHxbjOZjLybSOn64G0mb6VrQ/0?wx_fmt=png"></image>
     <view class="text-center margin-top-xs" bindtap="closeNewStudentFloat">
       <text class="icon-close"></text>
