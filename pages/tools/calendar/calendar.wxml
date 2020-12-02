@@ -39,7 +39,7 @@
         <view class='riqi'>
           <view class='empyt' style="width:{{14.28*empytGrids}}%"></view> 
           <view class='ri' wx:for='{{day}}' wx:key='{{index}}'>
-            <view class="num {{now_year == year && now_month == month && now_day == item.day?'thisDay':''}}">
+            <view class="num {{now_year == year && now_month == month && now_day == item.day && index < dayNum ?'thisDay':''}}">
               <view class="text-df {{index<dayNum?'text-black':'text-grey'}}">{{item.day}}</view>
               <view class="text-grey text-xs">{{item.ext}}</view>
             </view>
