@@ -71,3 +71,9 @@ button{
   top: 0;
   right: 0;
 }
+.bottom-text{
+  position: fixed;
+  bottom: 100rpx;
+  left: 0;
+  right: 0;
+}

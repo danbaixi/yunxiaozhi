@@ -7,6 +7,10 @@ Component({
     page:{
       type: "String",
       value: ""
+    },
+    Style:{
+      type: 'String',
+      value: ""
     }
   },
 

@@ -4,6 +4,7 @@
 </cu-custom>
 <list-loading loading="{{loading}}"></list-loading>
 <view class="container" wx:if="{{!loading}}">
+  <notice page="assess" Style="border: 1px solid #1380ff"></notice>
   <view class="term">
     <view class="cu-bar bg-white">
       <view class="action sub-title">
@@ -38,8 +39,8 @@
         <view class="text-grey text-center padding" wx:if="{{list.length==0}}">没有相关数据</view>
       </view>
   </view>
-  <view class="text-grey text-center">
-    已帮助 <text class="text-bold text-theme">{{totalCount}}</text> 个同学完成了评教工作
+  <view class="text-grey {{assess == null ? 'bottom-text':''}}">
+    <view class="text-center block">已完成 <text class="text-bold text-theme">{{totalCount}}</text> 次评教工作</view>
   </view>
   <view class="ad">
     <ad unit-id="adunit-062cb277a5a5b3b4"></ad>

@@ -1,3 +1,6 @@
 {
-  "navigationBarTitleText": "一键评教"
+  "navigationBarTitleText": "一键评教",
+  "usingComponents": {
+    "notice": "/pages/components/notice/notice"
+  }
 }

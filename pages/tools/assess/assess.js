@@ -7,7 +7,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    loading:true
+    loading:true,
+    finishAd: false, //观看完广告
   },
 
   /**
@@ -25,6 +26,10 @@ Page({
       videoAd.onLoad(() => {})
       videoAd.onError((err) => {})
       videoAd.onClose((res) => {
+        if(!res.isEnded){
+          app.msg("您未观看完广告，无法使用一键评教")
+          return
+        }
         that.assess()
       })
     }
@@ -62,30 +67,17 @@ Page({
       app.msg("你已经完成评教啦！")
       return
     }
-    wx.showModal({
-      title:'温馨提示',
-      content: '您是否愿意花费15秒钟观看一段视频广告？完成后即可一键评教。',
-      success:function(res){
-        if(res.confirm){
-          app.msg("谢谢您的理解与支持")
-          if (videoAd) {
-            videoAd.show().catch(() => {
-              // 失败重试
-              videoAd.load()
-                .then(() => videoAd.show())
-                .catch(err => {
-                  console.log('激励视频 广告显示失败')
-                })
-            })
-          }
-        }else{
-          app.msg("谢谢你的支持")
-          setTimeout(() => {
-            _this.assess()
-          }, 1000);
-        }
-      }
-    })
+    if (videoAd && !_this.data.finishAd) {
+      videoAd.show().catch(() => {
+        // 失败重试
+        videoAd.load()
+          .then(() => videoAd.show())
+          .catch(err => {
+            console.log('激励视频 广告显示失败')
+          })
+      })
+    }
+    app.msg("观看完广告后关闭会自动评教，感谢您的理解。")
 
   },
   assess: function () {
