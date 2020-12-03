@@ -40,7 +40,7 @@
       </view>
   </view>
   <view class="text-grey {{assess == null ? 'bottom-text':''}}">
-    <view class="text-center block">已完成 <text class="text-bold text-theme">{{totalCount}}</text> 次评教工作</view>
+    <view class="text-center block">累计已完成 <text class="text-bold text-theme">{{totalCount}}</text> 次评教工作</view>
   </view>
   <view class="ad">
     <ad unit-id="adunit-062cb277a5a5b3b4"></ad>
