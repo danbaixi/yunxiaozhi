@@ -71,13 +71,12 @@ Page({
       //   url: '../tool/tool?from=index',
       // }
       {
-        icon: 'evaluate',
-        color: 'red',
-        badge: '新',
-        name: '光速搜题',
-        icon: 'question',
-        needLogin: true,
-        url: '../tools/question/question?from=index',
+        color: 'olive',
+        badge: 0,
+        name: '新生必看',
+        icon: 'new_student',
+        needLogin: false,
+        url: '/pages/tools/newstudent/newstudent',
       },
       {
         icon: 'bad',

@@ -77,15 +77,6 @@ Page({
         needLogin: true,
         url: '/pages/tools/course/category/category?from=index',
       },
-      {
-        icon: 'evaluate',
-        color: 'red',
-        badge: '',
-        name: '光速搜题',
-        icon: 'question',
-        needLogin: true,
-        url: '../tools/question/question?from=index',
-      },
     ],
     life:[
       {

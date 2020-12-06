@@ -73,7 +73,7 @@ button{
 }
 .bottom-text{
   position: fixed;
-  bottom: 100rpx;
+  bottom: 40rpx;
   left: 0;
   right: 0;
 }
