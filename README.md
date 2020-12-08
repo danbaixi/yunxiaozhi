@@ -29,11 +29,6 @@
 3. 娱乐互动：
 谁去拿外卖、毒鸡汤、舔狗日记
 
-## 交流
-
-<img width="500" src="http://qiniu.yunxiaozhi.cn/wechat.png"/>
-
-欢迎大家一起学习交流，顺便点个Star
 
 ## 许可证
 

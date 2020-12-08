@@ -27,10 +27,10 @@
       </view>
       <view class="padding-top-sm">
         <radio-group bindchange="changeType">
-          <radio class="theme" checked="{{type==0}}"></radio> 
-          <text bindtap="changeType" data-val="0"> 有效成绩</text>
-          <radio class="theme margin-left" checked="{{type==1}}"></radio>
+          <radio class="theme" checked="{{type==1}}"></radio>
           <text bindtap="changeType" data-val="1"> 原始成绩</text>
+          <radio class="theme margin-left" checked="{{type==0}}"></radio> 
+          <text bindtap="changeType" data-val="0"> 有效成绩</text>
         </radio-group>
         <view class="fr">
           <view class="text-yellow" bindtap="viewAllScore">

@@ -19,7 +19,7 @@ Page({
     Custom: app.globalData.custom,
     termNumber:[2,1],
     year_index:0,
-    type:0, // 0为有效成绩，1为原始成绩
+    type:1, // 0为有效成绩，1为原始成绩
     loading:true
   },
 

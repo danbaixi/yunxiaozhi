@@ -4,6 +4,9 @@
 </cu-custom>
 <update-tips></update-tips>
 <view class="container" wx:if="{{!isNull}}">
+  <view class="margin-top bg-white padding text-center">
+    <text>数据仅供参考，与评优、奖学金无关！</text>
+  </view>
   <view class="total grid col-3 text-center padding bg-white margin-top" style="position:relative">
     <text class="question icon-question" bindtap="help"></text>
     <view bindtap="goPage" data-page="/pages/tools/rank/rank">
