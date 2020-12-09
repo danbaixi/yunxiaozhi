@@ -446,7 +446,7 @@ input-holder {
 }
 .course-notice{
   flex-direction: column;
-  padding: 8rpx;
+  padding: 6rpx;
   background: rgba(0, 0, 0, .5);
   border-radius: 8rpx;
 }

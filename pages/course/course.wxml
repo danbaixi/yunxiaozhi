@@ -139,10 +139,10 @@
           <view bindtap="closeAd" class="ad-close icon-roundclose text-center text-grey"></view>
         </view>
 
-        <view class="course-notice kcb-item" style="width:calc(92% / 7 * 2);margin-left:{{5*92/7}}%;margin-top:4rpx" wx:if="{{noticeDisplay}}">
+        <view class="course-notice kcb-item" style="font-size:{{startDay==1?28:24}}rpx;width:calc(92% / 7 * {{startDay==1?2:1}} - 2px);margin-left:{{(startDay==1?5:6)*92/7}}%;margin-top:4rpx" wx:if="{{noticeDisplay}}">
           <view class="notice-content text-white" bindtap="clickNotice">{{notice.content}}</view>
           <view class="notice-close text-yellow margin-top-xs" bindtap="closeNotice">
-            我知道了
+            关闭
           </view>
         </view>
 

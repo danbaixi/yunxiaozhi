@@ -50,7 +50,7 @@
     <view class="cu-item">
       <view class="content">
         <text class="cuIcon-circlefill text-grey"></text>
-        <text class="text-grey">隐藏毒鸡汤</text>
+        <text class="text-grey">首页隐藏毒鸡汤</text>
       </view>
       <view class="action">
         <switch class="theme sm" checked="{{settings.hide_soul == 1}}" data-field="hide_soul" bindchange="hideSoul"></switch>
@@ -65,7 +65,7 @@
     <view class="cu-item arrow" bindtap="setDormitory">
       <view class="content">
         <text class="cuIcon-circlefill text-grey"></text>
-        <text class="text-grey">宿舍信息</text>
+        <text class="text-grey">设置宿舍信息</text>
       </view>
     </view>
   </view>

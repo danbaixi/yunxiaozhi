@@ -24,7 +24,7 @@ function term2Name(term){
 //获取当前课表学期
 function getNowCourseTerm(){
   let cache = wx.getStorageSync('course_term')
-  if(!cache || cache.term != '20200'){
+  if(!cache || !cache.term){
     let term = this.getNowTerm()
     wx.setStorageSync('course_term', term)
     return term
