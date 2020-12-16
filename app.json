@@ -69,7 +69,8 @@
     "pages/tools/sport/detail/detail",
     "pages/tools/phone/phone",
     "pages/course/update/update",
-    "pages/terms/terms"
+    "pages/terms/terms",
+    "pages/discount/discount"
   ],
   "window": {
     "navigationStyle": "custom",

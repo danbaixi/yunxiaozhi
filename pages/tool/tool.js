@@ -316,11 +316,19 @@ Page({
       },
       {
         color: 'red',
-        badge: '新',
+        badge: '',
         name: '外卖红包',
         icon: 'waimai',
         needLogin: false,
         url: '../article/article?src=' + encodeURIComponent('http://mp.weixin.qq.com/s?__biz=MzI1NTUwNDIzNQ==&mid=100002861&idx=1&sn=bc55ac93a14feb1025bbe9e93d74d8d5&chksm=6a35b6295d423f3f5ee553af9eed5f63582bf5853db8c8cfa9e17cf9aba27647d745a0c9137c#rd'),
+      },
+      {
+        color: 'red',
+        badge: '新',
+        name: '出行优惠',
+        icon: 'travel',
+        needLogin: false,
+        url: '../article/article?src=' + encodeURIComponent('http://mp.weixin.qq.com/s?__biz=MzI1NTUwNDIzNQ==&mid=100003692&idx=1&sn=c21e5155ab32ea4de14ffe0f8904d743&chksm=6a35b5685d423c7e6c527975257db09bda09f2062d1e9fb1c1b8a875c77f3dc6372397a5cb2a#rd'),
       },
     ]
   },
