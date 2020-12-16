@@ -8,8 +8,8 @@
   <view class="term">
     <view class="cu-bar bg-white">
       <view class="action sub-title">
-        <text class="text-xl text-bold text-green">当前学期</text>
-        <text class="bg-green"></text>
+        <text class="text-xl text-bold text-theme">当前学期</text>
+        <text class="bg-theme"></text>
       </view>
     </view>
     <view style="margin:0 30rpx;position:relative">
@@ -33,7 +33,7 @@
           <view class="tr">
             <view class="td" style='width:60%'>{{item.course}}</view>
             <view class="td" style='width:25%'>{{item.teacher}}</view>
-            <view class="td" style="width:15%;color:{{item.status==1?'#6ed4e6':'#666'}}">{{item.status?'已评':'未评'}}</view>
+            <view class="td" style="width:15%;color:{{item.status==1?'var(--theme)':'#666'}}">{{item.status?'已评':'未评'}}</view>
           </view>
         </block>
         <view class="text-grey text-center padding" wx:if="{{list.length==0}}">没有相关数据</view>
