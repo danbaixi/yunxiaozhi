@@ -8,6 +8,7 @@ Page({
    */
   data: {
     loading:true,
+    finish: false,
     finishAd: false, //观看完广告
   },
 
@@ -19,7 +20,18 @@ Page({
     app.isLogin('/' + that.route).then(function (res) {
       that.getList()
     })
-    if (wx.createRewardedVideoAd) {
+
+  },
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+    return app.share()
+  },
+
+  loadingAd:function(){
+    if (!this.data.finish && wx.createRewardedVideoAd) {
+      console.log('广告加载...')
       videoAd = wx.createRewardedVideoAd({
         adUnitId: 'adunit-3c3771d2ae21a30f'
       })
@@ -30,15 +42,13 @@ Page({
           app.msg("您未观看完广告，无法使用一键评教")
           return
         }
-        that.assess()
+        this.assess()
+      })
+    }else{
+      this.setData({
+        finishAd: true
       })
     }
-  },
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-    return app.share()
   },
 
   getList:function(){
@@ -57,7 +67,9 @@ Page({
         })
         if(res.data.status != 0){
           app.msg(res.data.message)
+          return
         }
+        that.loadingAd()
       }
     })
   },
