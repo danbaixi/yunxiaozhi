@@ -91,7 +91,7 @@ App({
   //获取请求domain
   getDomain:function(){
     if(this.globalData.isDebug){
-      return this.globalData.isTest ? 'https://www.yunxiaozhi.cn/test/public/api/' : 'http://danbaixi.utools.club/yxz_v1/public/index.php/api/'
+      return this.globalData.isTest ? 'https://www.yunxiaozhi.cn/test/public/api/' : 'http://danbaixi.cn.utools.club/yxz_v1/public/index.php/api/'
     }
     return 'https://www.yunxiaozhi.cn/v1/public/api/'
   },

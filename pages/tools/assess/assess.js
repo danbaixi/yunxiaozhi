@@ -104,7 +104,11 @@ Page({
       success: function (res) {
         wx.hideLoading()
         if (res.data.status == 0) {
-          app.msg("评教成功！", "success")
+          wx.showToast({
+            title: res.data.message,
+            icon: res.data.message == '评教成功' ? 'success' : 'none',
+            duration: res.data.message == '评教成功' ? 1500 : 5000
+          })
           setTimeout(function () {
             that.getList();
           }, 1000);
