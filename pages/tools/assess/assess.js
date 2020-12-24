@@ -1,6 +1,7 @@
 var app = getApp();
-var md5 = require('../../../utils/md5.js');
+// var md5 = require('../../../utils/md5.js');
 let videoAd = null
+let interstitialAd = null
 Page({
 
   /**
@@ -20,7 +21,6 @@ Page({
     app.isLogin('/' + that.route).then(function (res) {
       that.getList()
     })
-
   },
   /**
    * 用户点击右上角分享
@@ -29,6 +29,7 @@ Page({
     return app.share()
   },
 
+  //激励广告
   loadingAd:function(){
     if (!this.data.finish && wx.createRewardedVideoAd) {
       console.log('广告加载...')
@@ -51,6 +52,25 @@ Page({
     }
   },
 
+  //插屏广告
+  loadingChaPing:function(){
+    if (wx.createInterstitialAd) {
+      interstitialAd = wx.createInterstitialAd({
+        adUnitId: 'adunit-925818f6261b9dc9'
+      })
+      interstitialAd.onLoad(() => {})
+      interstitialAd.onError((err) => {})
+      interstitialAd.onClose(() => {})
+    }
+    if (interstitialAd) {
+      setTimeout(function(){
+        interstitialAd.show().catch((err) => {
+          console.error(err)
+        })
+      },1200)
+    }
+  },
+
   getList:function(){
     var that = this;
     app.httpRequest({
@@ -69,7 +89,8 @@ Page({
           app.msg(res.data.message)
           return
         }
-        that.loadingAd()
+        //that.loadingAd()
+        that.loadingChaPing()
       }
     })
   },
@@ -79,17 +100,19 @@ Page({
       app.msg("你已经完成评教啦！")
       return
     }
-    if (videoAd && !_this.data.finishAd) {
-      videoAd.show().catch(() => {
-        // 失败重试
-        videoAd.load()
-          .then(() => videoAd.show())
-          .catch(err => {
-            console.log('激励视频 广告显示失败')
-          })
-      })
-    }
-    app.msg("观看完广告后关闭会自动评教，感谢您的理解。")
+    _this.assess()
+
+    // if (videoAd && !_this.data.finishAd) {
+    //   videoAd.show().catch(() => {
+    //     // 失败重试
+    //     videoAd.load()
+    //       .then(() => videoAd.show())
+    //       .catch(err => {
+    //         console.log('激励视频 广告显示失败')
+    //       })
+    //   })
+    // }
+    // app.msg("观看完广告后关闭会自动评教，感谢您的理解。")
 
   },
   assess: function () {
@@ -234,8 +257,8 @@ Page({
     var user_password = wx.getStorageSync('user_password');
     var yzm = that.data.yzm;
     var cookie = that.data.cookie;
-    var str = app.globalData.key + user_id;
-    var sign = md5.hexMD5(str);
+    // var str = app.globalData.key + user_id;
+    // var sign = md5.hexMD5(str);
     if (yzm == "") {
       app.msg("请输入验证码")
     } else {
@@ -248,7 +271,7 @@ Page({
           code: yzm,
           cookie: cookie,
           __VIEWSTATE: that.data.__VIEWSTATE,
-          sign: sign,
+          // sign: sign,
           type: type
         },
         success: function (res) {
