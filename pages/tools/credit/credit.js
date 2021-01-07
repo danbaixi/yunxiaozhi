@@ -97,6 +97,7 @@ Page({
       for (let i = 0; i < list.length; i++) {
         list[i].isShow = true
         total += Number(list[i].credit)
+        count++
       }
     }
     this.setData({

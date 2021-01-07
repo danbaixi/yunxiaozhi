@@ -48,7 +48,7 @@
             <view class="cu-item"><view class="content"><text class="text-grey">考场：{{list.address}}</text></view></view>
             <view class="cu-item"><view class="content"><text class="text-grey">学号：{{list.stuNum}}</text></view></view>
             <view class="cu-item"><view class="content"><text class="text-grey">人数：{{list.number}}人</text></view></view>
-            <view class="cu-item split"><view class="content"><text class="text-grey">监考：{{list.teacher1}} {{list.teacher2}}</text></view></view>
+            <view class="cu-item split"><view class="content"><text class="text-grey">监考：{{list.teacher1}} {{list.teacher2?list.teacher2:''}}</text></view></view>
           </block>
         </view>
         <view class="margin padding-sm bg-white" style="border-radius: 8rpx;">

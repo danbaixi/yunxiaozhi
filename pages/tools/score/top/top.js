@@ -22,6 +22,10 @@ Page({
       return
     }
     let score = JSON.parse(decodeURIComponent(options.data));
+    //计算平均绩点
+    if(!score.gpa && Number(score.score) > 0){
+      score.gpa = score.score >= 60 ? ((score.score - 50) / 10).toFixed(2) : 0
+    }
     that.setData({
       score:score
     });
