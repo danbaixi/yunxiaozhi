@@ -1,481 +1,481 @@
 {
-	"description": "项目配置文件。",
-	"setting": {
-		"urlCheck": false,
-		"es6": true,
-		"enhance": false,
-		"postcss": true,
-		"preloadBackgroundData": false,
-		"minified": true,
-		"newFeature": true,
-		"coverView": true,
-		"nodeModules": false,
-		"autoAudits": false,
-		"showShadowRootInWxmlPanel": true,
-		"scopeDataCheck": false,
-		"uglifyFileName": true,
-		"checkInvalidKey": true,
-		"checkSiteMap": true,
-		"uploadWithSourceMap": true,
-		"compileHotReLoad": false,
-		"babelSetting": {
-			"ignore": [],
-			"disablePlugins": [],
-			"outputPath": ""
-		},
-		"bundle": false,
-		"useIsolateContext": true,
-		"useCompilerModule": false,
-		"userConfirmedUseCompilerModuleSwitch": false,
-		"useMultiFrameRuntime": false,
-		"useApiHook": true,
-		"userConfirmedBundleSwitch": false,
-		"packNpmManually": false,
-		"packNpmRelationList": [],
-		"minifyWXSS": true
-	},
-	"compileType": "miniprogram",
-	"libVersion": "2.12.2",
-	"appid": "wxe0f03cdec8ab9416",
-	"projectname": "%E4%BA%91%E5%B0%8F%E6%99%BA",
-	"simulatorType": "wechat",
-	"simulatorPluginLibVersion": {},
-	"condition": {
-		"search": {
-			"list": []
-		},
-		"conversation": {
-			"list": []
-		},
-		"plugin": {
-			"list": []
-		},
-		"game": {
-			"list": []
-		},
-		"gamePlugin": {
-			"list": []
-		},
-		"miniprogram": {
-			"list": [
-				{
-					"id": -1,
-					"name": "评教",
-					"pathName": "pages/tools/assess/assess",
-					"query": ""
-				},
-				{
-					"id": -1,
-					"name": "应用",
-					"pathName": "pages/tool/tool",
-					"query": ""
-				},
-				{
-					"id": -1,
-					"name": "校历",
-					"pathName": "pages/tools/calendar/calendar",
-					"query": ""
-				},
-				{
-					"id": -1,
-					"name": "四六级",
-					"pathName": "pages/tools/cet/cet",
-					"query": ""
-				},
-				{
-					"id": -1,
-					"name": "羊城通",
-					"pathName": "pages/tools/yct/yct",
-					"query": ""
-				},
-				{
-					"id": -1,
-					"name": "新闻",
-					"pathName": "pages/news/news",
-					"query": ""
-				},
-				{
-					"id": 6,
-					"name": "绑定教务系统",
-					"pathName": "pages/bind/bind",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "我的",
-					"pathName": "pages/my/my",
-					"query": ""
-				},
-				{
-					"id": -1,
-					"name": "活动",
-					"pathName": "pages/tools/countdown/countdown",
-					"query": ""
-				},
-				{
-					"id": -1,
-					"name": "成绩",
-					"pathName": "pages/tools/score/score",
-					"query": ""
-				},
-				{
-					"id": -1,
-					"name": "成绩分析",
-					"pathName": "pages/tools/score/ana/ana",
-					"query": ""
-				},
-				{
-					"id": -1,
-					"name": "考勤记录",
-					"pathName": "pages/tools/attendance/attendance",
-					"query": ""
-				},
-				{
-					"id": -1,
-					"name": "考试安排",
-					"pathName": "pages/tools/exam/exam",
-					"query": ""
-				},
-				{
-					"id": -1,
-					"name": "课表",
-					"pathName": "pages/course/course",
-					"query": ""
-				},
-				{
-					"id": -1,
-					"name": "添加等级考试",
-					"pathName": "pages/tools/exam/add/add",
-					"query": ""
-				},
-				{
-					"id": 16,
-					"name": "时光",
-					"pathName": "pages/my/time/time",
-					"query": ""
-				},
-				{
-					"id": -1,
-					"name": "资讯",
-					"pathName": "pages/news/news",
-					"query": ""
-				},
-				{
-					"id": 19,
-					"name": "推文",
-					"pathName": "pages/web/web",
-					"query": "src=https://mp.weixin.qq.com/s?__biz=MzI1NTUwNDIzNQ==&mid=2247484116&idx=1&sn=59418ea4f122e80e561def4650c9e302&chksm=ea35b8d0dd4231c62275111f5e4c348560797a18e210dfe009ccb01a0479ab88f59927d23f02&token=1677165237&lang=zh_CN#rd",
-					"scene": null
-				},
-				{
-					"id": 20,
-					"name": "引导",
-					"pathName": "pages/tools/guide/index",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 21,
-					"name": "更多应用",
-					"pathName": "pages/tool/tool",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 21,
-					"name": "空教室",
-					"pathName": "pages/tools/emptyroom/emptyroom",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "表白墙",
-					"pathName": "pages/tools/confession/confession",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "手动设置班级",
-					"pathName": "pages/setClass/setClass",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "设置上课时间",
-					"pathName": "pages/course/setTime/setTime",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 25,
-					"name": "毒鸡汤",
-					"pathName": "pages/soul/soul",
-					"query": "egg=1",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "登录",
-					"pathName": "pages/login/login",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "个人设置",
-					"pathName": "pages/my/set/set",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "添加课程",
-					"pathName": "pages/course/add/add",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "设置课表背景",
-					"pathName": "pages/course/setBg/setBg",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 29,
-					"name": "排名",
-					"pathName": "pages/tools/score/rank/rank",
-					"query": "source=score&term=2018-2019-1",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "绩点排行",
-					"pathName": "pages/tools/rank/rank",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "提交毒鸡汤",
-					"pathName": "pages/soul/submit/submit",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "学分列表",
-					"pathName": "pages/tools/credit/credit",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 33,
-					"name": "理论课列表",
-					"pathName": "pages/tools/course/theory/theory",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "实训课程",
-					"pathName": "pages/tools/course/train/train",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "选修课",
-					"pathName": "pages/tools/course/public/public",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 36,
-					"name": "通讯录",
-					"pathName": "pages/tools/friends/friends",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "选修推荐",
-					"pathName": "pages/tools/public_course/public_course",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 38,
-					"name": "水电查询",
-					"pathName": "pages/tools/quantity/quantity",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "设置宿舍信息",
-					"pathName": "pages/my/dormitory/dormitory",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 40,
-					"name": "毕业回忆录",
-					"pathName": "pages/tools/summary/summary",
-					"query": "id=15230203124",
-					"scene": null
-				},
-				{
-					"id": 41,
-					"name": "课程管理",
-					"pathName": "pages/course/list/list",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "早起打卡",
-					"pathName": "pages/tools/clockin/clockin",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "查题",
-					"pathName": "pages/tools/question/question",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "打卡轨迹",
-					"pathName": "pages/tools/clockin/list/list",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "个人信息",
-					"pathName": "pages/my/userInfo/userInfo",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "校园导览",
-					"pathName": "pages/tools/guide/index",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "失物招领",
-					"pathName": "pages/tools/lost/lost",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "找社团",
-					"pathName": "pages/tools/club/club",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "社团详情",
-					"pathName": "pages/tools/club/item/item",
-					"query": "id=2",
-					"scene": null
-				},
-				{
-					"id": 50,
-					"name": "找同乡",
-					"pathName": "pages/tools/city/city",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "录取查询",
-					"pathName": "pages/tools/matriculate/matriculate",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "专插本查询",
-					"pathName": "pages/tools/matriculate/zcb/zcb",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 53,
-					"name": "舔狗日记",
-					"pathName": "pages/tools/tiangou/tiangou",
-					"query": "id=103",
-					"scene": null
-				},
-				{
-					"id": 54,
-					"name": "分享课表",
-					"pathName": "pages/course/share/share",
-					"query": "term=20191&term_name=2019-2020学年 第二学期",
-					"scene": null
-				},
-				{
-					"id": 55,
-					"name": "查看分享课表",
-					"pathName": "pages/course/share/share",
-					"query": "stu_id=201802004663&term=20190&term_name=2019-2020学年 第一学期",
-					"scene": null
-				},
-				{
-					"id": 56,
-					"name": "本科查询",
-					"pathName": "pages/tools/matriculate/bk/bk",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "新生专题",
-					"pathName": "pages/tools/newstudent/newstudent",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 58,
-					"name": "运动排名",
-					"pathName": "pages/tools/sport/sport",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "运动详情",
-					"pathName": "pages/tools/sport/detail/detail",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "电话本",
-					"pathName": "pages/tools/phone/phone",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "使用条款",
-					"pathName": "pages/terms/terms",
-					"scene": null
-				}
-			]
-		}
-	}
+  "description": "项目配置文件。",
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "enhance": false,
+    "postcss": true,
+    "preloadBackgroundData": false,
+    "minified": true,
+    "newFeature": true,
+    "coverView": true,
+    "nodeModules": false,
+    "autoAudits": false,
+    "showShadowRootInWxmlPanel": true,
+    "scopeDataCheck": false,
+    "uglifyFileName": true,
+    "checkInvalidKey": true,
+    "checkSiteMap": true,
+    "uploadWithSourceMap": true,
+    "compileHotReLoad": false,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    },
+    "bundle": false,
+    "useIsolateContext": true,
+    "useCompilerModule": false,
+    "userConfirmedUseCompilerModuleSwitch": false,
+    "useMultiFrameRuntime": false,
+    "useApiHook": true,
+    "userConfirmedBundleSwitch": false,
+    "packNpmManually": false,
+    "packNpmRelationList": [],
+    "minifyWXSS": true
+  },
+  "compileType": "miniprogram",
+  "libVersion": "2.12.2",
+  "appid": "wxe0f03cdec8ab9416",
+  "projectname": "%E4%BA%91%E5%B0%8F%E6%99%BA",
+  "simulatorType": "wechat",
+  "simulatorPluginLibVersion": {},
+  "condition": {
+    "search": {
+      "list": []
+    },
+    "conversation": {
+      "list": []
+    },
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "id": -1,
+          "name": "评教",
+          "pathName": "pages/tools/assess/assess",
+          "query": ""
+        },
+        {
+          "id": -1,
+          "name": "应用",
+          "pathName": "pages/tool/tool",
+          "query": ""
+        },
+        {
+          "id": -1,
+          "name": "校历",
+          "pathName": "pages/tools/calendar/calendar",
+          "query": ""
+        },
+        {
+          "id": -1,
+          "name": "四六级",
+          "pathName": "pages/tools/cet/cet",
+          "query": ""
+        },
+        {
+          "id": -1,
+          "name": "羊城通",
+          "pathName": "pages/tools/yct/yct",
+          "query": ""
+        },
+        {
+          "id": -1,
+          "name": "新闻",
+          "pathName": "pages/news/news",
+          "query": ""
+        },
+        {
+          "id": 6,
+          "name": "绑定教务系统",
+          "pathName": "pages/bind/bind",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "我的",
+          "pathName": "pages/my/my",
+          "query": ""
+        },
+        {
+          "id": -1,
+          "name": "活动",
+          "pathName": "pages/tools/countdown/countdown",
+          "query": ""
+        },
+        {
+          "id": -1,
+          "name": "成绩",
+          "pathName": "pages/tools/score/score",
+          "query": ""
+        },
+        {
+          "id": -1,
+          "name": "成绩分析",
+          "pathName": "pages/tools/score/ana/ana",
+          "query": ""
+        },
+        {
+          "id": -1,
+          "name": "考勤记录",
+          "pathName": "pages/tools/attendance/attendance",
+          "query": ""
+        },
+        {
+          "id": -1,
+          "name": "考试安排",
+          "pathName": "pages/tools/exam/exam",
+          "query": ""
+        },
+        {
+          "id": -1,
+          "name": "课表",
+          "pathName": "pages/course/course",
+          "query": ""
+        },
+        {
+          "id": -1,
+          "name": "添加等级考试",
+          "pathName": "pages/tools/exam/add/add",
+          "query": ""
+        },
+        {
+          "id": 16,
+          "name": "时光",
+          "pathName": "pages/my/time/time",
+          "query": ""
+        },
+        {
+          "id": -1,
+          "name": "资讯",
+          "pathName": "pages/news/news",
+          "query": ""
+        },
+        {
+          "id": 19,
+          "name": "推文",
+          "pathName": "pages/web/web",
+          "query": "src=https://mp.weixin.qq.com/s?__biz=MzI1NTUwNDIzNQ==&mid=2247484116&idx=1&sn=59418ea4f122e80e561def4650c9e302&chksm=ea35b8d0dd4231c62275111f5e4c348560797a18e210dfe009ccb01a0479ab88f59927d23f02&token=1677165237&lang=zh_CN#rd",
+          "scene": null
+        },
+        {
+          "id": 20,
+          "name": "引导",
+          "pathName": "pages/tools/guide/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": 21,
+          "name": "更多应用",
+          "pathName": "pages/tool/tool",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": 21,
+          "name": "空教室",
+          "pathName": "pages/tools/emptyroom/emptyroom",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "表白墙",
+          "pathName": "pages/tools/confession/confession",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "手动设置班级",
+          "pathName": "pages/setClass/setClass",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "设置上课时间",
+          "pathName": "pages/course/setTime/setTime",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": 25,
+          "name": "毒鸡汤",
+          "pathName": "pages/soul/soul",
+          "query": "egg=1",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "登录",
+          "pathName": "pages/login/login",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "个人设置",
+          "pathName": "pages/my/set/set",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "添加课程",
+          "pathName": "pages/course/add/add",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "设置课表背景",
+          "pathName": "pages/course/setBg/setBg",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": 29,
+          "name": "排名",
+          "pathName": "pages/tools/score/rank/rank",
+          "query": "source=score&term=2018-2019-1",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "绩点排行",
+          "pathName": "pages/tools/rank/rank",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "提交毒鸡汤",
+          "pathName": "pages/soul/submit/submit",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "学分列表",
+          "pathName": "pages/tools/credit/credit",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": 33,
+          "name": "理论课列表",
+          "pathName": "pages/tools/course/theory/theory",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "实训课程",
+          "pathName": "pages/tools/course/train/train",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "选修课",
+          "pathName": "pages/tools/course/public/public",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": 36,
+          "name": "通讯录",
+          "pathName": "pages/tools/friends/friends",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "选修推荐",
+          "pathName": "pages/tools/public_course/public_course",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": 38,
+          "name": "水电查询",
+          "pathName": "pages/tools/quantity/quantity",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "设置宿舍信息",
+          "pathName": "pages/my/dormitory/dormitory",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": 40,
+          "name": "毕业回忆录",
+          "pathName": "pages/tools/summary/summary",
+          "query": "id=15230203124",
+          "scene": null
+        },
+        {
+          "id": 41,
+          "name": "课程管理",
+          "pathName": "pages/course/list/list",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "早起打卡",
+          "pathName": "pages/tools/clockin/clockin",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "查题",
+          "pathName": "pages/tools/question/question",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "打卡轨迹",
+          "pathName": "pages/tools/clockin/list/list",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "个人信息",
+          "pathName": "pages/my/userInfo/userInfo",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "校园导览",
+          "pathName": "pages/tools/guide/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "失物招领",
+          "pathName": "pages/tools/lost/lost",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "找社团",
+          "pathName": "pages/tools/club/club",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "社团详情",
+          "pathName": "pages/tools/club/item/item",
+          "query": "id=2",
+          "scene": null
+        },
+        {
+          "id": 50,
+          "name": "找同乡",
+          "pathName": "pages/tools/city/city",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "录取查询",
+          "pathName": "pages/tools/matriculate/matriculate",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "专插本查询",
+          "pathName": "pages/tools/matriculate/zcb/zcb",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": 53,
+          "name": "舔狗日记",
+          "pathName": "pages/tools/tiangou/tiangou",
+          "query": "id=103",
+          "scene": null
+        },
+        {
+          "id": 54,
+          "name": "分享课表",
+          "pathName": "pages/course/share/share",
+          "query": "term=20191&term_name=2019-2020学年 第二学期",
+          "scene": null
+        },
+        {
+          "id": 55,
+          "name": "查看分享课表",
+          "pathName": "pages/course/share/share",
+          "query": "stu_id=201802004663&term=20190&term_name=2019-2020学年 第一学期",
+          "scene": null
+        },
+        {
+          "id": 56,
+          "name": "本科查询",
+          "pathName": "pages/tools/matriculate/bk/bk",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "新生专题",
+          "pathName": "pages/tools/newstudent/newstudent",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": 58,
+          "name": "运动排名",
+          "pathName": "pages/tools/sport/sport",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "运动详情",
+          "pathName": "pages/tools/sport/detail/detail",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "电话本",
+          "pathName": "pages/tools/phone/phone",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "使用条款",
+          "pathName": "pages/terms/terms",
+          "scene": null
+        }
+      ]
+    }
+  }
 }

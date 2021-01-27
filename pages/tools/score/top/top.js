@@ -46,7 +46,8 @@ Page({
     app.httpRequest({
       url: 'score/getCourseScoreData',
       data: {
-        course: that.data.score.name
+        course: that.data.score.name,
+        num: that.data.score.num
       },
       success: function (res) {
         if (res.data.status == 0) {
