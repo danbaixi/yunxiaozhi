@@ -77,7 +77,7 @@ Page({
       let times = []
       for(let i=0,len=courseTimes.length;i<len;i++){
         let t = courseTimes[i]
-        if(t[1] == ''){
+        if(t[1] == '' && courseTimes[i+1] && courseTimes[i+1][1]){
           times.push(`${t[0]}~${courseTimes[i+1][1]}`)
           i++
         }else{

@@ -595,6 +595,8 @@ Page({
           that.getCourseListRequest()
           let time = (new Date()).getTime();
           wx.setStorageSync('course_update_time', time);
+          //切换为当前学期
+          courseFn.setCourseToNowTerm()
           app.msg("更新成功", 'success')
         } else {
           if(res.data.status == 1005){

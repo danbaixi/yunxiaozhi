@@ -8,7 +8,7 @@ function getNowTerm(){
   }
   return {
     term: nowTerm.term,
-    name: this.term2Name(nowTerm.term),
+    name: term2Name(nowTerm.term),
     term_date: nowTerm.date
   }
 }
@@ -32,8 +32,15 @@ function getNowCourseTerm(){
   return cache
 }
 
+//将课表学期切到当前学期
+function setCourseToNowTerm(){
+  let term = getNowTerm()
+  wx.setStorageSync('course_term', term.term)
+}
+
 module.exports = {
   getNowTerm: getNowTerm,
   term2Name: term2Name,
-  getNowCourseTerm: getNowCourseTerm
+  getNowCourseTerm: getNowCourseTerm,
+  setCourseToNowTerm: setCourseToNowTerm
 }
