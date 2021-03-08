@@ -98,6 +98,9 @@ Page({
     }
 
     var section = week + ' ' + jie + '-' + (jie + jieshu - 1) + '节';
+    if(isNaN(jieshu)){
+      section = week + ' ' + jie + '-' + jie  + '节'
+    }
 
     data.section = section
     data.time = time
@@ -142,7 +145,7 @@ Page({
 
   getStudent:function(data){
     var that = this
-    var section = data.jie + '-' + (parseInt(data.jie) + parseInt(data.jieshu) - 1)
+    var section = data.jie + (data.jieshu > 1 ? ('-' + (parseInt(data.jie) + parseInt(data.jieshu) - 1)) : '')
     let courseTerm = courseFn.getNowCourseTerm()
     app.httpRequest({
       url: "course/getSameCourseStudent",

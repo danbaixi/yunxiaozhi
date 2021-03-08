@@ -29,7 +29,7 @@
     <view class="cu-list menu" wx:if="{{course.length>0}}">
       <view class="cu-item" wx:for="{{course}}" wx:key="key" bindtap='displayCourseInfo' data-num='{{item.indexNum}}'>
         <view class="content text-cut">
-          <text class="text-grey">{{item.jie}}-{{item.jie_end}} </text>
+          <text class="text-grey">{{item.jie}}-{{item.jie_end ? item.jie_end : item.jie}} </text>
           <text class="text-black">{{item.name}}</text>
         </view>
         <view class="action">

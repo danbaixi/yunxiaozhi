@@ -81,7 +81,7 @@ Page({
 
   getList: function (data) {
     var that = this
-    var section = data.jie + '-' + (parseInt(data.jie) + parseInt(data.jieshu) - 1)
+    var section = data.jie + (data.jieshu > 1 ? ('-' + (parseInt(data.jie) + parseInt(data.jieshu) - 1)) : '')
     let courseTerm = courseFn.getNowCourseTerm()
     that.setData({
       loading: true
