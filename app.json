@@ -24,8 +24,6 @@
     "pages/tools/exam/add/add",
     "pages/my/time/time",
     "pages/course/info/students/students",
-    "pages/news/news",
-    "pages/news/item/item",
     "pages/setClass/setClass",
     "pages/loginTips/loginTips",
     "pages/course/setTime/setTime",

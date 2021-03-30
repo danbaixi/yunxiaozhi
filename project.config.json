@@ -25,7 +25,7 @@
 		},
 		"bundle": false,
 		"useIsolateContext": true,
-		"useCompilerModule": false,
+		"useCompilerModule": true,
 		"userConfirmedUseCompilerModuleSwitch": false,
 		"useMultiFrameRuntime": false,
 		"useApiHook": true,

@@ -63,7 +63,7 @@
             </view>
           </view>
           <view class="action">
-            <text class="text-{{s.score<60&&type==0?'red':'theme'}} text-lg">{{s.score}}</text>
+            <text class="text-{{s.score<60?'red':'theme'}} text-lg">{{s.score}}</text>
           </view>
         </view>
       </view>
