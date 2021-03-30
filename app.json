@@ -68,7 +68,8 @@
     "pages/tools/phone/phone",
     "pages/course/update/update",
     "pages/terms/terms",
-    "pages/discount/discount"
+    "pages/discount/discount",
+    "pages/tools/score/fail/fail"
   ],
   "window": {
     "navigationStyle": "custom",
