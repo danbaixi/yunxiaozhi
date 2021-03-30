@@ -67,6 +67,14 @@ Page({
           timesData[1][3][1] = "11:55"
         }
       }
+      //网络公选课的上课时间
+      if(jieshu == 1){
+        if(jie == 7){
+          timesData[area-1][jie-1][1] = "16:20"
+        }else if(jie == 8){
+          timesData[area-1][jie-1][0] = "16:25"
+        }
+      }
     }
     let courseTimes = [];
     if(area > 0){
