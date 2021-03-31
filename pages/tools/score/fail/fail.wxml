@@ -1,2 +1,46 @@
-<!--pages/tools/score/fail.wxml-->
-<text>pages/tools/score/fail.wxml</text>
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">挂科率榜</view>
+</cu-custom>
+<view class="container">
+  <view class="padding-lr padding-top">
+    <view class="bg-white y-radius">
+      <view class="padding-lr padding-top-sm data-info">
+        <view>暂只显示前{{rank.length?rank.length:200}}条数据</view>
+        <view class="flex color-info">
+          <view class="color-item bg-olive"></view>
+          <view class="padding-lr-sm">已过科目</view>
+          <view class="color-item bg-red"></view>
+          <view class="padding-left-sm">已挂科目</view>
+        </view>
+      </view>
+      <view class="cu-list menu y-radius">
+        <view class="cu-item">
+          <view class="content">只显示本人已考科目</view>
+          <view class="action">
+            <switch class="theme sm" checked="{{onlyMe}}" bindchange="setOnlyMe"></switch>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="padding">
+    <list-loading loading="{{loading}}"></list-loading>
+    <view class="list" wx:if="{{!loading}}">
+      <view class="padding y-radius margin-bottom-sm shadow-wrap item {{onlyMe&&item.has == 0 ?'hidden':''}} bg-{{item.failed?'red':(item.has&&!onlyMe?'olive':'white')}}" 
+      wx:for="{{rank}}" wx:key="key">
+        <view class="fail-rate text-xl text-bold text-{{item.has&&!onlyMe||item.failed?'white':'orange'}}">{{ item.rate }}%</view>
+        <view class="course">
+          <view class="name text-xl text-cut">{{ item.name }}</view>
+          <view class="info text-{{item.has&&!onlyMe||item.failed ? 'white':'gray'}}">
+            <text class="padding-right">总数：{{item.total}}</text>
+            <text>挂科：{{item.fail}}</text>
+          </view>
+        </view>
+        <view class="rank text-xxl text-{{item.has&&!onlyMe||item.failed ? 'white':'theme'}}">
+          #{{ item.rank }}
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

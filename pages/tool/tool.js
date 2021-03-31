@@ -9,7 +9,6 @@ Page({
     gridCol: 5,
     study: [
       {
-        icon: 'form',
         color: 'blue',
         badge: 0,
         name: '成绩查询',
@@ -17,7 +16,6 @@ Page({
         needLogin:true,
         url: '../tools/score/score?from=index',
       }, {
-        icon: 'gpa',
         color: 'green',
         badge: 0,
         name: '绩点排行',
@@ -25,7 +23,6 @@ Page({
         needLogin: true,
         url: '../tools/rank/rank?from=index',
       }, {
-        icon: 'rank',
         color: 'green',
         badge: 0,
         name: '学业分析',
@@ -33,7 +30,20 @@ Page({
         needLogin: true,
         url: '../tools/score/ana/ana?from=index',
       }, {
-        icon: 'list',
+        color: 'green',
+        badge: 0,
+        name: '已修科目',
+        icon: 'score_list',
+        needLogin: true,
+        url: '/pages/tools/credit/credit',
+      }, {
+        color: 'green',
+        badge: 0,
+        name: '挂科率榜',
+        icon: 'score_fail',
+        needLogin: true,
+        url: '/pages/tools/score/fail/fail',
+      }, {
         color: 'orange',
         badge: 0,
         name: '考勤记录',
@@ -41,7 +51,6 @@ Page({
         needLogin: true,
         url: '../tools/attendance/attendance?from=index',
       }, {
-        icon: 'remind',
         color: 'olive',
         badge: 0,
         name: '考试安排',
@@ -49,7 +58,6 @@ Page({
         needLogin: true,
         url: '../tools/exam/exam?from=index',
       }, {
-        icon: 'evaluate',
         color: 'red',
         badge: 0,
         name: '一键评教',
@@ -57,19 +65,7 @@ Page({
         needLogin: true,
         url: '../tools/assess/assess?from=index',
       }, 
-      // {
-      //   icon: 'question',
-      //   color: 'cyan',
-      //   badge: 0,
-      //   name: '课本答案',
-      //   icon: 'question',
-      //   needLogin: false,
-      //   appid: "wxea8b994be0abb105",
-      //   path: "pages/index/index",
-      //   url: "",
-      // }, 
       {
-        icon: 'evaluate',
         color: 'red',
         badge: '',
         name: '课程管理',

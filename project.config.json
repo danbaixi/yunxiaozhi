@@ -25,7 +25,7 @@
 		},
 		"bundle": false,
 		"useIsolateContext": true,
-		"useCompilerModule": true,
+		"useCompilerModule": false,
 		"userConfirmedUseCompilerModuleSwitch": false,
 		"useMultiFrameRuntime": false,
 		"useApiHook": true,
@@ -473,6 +473,13 @@
 					"id": -1,
 					"name": "使用条款",
 					"pathName": "pages/terms/terms",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "挂科率榜",
+					"pathName": "pages/tools/score/fail/fail",
 					"scene": null
 				}
 			]

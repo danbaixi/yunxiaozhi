@@ -8,7 +8,8 @@ Page({
     rank: [],
     score: [],
     fail: [],
-    search: ''
+    onlyMe: false,
+    loading: false
   },
 
   /**
@@ -28,24 +29,27 @@ Page({
   //获取数据
   getData: function(){
     const self = this
+    self.setData({
+      loading: true
+    })
     app.promiseRequest({
       url: 'score/getScoreFailRank'
     }).then((res) => {
+      self.setData({
+        loading: false
+      })
       if(res.status == 0){
         //处理数据
         let {fail,rank,score} = res.data
+        let rankNum = 1
         for(let item of rank){
-          item['display'] = 1
           item['has'] = 0
-          item['fail'] = 0
-          if(self.data.search != '' && item.indexOf(self.data.search) == -1){
-            item['display'] = 0
-          }
-          if(score.indexOf(item) != -1){
+          item['failed'] = 0
+          item['rank'] = rankNum++
+          if(score.indexOf(item['name']) != -1){
             item['has'] = 1
-            if(fail.indexOf(item) != -1){
-              console.log(item)
-              item['fail'] = 1
+            if(fail.indexOf(item['name']) != -1){
+              item['failed'] = 1
             }
           }
         }
@@ -59,6 +63,12 @@ Page({
       app.msg(res.data.message)
     }).catch((msg) => {
       app.msg(msg)
+    })
+  },
+
+  setOnlyMe: function(){
+    this.setData({
+      onlyMe: !this.data.onlyMe
     })
   }
 })

@@ -1,1 +1,32 @@
-/* pages/tools/score/fail.wxss */
+.list{
+  padding-top: 0;
+}
+.list > .item{
+  display: flex;
+  position: relative;
+  align-items: center;
+}
+.item .fail-rate{
+  padding-right: 30rpx;
+}
+.item .rank{
+  margin-left: auto;
+}
+.item .course{
+  line-height: 1.5;
+  max-width: 60%;
+}
+.item.hidden{
+  display: none;
+}
+.data-info{
+  display: flex;
+  justify-content: space-between;
+}
+.color-info{
+  align-items: center;
+}
+.color-item{
+  width: 32rpx;
+  height: 32rpx;
+}
