@@ -3,7 +3,7 @@
 	<view slot="content">早起打卡</view>
 </cu-custom>
 <view class="bg" style="width:{{winWidth}}px;height:{{winHeight}}px;top:{{customBar}}px">
-  <image mode="aspectFill" src="/pages/assets/imgs/other/clockin-bg.png"></image>
+  <image mode="aspectFill" src="https://mmbiz.qpic.cn/mmbiz_png/YWKTC18p77J5UftPiaFHMPk0qsa3fE6GmyY8Au7eleNMugrDXt4EjibzvTlNCg7RcHm7vpyZib8YKMq4WQGqCAGlw/0?wx_fmt=png"></image>
 </view>
 <view class="option">
   <view class="item text-white bg-yellow" bindtap="showRule">

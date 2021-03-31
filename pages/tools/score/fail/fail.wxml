@@ -5,15 +5,6 @@
 <view class="container">
   <view class="padding-lr padding-top">
     <view class="bg-white y-radius">
-      <view class="padding-lr padding-top-sm data-info">
-        <view>暂只显示前{{rank.length?rank.length:200}}条数据</view>
-        <view class="flex color-info">
-          <view class="color-item bg-olive"></view>
-          <view class="padding-lr-sm">已过科目</view>
-          <view class="color-item bg-red"></view>
-          <view class="padding-left-sm">已挂科目</view>
-        </view>
-      </view>
       <view class="cu-list menu y-radius">
         <view class="cu-item">
           <view class="content">只显示本人已考科目</view>
@@ -21,6 +12,15 @@
             <switch class="theme sm" checked="{{onlyMe}}" bindchange="setOnlyMe"></switch>
           </view>
         </view>
+      </view>
+      <view class="padding-lr data-info">
+        <view class="flex color-info">
+          <view class="color-item bg-olive"></view>
+          <view class="padding-lr-sm">已过科目</view>
+          <view class="color-item bg-red"></view>
+          <view class="padding-left-sm">已挂科目</view>
+        </view>
+        <view><button class="wx-share text-df line-blue" open-type="share">分享 <text class="icon icon-share"></text></button></view>
       </view>
     </view>
   </view>

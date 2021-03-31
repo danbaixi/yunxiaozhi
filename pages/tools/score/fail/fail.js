@@ -23,7 +23,12 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    const img = 'https://mmbiz.qpic.cn/mmbiz_png/YWKTC18p77J5UftPiaFHMPk0qsa3fE6GmBjibAqtvWzTcWDFagRlYsPwctA1sfggUicpic5mLQ6vXJpVXzAqibLoyKQ/0?wx_fmt=png';
+    return {
+      title: '白云挂科率最高的竟然是...',
+      imageUrl: img,
+      path: this.route
+    }
   },
 
   //获取数据

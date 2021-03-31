@@ -12,7 +12,7 @@
   </view>
   <view class="options text-center">
     <view><button class="cu-btn line-theme" open-type="share">分享</button></view>
-    <view class="get" bindtap="get"><image src="/pages/assets/imgs/other/tiangou.gif"></image></view>
+    <view class="get" bindtap="get"><image src="https://mmbiz.qpic.cn/mmbiz_gif/YWKTC18p77J5UftPiaFHMPk0qsa3fE6Gm2bxfUNia5JHCA9K2tzY2QLymCssbbKWJXibibmoJRvf2VMQA682Mn1ouw/0?wx_fmt=gif"></image></view>
     <view><button class="cu-btn line-yellow" bindtap="copy">复制</button></view>
   </view>
 </view>
