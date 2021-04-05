@@ -168,25 +168,3 @@ button::after{
   background: transparent;
   z-index: 1;
 }
-.add_tips{
-  position: absolute;
-  right: 10px;
-  padding: 4px 10px;
-  background: var(--theme);
-  color: #fff;
-  border-radius: 4px;
-  z-index: 9999;
-}
-.add_tips .icon-close{
-  padding: 10px 2px;
-}
-.add_tips::before{
-  content: " ";
-  position: absolute;
-  top: -22px;
-  right: 50px;
-  border-width: 14px;
-  border-style: solid;
-  border-color: transparent var(--theme) transparent transparent;
-  transform: rotate(90deg);
-}

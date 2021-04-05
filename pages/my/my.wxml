@@ -1,7 +1,3 @@
-<view class="add_tips shadow" style="top:{{customBar + 8}}px" wx:if="{{add_tips}}">
-  <view>点击<text class="icon-more"></text>添加到我的小程序  <text class="icon-close" bindtap="closeAddTip"></text></view>
-  <view>微信下拉就能找到我啦</view>
-</view>
 <view class="bg">
   <image mode="widthFix" src="/pages/assets/imgs/other/jianying.png"></image>
 </view>
@@ -75,12 +71,6 @@
         <view class="content">
           <text class="icon-mark lg text-black"></text>
           <text class="text-black">问题反馈</text>
-        </view>
-      </view>
-      <view class="cu-item arrow" bindtap="showAddTip">
-        <view class="content">
-          <text class="icon-favor lg text-black"></text>
-          <text class="text-black">添加到我的小程序</text>
         </view>
       </view>
       <view class="cu-item arrow">

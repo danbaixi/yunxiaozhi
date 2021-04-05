@@ -1,5 +1,7 @@
 const util = require('../../utils/util');
 const app = getApp();
+const { getUserData, getCountDatas } = require('../api/user')
+const { openArticle, exitSaveData } = require('../../utils/common')
 Page({
 
   /**
@@ -12,9 +14,8 @@ Page({
     user_name:"点击登录",
     user_img:"http://yunxiaozhi-1251388077.cosgz.myqcloud.com/user_imgs/defalut.png",
     visible:false,
+    hasCountData: false,
     customBar: app.globalData.customBar,
-    statusBar: app.globalData.statusBar,
-    custom: app.globalData.custom,
     credit:0,
     attendance:0,
     exam:0,
@@ -66,17 +67,10 @@ Page({
   onShow:function(){
     this.getUserInfo();
     if(app.getUserId()){
-      if(this.data.credit == 0 && this.data.attendance == 0 && this.data.exam == 0){
+      if(!this.data.hasCountData){
         this.getCountData()
       }
-      if(this.data.water == 0 && this.data.electricity == 0){
-        this.getQuantityData()
-      }
     }
-  },
-
-  onPullDownRefresh: function () {
-    
   },
 
   onShareAppMessage:function () {
@@ -87,24 +81,22 @@ Page({
     if(!app.getLoginStatus()){
       app.msg('请先登录')
       wx.navigateTo({
-        url: '/pages/login/login',
+        url: '/pages/login/login?redirect=' + this.route,
       })
       return
     }
 
     if (!app.getUserId()){
       wx.navigateTo({
-        url: '/pages/bind/bind',
+        url: '/pages/bind/bind?redirect=' + this.route,
       })
       return
     }
-
     app.msg("暂不支持解绑")
-
   },
   login:function(){
     wx.navigateTo({
-      url: '/pages/login/login',
+      url: '/pages/login/login?redirect=' + this.route,
     })
   },
 
@@ -120,9 +112,7 @@ Page({
     if (userInfo && user_id){
       user_name = userInfo.nickName
       user_img = userInfo.avatarUrl
-      app.promiseRequest({
-        url: 'user/getInfo'
-      }).then((result) => {
+      getUserData().then((result) => {
         let data = result.data
         user_name = util.isDefaultNickname(data.user_name) ? data.nickname : data.user_name
         user_img = data.user_img ? app.globalData.headImgUrl + data.user_img : data.avatar
@@ -130,6 +120,8 @@ Page({
           user_name: user_name,
           user_img: user_img,
         })
+      }).catch((err) => {
+        app.msg(err)
       })
     }
     if (user_id){
@@ -186,11 +178,11 @@ Page({
     wx.showModal({
       title:'温馨提示',
       content: '确定要退出账号吗？',
-      success:function(res){
+      success: (res) => {
         if(res.confirm){
-          app.exitSaveData()
+          exitSaveData()
           wx.navigateTo({
-            url: '/pages/login/login',
+            url: '/pages/login/login?redirect=' + this.route,
           })
         }
       }
@@ -203,12 +195,10 @@ Page({
       return
     }
     let _this = this
-    app.httpRequest({
-      url:'user/getCountData',
-      success:function(res){
-        if(res.data.status == 0){
-          _this.setData(res.data.data)
-        }
+    getCountDatas().then((res) => {
+      if(res.status == 0){
+        res.data.hasCountData = true
+        _this.setData(res.data)
       }
     })
   },
@@ -239,30 +229,10 @@ Page({
     })
   },
   focus_me:function(){
-    wx.navigateTo({
-      url: '/pages/article/article?src=' + encodeURIComponent(this.data.focus_article),
-    })
-  },
-
-  //获取水电
-  getQuantityData: function () {
-    if (!app.getUserId()) {
-      return
-    }
-    let _this = this
-    app.httpRequest({
-      url: 'dormitory/getQuantityDetail',
-      success: function (res) {
-        if (res.data.data != []) {
-          _this.setData(res.data.data)
-        }
-      }
-    })
+    openArticle(this.data.focus_article)
   },
   question:function(){
-    wx.navigateTo({
-      url: '/pages/article/article?src=' + encodeURIComponent(this.data.question_article),
-    })
+    openArticle(this.data.question_article)
   },
   showAddTip:function(){
     this.setData({

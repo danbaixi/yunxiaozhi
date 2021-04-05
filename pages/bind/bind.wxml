@@ -32,9 +32,11 @@
       <view class="padding-top-xl flex flex-direction">
         <button class="cu-btn round bg-theme shadow text-white lg" bindtap='login'>绑定</button>
       </view>
-      
+      <view class="padding-top text-center">
+        <text class="text-gray" bindtap="loginTest">使用测试账号登录</text>
+      </view>
       <view class="padding-top-xl text-center">
-        <text bindtap="help" class="text-gray">新生登录指南</text>
+        <text bindtap="help" class="text-yellow">新生登录指南</text>
       </view>
 
     </form>

@@ -1,5 +1,6 @@
-var app = getApp()
-var util = require('../../utils/util.js');
+const app = getApp()
+const util = require('../../utils/util.js');
+const { likeSoul } = require('../api/soul')
 Page({
   data: {
     tools: [
@@ -157,6 +158,12 @@ Page({
       })
     }
     this.newStudentTips()
+    if(!wx.getStorageSync('add_my_tips')){
+      this.setData({
+        add_tips: true
+      })
+    }
+    this.getMyExam()
   },
 
   onShow:function(){
@@ -196,7 +203,7 @@ Page({
     that.getNowWeek();//获取第几周
     that.getWeekday();//获取星期几
     that.getCourse(that.data.now_week);//获取课表
-    that.getMyExam();//获取我的考试
+    //that.getMyExam();//获取我的考试
     //that.getNews()
 
     //判断是否为本班课表
@@ -438,7 +445,7 @@ Page({
   /** 跳转登录页面 */
   goLogin:function(){
     wx.navigateTo({
-      url: '../login/login',
+      url: '../login/login?redirect=' + this.route,
     })
     this.hideVersionTips()
   },
@@ -571,7 +578,7 @@ Page({
       url: '../tools/exam/exam?currentTab=1',
     })
   },
-  close_tips(){
+  closeAddTip(){
     var time = (new Date).getTime()
     this.setData({
       add_tips:false
@@ -581,31 +588,12 @@ Page({
 
   //获取毒鸡汤
   getSoul: function () {
-    var list = wx.getStorageSync('souls')
-    var soulsUpdate = wx.getStorageSync('soul_update')
-    var that = this
-    var soul = false
-    var time = Math.floor((new Date).getTime() / 1000)
-    that.setData({
-      likeSoul:false
-    })
-
-    if(!list || time > soulsUpdate + 60 * 60){
-      app.requestSouls().then((data) => {
-        list = data.data
-        wx.setStorageSync('souls', list)
-        wx.setStorageSync('soul_update', time)
-        soul = list[Math.floor(Math.random() * list.length)]
-        that.setData({
-          soul: soul
-        })
-      }).catch((message) => {
-        console.log('毒鸡汤' + message)
-      })
-    }else{
-      soul = list[Math.floor(Math.random() * list.length)]
-      that.setData({
-        soul: soul
+    const list = wx.getStorageSync('souls')
+    if(list){
+      let soul = list[Math.floor(Math.random() * list.length)]
+      this.setData({
+        soul: soul,
+        likeSoul:false
       })
     }
   },
@@ -617,8 +605,12 @@ Page({
       return
     }
     let id = e.currentTarget.dataset.id
-    let stu_id = wx.getStorageSync('user_id')
-    app.likeSoul(id,stu_id).then((data) => {
+    let stu_id = app.getUserId()
+    if(!stu_id){
+      app.msg("登录才能点赞")
+      return
+    }
+    likeSoul({id,stu_id}).then((data) => {
       let soul = that.data.soul
       soul.like_count = soul.like_count + 1;
       that.setData({
@@ -626,7 +618,7 @@ Page({
         soul: soul
       })
     }).catch((message) => {
-      app.msg(res.data.message)
+      app.msg(message)
     })
   },
 

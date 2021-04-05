@@ -1,4 +1,5 @@
 const app = getApp()
+const { createSoul } = require('../../api/soul')
 Page({
 
   /**
@@ -41,23 +42,18 @@ Page({
       title: '提交中',
       mask: true
     })
-    app.httpRequest({
-      url:'soul/create',
-      method:'POST',
-      data:{
+    createSoul({
         title: _this.data.soul,
         name:_this.data.name,
         session: session
-      },
-      success:function(res){
-        app.msg(res.data.message)
-        if(res.data.status == 0){
-          _this.setData({
-            soul:'',
-            name:''
-          })
-          return
-        }
+    }).then((res) => {
+      app.msg(res.message)
+      if(res.status == 0){
+        _this.setData({
+          soul:'',
+          name:''
+        })
+        return
       }
     })
   }

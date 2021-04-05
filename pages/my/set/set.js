@@ -1,4 +1,6 @@
 const app = getApp();
+const { exitSaveData } = require('../../../utils/common')
+const { setUserConfig } = require('../../api/user')
 Page({
   /**
    * 页面的初始数据
@@ -54,9 +56,10 @@ Page({
   displayName: function (e) {
     let field = e.currentTarget.dataset.field
     let value = e.detail.value ? 1 : 0
-    app.updateSetting(field,value).then((data) => {
-      //app.msg("设置成功","success")
-    }).catch((message) => {
+    setUserConfig({
+      field,
+      value
+    }).then().catch((message) => {
       app.msg(message)
     })
   },
@@ -65,8 +68,7 @@ Page({
   hideSoul:function(e){
     let field = e.currentTarget.dataset.field
     let value = e.detail.value ? 1 : 0
-    app.updateSetting(field,value).then((data) => {
-      //app.msg("设置成功","success")
+    setUserConfig({field,value}).then((data) => {
       wx.setStorageSync("hide_soul", value)
     }).catch((message) => {
       app.msg(message)
@@ -119,7 +121,7 @@ Page({
                     app.msg(res.data.message)
                     return
                   }
-                  app.exitSaveData()
+                  exitSaveData()
                   wx.navigateTo({
                     url: '/pages/login/login',
                   })

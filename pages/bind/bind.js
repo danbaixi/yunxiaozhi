@@ -1,5 +1,7 @@
 const util = require('../../utils/util');
 const md5 = require('../../utils/md5');
+const { loginRedirect, updateAndGetCourseList } = require('../../utils/common')
+const { bindQingguoAccount } = require('../api/login')
 const app = getApp()
 Page({
 
@@ -39,7 +41,7 @@ Page({
     })
     let rebind = options.rebind || false
     this.setData({
-      url: options.url ? options.url : '/pages/index/index',
+      redirect: options.redirect,
       rebind: rebind
     })
 
@@ -71,12 +73,6 @@ Page({
       wx.setStorageSync('login_session', null)
     }
   },
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
-
-  },
 
   getCourseList:function(){
     return app.promiseRequest({
@@ -88,24 +84,6 @@ Page({
    * 绑定教务系统
    */
   login: function(e) {
-    var time = (new Date()).getTime()
-    if (wx.getStorageInfoSync('login_time') != "") {
-      var update_time = wx.getStorageSync('login_time');
-      var cha = time - update_time;
-      var season = 60 * 5 - Math.floor(cha / 1000);
-    } else {
-      var season = 0;
-    }
-    if (season > 0) {
-      let minute = Math.floor(season / 60)
-      if(minute > 0 ){
-        app.msg('目前使用人数较多，请在'+ minute + '分钟后登录，谢谢你的谅解')
-        return
-      }
-      app.msg('目前使用人数较多，请在' + season + '秒后登录，谢谢你的谅解')
-      return
-    }
-
     var that = this;
     var user_id = that.data.user_id;
     var password = that.data.user_password;
@@ -128,43 +106,41 @@ Page({
     })
 
     if(that.data.systemType == 1){
-      that.bindQingGuo().then((resolve) => {
+      let user_info = wx.getStorageSync('user_info')
+      let nickname = user_info['nickName']
+      let avatar = user_info['avatarUrl']
+      let data = {
+        stu_id: that.data.user_id,
+        password: that.data.user_password,
+        cookie: that.data.cookie,
+        __VIEWSTATE: that.data.__VIEWSTATE,
+        code: that.data.code,
+        session: app.getLoginStatus(),
+        nickname: nickname,
+        avatar: avatar,
+        rebind:that.data.rebind ? 1 : 0
+      }
+      bindQingguoAccount(data).then((resolve) => {
         wx.hideLoading()
         if (resolve.status == 0) {
+          app.msg("绑定成功","success")
           wx.setStorageSync('user_id', that.data.user_id)
-          that.getCourseList().then((result)=>{
-            if (result.status == 0){
-              app.msg("绑定成功", "success")
-              wx.setStorageSync('course', result.data.course);
-              wx.setStorageSync('train', result.data.train_course);
-            }else{
-              app.msg("绑定成功，获取课表失败，请手动更新课表")
-            }
-          })
+          //更新获取课表
+          updateAndGetCourseList()
           setTimeout(function () {
-            app.updateConfigRequest()
-            if (that.data.url != '') {
-              if(util.isTabPage(that.data.url)){
-                wx.switchTab({
-                  url: that.data.url
-                })
-              }else{
-                wx.redirectTo({
-                  url: that.data.url,
-                })
-              }
-              return
-            }
-            wx.switchTab({
-              url: '/pages/index/index'
-            })
+            loginRedirect(that.data.redirect)
           }, 1000);
           return
         }
         that.freshYzm()
         app.msg(resolve.message)
+      }).catch((err) => {
+        console.log(err)
       })
-    }else if (that.data.systemType == 2) {
+      return
+    }
+
+    if (that.data.systemType == 2) {
       var cookie = that.data.cookie;
       var encoded = util.encodeInp(user_id) + "%%%" + util.encodeInp(password);
       app.httpRequest({
@@ -302,35 +278,6 @@ Page({
     })
   },
 
-  //青果教务系统登录
-  bindQingGuo:function(){
-    let _this = this
-    let user_info = wx.getStorageSync('user_info')
-    let nickname = user_info['nickName']
-    let avatar = user_info['avatarUrl']
-    return new Promise((resolve => {
-      app.httpRequest({
-        url: 'login/bindQingGuoAccount',
-        needLogin: false,
-        data: {
-          stu_id: _this.data.user_id,
-          password: _this.data.user_password,
-          cookie: _this.data.cookie,
-          __VIEWSTATE: _this.data.__VIEWSTATE,
-          code: _this.data.code,
-          session: app.getLoginStatus(),
-          nickname: nickname,
-          avatar: avatar,
-          rebind:_this.data.rebind ? 1 : 0
-        },
-        method: "POST",
-        success: function(res) {
-          return resolve(res.data)
-        }
-      })
-    }))
-  },
-
   //疑问
   help:function(){
     wx.navigateTo({
@@ -340,6 +287,13 @@ Page({
   closeTips:function(){
     this.setData({
       tips_show:false
+    })
+  },
+  // 登录测试账号
+  loginTest:function(){
+    this.setData({
+      user_id: 'test',
+      user_password: '123456'
     })
   }
 })

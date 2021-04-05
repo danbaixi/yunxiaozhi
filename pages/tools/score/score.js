@@ -1,5 +1,6 @@
 var app = getApp();
 var util = require('../../../utils/util.js');
+const { getScoreList } = require('../../api/score') 
 Page({
 
   /**
@@ -95,6 +96,7 @@ Page({
   //获取成绩
   getScore:function(update){
     var that = this;
+    //读缓存
     var scores = wx.getStorageSync('scores');
     if (scores != '' && JSON.stringify(scores) != "{}" && scores.score.length>0 && !update){
       that.setData({
@@ -107,31 +109,29 @@ Page({
       })
       return
     }
-    app.httpRequest({
-      url: 'score/getscorelist',
-      success: function (res) {
+    //读数据库
+    getScoreList(that.route).then((res) => {
+      that.setData({
+        loading:false
+      })
+      if(res.status == 0){
+        wx.setStorageSync('scores', res.data.data);
+          that.setData({
+            isNull: false,
+            gpa: res.data.gpa,
+            score: res.data.score,
+            term: res.data.term,
+            year: res.data.year,
+            original_score: res.data.originalScore
+          })
+      }else if(res.status == 1001){
         that.setData({
-          loading:false
+          isNull:true
         })
-        if (res.data.status == 0) {
-          wx.setStorageSync('scores', res.data.data);
-          that.setData({
-            isNull:false,
-            gpa: res.data.data.gpa,
-            score: res.data.data.score,
-            term: res.data.data.term,
-            year: res.data.data.year,
-            original_score: res.data.data.originalScore
-          })
-        }else if(res.data.status == 1001){
-          that.setData({
-            isNull:true
-          })
-        }else{
-          app.msg(res.data.message)
-        }
-      },
-    });
+      }else{
+        app.msg(res.message)
+      }
+    })
   },
 
   //获取公告

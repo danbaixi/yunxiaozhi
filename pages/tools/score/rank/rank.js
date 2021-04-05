@@ -1,4 +1,5 @@
 const app = getApp()
+const { setUserConfig } = require('../../../api/user')
 Page({
 
   /**
@@ -130,7 +131,10 @@ Page({
       content: '此操作会将您隐藏姓名的设置去除，确认要设置吗？',
       success:function(res){
         if(res.confirm){
-          app.updateSetting('is_display_name', 0).then((data) => {
+          setUserConfig({
+            field: 'is_display_name',
+            value: 0
+          }).then(() => {
             let user = _this.data.user
             user.is_display_name = 0
             _this.setData({

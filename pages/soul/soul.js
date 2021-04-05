@@ -1,4 +1,5 @@
 const app = getApp()
+const { getSoulList, likeSoul } = require('../api/soul')
 Page({
 
   /**
@@ -12,51 +13,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let soul = options.id
     this.getSoul()
     this.display()
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
   },
 
   /**
@@ -80,10 +38,9 @@ Page({
     })
 
     if(!list || time > soulsUpdate + 60 * 60){
-      app.requestSouls().then((data) => {
+      getSoulList().then((data) => {
         list = data.data
         wx.setStorageSync('souls', list)
-        wx.setStorageSync('soul_update', time)
         soul = list[Math.floor(Math.random() * list.length)]
         that.setData({
           soul: soul
@@ -91,12 +48,12 @@ Page({
       }).catch((message) => {
         app.msg(message)
       })
-    }else{
-      soul = list[Math.floor(Math.random() * list.length)]
-      that.setData({
-        soul: soul
-      })
+      return
     }
+    soul = list[Math.floor(Math.random() * list.length)]
+    that.setData({
+      soul: soul
+    })
   },
   
   //点赞
@@ -107,8 +64,15 @@ Page({
       return
     }
     let id = e.currentTarget.dataset.id
-    let stu_id = wx.getStorageSync('user_id')
-    app.likeSoul(id,stu_id).then((data) => {
+    let stu_id = app.getUserId()
+    if(!stu_id){
+      app.msg("登录后才能点赞")
+      return
+    }
+    likeSoul({
+      id,
+      stu_id
+    }).then((data) => {
       let soul = that.data.soul
       soul.like_count = soul.like_count + 1;
       that.setData({
@@ -116,7 +80,7 @@ Page({
         soul: soul
       })
     }).catch((message) => {
-      app.msg(res.data.message)
+      app.msg(message)
     })
   },
 

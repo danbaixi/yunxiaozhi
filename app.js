@@ -1,19 +1,20 @@
-const datas = require('./utils/datas')
+const { updateGlobalConfig, exitSaveData } = require('./utils/common')
 App({
   /** 小程序入口 */
   onLaunch: function () {
     //设置导航栏数据
     this.setNavgition()
     //更新配置
-    this.updateConfigRequest()
+    updateGlobalConfig()
     this.setFileUrl()
     //检查更新
     this.checkVersion()
+
   },
 
   /** 全局变量 */
   globalData:{
-    isDebug:false,
+    isDebug:true,
     isTest:false,
     isLocal:false,
     themeColor: '#1380ff',
@@ -137,7 +138,7 @@ App({
           case 4003:
             //登陆已过期
             that.msg(res.data.message)
-            that.exitSaveData()
+            exitSaveData()
             setTimeout(() => {
               wx.navigateTo({
                 url: '/pages/login/login?redirect=' + datas.redirect,
@@ -282,7 +283,7 @@ App({
           }else if(res.data.status == 4003){
             //登陆已过期
             that.msg(res.data.message)
-            that.exitSaveData()
+            exitSaveData()
             setTimeout(() => {
               wx.navigateTo({
                 url: '/pages/login/login?redirect=' + datas.redirect,
@@ -305,26 +306,6 @@ App({
     return promise
   },
 
-  //更新毒鸡汤
-  requestSouls: function(){
-    return this.promiseRequest({
-      url: 'soul/getList',
-      needLogin: false
-    })
-  }, 
-
-  //点赞毒鸡汤
-  likeSoul: function(id,stu_id){
-    return this.promiseRequest({
-      url: 'soul/like',
-      needLogin: false,
-      data: {
-        id: id,
-        stu_id: stu_id
-      }
-    })
-  },
-
   //修改设置
   updateSetting:function(field,value){
     return this.promiseRequest({
@@ -336,16 +317,7 @@ App({
       }
     })
   },
-  //退出保存的数据
-  exitSaveData:function(){
-    //保留配置信息
-    let bg_imgs = wx.getStorageSync('bg_imgs')
-    let bg_img = wx.getStorageSync('bg_img')
-    wx.clearStorageSync()
-    wx.setStorageSync('bg_imgs', bg_imgs)
-    wx.setStorageSync('bg_img', bg_img)
-    this.updateConfigRequest()
-  },
+
 
   //获取配置，支持使用“.”
   //key为空，返回全部
@@ -371,17 +343,4 @@ App({
     }
     return configs
   },
-  //弹出条款内容
-  acceptTerms:function(){
-    let userId = this.getUserId()
-    if(!userId || userId === 'test'){
-      return
-    }
-    let accept_terms = this.getConfig('accept_terms')
-    if(accept_terms == 0){
-      wx.navigateTo({
-        url: '/pages/terms/terms',
-      })
-    }
-  }
 })
