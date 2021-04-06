@@ -1,5 +1,5 @@
 const app = getApp();
-const { exitSaveData } = require('../../../utils/common')
+const { exitSaveData } = require('../../../utils/util')
 const { getUserConfig,setUserConfig, getUntieCount, untieWechat } = require('../../api/user')
 Page({
   /**

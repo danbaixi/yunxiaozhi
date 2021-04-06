@@ -1,27 +1,8 @@
 /**
  * 公共函数
  */
-
 const { updateCourse, getCourseList } = require('../pages/api/course')
-const { getGlobalConfig } = require('../pages/api/user')
 const dayjs = require('dayjs')
-
-// 检查网络异常问题
-function checkNetWorkStatus(){
-  return new Promise((resolve) => {
-    wx.getNetworkType({
-      success (res) {
-        if(res.networkType == 'unknown' || res.networkType == 'none'){
-          resolve('网络未连接，请检查你的网络')
-        }
-        if(res.networkType == '2g' || res.networkType == '3g'){
-          resolve('网络似乎不太顺畅')
-        }
-        resolve(true)
-      }
-    })
-  })
-}
 
 //是否为Tab页路径
 function isTabPath(path){
@@ -84,27 +65,6 @@ async function updateAndGetCourseList(){
 function openArticle(article){
   wx.navigateTo({
     url: '/pages/article/article?src=' + encodeURIComponent(article)
-  })
-}
-
-// 退出保存的数据
-function exitSaveData(){
-  //保留配置信息
-  let bg_imgs = wx.getStorageSync('bg_imgs')
-  let bg_img = wx.getStorageSync('bg_img')
-  wx.clearStorageSync()
-  wx.setStorageSync('bg_imgs', bg_imgs)
-  wx.setStorageSync('bg_img', bg_img)
-  updateGlobalConfig()
-}
-
-// 更新配置
-function updateGlobalConfig(){
-  const time = dayjs().unix()
-  getGlobalConfig().then((data) => {
-    wx.setStorageSync('config_update_time', time)
-    wx.setStorageSync('configs', data.data)
-    acceptTerms()
   })
 }
 
@@ -198,12 +158,9 @@ function setUpdateTime(type,time){
 }
 
 module.exports = {
-  checkNetWorkStatus,
   loginRedirect,
   updateAndGetCourseList,
   openArticle,
-  exitSaveData,
-  updateGlobalConfig,
   getConfig,
   getUserId,
   backPage,

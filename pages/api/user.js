@@ -15,15 +15,6 @@ function getCountDatas(){
   })
 }
 
-// 获取全局配置
-function getGlobalConfig(data = {stu_id : ''}){
-  return R({
-    url: 'config/getMiniConfig',
-    needLogin: false,
-    data
-  })
-}
-
 // 获取个人设置
 function getUserConfig(){
   return R({
@@ -156,7 +147,6 @@ function getFriendList(){
 module.exports = {
   getUserData,
   getCountDatas,
-  getGlobalConfig,
   getUserConfig,
   setUserConfig,
   setNickname,

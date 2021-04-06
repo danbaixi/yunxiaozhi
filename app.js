@@ -1,11 +1,12 @@
-const { updateGlobalConfig, exitSaveData } = require('./utils/common')
+const { acceptTerms } = require('./utils/common')
+const { exitSaveData } = require('./utils/util')
 App({
   /** 小程序入口 */
   onLaunch: function () {
     //设置导航栏数据
     this.setNavgition()
     //更新配置
-    updateGlobalConfig()
+    this.updateConfigRequest()
     this.setFileUrl()
     //检查更新
     this.checkVersion()
@@ -36,7 +37,7 @@ App({
       if (data.status == 0) {
         wx.setStorageSync('config_update_time', time)
         wx.setStorageSync('configs', data.data)
-        this.acceptTerms()
+        acceptTerms()
       } else {
         console.log('get config error')
       }

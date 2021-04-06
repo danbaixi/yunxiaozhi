@@ -1,4 +1,3 @@
-const util = require('../../../utils/util.js')
 const { getScoreList, updateScore } = require('../../api/score') 
 const { getNotice } = require('../../api/common')
 const { canUpdate, setUpdateTime, backPage } = require('../../../utils/common')
@@ -39,7 +38,7 @@ Page({
       winHeight: winHeight,
       update_time: update_time ? dayjs(update_time).format('YYYY-MM-DD HH:mm:ss') :'无记录'
     })
-    app.isLogin('/' + that.route).then(function (res) {
+    app.isLogin(that.route).then(function (res) {
       that.getScore(false)
     })
   },

@@ -1,7 +1,8 @@
 const util = require('../../utils/util');
 const app = getApp();
 const { getUserData, getCountDatas } = require('../api/user')
-const { openArticle, exitSaveData } = require('../../utils/common')
+const { openArticle } = require('../../utils/common')
+const { exitSaveData } = require('../../utils/util')
 Page({
 
   /**

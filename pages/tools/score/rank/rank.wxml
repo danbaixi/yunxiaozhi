@@ -31,7 +31,7 @@
   </view>
   <view class="text-center text-theme">
     <text class="text-yellow">{{className}}</text>
-    <text bindtap="viewAll">查看生涯排行<text class="icon-right"></text></text>
+    <text bindtap="viewAll"> 查看生涯排行<text class="icon-right"></text></text>
   </view>
   <list-loading loading="{{loading}}"></list-loading>
   <view class="cu-list menu margin-top-sm" wx:if="{{user.is_display_name!=1}}">

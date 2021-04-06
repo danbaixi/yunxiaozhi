@@ -205,6 +205,36 @@ function getThisMonthDays(year,month) {
 function getFirstDayOfWeek(year,month) {
     return new Date(Date.UTC(year,month-1, 1)).getDay();
 }
+
+// 检查网络异常问题
+function checkNetWorkStatus(){
+  return new Promise((resolve) => {
+    wx.getNetworkType({
+      success (res) {
+        if(res.networkType == 'unknown' || res.networkType == 'none'){
+          resolve('网络未连接，请检查你的网络')
+        }
+        if(res.networkType == '2g' || res.networkType == '3g'){
+          resolve('网络似乎不太顺畅')
+        }
+        resolve(true)
+      }
+    })
+  })
+}
+
+// 退出保存的数据
+function exitSaveData(){
+  //保留配置信息
+  const app = getApp()
+  let bg_imgs = wx.getStorageSync('bg_imgs')
+  let bg_img = wx.getStorageSync('bg_img')
+  wx.clearStorageSync()
+  wx.setStorageSync('bg_imgs', bg_imgs)
+  wx.setStorageSync('bg_img', bg_img)
+  app.updateConfigRequest()
+}
+
 module.exports = {
   formatTime: formatTime,
   formatTime2: formatTime2,
@@ -220,4 +250,6 @@ module.exports = {
   deepCopyArray: deepCopyArray,
   getThisMonthDays: getThisMonthDays,
   getFirstDayOfWeek: getFirstDayOfWeek,
+  checkNetWorkStatus,
+  exitSaveData
 }

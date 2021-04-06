@@ -20,7 +20,33 @@ function updateScore(data){
   })
 }
 
+// 获取已修学分
+function getAllCredit(){
+  return R({
+    url:'score/getAllCredit'
+  })
+}
+
+// 获取学期班级排名
+function getTermRank(data){
+  return R({
+    url: 'score/getTermRank',
+    data
+  })
+}
+
+// 获取单科成绩信息
+function getCourseScoreData(data){
+  return R({
+    url: 'score/getCourseScoreData',
+    data
+  })
+}
+
 module.exports = {
   getScoreList,
-  updateScore
+  updateScore,
+  getAllCredit,
+  getTermRank,
+  getCourseScoreData
 }

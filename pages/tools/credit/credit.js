@@ -1,3 +1,4 @@
+const { getAllCredit } = require('../../api/score')
 const app = getApp()
 Page({
 
@@ -23,26 +24,16 @@ Page({
     })
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  },
-  
   //获取数据
   getData:function(){
     let _this = this
-    app.httpRequest({
-      url:'score/getAllCredit',
-      success:function(res){
-        _this.setData({
-          loading: false
-        })
-        if(res.data.status == 0){
-          res.data.data.isNull = res.data.data.credit.length == 0 ? true : false
-          _this.setData(res.data.data)
-        }
+    getAllCredit().then((res) => {
+      _this.setData({
+        loading: false
+      })
+      if(res.status == 0){
+        res.data.isNull = res.data.credit.length == 0 ? true : false
+        _this.setData(res.data)
       }
     })
   },

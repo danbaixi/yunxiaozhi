@@ -3,8 +3,7 @@
  */
 
 const { isDebug, isTest, xdebugID } = require('./config')
-const { checkNetWortStatus, exitSaveData } = require('./common') 
-
+const { checkNetWorkStatus, exitSaveData } = require('./util')
 //请求路径
 function getDomain(){
   if(isDebug){
@@ -59,6 +58,7 @@ function R(datas){
       url: url,
       data: data,
       method: datas.method,
+      timeout: 20000,
       header: {
         'content-type': contentType,
         'session-token': session
@@ -94,7 +94,7 @@ function R(datas){
       fail:function(res){
         //检查是否是网络问题
         let message = '请求超时，请重试'
-        checkNetWortStatus().then((result) => {
+        checkNetWorkStatus().then((result) => {
           if(result !== true){
             message = result
           }
