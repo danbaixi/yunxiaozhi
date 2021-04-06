@@ -24,28 +24,24 @@ Page({
     gridCol:4,
     tools:[
       {
-        badge: 0,
         name: '通讯录',
         icon: 'students',
         needLogin: true,
         url: '../tools/friends/friends?from=index',
       },
       {
-        badge: 0,
         name: '理论课',
         icon: 'theory',
         needLogin: true,
         url: '../tools/course/theory/theory?from=index',
       },
       {
-        badge: 0,
         name: '选修课',
         icon: 'public',
         needLogin: true,
         url: '../tools/course/public/public?from=index',
       },
       {
-        badge: 0,
         name: '实训周',
         icon: 'train',
         needLogin: true,

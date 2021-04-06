@@ -1,4 +1,4 @@
-.cu-bar .action:first-child{
+.cu-bar .action.title{
   font-size:24rpx;
   color: var(--theme)
 }

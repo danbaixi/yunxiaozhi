@@ -46,10 +46,6 @@
     <view class="action">
       微信信息
     </view>
-    <view class="action" bindtap="updateWechat">
-      <button open-type="getUserInfo" class="tr-btn"></button>
-      同步微信信息 <text class="icon-right"></text>
-    </view>
   </view>
   <view class="cu-list menu">
     <view class="cu-item">
@@ -85,6 +81,6 @@
       </view>
       <view class="modal-footer">
         <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
-        <view class="btn-confirm" bindtap="UpdateName" data-status="confirm">确定</view>
+        <view class="btn-confirm" bindtap="updateName" data-status="confirm">确定</view>
       </view>
   </view>

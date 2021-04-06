@@ -1,6 +1,9 @@
-var app = getApp();
-var util = require('../../../utils/util.js');
-const { getScoreList } = require('../../api/score') 
+const util = require('../../../utils/util.js')
+const { getScoreList, updateScore } = require('../../api/score') 
+const { getNotice } = require('../../api/common')
+const { canUpdate, setUpdateTime, backPage } = require('../../../utils/common')
+const dayjs = require('dayjs')
+const app = getApp()
 Page({
 
   /**
@@ -34,7 +37,7 @@ Page({
     that.setData({
       from: options.from,
       winHeight: winHeight,
-      update_time: update_time ? util.formatTime3(new Date(update_time)):'无记录'
+      update_time: update_time ? dayjs(update_time).format('YYYY-MM-DD HH:mm:ss') :'无记录'
     })
     app.isLogin('/' + that.route).then(function (res) {
       that.getScore(false)
@@ -53,10 +56,9 @@ Page({
    */
   onShareAppMessage: function () {
     return app.share('您有一份期末成绩单待查收','score.png',this.route)
-  },
-  /** 
- * 滑动切换tab 
- */
+  }, 
+
+  // 滑动切换tab 
   bindChange: function (e) {
     wx.pageScrollTo({
       scrollTop: 0,
@@ -68,9 +70,8 @@ Page({
       currentTab: e.detail.current
     });
   },
-  /**
-   * 进入成绩详情
-   */
+  
+  // 进入成绩详情
   itemData:function(e){
     let type = this.data.type
     let score = type == 1 ? this.data.original_score : this.data.score
@@ -85,15 +86,18 @@ Page({
       url: 'top/top?from=score&data=' + encodeURIComponent(JSON.stringify(data))  
     })
   },
+
   analysis:function(){
     wx.navigateTo({
       url:'ana/ana'
     })
   },
+
   refresh:function(){
     this.onPullDownRefresh();
   },
-  //获取成绩
+
+  // 获取成绩
   getScore:function(update){
     var that = this;
     //读缓存
@@ -109,7 +113,7 @@ Page({
       })
       return
     }
-    //读数据库
+    // 读数据库
     getScoreList(that.route).then((res) => {
       that.setData({
         loading:false
@@ -134,28 +138,25 @@ Page({
     })
   },
 
-  //获取公告
+  // 获取公告
   getNotice: function () {
-    var that = this;
-    wx.request({
-      url: app.globalData.domain + 'notice/getnotice',
-      data: {
-        page: 'score'
-      },
-      success: function (res) {
-        if (res.data.status == 1001) {
-          that.setData({
-            hasNotice: res.data.data.display == 1 ? true : false,
-            notice: res.data.data.content
-          })
-        } else {
-          that.setData({
-            hasNotice: false
-          })
-        }
+    var that = this
+    getNotice({
+      page: 'score'
+    }).then((res) => {
+      if (res.status == 1001) {
+        that.setData({
+          hasNotice: res.data.display == 1 ? true : false,
+          notice: res.data.content
+        })
+      }else {
+        that.setData({
+          hasNotice: false
+        })
       }
     })
   },
+
   /** 刷新验证码 */
   freshYzm: function () {
     var num = Math.ceil(Math.random() * 1000000);
@@ -163,22 +164,23 @@ Page({
       yzmUrl: app.globalData.domain + 'login/getValidateImg?cookie=' + this.data.cookie + '&rand=' + num,
     })
   },
+
   /**输入验证码时，改变模态框高度 */
   inputFocus: function () {
     this.setData({
       input_focus: 1
     })
   },
+
   /** 不输入验证码时，恢复 */
   inputBlur: function () {
     this.setData({
       input_focus: 0
     })
   },
-  /**
-* 弹窗
-*/
-  updateScore: function () {
+
+  //更新成绩（已废除）
+  updateScoreBack: function () {
     var that = this;
     var system_type = wx.getStorageSync('system_type');
     if (system_type != 2) {
@@ -232,6 +234,7 @@ Page({
       yzm: e.detail.value,
     })
   },
+
   //更新成绩
   update:function(){
     if(app.getUserId() === 'test'){
@@ -240,73 +243,48 @@ Page({
     }
     var that = this;
     that.setData({ list_is_display: false })
-    app.isBind()
-    var time = (new Date()).getTime();
-    if (wx.getStorageSync('score_update_time') != "") {
-      var update_time = wx.getStorageSync('score_update_time');
-      var cha = time - update_time;
-      var season = 60 * 1 - Math.floor(cha / 1000);
-    } else {
-      var season = 0;
-    }
-    if (season > 0) {
-      let minute = Math.floor(season / 60)
-      if(minute > 0 ){
-        app.msg('请在'+ minute + '分钟后更新')
-        return
-      }
-      app.msg('请在' + season + '秒后更新')
+    const canUpdateResult = canUpdate('score')
+    if(canUpdateResult !== true){
+      app.msg(canUpdateResult)
       return
     }
     wx.showLoading({
       title: "更新中..",
       mask: true
     })
-    app.httpRequest({
-      url: 'score/updateScoreV0',
-      data:{
-        time:time
-      },
-      success: function (res) {
-        wx.hideLoading()
-        if (res.data.status == 0) {
-          app.msg(res.data.message,'success') 
+    const time = dayjs().unix()
+    updateScore({time})
+      .then((res) => {
+        if (res.status == 0) {
+          app.msg(res.message,'success') 
           wx.setStorageSync('scores', '')
-          that.getScore(true);
-          wx.setStorageSync('score_update_time', time);
+          that.getScore(true)
+          setUpdateTime('score',time)
           that.setData({
-            update_time: util.formatTime3(new Date(time))
+            update_time: dayjs().format('YYYY-MM-DD HH:mm:ss')
           })
         } else {
-          if (res.data.status == 1002) {
+          if (res.status == 1002) {
             that.freshYzm()
-          } else if (res.data.status == 1006) {
+          } else if (res.status == 1006) {
             that.setData({
               showModal: false
             })
           }
-          app.msg(res.data.message)
         }
-      }
-    })
-  },
-  backPage:function(){
-    if(this.data.from == 'index'){
-      wx.navigateBack({
-        delta: 1
-      });
-    }else{
-      wx.reLaunch({
-        url: '/pages/index/index',
       })
-    }
   },
+  backPageBtn:function(){
+    backPage(this.data.from)
+  },
+
   selectYear:function(e){
     let index = e.detail.value
     this.setData({
       year_index: index
     })
   },
+
   goRank:function(e){
     let term  = e.currentTarget.dataset.term
     if (!this.data.gpa.hasOwnProperty(term)){
@@ -317,6 +295,7 @@ Page({
       url: 'rank/rank?source=score&term=' + term,
     })
   },
+
   //切换成绩模式
   changeType:function(e){
     let val = e.currentTarget.dataset.val
@@ -327,6 +306,7 @@ Page({
       type: val
     })
   },
+
   //是否存在有效成绩
   hasEffectScore:function(name){
     if(this.data.score.length <= 0){
@@ -341,6 +321,7 @@ Page({
     })
     return isExist
   },
+
   viewAllScore:function(){
     wx.navigateTo({
       url: '/pages/tools/credit/credit',

@@ -1,3 +1,5 @@
+const { updateTheoryCourse, getTheoryCourseList } = require('../../../api/course')
+const { backPage } = require('../../../../utils/common')
 const app = getApp()
 Page({
 
@@ -19,33 +21,10 @@ Page({
     this.setData({
       from: options.from
     })
-    let that = this
-    app.isLogin('/' + that.route).then(function (res) {
-      that.getList()
-    })
+    this.getList()
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  },
-  //更新
+  // 更新
   update: function () {
     if(app.getUserId() === 'test'){
       app.msg('测试号无法更新数据')
@@ -55,44 +34,35 @@ Page({
     wx.showLoading({
       title: '更新中...',
     })
-    app.httpRequest({
-      url: 'course/updateTheoryCourse',
-      success: function (res) {
-        app.msg(res.data.message)
-        if (res.data.status == 0) {
-          _this.setData(res.data.data)
+    updateTheoryCourse()
+      .then((res) => {
+        if (res.status == 0) {
+          app.msg(res.message)
+          _this.setData(res.data)
         }
+      })
+  },
+
+  // 获取列表
+  getList: function () {
+    let _this = this
+    getTheoryCourseList().then((res) => {
+      if (res.status == 0) {
+        _this.setData({
+          course: res.data.course,
+          term: res.data.term,
+          loading: false
+        })
       }
     })
   },
 
-  getList: function () {
-    let _this = this
-    app.httpRequest({
-      url: 'course/getTheoryCourse',
-      success: function (res) {
-        if (res.data.status == 0) {
-          _this.setData({
-            course: res.data.data.course,
-            term: res.data.data.term,
-            loading: false
-          })
-        }
-      }
-    })
+  // 返回 
+  backPageBtn: function () {
+    backPage(this.data.from)
   },
-  backPage: function () {
-    if (this.data.from == 'index') {
-      wx.navigateBack({
-        delta: 1
-      });
-    } else {
-      wx.reLaunch({
-        url: '/pages/index/index',
-      })
-    }
-  },
-  //查看详情
+
+  // 查看详情
   viewDetail: function (e) {
     let detailIndex = e.currentTarget.dataset.index
     this.setData({
@@ -100,7 +70,8 @@ Page({
       showDetail: true
     })
   },
-  //hide
+  
+  // hide
   hideModal: function () {
     this.setData({
       showDetail: false

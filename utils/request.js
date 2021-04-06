@@ -34,11 +34,17 @@ function R(datas){
         icon: 'none',
         title: '请先登录'
       })
-      return
+      setTimeout(() => {
+        wx.navigateTo({
+          url: '/pages/login/login?redirect=' + datas.redirect,
+        })
+      },1000)
+      return new Promise((resolve) => {
+        return resolve('请先登录')
+      })
     }
   }
-  var that = this,
-      url = getUrl(datas.url),
+  var url = getUrl(datas.url),
       data = typeof datas.data == undefined ? '': datas.data,
       contentType = 'application/json'
 
@@ -60,7 +66,7 @@ function R(datas){
       success:function(res){
         wx.hideLoading()
         if(res.data.status == 0){
-          resolve(res.data)
+          return resolve(res.data)
         }
         if(res.data.status == 4003){
           //登陆已过期
@@ -77,7 +83,12 @@ function R(datas){
             })
           },1000)
         }else{
-          reject(res.data.message || '服务器开小差了 ╯﹏╰')
+          const err = res.data.message || '服务器开小差了 ╯﹏╰'
+          wx.showToast({
+            title: err,
+            icon: 'none'
+          })
+          return reject(err)
         }
       },
       fail:function(res){

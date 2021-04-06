@@ -12,7 +12,7 @@ page{
   width: 100%;
   background: #fff;
   margin: 20rpx 0 20rpx;
-  padding: 0 3% 20rpx;
+  padding: 0 3%;
 }
 .screen-swiper {
   min-height: 320rpx;

@@ -1,3 +1,5 @@
+const { getTrainCourseList, updateTrainCourse } = require('../../../api/course')
+const { backPage } = require('../../../../utils/common')
 const app = getApp()
 Page({
 
@@ -19,32 +21,9 @@ Page({
     this.setData({
       from: options.from
     })
-    let that = this
-    app.isLogin('/' + that.route).then(function (res) {
-      that.getList()
-    })
+    this.getList()
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  },
   //更新
   update:function(){
     if(app.getUserId() === 'test'){
@@ -56,42 +35,30 @@ Page({
       title: '更新中...',
       mask: true
     })
-    app.httpRequest({
-      url:'course/updateTrainCourse',
-      success:function(res){
-        app.msg(res.data.message)
-        if(res.data.status == 0){
-          _this.setData(res.data.data)
+    updateTrainCourse()
+      .then((res) => {
+        app.msg(res.message)
+        if(res.status == 0){
+          _this.setData(res.data)
         }
-      }
-    })
+      })
   },
 
   getList:function(){
     let _this = this
-    app.httpRequest({
-      url:'course/getTrainCourse',
-      success:function(res){
-        if (res.data.status == 0) {
-          _this.setData({
-            course: res.data.data.course,
-            term: res.data.data.term,
-            loading: false
-          })
-        }
+    getTrainCourseList().then((res) => {
+      if (res.status == 0) {
+        _this.setData({
+          course: res.data.course,
+          term: res.data.term,
+          loading: false
+        })
       }
     })
   },
-  backPage: function () {
-    if (this.data.from == 'index') {
-      wx.navigateBack({
-        delta: 1
-      });
-    } else {
-      wx.reLaunch({
-        url: '/pages/index/index',
-      })
-    }
+
+  backPageBtn: function () {
+    backPage(this.data.from)
   },
   //查看详情
   viewDetail:function(e){

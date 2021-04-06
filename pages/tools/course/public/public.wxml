@@ -1,7 +1,7 @@
 <view class="cu-custom" style="height:{{customBar}}px">
   <view class="cu-bar fixed bg-white" style="height:{{customBar}}px;padding-top:{{statusBar}}px">
     <view class="action border-custom" style="width:{{custom.width}}px;height:{{custom.height}}px;margin-left:calc(750rpx - {{custom.right}}px)">
-      <text class="icon-back text-bold text-black" bindtap="backPage"></text>
+      <text class="icon-back text-bold text-black" bindtap="backPageBtn"></text>
       <text class="icon-refresh text-bold text-black" bindtap="update"></text>
     </view>
     <view class="content" style="top:{{statusBar}}px">选修课程</view>

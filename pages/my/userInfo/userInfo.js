@@ -1,5 +1,6 @@
-var util = require('../../../utils/util.js');
-var app = getApp();
+const util = require('../../../utils/util.js')
+const { getUserData, setNickname, setAvatar,updateUserInfo } = require('../../api/user')
+const app = getApp()
 Page({
 
   /**
@@ -23,19 +24,12 @@ Page({
     if(this.data.uploadFile != ''){
       //设置头像
       let _this = this
-      app.httpRequest({
-        url:'user/alterUserImg',
-        method: 'POST',
-        data:{
-          url: _this.data.uploadFile
-        },
-        success:function(res){
-          app.msg(res.data.message)
-          if(res.data.status == 0){
-            _this.setData({
-              user_img : _this.data.fileUrl + _this.data.uploadFile
-            })
-          }
+      setAvatar({url: _this.data.uploadFile}).then((res) => {
+        app.msg(res.message)
+        if(res.status == 0){
+          _this.setData({
+            user_img : _this.data.fileUrl + _this.data.uploadFile
+          })
         }
       })
     }
@@ -45,9 +39,7 @@ Page({
   },
   getInfo:function(){
     var that = this;
-    app.promiseRequest({
-      url: 'user/getInfo'
-    }).then((result) => {
+    getUserData().then((result) => {
       let data = result.data
       //处理班级，去掉括号后的
       var stu_class = data.stu_class.split('（')[0];
@@ -109,6 +101,7 @@ Page({
   onCancel: function (e) {
     this.hideModal();
   },
+
   //修改昵称窗口打开
   openUpdateName:function(){
     var that = this;
@@ -116,26 +109,30 @@ Page({
       showModal: true,
     });
   },
-  /**输入验证码时，改变模态框高度 */
+
+  /**输入时，改变模态框高度 */
   inputFocus: function () {
     this.setData({
       input_focus: 1
     })
   },
-  /** 不输入验证码时，恢复 */
+
+  /** 不输入时，恢复 */
   inputBlur: function () {
     this.setData({
       input_focus: 0
     })
   },
+
   /** 获取昵称 */
   yzmInput: function (e) {
     this.setData({
       nickNameInput: e.detail.value,
     })
   },
-  //修改昵称
-  UpdateName:function(e){
+
+  // 修改昵称
+  updateName:function(e){
     var that = this;
     var nickName = that.data.nickNameInput;
     if(nickName == '' || nickName == that.data.user_name){
@@ -146,13 +143,7 @@ Page({
       title: '提交中',
       mask: true
     })
-    app.promiseRequest({
-      url: 'user/alternickname',
-      method: 'POST',
-      data: {
-        nickname: nickName,
-      }
-    }).then((data) => {
+    setNickname({nickname: nickName}).then((data) => {
       that.hideModal();
       app.msg(data.message)
       if(data.status == 0){
@@ -172,62 +163,12 @@ Page({
       title: '正在更新',
       mask: true
     })
-    app.httpRequest({
-      url:'user/updateInfo',
-      success:function(res){
-        app.msg(res.data.message)
-        if(res.data.status != 0){
-          return
-        }
-        _this.getInfo()
+    updateUserInfo().then((res) => {
+      app.msg(res.message)
+      if(res.status != 0){
+        return
       }
-    })
-  },
-  updateWechat:function(){
-    let _this = this
-    wx.login({
-      success: (res) => {
-        let code = res.code
-        wx.showLoading({
-          title: '更新中',
-          mask: true
-        })
-        app.httpRequest({
-          url: 'wechat/wechatLogin',
-          data: {
-            code: code
-          },
-          needLogin: false,
-          success: function (res) {
-            wx.getUserInfo({
-              success: (res) => {
-                app.httpRequest({
-                  url: 'user/updateData',
-                  data: {
-                    code: code,
-                    encryptedData: res.encryptedData,
-                    iv: res.iv,
-                  },
-                  success: function (res) {
-                    app.msg(res.data.message)
-                    if (res.data.status != 0) {
-                      return
-                    }
-                    _this.getInfo()
-                  }
-                })
-              },
-              fail: () => {
-                app.msg('拒绝授权将无法同步微信信息')
-              }
-            })
-          }
-        })
-        
-      },
-      fail: () => {
-        app.msg('初始化失败，请重试')
-      }
+      _this.getInfo()
     })
   }
 })

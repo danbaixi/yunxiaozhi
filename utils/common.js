@@ -139,7 +139,7 @@ function getUserId(){
   return user_id == '' ? false : user_id
 }
 
-//弹出条款内容
+// 弹出条款内容
 function acceptTerms(){
   let userId = getUserId()
   if(!userId || userId === 'test'){
@@ -152,6 +152,51 @@ function acceptTerms(){
     })
   }
 }
+
+// 自定义导航返回功能
+function backPage(from = ''){
+  if (from == 'index') {
+    wx.navigateBack({
+      delta: 1
+    });
+  } else {
+    wx.reLaunch({
+      url: '/pages/index/index',
+    })
+  }
+}
+
+// 判断是否可以更新数据
+const UPDATE_TIME = 60 //时间间隔60s
+const TIME_KEY = {
+  score: 'score_update_time', //成绩
+  course: 'course_update_time' //课表
+}
+function canUpdate(type){
+  const key = TIME_KEY[type]
+  if(!key){
+    return true
+  }
+  let cacheTime = wx.getStorageSync(key)
+  if(!cacheTime){
+    return true
+  }
+  //兼容以ms单位的时间戳
+  if((cacheTime.toString()).length == 13){
+    cacheTime = parseInt(cacheTime / 1000)
+  }
+  const now = dayjs().unix()
+  const level = cacheTime + UPDATE_TIME - now
+  if(level > 0){
+    return `请在${level}秒后更新`
+  }
+  return true
+}
+
+function setUpdateTime(type,time){
+  wx.setStorageSync(TIME_KEY[type],time)
+}
+
 module.exports = {
   checkNetWorkStatus,
   loginRedirect,
@@ -161,4 +206,7 @@ module.exports = {
   updateGlobalConfig,
   getConfig,
   getUserId,
+  backPage,
+  canUpdate,
+  setUpdateTime
 }

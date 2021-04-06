@@ -1,3 +1,5 @@
+const { getPublicCourseList } = require('../../../api/course')
+const { backPage } = require('../../../../utils/common')
 const app = getApp()
 Page({
 
@@ -25,26 +27,6 @@ Page({
     })
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  },
   //更新
   update:function(){
     app.msg('选修课暂不支持更新')
@@ -53,30 +35,22 @@ Page({
 
   getList:function(){
     let _this = this
-    app.httpRequest({
-      url:'course/getPublicCourse',
-      success:function(res){
-        if (res.data.status == 0) {
+    getPublicCourseList()
+      .then((res) => {
+        if (res.status == 0) {
           _this.setData({
-            course: res.data.data.course,
-            term: res.data.data.term,
+            course: res.data.course,
+            term: res.data.term,
             loading: false
           })
         }
-      }
-    })
-  },
-  backPage: function () {
-    if (this.data.from == 'index') {
-      wx.navigateBack({
-        delta: 1
-      });
-    } else {
-      wx.reLaunch({
-        url: '/pages/index/index',
       })
-    }
   },
+
+  backPageBtn: function () {
+    backPage(this.data.from)
+  },
+  
   //查看详情
   viewDetail:function(e){
     let detailIndex = e.currentTarget.dataset.index
@@ -85,6 +59,7 @@ Page({
       showDetail: true
     })
   },
+
   //hide
   hideModal:function(){
     this.setData({

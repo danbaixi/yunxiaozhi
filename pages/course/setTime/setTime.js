@@ -1,3 +1,4 @@
+const { getAreaInfo, setAreaInfo, setDisplayTime } = require('../../api/user')
 const app = getApp()
 Page({
 
@@ -15,64 +16,13 @@ Page({
     this.getData()
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  },
-
   getData:function(){
     var that = this
     wx.showLoading({
       title: '正在加载',
       mask: true
     })
-    app.promiseRequest({
-      url:'user/getareainfo'
-    }).then((data) => {
+    getAreaInfo().then((data) => {
       that.setData({
         area:data.data.area,
         areas:data.data.areas,
@@ -87,18 +37,13 @@ Page({
   setArea:function(e){
     var that = this
     var area = Number(e.detail.value) + 1
-    app.promiseRequest({
-      url: 'user/setArea',
-      data: {
-        area: area
-      },
-      method: 'POST'
-    }).then((data) =>{
-      app.msg(data.message,'success')
-      that.setData({
-        area: area
-      })
-      wx.setStorageSync('user_area', area)
+    setAreaInfo({area})
+      .then((data) =>{
+        app.msg(data.message,'success')
+        that.setData({
+          area: area
+        })
+        wx.setStorageSync('user_area', area)
     }).catch((message) => {
       app.msg(message)
     })
@@ -114,20 +59,16 @@ Page({
       return
     }
     var status = e.detail.value ? 1 : 0
-    app.promiseRequest({
-      url: 'user/setCourseTimeStatus',
-      data: {
-        status: status
-      },
-      method: 'POST'
-    }).then((data) => {
-      app.msg(data.message,'success')
-      that.setData({
-        status: status
+    setDisplayTime({status})
+      .then((data) => {
+        app.msg(data.message,'success')
+        that.setData({
+          status: status
+        })
+        wx.setStorageSync('display_course_time', status)
       })
-      wx.setStorageSync('display_course_time', status)
-    }).catch((message) => {
-      app.msg(message)
-    })
+      .catch((message) => {
+        app.msg(message)
+      })
   }
 })

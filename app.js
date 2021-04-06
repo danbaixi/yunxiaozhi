@@ -306,19 +306,6 @@ App({
     return promise
   },
 
-  //修改设置
-  updateSetting:function(field,value){
-    return this.promiseRequest({
-      url: 'user/alterUserConfig',
-      method: 'POST',
-      data: {
-        field: field,
-        value: value
-      }
-    })
-  },
-
-
   //获取配置，支持使用“.”
   //key为空，返回全部
   getConfig:function(key){

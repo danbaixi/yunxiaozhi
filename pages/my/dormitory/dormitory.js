@@ -1,3 +1,4 @@
+const { getDormitory, getRoomList, getLevelList, getDormitoryList, setDormitory } = require('../../api/user')
 const app = getApp()
 Page({
 
@@ -27,66 +28,15 @@ Page({
     this.getInfo()
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  },
-
   //获取设置
   getInfo:function(){
     let _this = this
-    app.httpRequest({
-      url:'dormitory/getDormitory',
-      success:function(res){
+    getDormitory()
+      .then((res) => {
         _this.setData({
-          dormitory:res.data.data
+          dormitory:res.data
         })
-      }
-    })
+      })
   },
 
   //获取数据
@@ -96,22 +46,17 @@ Page({
       title: '正在加载...',
       mask: true
     })
-    app.httpRequest({
-      url:'dormitory/getRoom',
-      success:function(res){
-        wx.hideLoading({
-          complete: (res) => {},
-        })
+    getRoomList()
+      .then((res) => {
         _this.setData({
-          rooms: res.data.data,
-          areas: res.data.data[1]
+          rooms: res.data,
+          areas: res.data[1]
         })
-      }
-    })
+      })
   },
 
-  getOptions:function(type,id)
-  {
+  // 获取选择器选项
+  getOptions:function(type,id){
     let rooms = this.data.rooms
     let coloum = ''
     switch(type){
@@ -179,25 +124,14 @@ Page({
       title: '正在加载',
       mask: true
     })
-    app.httpRequest({
-      url:'dormitory/getLevelsList',
-      data:{
-        area:area,
-        build:build
-      },
-      success:function(res){
-        wx.hideLoading({
-          complete: (res) => {},
-        })
-        if(res.data.status == 0){
+    getLevelList({area,build})
+      .then((res) => {
+        if(res.status == 0){
           _this.setData({
-            levels:res.data.data
+            levels:res.data
           })
-          return
         }
-        app.msg(res.data.messgae)
-      }
-    })
+      })
   },
 
   //获取宿舍号
@@ -210,21 +144,15 @@ Page({
       title: '正在加载',
       mask: true
     })
-    app.httpRequest({
-      url:'dormitory/getDormitoryList',
-      data:{
-        area:area,
-        build:build,
-        level:level
-      },
-      success:function(res){
-        wx.hideLoading({
-          complete: (res) => {},
-        })
-        _this.setData({
-          dormitorys:res.data.data
-        })
-      }
+    getDormitoryList({
+      area:area,
+      build:build,
+      level:level
+    })
+    .then((res) => {
+      _this.setData({
+        dormitorys:res.data
+      })
     })
   },
 
@@ -249,29 +177,24 @@ Page({
     }
     let id = _this.data.dormitorys[_this.data.room].id
     let name = _this.data.areas[_this.data.area].name + '-' + _this.data.builds[_this.data.build].name + '-' + _this.data.dormitorys[_this.data.room].name
-    app.httpRequest({
-      url:'dormitory/setRoom',
-      method:'POST',
-      data:{
-        id: id,
-        name: name
-      },
-      success:function(res){
-        app.msg(res.data.message)
-        if(res.data.status == 0){
-          _this.setData({
-            dormitory: name
-          })
-          var pages = getCurrentPages();
-          var currPage = pages[pages.length - 1];
-          var prevPage = pages[pages.length - 2];
-          if(!prevPage){
-            return
-          }
-          prevPage.setData({
-            isFresh: true
-          })
+    setDormitory({
+      id: id,
+      name: name
+    })
+    .then((res) => {
+      if(res.status == 0){
+        app.msg(res.message)
+        _this.setData({
+          dormitory: name
+        })
+        var pages = getCurrentPages();
+        var prevPage = pages[pages.length - 2];
+        if(!prevPage){
+          return
         }
+        prevPage.setData({
+          isFresh: true
+        })
       }
     })
   }

@@ -11,7 +11,7 @@
 <view class="container">
   <view class="cu-list grid col-{{gridCol}} no-border tools">
     <view class="cu-item" wx:for="{{tools}}" wx:key="key" data-tab="{{item.tab}}" data-url="{{item.url}}"  data-appid="{{item.appid}}" data-path="{{item.path}}" data-needLogin="{{item.needLogin}}" bindtap='openTool'>
-      <view class="app-icon">
+      <view class="app-icon" style="position: relative; left: 0rpx; top: 10rpx">
         <image mode="widthFix" src="/pages/assets/imgs/app_icon/{{item.icon}}.png"></image>
       </view>
       <text>{{item.name}}</text>

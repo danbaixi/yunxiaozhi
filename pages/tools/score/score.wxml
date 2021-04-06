@@ -2,7 +2,7 @@
   <view class="cu-custom" style="height:{{CustomBar}}px">
     <view class="cu-bar fixed bg-white" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px">
       <view class="action border-custom" style="width:{{Custom.width}}px;height:{{Custom.height}}px;margin-left:calc(750rpx - {{Custom.right}}px)">
-        <text class="icon-back text-black text-bold" bindtap="backPage"></text>
+        <text class="icon-back text-black text-bold" bindtap="backPageBtn"></text>
         <text class="icon-refresh text-black text-bold" bindtap="update"></text>
       </view>
       <view class="content-yxz" style="top:{{StatusBar}}px">

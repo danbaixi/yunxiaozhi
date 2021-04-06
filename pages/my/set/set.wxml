@@ -5,7 +5,7 @@
 <list-loading loading="{{loading}}"></list-loading>
 <view class="container" wx:if="{{!loading}}">
   <view class="cu-bar bg-white solid-bottom">
-    <view class="action">
+    <view class="action title">
       隐私设置
     </view>
   </view>
@@ -42,7 +42,7 @@
     </view>
   </view>
   <view class="cu-bar bg-white solid-bottom">
-    <view class="action">
+    <view class="action title">
       其他设置
     </view>
   </view>
@@ -70,7 +70,7 @@
     </view>
   </view>
   <view class="cu-bar bg-white solid-bottom">
-    <view class="action">
+    <view class="action title">
       账号设置
     </view>
   </view>

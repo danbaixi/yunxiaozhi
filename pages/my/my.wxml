@@ -107,10 +107,6 @@
       </view>
   </view>
   </view>
-  <!-- <view class="banner">
-    <button open-type="share"></button>
-    <image mode="widthFix" src="/pages/assets/imgs/other/share_banner.png"></image>
-  </view> -->
 </view>
 
 
