@@ -1,5 +1,7 @@
-var app = getApp();
-var util = require('../../../utils/util.js');
+const app = getApp();
+const dayjs = require('dayjs');
+const util = require('../../../utils/util.js')
+const { getExamClassList, getExamList, getCourseExamList } = require('../../api/other')
 Page({
 
   /**
@@ -53,13 +55,10 @@ Page({
       }
     });
     //检查是否登录
-    app.isBind().then((result) => {
-      if(result){
-        that.getCourseExam();
-        that.getMyExam();
-      }
-    })
+    that.getCourseExam()
+    that.getMyExam()
   },
+
   /**
   * 生命周期函数--监听页面显示
   */
@@ -73,18 +72,14 @@ Page({
       })
     }
   },
-  /**
-  * 页面相关事件处理函数--监听用户下拉动作
-  */
-  onPullDownRefresh: function () {
 
-  },
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
     return app.share('期末考试安排，请查收','exam.png',this.route)
   },
+
   /** 
  * 滑动切换tab 
  */
@@ -92,6 +87,7 @@ Page({
     var that = this;
     that.setData({ currentTab: e.detail.current });
   },
+
   /** 
   * 点击tab切换 
   */
@@ -105,73 +101,63 @@ Page({
       })
     }
   },
+
+  // 获取期末考试列表
   getCourseExam:function(e){
-    var that = this;
-    wx.showLoading({
-      title: '加载中...',
-      mask: true
-    })
-    app.httpRequest({
-      url: 'exam/getlist',
-      data:{
-        class_name:that.data.class_name
-      },
-      success: function (res) {
-        wx.hideLoading()
-        if (res.data.status == 0) {
-          var course_exam =  res.data.data.data
-          var term = res.data.data.term
-          var picker_term = []
-          for (var i = 0; i < course_exam;i++){
-            course_exam[i].open = 0
-          }
-          for(var i= 0;i < term.length;i++){
-            picker_term.push(term[i].title)
-          }
-          that.setData({
-            loading:false,
-            course_exam: course_exam,
-            term: term,
-            picker_term: picker_term,
-            class_name:res.data.data.class_name
-          });
-          if(that.data.classList.length == 0){
-            that.getClassList();
-          }
-        } else {
-          app.msg(res.data.message)
+    const that = this
+    getCourseExamList({
+      class_name:that.data.class_name
+    }).then((res) => {
+      if (res.status == 0) {
+        let course_exam =  res.data.data
+        let term = res.data.term
+        let picker_term = []
+        for (let i = 0; i < course_exam;i++){
+          course_exam[i].open = 0
         }
-      },
+        for(let i= 0;i < term.length;i++){
+          picker_term.push(term[i].title)
+        }
+        that.setData({
+          loading:false,
+          course_exam: course_exam,
+          term: term,
+          picker_term: picker_term,
+          class_name:res.data.class_name
+        });
+        if(that.data.classList.length == 0){
+          that.getClassList()
+        }
+      }
     })
   },
+
+  // 获取考试列表
   getMyExam:function(e){
-    var that = this;
-    var now = util.formatTime2(new Date());
-    app.httpRequest({
-      url: 'exam/getmylist',
-      success: function (res) {
-        if (res.data.status == 0) {
-          var data = res.data.data;
-          for(var i=0;i<data.length;i++){
-            var days = that.dateDiff(data[i].exam_date,now);
-            data[i].days = days;
-          }
-          that.setData({
-            loading:false,
-            my_exam: data,
-            myExamIsNull: false,
-          });
-        }else{
-          app.msg(res.data.message)
+    const that = this
+    let now = dayjs()
+    getExamList().then((res) => {
+      if (res.status == 0) {
+        let data = res.data;
+        for(let i=0;i<data.length;i++){
+          var days = dayjs(data[i].exam_date).diff(now,'day')
+          data[i].days = days
         }
-      },
+        that.setData({
+          loading:false,
+          my_exam: data,
+          myExamIsNull: false,
+        });
+      }
     })
   },
+
   add:function(e){
     wx.navigateTo({
       url: 'add/add',
     })
   },
+
   //复制
   copy:function(e){
     var that = this;
@@ -182,6 +168,7 @@ Page({
       data:string,
     })
   },
+
   //修改
   edit:function(e){
     var that = this;
@@ -191,14 +178,7 @@ Page({
       url: 'add/add?action=edit&id='+data.id+'&name='+data.exam_name+'&num='+data.exam_num+'&date='+data.exam_date+'&address='+data.exam_address+'&position='+data.exam_position,
     })
   },
-  //计算两个日期的天数
-  dateDiff: function (date1, date2) {
-    var start_date = new Date(date1.replace(/-/g, "/"));
-    var end_date = new Date(date2.replace(/-/g, "/"));
-    var days = start_date.getTime() - end_date.getTime();
-    var day = parseInt(days / (1000 * 60 * 60 * 24));
-    return day;
-  },
+
   //伸缩
   open:function(e){
     var index = e.currentTarget.dataset.index
@@ -208,6 +188,7 @@ Page({
       course_exam:exams
     })
   },
+
   changeAll:function(){
     let exams = this.data.course_exam
     for(let i=0;i<exams.length;i++){
@@ -218,35 +199,31 @@ Page({
       allStatus:!this.data.allStatus
     })
   },
+
   //选择学期
   selectTerm:function(e){
     this.setData({
       term_index: e.detail.value
     })
   },
-  //获取班级
+
+  // 获取班级
   getClassList:function(){
     let _this = this
     if(_this.data.term.length == 0){
       return
     }
-    app.httpRequest({
-      url:'exam/getClassList',
-      data:{
-        term: _this.data.term[_this.data.term_index].num
-      },
-      success:function(res){
-        console.log(res)
-        if(res.data.status == -1){
-          app.msg(res.data.message)
-          return
-        }
+    getExamClassList({
+      term: _this.data.term[_this.data.term_index].num
+    }).then((res) => {
+      if(res.status == 0){
         _this.setData({
-          classList:res.data.data
+          classList:res.data
         })
       }
     })
   },
+
   selectClass:function(e){
     let class_name = this.data.classList[e.detail.value]
     this.setData({

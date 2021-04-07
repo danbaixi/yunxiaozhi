@@ -21,10 +21,22 @@ function getUrl(path){
   return `${domain}${path}${isDebug ? '?XDEBUG_SESSION_START=' + xdebugID : ''}`
 }
 
+// 获取跳转登录页面前的路由
+function getRedirect(){
+  const pages = getCurrentPages()
+  const currentPage = pages[pages.length-1]
+  const url = currentPage.route
+  const options = currentPage.options
+  let params = []
+  for(let k in options){
+    params.push(`${k}=${options[k]}`)
+  }
+  return encodeURIComponent(url + (params.length > 0 ? '?' + params.join('&') : ''))
+}
+
 //封装返回Promise对象的请求API
 function R(datas){
   datas.data = datas.data == undefined ? {} : datas.data
-  datas.redirect = datas.redirect || ''
   let session = ''
   if (datas.needLogin == undefined || datas.needLogin == true){
     session = wx.getStorageSync('login_session')
@@ -33,9 +45,10 @@ function R(datas){
         icon: 'none',
         title: '请先登录'
       })
+      let redirect = getRedirect()
       setTimeout(() => {
-        wx.navigateTo({
-          url: '/pages/login/login?redirect=' + datas.redirect,
+        wx.redirectTo({
+          url: '/pages/login/login?redirect=' + redirect,
         })
       },1000)
       return new Promise((resolve) => {
@@ -77,9 +90,10 @@ function R(datas){
           //重新登录清除一些缓存
           exitSaveData()
           //待解决：重复重定向到登录页面的问题
+          let redirect = getRedirect()
           setTimeout(() => {
-            wx.navigateTo({
-              url: '/pages/login/login?redirect=' + datas.redirect,
+            wx.redirectTo({
+              url: '/pages/login/login?redirect=' + redirect,
             })
           },1000)
         }else{

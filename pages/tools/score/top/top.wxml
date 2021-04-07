@@ -28,7 +28,7 @@
         </view>
       </view>
     </view>
-    <view wx:if="{{loading || all_fail}}">
+    <view wx:if="{{all_fail}}">
       <view class="top_item bg-g">全校挂科情况</view>
       <list-loading loading="{{loading}}"></list-loading>
       <view wx:if="{{!loading}}">

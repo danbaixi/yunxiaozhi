@@ -35,6 +35,13 @@ function getTermRank(data){
   })
 }
 
+// 获取生涯班级排名
+function getAllRank(){
+  return R({
+    url: 'score/getAllRank'
+  })
+}
+
 // 获取单科成绩信息
 function getCourseScoreData(data){
   return R({
@@ -43,10 +50,19 @@ function getCourseScoreData(data){
   })
 }
 
+// 获取学业报告
+function getScoreAnalysis(){
+  return R({
+    url: 'score/getscoreanalysis'
+  })
+}
+
 module.exports = {
   getScoreList,
   updateScore,
   getAllCredit,
   getTermRank,
-  getCourseScoreData
+  getAllRank,
+  getCourseScoreData,
+  getScoreAnalysis
 }

@@ -1,5 +1,5 @@
 const courseFn = require("../../../../utils/course")
-const app = getApp()
+const { getStudentList } = require('../../../api/course')
 Page({
 
   /**
@@ -26,41 +26,6 @@ Page({
   },
 
   /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
@@ -72,13 +37,6 @@ Page({
     }
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  },
-
   getList: function (data) {
     var that = this
     var section = data.jie + (data.jieshu > 1 ? ('-' + (parseInt(data.jie) + parseInt(data.jieshu) - 1)) : '')
@@ -86,34 +44,30 @@ Page({
     that.setData({
       loading: true
     })
-    app.httpRequest({
-      url: "course/getSameCourseStudent",
-      data: {
-        term: courseTerm.term,
-        name: (data.fullName || data.name),
-        weekly: data.zhoushu,
-        section: section,
-        teacher: data.teacher,
-        address: data.fullAddress,
-        week: data.week,
-        category: data.category,
-        p: that.data.p,
-        length: that.data.length,
-        count: 0
-      },
-      success: function (res) {
-        if (res.data.status == 0) {
-          var list = that.data.list
-          var finish = false
-          list = list.concat(res.data.data)
-          if (res.data.data.length < that.data.length) {
-            finish = true
-          }
-          that.setData({
-            list: list,
-            finish: finish
-          })
+    getStudentList({
+      term: courseTerm.term,
+      name: (data.fullName || data.name),
+      weekly: data.zhoushu,
+      section: section,
+      teacher: data.teacher,
+      address: data.fullAddress,
+      week: data.week,
+      category: data.category,
+      p: that.data.p,
+      length: that.data.length,
+      count: 0
+    }).then((res) => {
+      if (res.status == 0) {
+        var list = that.data.list
+        var finish = false
+        list = list.concat(res.data)
+        if (res.data.length < that.data.length) {
+          finish = true
         }
+        that.setData({
+          list: list,
+          finish: finish
+        })
       }
     })
   }

@@ -1,6 +1,9 @@
 const app = getApp()
-const util = require('../../utils/util.js');
+const util = require('../../utils/util.js')
 const { likeSoul } = require('../api/soul')
+const { getExamList } = require('../api/other')
+const { checkCourseInWeek,getConfig, openArticle } = require('../../utils/common')
+const dayjs = require('dayjs')
 Page({
   data: {
     tools: [
@@ -198,13 +201,10 @@ Page({
         hideSoul: hide_soul
       })
     }
-    
-    // that.getMessage();//获取公告
+
     that.getNowWeek();//获取第几周
     that.getWeekday();//获取星期几
     that.getCourse(that.data.now_week);//获取课表
-    //that.getMyExam();//获取我的考试
-    //that.getNews()
 
     //判断是否为本班课表
     var tmpClass = wx.getStorageSync('tmp_class')
@@ -220,8 +220,7 @@ Page({
     that.setData({
       news_list: [],
     });
-    wx.removeStorageSync('news');
-    //that.getBanner();
+    wx.removeStorageSync('news')
     that.getMyExam();
     var user_id = wx.getStorageSync('user_id');
     that.setData({
@@ -238,7 +237,6 @@ Page({
   },
   /** 打开应用 */
   openTool:function(e){
-    var that = this;
     var url = e.currentTarget.dataset.url
     var needLogin = e.currentTarget.dataset.needlogin
     var tab = e.currentTarget.dataset.tab
@@ -269,6 +267,7 @@ Page({
       url: url,
     })
   },
+
   /** 获取当前周 */
   getNowWeek: function () {
     var that = this;
@@ -300,6 +299,7 @@ Page({
       now_week_text:now_week_text
     })
   },
+
   /** 获取课表 */
   getCourse: function (week) {
     var that = this;
@@ -312,7 +312,7 @@ Page({
         if (typeof data[a]['course_weekly'] == "undefined" || typeof data[a]['course_danshuang'] == "undefined") {
           continue
         }
-        if (that.ana_week(week, data[a]['course_weekly'], data[a]['course_danshuang']) && data[a]['course_week'] == that.data.weekday) {
+        if (checkCourseInWeek(week, data[a]) && data[a]['course_week'] == that.data.weekday) {
           var jie = data[a]['course_section'].split("-")[0];
           var jieshu = data[a]['course_section'].split("-")[1] - data[a]['course_section'].split("-")[0] + 1;
           //格式化上课地点
@@ -374,55 +374,7 @@ Page({
     }
     // that.getTrain(week);
   },
-  /** 解析周数 */
-  ana_week: function (week, weekly, danshuang) {
-    var result = new Array();
-    var temp1 = weekly.split(",");
-    var temp2 = new Array();
-    for (var i = 0; i < temp1.length; i++) {
-      temp2[i] = temp1[i].split("-");
-    }
-    var k = 0;//周数
-    if (danshuang == 0) {
-      for (var a = 0; a < temp1.length; a++) {
-        if (temp2[a].length == 2) {
-          for (var start = parseInt(temp2[a][0]); start <= temp2[a][1]; start++) {
-            result[k++] = start;
-          }
-        } else {
-          result[k++] = parseInt(temp2[a][0]);
-        }
-      }
-    } else {
-      for (var a = 0; a < temp1.length; a++) {
-        if (temp2[a].length == 2) {
-          for (var start = parseInt(temp2[a][0]); start <= temp2[a][1]; start++) {
-            if (danshuang == 1) {
-              if (start % 2 != 0) {
-                result[k++] = start++;
-              }
-            } else if (danshuang == 2) {
-              if (start % 2 == 0) {
-                result[k++] = start++;
-              }
-            }
-          }
-        } else {
-          let weekNum = parseInt(temp2[a][0])
-          if((danshuang == 1 && weekNum % 2 == 1) || (danshuang == 2 && weekNum % 2 == 0)){
-            result[k++] = weekNum;
-          }
-        }
-      }
-    }
-    for (var j = 0; j < result.length; j++) {
-      if (week == result[j]) {
-        return true;
-      } else if (j == result.length - 1) {
-        return false;
-      }
-    }
-  },
+
   /** 获取星期几 */
   getWeekday:function(){
     var that = this;
@@ -442,6 +394,7 @@ Page({
       WEEKDAY:WEEKDAY,
     })
   },
+
   /** 跳转登录页面 */
   goLogin:function(){
     wx.navigateTo({
@@ -456,25 +409,27 @@ Page({
     })
   },
 
-
   /** 跳转课表页面 */
   goCourse: function () {
     wx.switchTab({
       url: '../course/course',
     })
   },
+
   /** 跳转课表页面 */
   goMoreNews: function () {
     wx.navigateTo({
       url: 'more_news/more_news',
     })
   },
+
   /** 跳转公告页面 */
   goMessage:function(){
     wx.navigateTo({
       url: 'message/message',
     })
   },
+
   /** 显示课表详细内容 */
   displayCourseInfo: function (e) {
     var indexNum = e.currentTarget.dataset.num;
@@ -493,47 +448,9 @@ Page({
       url: "/pages/course/info/info?data=" + encodeURIComponent(JSON.stringify(course)),
     })
   },
-  /** 获取banner信息 */
-  getBanner:function(){
-    var that = this;
-    app.httpRequest({
-      url: 'banner/getListByBid',
-      needLogin:false,
-      data:{
-        bid:1
-      },
-      success:function(res){
-        if(res.data.status == 1001){
-          var indicatorDots = true;
-          if (res.data.data.data.length<=1){
-            indicatorDots = false;
-          }
-          var banner = res.data.data.data
-          for(var i=0;i<banner.length;i++){
-            banner[i].img_src = that.data.imgDomain + banner[i].img_src
-          }
-          that.setData({
-            banner:banner,
-            indicatorDots: indicatorDots
-          })
-        }
-      }
-    })
-  },
-  /** 点击banner */
-  bannerClick:function(e){
-    var that = this;
-    var index = e.currentTarget.dataset.index;
-    var banner_type = that.data.banner[index].type;
-    if(banner_type == 1){
-      var url = that.data.banner[index].href;
-      wx.navigateTo({
-        url: url,
-      })
-    }
-  },
+
   //获取考试列表
-  getMyExam: function (e) {
+  getMyExam: function () {
     if (!app.getUserId()){
       this.setData({
         my_exams:[],
@@ -541,43 +458,31 @@ Page({
       })
       return
     }
-    var that = this,displayExam = false;
-    var now = util.formatTime2(new Date());
-    app.httpRequest({
-      url: 'exam/getmylist',
-      success: function (res) {
-        if (res.data.status == 0) {
-          var data = res.data.data;
-          for (var i = 0; i < data.length; i++) {
-            var days = that.dateDiff(data[i].exam_date, now);
-            data[i].days = days;
-            if(days > 0){
-              displayExam = true
-            }
-          }
-          that.setData({
-            my_exams: data,
-            displayExam: displayExam,
-          });
-        } else {
-          app.msg(res.data.message)
+    const that = this
+    let displayExam = false
+    let now = dayjs()
+    getExamList().then((res) => {
+      let data = res.data
+      for (let i = 0; i < data.length; i++) {
+        let days = dayjs(data[i].exam_date).diff(now,'day')
+        data[i].days = days
+        if(days > 0){
+          displayExam = true
         }
-      },
+      }
+      that.setData({
+        my_exams: data,
+        displayExam: displayExam
+      });
     })
   },
-  //计算两个日期的天数
-  dateDiff: function (date1, date2) {
-    var start_date = new Date(date1.replace(/-/g, "/"));
-    var end_date = new Date(date2.replace(/-/g, "/"));
-    var days = start_date.getTime() - end_date.getTime();
-    var day = parseInt(days / (1000 * 60 * 60 * 24));
-    return day;
-  },
+
   goExam:function(e){
     wx.navigateTo({
       url: '../tools/exam/exam?currentTab=1',
     })
   },
+
   closeAddTip(){
     var time = (new Date).getTime()
     this.setData({
@@ -654,55 +559,32 @@ Page({
       }
     })
   },
-  //获取新闻
-  getNews:function(){
-    let _this = this
-    app.httpRequest({
-      url:'article/getNews',
-      success:function(res){
-        if(res.data.status == 0){
-          _this.setData({
-            'display_news': res.data.data.display,
-            'news': res.data.data.news
-          })
-        }
-      }
-    })
-  },
-  // 查看
-  viewNews:function(){
-    this.viewAllNews()
-    return
-    wx.navigateTo({
-      url: '/pages/article/article?src=' + encodeURIComponent(this.data.news.src) + '&title=' + this.data.news.title + '&img=' + encodeURIComponent(this.data.news.img),
-    })
-  },
-  // 查看全部
-  viewAllNews:function(){
-    wx.navigateTo({
-      url: '/pages/news/news',
-    })
-  },
+
   hideVersionTips:function(){
     this.setData({
       newVersionTip:false
     })
   },
+
   //获取文章轮播
   getArticleBanner:function(){
-    let _this = this
-    app.httpRequest({
-      url: 'article/getArticleBanner',
-      needLogin: false,
-      success:function(res){
-        if(res.data.status == 0){
-          _this.setData({
-            articleBanners:res.data.data
-          })
-        }
-      }
+    const banners = getConfig('banners')
+    if(!banners){
+      return
+    }
+    const audit = getConfig('auditing')
+    if(audit == 1){
+      banners = [{
+          title : '',
+          img : 'https://mmbiz.qpic.cn/mmbiz_jpg/YWKTC18p77JNk4Iyh99tsRmnHLUFunCcic5ZqFABFAtmqfT4DBuAH4sDsbTCugj9o8JJsRoBfbotQLgAllHAfDQ/0?wx_fmt=jpeg',
+          src : ''
+        }]
+    }
+    this.setData({
+      articleBanners: banners
     })
   },
+
   //点击轮播的文章
   viewArticle:function(e){
     if (this.data.articleBanners.length <= 1){
@@ -710,10 +592,9 @@ Page({
     }
     let index = e.currentTarget.dataset.index
     let article = this.data.articleBanners[index]
-    wx.navigateTo({
-      url: '/pages/news/news?src=' + encodeURIComponent(article.src),
-    })
+    openArticle(article.src)
   },
+
   //展示新生专题提示
   newStudentTips:function(){
     let audit = app.getConfig('auditing')
@@ -727,20 +608,24 @@ Page({
       })
     }
   },
+
   hideNewStudentTips:function(){
     this.setData({
       showNewStudentTips:false
     })
   },
+
   goNewStudent:function(){
     wx.navigateTo({
       url: '/pages/tools/newstudent/newstudent',
     })
   },
+
   closeNewStudentTips:function(){
     wx.setStorageSync('hide_new_studnet_tips', true)
     app.msg("已设置不再弹出")
   },
+
   closeNewStudentFloat:function(){
     this.setData({
       hideNewStudentFloat: true

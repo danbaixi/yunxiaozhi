@@ -2,10 +2,9 @@
 const R = require('../../utils/request')
 
 // 获取课表列表
-function getCourseList(redirect){
+function getCourseList(){
   return R({
-    url: 'course/getList',
-    redirect
+    url: 'course/getList'
   })
 }
 
@@ -51,6 +50,47 @@ function updateTrainCourse(){
   })
 }
 
+// 添加课程
+function addCourse(data){
+  return R({
+    url:'course/addCourse',
+    data,
+    method: 'POST',
+  })
+}
+
+// 删除课程
+function delCourse(data){
+  return R({
+    url: 'course/deleteCourseById',
+    data
+  })
+}
+
+// 获取自定义课程
+function getCourseById(data){
+  return R({
+    url:'course/getCourseById',
+    data
+  })
+}
+
+// 获取同堂同学数量
+function getStudentCount(data){
+  return R({
+    url: "course/getSameCourseStudent",
+    data
+  })
+}
+
+// 获取同堂同学列表
+function getStudentList(data){
+  return R({
+    url: "course/getSameCourseStudent",
+    data
+  })
+}
+
 module.exports = {
   getCourseList,
   updateCourse,
@@ -58,5 +98,10 @@ module.exports = {
   updateTheoryCourse,
   getPublicCourseList,
   getTrainCourseList,
-  updateTrainCourse
+  updateTrainCourse,
+  addCourse,
+  delCourse,
+  getCourseById,
+  getStudentCount,
+  getStudentList
 }

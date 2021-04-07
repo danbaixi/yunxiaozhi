@@ -22,6 +22,7 @@ function loginRedirect(path){
     })
     return
   }
+  path = decodeURIComponent(path)
   if(isTabPath(path)){
     wx.switchTab({
       url: '/' + path,
@@ -130,8 +131,10 @@ function backPage(from = ''){
 const UPDATE_TIME = 60 //时间间隔60s
 const TIME_KEY = {
   score: 'score_update_time', //成绩
-  course: 'course_update_time' //课表
+  course: 'course_update_time', //课表
+  attendance: 'attendance_update_time' //考勤
 }
+
 function canUpdate(type){
   const key = TIME_KEY[type]
   if(!key){
@@ -153,8 +156,85 @@ function canUpdate(type){
   return true
 }
 
+// 设置更新时间
 function setUpdateTime(type,time){
+  time = time || dayjs().unix()
   wx.setStorageSync(TIME_KEY[type],time)
+}
+
+// 判断课程是否在当前周
+function checkCourseInWeek(week,course){
+  let { course_weekly:weekly, course_danshuang:danshuang} = course
+  let weeklys = weekly.split(",")
+  let weeklyDetail = []
+  for(let w of weeklys){
+    let s = w.split('-')
+    if(s.length > 1){
+      weeklyDetail.push(s)
+    }else{
+      weeklyDetail.push(w)
+    }
+  }
+  if(danshuang == 1 && week % 2 == 0){
+    return false
+  }
+  if(danshuang == 2 && week % 2 == 1){
+    return false
+  }
+  for(let d of weeklyDetail){
+    if(Array.isArray(d) && week >= d[0] && week <= d[1]){
+      return true
+    }
+    if(week == d){
+      return true
+    }
+  }
+  return false
+}
+
+// 获取通知
+function getNotice(page){
+  const notices = getConfig('notices')
+  console.log(notices)
+  if(!notices || notices.length <= 0){
+    return false
+  }
+  for(let n of notices){
+    if(page == n.page){
+      return n
+    }
+  }
+  return false
+}
+
+// 通知点击事件
+function noticeClickEvent(notice){
+  if(notice.url == ''){
+    return
+  }
+  switch(notice.type){
+    //文章
+    case 1:
+      openArticle(notice.url)
+      break
+    //页面
+    case 2:
+      wx.navigateTo({
+        url: notice.url,
+      })
+      break
+    //小程序
+    case 3:
+      wx.navigateToMiniProgram({
+        appId:this.data.notice.appid,
+        path: this.data.notice.url
+      })
+      break
+    //其他
+    default:
+      console.log('暂不支持跳转')
+      break
+  }
 }
 
 module.exports = {
@@ -165,5 +245,9 @@ module.exports = {
   getUserId,
   backPage,
   canUpdate,
-  setUpdateTime
+  setUpdateTime,
+  acceptTerms,
+  checkCourseInWeek,
+  getNotice,
+  noticeClickEvent
 }

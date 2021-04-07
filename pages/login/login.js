@@ -98,6 +98,7 @@ Page({
           _this.getCode()
         }).then((resolve) => {
           if(resolve.status == 0){
+            app.msg("登录成功","success")
             wx.setStorageSync('login_session', resolve.data.session)
             wx.setStorageSync('user_id', resolve.data.stu_id)
             wx.setStorageSync('user_info', resolve.data.info)
@@ -110,7 +111,6 @@ Page({
               }, 500);
               return
             }
-            app.msg("登录成功","success")
             //更新获取课表
             updateAndGetCourseList()
             setTimeout(() => {

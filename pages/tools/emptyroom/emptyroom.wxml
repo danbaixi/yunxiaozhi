@@ -18,7 +18,7 @@
         <view class="title">教学楼</view>
         <picker bindchange="selectFloor" value="{{floor}}" range="{{floors}}" range-key="name">
           <view class="picker">
-            {{floors[floor]['name']}}
+            {{floors.length > 0 ? floors[floor]['name'] : '加载中...'}}
           </view>
         </picker>
       </view>

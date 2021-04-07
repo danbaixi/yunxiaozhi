@@ -1,6 +1,7 @@
-var app = getApp();
-var ccFile = require('../../../utils/calendar-converter.js')
-var calendarConverter = new ccFile.CalendarConverter();
+const app = getApp();
+const ccFile = require('../../../utils/calendar-converter.js')
+const calendarConverter = new ccFile.CalendarConverter();
+const { getCalendarList } = require('../../api/other')
 Page({
 
   /**
@@ -71,6 +72,36 @@ Page({
         })
         that.getDayData(now_year, now_month);
         that.zhouci();
+      }
+    })
+    // that.getData()
+  },
+  //获取数据
+  getData:function(){
+    const that = this
+    getCalendarList().then((res) => {
+      if(res.status == 0){
+        var data = res.data.calendar;
+        var semester = res.data.semester;
+        for (var i = 0; i < data.length; i++) {
+          var stemp = data[i].startDate.split('-');
+          var start = new Array(parseInt(stemp[0]), parseInt(stemp[1]), parseInt(stemp[2]));
+          var etemp = data[i].endDate.split('-');
+          var end = new Array(parseInt(etemp[0]), parseInt(etemp[1]), parseInt(etemp[2]));
+          var calendar = {
+            semester: data[i].semester,
+            title: data[i].title,
+            start: start,
+            end: end,
+          }
+          that.setData({ jilu: that.data.jilu.concat(calendar) });
+        }
+        that.setData({
+          semester: semester,
+          loading: false
+        })
+        that.getDayData(that.data.now_year, that.data.now_month);
+        that.zhouci()
       }
     })
   },

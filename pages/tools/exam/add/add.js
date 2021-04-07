@@ -1,5 +1,6 @@
-var app = getApp();
-var util = require('../../../../utils/util.js');
+const app = getApp();
+const util = require('../../../../utils/util.js')
+const { editExam } = require('../../../api/other')
 Page({
 
   /**
@@ -32,58 +33,18 @@ Page({
   },
 
   /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
     return app.share()
   },
+
   bindDateChange: function (e) {
     this.setData({
       date: e.detail.value
     })
   },
+
   formSubmit: function (e) {
     var that = this;
     var value = e.detail.value;
@@ -94,46 +55,60 @@ Page({
     var position = value.position;
     if(name==""||date==""){
       app.msg("请输入必填信息")
-    }else{
-      wx.showLoading({
-        title: "加载中",
-        mask: true
-      })
-      if(that.data.action =="修改"){
-        app.httpRequest({
-          url: 'exam/editlist',
-          data: {
-            id:that.data.id,
-            name: name,
-            date: date,
-            address: address,
-            num: num,
-            position: position
-          },
-          success: function (res) {
-            wx.hideLoading()
-            if (res.data.status == 0) {
-              app.msg("修改成功","success")
-              wx.setStorageSync('my_exams','')
-              setTimeout(function () {
-                //返回后刷新
-                var pages = getCurrentPages();
-                var prevPage = pages[pages.length - 2];
-                prevPage.setData({
-                  isFresh: true
-                })
-                wx.navigateBack({})
-              }, 1000)
-            } else {
-              app.msg("修改失败")
-            }
-          },
-        })
-        return
+      return
+    }
+    wx.showLoading({
+      title: "保存中",
+      mask: true
+    })
+    let data = {
+      name: name,
+      date: date,
+      address: address,
+      num: num,
+      position: position
+    }
+    if(that.data.id){
+      data.id = that.data.id
+    }
+    editExam(data).then((res) => {
+      if (res.status == 0) {
+        app.msg(`${that.data.action}成功`,"success")
+        wx.setStorageSync('my_exams','')
+        setTimeout(function () {
+          //返回后刷新
+          var pages = getCurrentPages();
+          var prevPage = pages[pages.length - 2];
+          prevPage.setData({
+            isFresh: true
+          })
+          wx.navigateBack({})
+        }, 1000)
       }
+    })
+    return
+    if(that.data.action =="修改"){
+
+      let result = 
+      editExam(data).then((res) => {
+        if (res.status == 0) {
+          app.msg("修改成功","success")
+          wx.setStorageSync('my_exams','')
+          setTimeout(function () {
+            //返回后刷新
+            var pages = getCurrentPages();
+            var prevPage = pages[pages.length - 2];
+            prevPage.setData({
+              isFresh: true
+            })
+            wx.navigateBack({})
+          }, 1000)
+        }
+      })
       app.httpRequest({
-        url: 'exam/addlist',
+        url: 'exam/editlist',
         data: {
+          id:that.data.id,
           name: name,
           date: date,
           address: address,
@@ -143,8 +118,8 @@ Page({
         success: function (res) {
           wx.hideLoading()
           if (res.data.status == 0) {
-            app.msg("添加成功", "success")
-            wx.setStorageSync('my_exams', '')
+            app.msg("修改成功","success")
+            wx.setStorageSync('my_exams','')
             setTimeout(function () {
               //返回后刷新
               var pages = getCurrentPages();
@@ -155,11 +130,43 @@ Page({
               wx.navigateBack({})
             }, 1000)
           } else {
-            app.msg("添加失败")
+            app.msg("修改失败")
           }
         },
       })
+      return
     }
+    addExam().then((res) => {
+        
+    })
+    app.httpRequest({
+      url: 'exam/addlist',
+      data: {
+        name: name,
+        date: date,
+        address: address,
+        num: num,
+        position: position
+      },
+      success: function (res) {
+        wx.hideLoading()
+        if (res.data.status == 0) {
+          app.msg("添加成功", "success")
+          wx.setStorageSync('my_exams', '')
+          setTimeout(function () {
+            //返回后刷新
+            var pages = getCurrentPages();
+            var prevPage = pages[pages.length - 2];
+            prevPage.setData({
+              isFresh: true
+            })
+            wx.navigateBack({})
+          }, 1000)
+        } else {
+          app.msg("添加失败")
+        }
+      },
+    })
   },
   //删除
   del:function(e){

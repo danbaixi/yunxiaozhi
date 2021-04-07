@@ -2,6 +2,8 @@ const app = getApp()
 const TIMES = require('../../../utils/course-time.js')
 const courseFn = require('../../../utils/course')
 const util = require('../../../utils/util')
+const { openArticle } = require('../../../utils/common.js')
+const { getStudentCount } = require('../../api/course')
 Page({
 
   /**
@@ -119,30 +121,8 @@ Page({
     })
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
-  },
   rest:function(){
-    wx.navigateTo({
-      url: '../../article/article?src=' + encodeURIComponent('http://mp.weixin.qq.com/s?__biz=MzI1NTUwNDIzNQ==&mid=100000581&idx=1&sn=6ef90448df9ac2d4930fa3b15aa8399e&chksm=6a35b9415d423057df293f498fe3027b2ede3fe46000e69fc1a713a90eb7f894aabe416d7fa2#rd'),
-    })
+    openArticle('http://mp.weixin.qq.com/s?__biz=MzI1NTUwNDIzNQ==&mid=100000581&idx=1&sn=6ef90448df9ac2d4930fa3b15aa8399e&chksm=6a35b9415d423057df293f498fe3027b2ede3fe46000e69fc1a713a90eb7f894aabe416d7fa2#rd')
   },
 
   setTime:function(){
@@ -155,24 +135,20 @@ Page({
     var that = this
     var section = data.jie + (data.jieshu > 1 ? ('-' + (parseInt(data.jie) + parseInt(data.jieshu) - 1)) : '')
     let courseTerm = courseFn.getNowCourseTerm()
-    app.httpRequest({
-      url: "course/getSameCourseStudent",
-      data:{
-        term:courseTerm.term,
-        name:(data.fullName || data.name),
-        weekly:data.zhoushu,
-        section:section,
-        teacher:data.teacher,
-        address: data.fullAddress,
-        week:data.week,
-        category:data.category
-      },
-      success:function(res){
-        if(res.data.status == 0){
-          that.setData({
-            sameCount:res.data.data
-          })
-        }
+    getStudentCount({
+      term:courseTerm.term,
+      name:(data.fullName || data.name),
+      weekly:data.zhoushu,
+      section:section,
+      teacher:data.teacher,
+      address: data.fullAddress,
+      week:data.week,
+      category:data.category
+    }).then((res) => {
+      if(res.status == 0){
+        that.setData({
+          sameCount:res.data
+        })
       }
     })
   },

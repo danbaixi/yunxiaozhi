@@ -2,6 +2,8 @@ var colors = require('../../utils/colors.js')
 const TIMES = require('../../utils/course-time.js')
 const courseFn = require('../../utils/course')
 const util = require('../../utils/util')
+const { checkCourseInWeek,setUpdateTime, canUpdate, getNotice, noticeClickEvent } = require('../../utils/common')
+const { updateCourse, getCourseList } = require('../api/course')
 const app = getApp()
 Page({
   /**
@@ -119,7 +121,7 @@ Page({
       }
     }
     //获取公告
-    that.getNotice()
+    that.getCourseNotice()
   },
 
   onShow:function(){
@@ -286,7 +288,7 @@ Page({
         }
 
         let display = false,thisWeek = false //是否是当周课表
-        if (that.ana_week(week, data[a]['course_weekly'], data[a]['course_danshuang'])) {
+        if (checkCourseInWeek(week, data[a])) {
           thisWeek = true
         }
         if(thisWeek || !that.data.onlyThisWeek){
@@ -412,7 +414,7 @@ Page({
     })
   },
   /**
-   * 解析周数
+   * 解析周数，将弃用
    */
   ana_week:function(week,weekly,danshuang){
     var result = new Array();
@@ -518,103 +520,40 @@ Page({
     }
 
   },
-  /**
-* 弹窗
-*/
-  updateCourse: function () {
-    var that = this;
-    var system_type = wx.getStorageSync('system_type');
-    if (system_type == 1) {
-      app.msg("请使用旧教务系统账号登录后更新课表")
-      setTimeout(function(){
-        wx.navigateTo({
-          url: '/pages/bind/bind',
-        })
-      },2000)
-      return;
-    }
-    that.setData({
-      showModal: true,
-      list_is_display:false
-    });
-    /**获取验证码 */
-    wx.request({
-      url: app.globalData.domain + 'login/getLoginInitData',
-      success: function (res) {
-        that.setData({
-          cookie: res.data.data['cookie'],
-          __VIEWSTATE: res.data.data['__VIEWSTATE'],
-        })
-        that.freshYzm();
-      }
-    });
-  },
-  /**
-   * 弹出框蒙层截断touchmove事件
-   */
-  preventTouchMove: function () {
 
-  },
-  /**
-   * 隐藏模态对话框
-   */
-  hideModal: function (e) {
-    this.setData({ 
-      showModal: false 
-    }) 
-  },
-  /**
-   * 对话框取消按钮点击事件
-   */
-  onCancel: function (e) {
-    this.hideModal();
-  },
-  /** 获取验证码 */
-  yzmInput: function (e) {
-    this.setData({
-      yzm: e.detail.value,
-    })
-  },
+  //获取课表
   getCourseListRequest(){
     let that = this
-    app.httpRequest({
-      url: 'course/getList',
-      success: function (res) {
+    getCourseList().then((res) => {
+      if(res.status == 0){
         wx.setStorageSync('course', res.data.data.course);
         wx.setStorageSync('train', res.data.data.train_course);
-        that.onShow();
-      },
-    })
-  },
-  updateCourseRequest(){
-    let that = this
-    app.httpRequest({
-      url: 'course/updateV1',
-      success: function (res) {
-        if (res.data.status == 0) {
-          that.getCourseListRequest()
-          let time = (new Date()).getTime();
-          wx.setStorageSync('course_update_time', time);
-          //切换为当前学期
-          courseFn.setCourseToNowTerm()
-          app.msg("更新成功", 'success')
-        } else {
-          if(res.data.status == 1005){
-            //再获取一遍
-            that.updateCourseRequest()
-          }else if (res.data.status == 1002) {
-            app.msg(res.data.message)
-            that.freshYzm()
-          } else {
-            app.msg(res.data.message)
-            that.setData({
-              showModal:false
-            })
-          }
-        }
+        that.onShow()
       }
     })
   },
+
+  //更新课表
+  updateCourseRequest(){
+    let that = this
+    updateCourse().then((res) => {
+      if (res.status == 0) {
+        that.getCourseListRequest()
+        setUpdateTime('course')
+        //切换为当前学期
+        courseFn.setCourseToNowTerm()
+        app.msg("更新成功", 'success')
+        return
+      }
+      if(res.status == 1005){
+        //再获取一遍
+        that.updateCourseRequest()
+      }else{
+        app.msg(res.message)
+      }
+    })
+  },
+
   /**
    * 对话框确认按钮点击事件
    */
@@ -623,25 +562,18 @@ Page({
     var user_id = wx.getStorageSync('user_id');
     if (!user_id) {
       app.msg("请先登录")
-      return;
+      return
     }
     if(!that.data.acceptTerms){
       app.msg("请先接受使用条款")
-      return;
+      return
     }
     that.setData({
       list_is_display: false
     })
-    var time = (new Date()).getTime();
-    if (wx.getStorageSync('course_update_time') != "") {
-      var update_time = wx.getStorageSync('course_update_time');
-      var cha = time - update_time;
-      var season = 120 - Math.floor(cha / 1000);
-    } else {
-      var season = 0;
-    }
-    if (season > 0) {
-      app.msg('请在' + season + '秒后更新')
+    const canUpdateResult = canUpdate('course')
+    if(canUpdateResult !== true){
+      app.msg(canUpdateResult)
       return
     }
     that.setData({
@@ -654,25 +586,7 @@ Page({
     wx.removeStorageSync('tmp_class')
     that.updateCourseRequest()
   },
-  /** 刷新验证码 */
-  freshYzm: function () {
-    var num = Math.ceil(Math.random() * 1000000);
-    this.setData({
-      yzmUrl: app.globalData.domain + 'login/getValidateImg?cookie=' + this.data.cookie + '&rand=' + num,
-    })
-  },
-  /**输入验证码时，改变模态框高度 */
-  inputFocus: function () {
-    this.setData({
-      input_focus: 1
-    })
-  },
-  /** 不输入验证码时，恢复 */
-  inputBlur: function () {
-    this.setData({
-      input_focus: 0
-    })
-  },
+  
   //是否显示列表
   listDisplay:function(){
     var list = this.data.list_is_display;
@@ -706,30 +620,24 @@ Page({
       todayDay:day
     });
   },
-  getNotice:function(){
-    let that = this
-    let notice_time_course = wx.getStorageSync('notice_time_course')
-    app.httpRequest({
-      url: 'notice/getnotice',
-      data:{
-        page:'course'
-      },
-      needLogin: false,
-      success:function(res){
-        if(!res.data.data){
-          return
-        }
-        let noticeDisplay = true
-        if(notice_time_course >= res.data.data.add_time || res.data.data.display == 0){
-          noticeDisplay = false
-        }
-        that.setData({
-          noticeDisplay: noticeDisplay,
-          notice: res.data.data
-        })
+
+  getCourseNotice:function(){
+    let notice = getNotice('course')
+    let noticeDisplay = true
+    if(!notice){
+      noticeDisplay = false
+    }else{
+      let notice_time_course = wx.getStorageSync('notice_time_course')
+      if(notice_time_course >= notice.add_time || notice.display == 0){
+        noticeDisplay = false
       }
+    }
+    this.setData({
+      noticeDisplay: noticeDisplay,
+      notice: notice
     })
   },
+
   closeNotice:function(){
     let now = parseInt(new Date().getTime() / 1000)
     wx.setStorageSync('notice_time_course', now)
@@ -737,32 +645,11 @@ Page({
       noticeDisplay: false
     })
   },
+
   clickNotice:function(){
-    if(this.data.notice.url == ''){
-      return
-    }
-    switch(this.data.notice.type){
-      case 1:
-        wx.navigateTo({
-          url: '/pages/article/article?src=' + encodeURIComponent(this.data.notice.url),
-        })
-        break
-      case 2:
-        wx.navigateTo({
-          url: this.data.notice.url,
-        })
-        break
-      case 3:
-        wx.navigateToMiniProgram({
-          appId:this.data.notice.appid,
-          path: this.data.notice.url
-        })
-        break
-      default:
-        app.msg("暂不支持跳转")
-        break
-    }
+    noticeClickEvent(this.data.notice)
   },
+
   hideMask:function(){
     this.setData({
       list_is_display: false
@@ -855,32 +742,6 @@ Page({
       return title
     }
   },
-
-  loginTips:function(){
-    wx.navigateTo({
-      url: '/pages/loginTips/loginTips',
-    })
-  },
-  shareCourse:function(){
-    app.msg("此功能正在优化中")
-    return
-    if(!app.getUserId()){
-      app.msg("你还没有登录哦")
-      return
-    }
-    wx.navigateTo({
-      url: '/pages/course/share/share?term=' + this.data.courseTerm.term + '&term_name=' + this.data.courseTerm.name,
-    })
-  },
-  setTime:function(){
-    if (!app.getUserId()) {
-      app.msg("你还没有登录哦")
-      return
-    }
-    wx.navigateTo({
-      url: '/pages/course/setTime/setTime',
-    })
-  },
   
   getConfigData:function(){
     if (!app.getUserId()){
@@ -942,8 +803,8 @@ Page({
       if (typeof courses[i].course_weekly == "undefined"){
         continue
       }
-      var tmp = this.ana_week(this.data.now_week, courses[i].course_weekly, courses[i].course_danshuang)
-      if (tmp && courses[i]['course_week'] == week){
+      var inWeek = checkCourseInWeek(this.data.now_week, courses[i])
+      if (inWeek && courses[i]['course_week'] == week){
         var jie = courses[i]['course_section'].split("-")[0];
         var jieshu = courses[i]['course_section'].split("-")[1] - courses[i]['course_section'].split("-")[0] + 1;
         //格式化上课地点
@@ -1031,19 +892,19 @@ Page({
 
   //设置起始日
   setStartDay:function(e){
-    var val = e.detail.value
+    let val = e.detail.value
     this.setData({
       startDay:val
     })
     wx.setStorageSync('start_day',val)
-    var week = this.data.now_week
-    var day = this.getDayOfWeek(week,val)
-    var zhou_num = ['第1周', '第2周', '第3周', '第4周', '第5周', '第6周', '第7周', '第8周', '第9周', '第10周', '第11周', '第12周', '第13周', '第14周', '第15周', '第16周', '第17周', '第18周', '第19周', '第20周']
-    var n = zhou_num[week - 1].search(/(本周)/i);
+    let week = this.data.now_week
+    let day = this.getDayOfWeek(week,val)
+    let zhou_num = this.data.zhou_num
+    let n = zhou_num[week - 1].search(/(本周)/i);
     if (n == -1) {
       zhou_num[week - 1] = zhou_num[week - 1] + "(本周)";
     }
-    var month = this.getMonth((week - 1) * 7);
+    let month = this.getMonth((week - 1) * 7);
 
     this.setData({
       startDay:val,
@@ -1056,11 +917,7 @@ Page({
     })
     this.getCourse(week, true, false)
   },
-  addCourse:function(){
-    wx.navigateTo({
-      url: '/pages/course/add/add',
-    })
-  },
+
   displayOnlyWeek:function(){
     let result = !this.data.onlyThisWeek
     this.setData({
@@ -1074,12 +931,54 @@ Page({
       showMoreCourse:false
     })
   },
-  //设置背景
+
+  /**
+   * 页面跳转
+   */
+
+  // 设置背景
   setBg:function(){
     wx.navigateTo({
       url: '/pages/course/setBg/setBg?from=index',
     })
   },
+
+  // 课程管理
+  courseList:function(){
+    wx.navigateTo({
+      url: '/pages/course/list/list',
+    })
+  },
+
+  // 登录提示
+  loginTips:function(){
+    wx.navigateTo({
+      url: '/pages/loginTips/loginTips',
+    })
+  },
+
+  // 分享课表
+  shareCourse:function(){
+    if(!app.getUserId()){
+      app.msg("你还没有登录哦")
+      return
+    }
+    wx.navigateTo({
+      url: '/pages/course/share/share?term=' + this.data.courseTerm.term + '&term_name=' + this.data.courseTerm.name,
+    })
+  },
+
+  // 设置时间
+  setTime:function(){
+    if (!app.getUserId()) {
+      app.msg("你还没有登录哦")
+      return
+    }
+    wx.navigateTo({
+      url: '/pages/course/setTime/setTime',
+    })
+  },
+
   touchStart: function(e) {
     this.setData({
       "touch.x": e.changedTouches[0].clientX,
@@ -1130,11 +1029,7 @@ Page({
     },500)
     this.selectWeek(week)
   },
-  courseList:function(){
-    wx.navigateTo({
-      url: '/pages/course/list/list',
-    })
-  },
+
   getCourseTerm:function(){
     let nowTerm = courseFn.getNowCourseTerm()
     let thisTerm = app.getConfig('nowTerm.term')

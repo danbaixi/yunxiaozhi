@@ -2,6 +2,7 @@ const app = getApp()
 const colors = require('../../../utils/colors')
 const course = require('../../../utils/course')
 const util = require('../../../utils/util')
+const { getTermByClassname, getCourseByClassname } = require('../../api/course')
 Page({
 
   /**
@@ -29,13 +30,6 @@ Page({
   },
 
   /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
@@ -57,40 +51,7 @@ Page({
     })
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  },
+  // 获取课程列表
   getData:function(){
     let data = wx.getStorageSync('course')
     let courses = []
@@ -136,6 +97,8 @@ Page({
     })
     this.stopAnimation()
   },
+
+  // 课程筛选
   fiterCourse:function(e){
     let index = e.currentTarget.dataset.index
     let displayCourses = []
@@ -158,6 +121,8 @@ Page({
     })
     this.stopAnimation()
   },
+
+  // 显示课程
   displayCourse:function(index,course){
     switch(index){
       case 0:return true;break
@@ -193,6 +158,8 @@ Page({
         break
     }
   },
+
+  // 获取数量
   getCounts:function(){
     let courses = wx.getStorageSync('course')
     let counts = [0,0,0,0,0,0]
@@ -223,6 +190,8 @@ Page({
       counts:counts
     })
   },
+
+  // 添加课程
   addCourse:function(e){
     let id = e.currentTarget.dataset.id
     if(id){
@@ -241,6 +210,7 @@ Page({
       url: '/pages/course/add/add?from=list',
     })
   },
+
   stopAnimation:function(){
     if(this.data.toggleDelay){
       setTimeout(()=>{
@@ -250,11 +220,13 @@ Page({
       },1000)
     }
   },
+
   changeClass:function(){
     wx.navigateTo({
       url: '/pages/setClass/setClass',
     })
   },
+
   //获取学期
   getTerms:function(){
     let _this = this
@@ -271,15 +243,10 @@ Page({
       title: '正在加载',
       mask: true
     })
-    app.promiseRequest({
-      url:'data/getTermsByClassname',
-      data:{
-        stu_id: stu_id,
-        classname: classname
-      },
-      needLogin:false,
-    }).then((result) =>{
-      wx.hideLoading()
+    getTermByClassname({
+      stu_id: stu_id,
+      classname: classname
+    }).then((result) => {
       let terms = result.data
       let termIndex = 0
       if(_this.data.courseTerm){
@@ -287,37 +254,15 @@ Page({
           if(element.term == _this.data.courseTerm.term){
             termIndex = index
           } 
-        });
-      }
-      _this.setData({
-        terms: result.data,
-        termIndex:termIndex
-      })
-    })
-  },
-  //获取当前学期的课表
-  getNowTermCourse:function(){
-    app.httpRequest({
-      url: 'data/getCourseFromSchool',
-      data: {
-        number: number,
-        className: name
-      },
-      needLogin:false,
-      success: function (res) {
-        wx.hideLoading()
-        if (res.data.status !== 0) {
-          app.msg(res.data.message)
-          return
-        }
-        wx.setStorageSync('tmp_class', tmpClass)
-        wx.setStorageSync('course', res.data.data.course)
-        wx.switchTab({
-          url: '/pages/course/course'
+        })
+        _this.setData({
+          terms: result.data,
+          termIndex: termIndex
         })
       }
     })
   },
+
   //切换学期
   changeTerm:function(e){
     let _this = this
@@ -340,6 +285,7 @@ Page({
       title: '正在加载',
       mask: true
     })
+    //TODO :getCourseByClassname
     app.promiseRequest({
       url:url,
       data:data,

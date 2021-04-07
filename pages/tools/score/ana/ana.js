@@ -1,5 +1,7 @@
-import * as echarts from '../../../../pages/components/ec-canvas/echarts';
-var app = getApp();
+import * as echarts from '../../../../pages/components/ec-canvas/echarts'
+const { getScoreAnalysis } = require('../../../api/score')
+const { openArticle } = require('../../../../utils/common')
+const app = getApp();
 var data = null
 Page({
   /**
@@ -26,10 +28,7 @@ Page({
     this.setData({
       winWidth: windowWidth,
     })
-    let that = this
-    app.isLogin('/' + that.route).then(function (res) {
-      that.getData()
-    })
+    this.getData()
   },
 
   /**
@@ -40,37 +39,25 @@ Page({
   },
 
   help: function () {
-    wx.navigateTo({
-      url: '/pages/article/article?src=' + encodeURIComponent(this.data.articleUrl),
-    })
+    openArticle(this.data.articleUrl)
   },
 
   //获取数据
   getData:function(){
     var that = this
-    app.httpRequest({
-      url: 'score/getscoreanalysis',
-      success: function (res) {
-        that.setData({
-          loading: false
-        })
-        if (res.data.status == 0) {
-          that.setData(res.data.data)
-          data = res.data.data
-          if (res.data.data.terms.length == 0) {
-            that.setData({
-              isNull: true
-            })
-            return
-          }
-        }else{
-          that.setData({
-            isNull: true,
-          })
+    getScoreAnalysis().then((res) => {
+      data = res.data
+      data.loading = false
+      data.isNull = false
+      if (res.status == 0) {
+        if (data.terms.length == 0) {
+          data.isNull = true
         }
       }
+      that.setData(data)
     })
   },
+  
   /** 曲线图点击事件 */
   lineTouchHandler: function (e) {
     lineChart.showToolTip(e, {

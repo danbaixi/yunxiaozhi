@@ -36,7 +36,7 @@ Page({
     that.setData({
       from: options.from,
       winHeight: winHeight,
-      update_time: update_time ? dayjs(update_time).format('YYYY-MM-DD HH:mm:ss') :'无记录'
+      update_time: update_time ? dayjs.unix(update_time).format('YYYY-MM-DD HH:mm:ss') :'无记录'
     })
     app.isLogin(that.route).then(function (res) {
       that.getScore(false)
@@ -56,19 +56,6 @@ Page({
   onShareAppMessage: function () {
     return app.share('您有一份期末成绩单待查收','score.png',this.route)
   }, 
-
-  // 滑动切换tab 
-  bindChange: function (e) {
-    wx.pageScrollTo({
-      scrollTop: 0,
-      duration: 300
-    })
-    var scores = wx.getStorageSync('scores');
-    var that = this;
-    that.setData({ 
-      currentTab: e.detail.current
-    });
-  },
   
   // 进入成绩详情
   itemData:function(e){
@@ -153,84 +140,6 @@ Page({
           hasNotice: false
         })
       }
-    })
-  },
-
-  /** 刷新验证码 */
-  freshYzm: function () {
-    var num = Math.ceil(Math.random() * 1000000);
-    this.setData({
-      yzmUrl: app.globalData.domain + 'login/getValidateImg?cookie=' + this.data.cookie + '&rand=' + num,
-    })
-  },
-
-  /**输入验证码时，改变模态框高度 */
-  inputFocus: function () {
-    this.setData({
-      input_focus: 1
-    })
-  },
-
-  /** 不输入验证码时，恢复 */
-  inputBlur: function () {
-    this.setData({
-      input_focus: 0
-    })
-  },
-
-  //更新成绩（已废除）
-  updateScoreBack: function () {
-    var that = this;
-    var system_type = wx.getStorageSync('system_type');
-    if (system_type != 2) {
-      app.msg("请使用旧教务系统账号登录后更新成绩")
-      setTimeout(function () {
-        wx.redirectTo({
-          url: '/pages/bind/bind',
-        })
-      }, 2000)
-      return;
-    }
-    // that.setData({
-    //   showModal: true
-    // });
-    /**获取验证码 */
-    app.httpRequest({
-      url: 'login/getLoginInitData',
-      needLogin:false,
-      success: function (res) {
-        that.setData({
-          cookie: res.data.data['cookie'],
-          __VIEWSTATE: res.data.data['__VIEWSTATE'],
-        })
-        that.freshYzm();
-      }
-    });
-  },
-  /**
-   * 弹出框蒙层截断touchmove事件
-   */
-  preventTouchMove: function () {
-
-  },
-  /**
-   * 隐藏模态对话框
-   */
-  hideModal: function (e) {
-    this.setData({
-      showModal: false
-    })
-  },
-  /**
-   * 对话框取消按钮点击事件
-   */
-  onCancel: function (e) {
-    this.hideModal();
-  },
-  /** 获取验证码 */
-  yzmInput: function (e) {
-    this.setData({
-      yzm: e.detail.value,
     })
   },
 

@@ -1,4 +1,4 @@
-const { acceptTerms } = require('./utils/common')
+const { acceptTerms,checkCourseInWeek } = require('./utils/common')
 const { exitSaveData } = require('./utils/util')
 App({
   /** 小程序入口 */
@@ -10,7 +10,8 @@ App({
     this.setFileUrl()
     //检查更新
     this.checkVersion()
-
+    //test
+    // console.log(checkCourseInWeek(10,{course_weekly:'1-5,7,10-14',course_danshuang:1}))
   },
 
   /** 全局变量 */

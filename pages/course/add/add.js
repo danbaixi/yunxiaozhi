@@ -1,4 +1,5 @@
 const app = getApp()
+const { getCourseList, getCourseById, addCourse, delCourse } = require('../../api/course')
 Page({
 
   /**
@@ -68,54 +69,6 @@ Page({
     }
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  },
   showModal:function(){
     this.setData({
       modalName: 'weekly'
@@ -267,31 +220,20 @@ Page({
       week:_this.data.week+1,
       section:_this.data.section
     }
-    app.httpRequest({
-      url:'course/addCourse',
-      data:data,
-      method: 'POST',
-      success:function(res){
-        if(res.data.status == 0){
-          app.msg(res.data.message,'success')
-          _this.getCourseList().then((result) => {
-            if (result.status == 0) {
-              app.msg("保存成功", "success")
-              wx.setStorageSync('course', result.data.course);
-              wx.setStorageSync('train', result.data.train_course);
-            } else {
-              app.msg("保存成功，获取课表失败，请手动更新课表")
-            }
-          })
-          _this.comeBack()
-        }
+    addCourse(data).then((res) => {
+      if(res.status == 0){
+        app.msg(res.message,'success')
+        getCourseList().then((result) => {
+          if (result.status == 0) {
+            app.msg("保存成功", "success")
+            wx.setStorageSync('course', result.data.course);
+            wx.setStorageSync('train', result.data.train_course);
+          } else {
+            app.msg("保存成功，获取课表失败，请手动更新课表")
+          }
+        })
+        _this.comeBack()
       }
-    })
-  },
-  //获取课表列表
-  getCourseList: function () {
-    return app.promiseRequest({
-      url: 'course/getList'
     })
   },
 
@@ -299,34 +241,26 @@ Page({
   getCourse: function (id) {
     let _this = this
     wx.showLoading({
-      title:'正在加载...',
+      title:'正在加载',
       mask: true
     })
-    app.httpRequest({
-      url:'course/getCourseById',
-      data:{
-        id:id
-      },
-      success:function(res){
-        wx.hideLoading()
-        if(res.data.status != 0){
-          app.msg(res.data.message)
-          wx.navigateBack({
-            
-          })
-          return
-        }
-        let course = res.data.data
-        _this.setData({
-          name:course.course_name,
-          address:course.course_address,
-          teacher:course.course_teacher
-        })
-        _this.anaWeekly(course.course_weekly)
-        _this.anaWeek(course.course_week,course.course_section)
+    getCourseById({id: id}).then((res) => {
+      if(res.status != 0){
+        app.msg(res.message)
+        wx.navigateBack({})
+        return
       }
+      let course = res.data
+      _this.setData({
+        name:course.course_name,
+        address:course.course_address,
+        teacher:course.course_teacher
+      })
+      _this.anaWeekly(course.course_weekly)
+      _this.anaWeek(course.course_week,course.course_section)
     })
   },
+
   //删除课表
   deleteCourse:function(){
     let _this = this
@@ -339,27 +273,20 @@ Page({
             title: '正在删除',
             mask: true
           })
-          app.httpRequest({
-            url: 'course/deleteCourseById',
-            data: {
-              id: _this.data.id
-            },
-            success: function (res) {
-              wx.hideLoading()
-              if (res.data.status == 0) {
-                _this.getCourseList().then((result) => {
-                  if (result.status == 0) {
-                    app.msg("删除成功", "success")
-                    wx.setStorageSync('course', result.data.course);
-                    wx.setStorageSync('train', result.data.train_course);
-                  } else {
-                    app.msg("删除成功，更新课表失败，请手动更新课表")
-                  }
-                  _this.comeBack()
-                })
-              } else {
-                app.msg(res.data.message)
-              }
+          delCourse({
+            id: _this.data.id
+          }).then((res) => {
+            if (res.status == 0) {
+              getCourseList().then((result) => {
+                if (result.status == 0) {
+                  app.msg("删除成功", "success")
+                  wx.setStorageSync('course', result.data.course);
+                  wx.setStorageSync('train', result.data.train_course);
+                } else {
+                  app.msg("删除成功，更新课表失败，请手动更新课表")
+                }
+                _this.comeBack()
+              })
             }
           })
         }

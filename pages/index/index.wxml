@@ -92,22 +92,6 @@
     </view>
   </view>
 
-  <!-- <view class='box' wx:if="{{display_news}}" bindtap='viewAllNews'>
-    <view class="cu-bar bg-white solid-bottom arrow">
-      <view class="action">
-        <text class="text-black text-xl text-bold">校园头条</text>
-      </view>
-      <view class="action">
-        <button class="cu-btn sm round line-theme">查看更多</button>
-      </view>
-    </view>
-    <view class="padding-top-sm padding-bottom-sm" bindtap="viewNews">
-      <view class="news-img">
-        <image mode="widthFix" src="{{news.img}}"></image>
-      </view>
-      <view class="padding-top-xs text-black text-lg">{{news.title}}</view>
-    </view>
-  </view> -->
 </view>
 
 <view class="cu-modal {{newVersionTip?'show':''}}">

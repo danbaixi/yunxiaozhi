@@ -1,4 +1,5 @@
 const app = getApp()
+const { getNotice, noticeClickEvent } = require('../../../utils/common')
 Component({
   /**
    * 组件的属性列表
@@ -23,20 +24,14 @@ Component({
   },
 
   ready: function(){
-    let _this = this
-    let page = _this.data.page
-    app.httpRequest({
-      url: 'notice/getNotice',
-      needLogin: false,
-      data:{
-        page:page
-      },
-      success:function(res){
-        if(res.data.status == 0){
-          _this.setData(res.data.data)
-        }
-      }
-    })
+    let data = getNotice(this.data.page)
+    if(!data){
+      this.setData({
+        display: false
+      })
+      return
+    }
+    this.setData(data)
   },
 
   /**
@@ -49,32 +44,7 @@ Component({
       })
     },
     go:function(){
-      if(this.data.url == ''){
-        return
-      }
-      switch(this.data.type){
-        case 1:
-          wx.navigateTo({
-            url: '/pages/article/article?src=' + encodeURIComponent(this.data.url),
-          })
-          break
-        case 2:
-          wx.navigateTo({
-            url: this.data.url,
-          })
-          break
-        case 3:
-          wx.navigateToMiniProgram({
-            appId:this.data.appid,
-            path: this.data.url
-          })
-          break
-        default:
-          app.msg("暂不支持跳转")
-          break
-      }
+      noticeClickEvent(this.data)
     }
-  },
-
- 
+  }
 })

@@ -1,4 +1,5 @@
 const app = getApp()
+const { getFloors } = require('../../api/other')
 Page({
 
   /**
@@ -51,53 +52,12 @@ Page({
   },
 
   /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
 
   },
+
   //选择校区
   selectArea:function(e){
     var that = this
@@ -110,39 +70,39 @@ Page({
       })
     })
   },
+
   //选择教学楼
   selectFloor:function(e){
     this.setData({
       floor: e.detail.value,
     })
   },
+
   selectWeekly: function (e) {
     this.setData({
       weekly: e.detail.value,
     })
   },
+
   selectWeek: function (e) {
     this.setData({
       week: e.detail.value,
     })
   },
+
   selectSection: function (e) {
     this.setData({
       section: e.detail.value,
     })
   },
+
   //获取教学楼
   getFloors:function(area,callback){
-    app.httpRequest({
-      url:'/Emptyroom/getFloors',
-      data:{
-        area: Number(area)+1
-      },
-      needLogin:false,
-      success:function(res){
-        if(res.data.status == 0){
-          callback(res.data.data)
-        }
+    getFloors({
+      area: Number(area)+1
+    }).then((res) => {
+      if(res.status == 0){
+        callback(res.data)
       }
     })
   },

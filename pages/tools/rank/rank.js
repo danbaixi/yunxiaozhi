@@ -1,5 +1,7 @@
 const app = getApp()
 const { setUserConfig } = require('../../api/user')
+const { getAllRank } = require('../../api/score')
+const { openArticle } = require('../../../utils/common')
 Page({
 
   /**
@@ -22,52 +24,7 @@ Page({
     this.setData({
       stu_id: stu_id
     })
-    let that = this
-    app.isLogin('/' + that.route).then(function (res) {
-      that.getRank()
-    })
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
+    this.getRank()
   },
 
   /**
@@ -76,39 +33,34 @@ Page({
   onShareAppMessage: function () {
 
   },
+
   //获取排名
   getRank:function(term){
     let _this = this
-    app.httpRequest({
-      url: 'score/getAllRank',
-      success:function(res){
-        _this.setData({
-          loading:false
-        })
-        if(res.data.status == 0){
-          _this.setData(res.data.data)
-        }else{
-          app.msg(res.data.message)
-        }
+    getAllRank().then((res) => {
+      if(res.status == 0){
+        res.data.loading = false
+        _this.setData(res.data)
       }
     })
   },
 
   help:function(){
-    wx.navigateTo({
-      url: '/pages/article/article?src=' + encodeURIComponent(this.data.articleUrl),
-    })
+    openArticle(this.data.articleUrl)
   },
+
   showQuestion:function(){
     this.setData({
       showQuestion:true
     })
   },
+
   hideQuestion: function () {
     this.setData({
       showQuestion: false
     })
   },
+
   openRank:function(){
     let _this = this
     wx.showModal({

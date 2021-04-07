@@ -1,4 +1,7 @@
-var app = getApp();
+const app = getApp()
+const { backPage, canUpdate } = require('../../../utils/common')
+const { getAttendanceList, updateAttendanceList } = require('../../api/other')
+const dayjs = require('dayjs')
 Page({
 
   /**
@@ -22,15 +25,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that = this;
     if(options){
-      that.setData({
+      this.setData({
         from:options.from
       })
     }
-    app.isLogin('/' + that.route).then(function (res) {
-      that.getData()
-    })
+    this.getData()
   },
 
   /**
@@ -39,12 +39,14 @@ Page({
   onPullDownRefresh:function(){
     this.update()
   },
+
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
     return app.share('点击查询个人考勤记录', 'attendance.png', this.route)
   },
+
   /**
 * 弹窗
 */
@@ -100,42 +102,23 @@ Page({
       app.msg('测试号无法更新数据')
       return
     }
-    var that = this;
-    var time = (new Date()).getTime();
-    if (wx.getStorageSync('attendance_update_time') != "") {
-      var update_time = wx.getStorageSync('attendance_update_time');
-      var cha = time - update_time;
-      var season = 60 * 1 - Math.floor(cha / 1000);
-    } else {
-      var season = 0;
-    }
-    if (season > 0) {
-      let minute = Math.floor(season / 60)
-      if(minute > 0 ){
-        app.msg('请在'+ minute + '分钟后更新')
-        return
-      }
-      app.msg('请在' + season + '秒后更新')
+    const that = this
+    const canUpdateResult = canUpdate('attendance')
+    if(canUpdateResult !== true){
+      app.msg(canUpdateResult)
       return
     }
     wx.showLoading({
       title: "更新中",
       mask: true
     })
-    app.httpRequest({
-      url: 'attendance/update',
-      success: function (res) {
-        wx.hideLoading()
-        if (res.data.status == 0) {
-          app.msg('更新了' + res.data.data + '条记录')
-          wx.setStorageSync('attendance_update_time', time);
-          setTimeout(function () {
-            that.onLoad();
-            that.hideModal();
-          }, 2000)
-        }else {
-          app.msg(res.data.message)
-        }
+    updateAttendanceList().then((res) => {
+      if (res.status == 0) {
+        app.msg('更新了' + res.data + '条记录')
+        wx.setStorageSync('attendance_update_time', dayjs().unix())
+        setTimeout(function () {
+          that.onLoad()
+        }, 2000)
       }
     })
   },
@@ -158,33 +141,19 @@ Page({
       input_focus: 0
     })
   },
-  backPage: function () {
-    if (this.data.from == 'index') {
-      wx.navigateBack({
-        delta: 1
-      });
-    } else {
-      wx.reLaunch({
-        url: '/pages/index/index',
-      })
-    }
+  backPageBtn: function () {
+    backPage(this.data.from)
   },
+
+  // 获取数据
   getData:function(){
     let that = this
-    app.httpRequest({
-      url: 'attendance/getlist',
-      success: function (res) {
-        if (res.data.status == 0) {
-          that.setData({
-            loading: false,
-            term: res.data.data.term,
-            attendance: res.data.data.attendance,
-            isNull: res.data.data.term.length == 0 ? true : false
-          });
-        } else {
-          app.msg(res.data.message)
-        }
-      },
+    getAttendanceList().then((res) => {
+      if (res.status == 0) {
+        res.data.loading = false
+        res.data.isNull = res.data.term.length == 0
+        that.setData(res.data)
+      }
     })
   }
 })
