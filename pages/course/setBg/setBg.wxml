@@ -10,7 +10,7 @@
     </view>
     <view class="li" bindtap="diy" wx:if="{{auditing != 1}}">
       <view class="image {{bg_type=='diy'?'selected':''}}" wx:if="{{bg_type =='diy'}}">
-        <image mode="aspectFit" src="{{bg_img}}"></image>
+        <image mode="widthFix" src="{{bg_img}}"></image>
       </view>
       <view class="image add-photo" wx:else>
         <text class="icon-cameraadd lg text-white"></text>
@@ -20,10 +20,11 @@
   </view>
   <view class="bgs margin-top">
     <view class="text-bold text-lg margin-bottom">推荐背景</view>
-    <view class="cu-list no-border grid col-3" style="background:transparent">
-      <view class="cu-item" wx:for="{{bgNum}}" wx:key="key">
-        <view class="li" data-num="{{item+1}}" bindtap="select">
-          <image class="image {{bg_type == item+1 ? 'selected' : ''}}" src="{{fileUrl}}/course_bg/{{item+1}}_preview.jpg"></image>
+    <list-loading loading="{{loading}}"></list-loading>
+    <view wx:if="{{!loading && bgList}}" class="cu-list no-border grid col-3" style="background:transparent">
+      <view class="cu-item" wx:for="{{bgList}}" wx:key="key">
+        <view class="li" data-num="{{item.id}}" bindtap="select">
+          <image class="image {{bg_type == item.id ? 'selected' : ''}}" src="{{item.preview}}"></image>
         </view>
       </view>
     </view>

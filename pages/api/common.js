@@ -10,6 +10,14 @@ function getNotice(data){
   })
 }
 
+// 获取上传文件的key
+function getCosTempKey(){
+  return R({
+    url: 'cos/getTempKey'
+  })
+}
+
 module.exports = {
   getNotice,
+  getCosTempKey
 }

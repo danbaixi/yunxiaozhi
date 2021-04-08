@@ -4,7 +4,7 @@
 	<view slot="content">裁剪</view>
 </cu-custom>
 <view class="cropper-wrapper">
-    <template is="we-cropper" data="{{...cropperOpt}}"/>
+  <template is="we-cropper" data="{{...cropperOpt}}"/>
 </view>
 <view class="cropper-buttons">
   <view class="upload" bindtap="cancel">取消</view>

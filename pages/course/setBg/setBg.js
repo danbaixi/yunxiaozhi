@@ -1,4 +1,5 @@
 const app = getApp()
+const { getBgList } = require('../../api/course')
 Page({
 
   /**
@@ -10,6 +11,8 @@ Page({
     bg_type:null,
     uploadFile: '',
     courseFileUrl: 'https://yunxiaozhi-1251388077.cos.ap-guangzhou.myqcloud.com/course_bg/',
+    bgList: [],
+    loading: true
   },
 
   /**
@@ -24,6 +27,7 @@ Page({
       })
       return
     }
+    this.getBgData()
     const { width, height } = options
     let bg_img = wx.getStorageSync('bg_img')
     let bg_type = wx.getStorageSync('bg_type')
@@ -70,6 +74,7 @@ Page({
       wx.downloadFile({
         url: url,
         success: function (res) {
+          console.log(res)
           if (res.statusCode === 200) {
             const fs = wx.getFileSystemManager()
             _this.checkMaxSize().then((result) => {
@@ -89,6 +94,10 @@ Page({
           } else {
             return reject('下载失败')
           }
+        },
+        fail: function(res){
+          console.log(res)
+          return reject('下载失败')
         }
       })
     })
@@ -144,7 +153,8 @@ Page({
   select:function(e){
     let _this = this
     let num = e.currentTarget.dataset.num
-    let url = _this.data.fileUrl + '/course_bg/' + num + '.jpg'
+    let index = num - 1
+    let url = _this.data.bgList[index].src
     let bg_imgs = wx.getStorageSync('bg_imgs')
     if(!bg_imgs || !bg_imgs[num]){
       //下载图片
@@ -211,6 +221,29 @@ Page({
     if(this.data.bg_type == null){
       return
     }
-    this.setBg(null,'')
+    const _this = this
+    wx.showModal({
+      title: '确定要清空背景吗？',
+      success: function(res){
+        if(res.confirm){
+          _this.setBg(null,'')
+        }
+      }
+    })
+  },
+
+  // 获取课表背景列表
+  getBgData:function(){
+    const _this = this
+    getBgList().then((res) => {
+      if(res.status == 0){
+        _this.setData({
+          bgList: res.data,
+          loading: false
+        })
+      }else{
+        app.msg("获取背景失败，请重试")
+      }
+    })
   }
 })

@@ -57,9 +57,7 @@ Page({
     }
     let opt = this.getOption(src,cutWidth,cutHeight)
     this.cropper = new WeCropper(opt)
-      .on('ready', (ctx) => {
-          console.log(`wecropper is ready for work!`)
-      })
+      .on('ready', (ctx) => {})
       .on('beforeImageLoad', (ctx) => {
           wx.showToast({
               title: '上传中',

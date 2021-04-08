@@ -141,6 +141,13 @@ function getCourseListByStuId(data){
   })
 }
 
+// 获取课表背景列表
+function getBgList(){
+  return R({
+    url: 'course/getBgList'
+  })
+}
+
 module.exports = {
   getCourseList,
   updateCourse,
@@ -159,5 +166,6 @@ module.exports = {
   getCollectClass,
   addcollectClass,
   delCollectClass,
-  getCourseListByStuId
+  getCourseListByStuId,
+  getBgList
 }
