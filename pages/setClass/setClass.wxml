@@ -9,7 +9,7 @@
       <input type="text" value="{{search}}" placeholder="输入班级，如计算机" bindinput="searchInput" confirm-type="search"></input>
     </view>
     <view class="action">
-      <button class="cu-btn bg-cyan text-white shadow-blur" bindtap="search">搜索</button>
+      <button class="cu-btn bg-theme text-white shadow-blur" bindtap="search">搜索</button>
     </view>
   </view>
   <view class="padding-tb-xs padding-lr bg-white text-yellow text-sm">温馨提示：班级课表不包括体育课和选修课</view>
@@ -17,16 +17,15 @@
     <view class="text-grey text-sm">已收藏的班级 {{collects.length==0?'：无':''}}</view>
     <view>
       <view wx:if="{{collects.length>0}}">
-        <button class="cu-btn sm text-xs text-gray margin-top-xs margin-right-xs" 
-          wx:for="{{collects}}" wx:key="key" data-name="{{item.name}}" data-number="{{item.number}}" bindtap="select" bindlongtap="delectCollect"
-        >
+        <button class="cu-btn sm text-xs text-gray margin-top-xs margin-right-xs collect-class" 
+          wx:for="{{collects}}" wx:key="key" data-name="{{item.name}}" data-number="{{item.number}}" bindtap="select" bindlongtap="delectCollect" >
           {{item.name}}
         </button>
       </view>
     </view>
   </view>
   <view class="cu-list menu">
-    <view class="cu-item arrow" wx:if="{{tmpClass!='' && userId}}" bindtap="restore">
+    <view class="cu-item arrow" wx:if="{{(tmpClass || course_stu) && userId}}" bindtap="restore">
       <view class="content">
         <text class="text-orange">切换回个人课表</text>
       </view>

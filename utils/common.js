@@ -2,7 +2,7 @@
  * 公共函数
  */
 const { updateCourse, getCourseList } = require('../pages/api/course')
-const dayjs = require('dayjs')
+const dayjs = require('../utils/dayjs.min')
 
 //是否为Tab页路径
 function isTabPath(path){
@@ -195,7 +195,6 @@ function checkCourseInWeek(week,course){
 // 获取通知
 function getNotice(page){
   const notices = getConfig('notices')
-  console.log(notices)
   if(!notices || notices.length <= 0){
     return false
   }

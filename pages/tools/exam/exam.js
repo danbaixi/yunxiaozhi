@@ -1,6 +1,5 @@
 const app = getApp();
-const dayjs = require('dayjs');
-const util = require('../../../utils/util.js')
+const dayjs = require('../../../utils/dayjs.min')
 const { getExamClassList, getExamList, getCourseExamList } = require('../../api/other')
 Page({
 

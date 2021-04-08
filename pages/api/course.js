@@ -2,9 +2,10 @@
 const R = require('../../utils/request')
 
 // 获取课表列表
-function getCourseList(){
+function getCourseList(data){
   return R({
-    url: 'course/getList'
+    url: 'course/getList',
+    data
   })
 }
 
@@ -91,6 +92,55 @@ function getStudentList(data){
   })
 }
 
+
+// 根据班级获取课程学期列表
+function getTermByClassname(data){
+  return R({
+    url:'data/getTermsByClassname',
+    data
+  })
+}
+
+// 根据班级获取课表
+function getCourseByClassname(data){
+  return R({
+    url: 'data/getCourseByClassname',
+    data
+  })
+}
+
+// 获取已收藏班级
+function getCollectClass(){
+  return R({
+    url: 'course/getCollectClasses'
+  })
+}
+
+// 收藏班级
+function addcollectClass(data){
+  return R({
+    url:'course/collectClass',
+    data,
+  })
+}
+
+// 删除收藏班级
+function delCollectClass(data){
+  return R({
+    url:'course/deleteCollect',
+    data
+  })
+}
+
+// 根据学号获取课表
+function getCourseListByStuId(data){
+  return R({
+    url:'data/getCourseByStuId',
+    data,
+    needLogin:false
+  })
+}
+
 module.exports = {
   getCourseList,
   updateCourse,
@@ -103,5 +153,11 @@ module.exports = {
   delCourse,
   getCourseById,
   getStudentCount,
-  getStudentList
+  getStudentList,
+  getTermByClassname,
+  getCourseByClassname,
+  getCollectClass,
+  addcollectClass,
+  delCollectClass,
+  getCourseListByStuId
 }

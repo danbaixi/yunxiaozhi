@@ -1,1 +1,3 @@
-/* pages/course/setClass/setClass.wxss */
+.collect-class{
+  padding: 0 8rpx;
+}

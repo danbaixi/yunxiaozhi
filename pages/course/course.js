@@ -99,6 +99,7 @@ Page({
 
     that.setData({
       now_week: week,
+      nowWeek: week,
       zhou_num: zhou_num,
       now_month: month,
       now_month_number: month / 1, // 当前月份数字类型，用于数字运算
@@ -127,6 +128,31 @@ Page({
   onShow:function(){
     let _this = this
     var tmpClass = wx.getStorageSync('tmp_class');//临时设置班级
+    //课表学期
+    _this.getCourseTerm()
+    var week = _this.getNowWeek();
+    var startDay = wx.getStorageSync('start_day')
+    var day = _this.getDayOfWeek(week,startDay)
+    var month = _this.getMonth((week - 1) * 7);
+    //获取当前日期
+    let {todayMonth, todayDay} =  _this.getTodayDate()
+    //获取课表
+    _this.getCourse(_this.data.now_week, true, false);
+    //获取设置，隐藏上课时间
+    _this.getConfigData()
+    _this.setData({
+      now_day: day,
+      now_week: week,
+      nowWeek: week,
+      now_month: month,
+      now_month_number: month / 1, // 当前月份数字类型，用于数字运算
+      todayMonth,
+      todayDay,
+      imageUrl: wx.getStorageSync('bg_img'),
+      list_is_display: false,
+      tmpClass: tmpClass,
+      showMoreCourse:false
+    })
     //判断背景图片是否存在
     let bg_img = wx.getStorageSync('bg_img')
     if (bg_img){
@@ -167,27 +193,6 @@ Page({
         }
       })
     }
-    //课表学期
-    _this.getCourseTerm()
-    var week = _this.getNowWeek();
-    var startDay = wx.getStorageSync('start_day')
-    var day = _this.getDayOfWeek(_this.getNowWeek(),startDay)
-    var month = _this.getMonth((week - 1) * 7);
-    _this.setData({
-      now_day: day,
-      now_month: month,
-      now_month_number: month / 1, // 当前月份数字类型，用于数字运算
-      imageUrl: wx.getStorageSync('bg_img'),
-      list_is_display: false,
-      tmpClass: tmpClass,
-      showMoreCourse:false
-    })
-    //获取当前日期
-    _this.getTodayDate();
-    //获取课表
-    _this.getCourse(_this.data.now_week, true, false);
-    //获取设置，隐藏上课时间
-    _this.getConfigData()
   },
   /**
    * 用户点击右上角分享
@@ -237,9 +242,6 @@ Page({
     if(week>20 || week <= 0){
       result = 1;
     }
-    this.setData({
-      nowWeek : result
-    })
     return result
   },
   /**
@@ -615,10 +617,10 @@ Page({
     var date = new Date();
     var month = date.getMonth();
     var day = date.getDate();
-    this.setData({
+    return {
       todayMonth:month+1,
       todayDay:day
-    });
+    }
   },
 
   getCourseNotice:function(){
@@ -938,8 +940,9 @@ Page({
 
   // 设置背景
   setBg:function(){
+    const device = wx.getSystemInfoSync()
     wx.navigateTo({
-      url: '/pages/course/setBg/setBg?from=index',
+      url: `/pages/course/setBg/setBg?from=index&height=${device.windowHeight}&width=${device.windowWidth}`,
     })
   },
 

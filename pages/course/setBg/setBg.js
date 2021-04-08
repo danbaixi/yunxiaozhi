@@ -24,6 +24,7 @@ Page({
       })
       return
     }
+    const { width, height } = options
     let bg_img = wx.getStorageSync('bg_img')
     let bg_type = wx.getStorageSync('bg_type')
     if(bg_img != '' && bg_type == ''){
@@ -31,17 +32,12 @@ Page({
     }
     let auditing = app.getConfig('auditing')
     this.setData({
+      width,
+      height,
       bg_type: bg_type,
       bg_img: bg_img,
       auditing: auditing
     })
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
   },
 
   /**
@@ -65,34 +61,6 @@ Page({
         })
       },1000)
     }
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
   },
 
   //下载背景
@@ -216,6 +184,7 @@ Page({
 
   //diy背景
   diy:function(){
+    const _this = this
     wx.chooseImage({
       count: 1,
       sizeType: ['original'],
@@ -228,7 +197,7 @@ Page({
           mask: true
         })
         wx.navigateTo({
-          url: `../../cropper/cropper?type=course&src=${src}`,
+          url: `../../cropper/cropper?type=course&src=${src}&width=${_this.data.width}&height=${_this.data.height}`,
           success:function(){
             wx.hideLoading()
           }

@@ -1,0 +1,21 @@
+@import "we-cropper/common.wxss";
+page{
+  width: 100%;
+  height: 100%;
+}
+.cropper-wrapper{
+  width: 100%;
+  height: 90%;
+}
+.cropper{
+    width: 100%;
+    /* height: 80%; */
+    /* position: absolute;
+    top: 0;
+    left: 0;  */
+}
+
+.cropper-buttons{
+    background-color: rgba(0, 0, 0, 0.95);
+    color: #04b00f;
+}

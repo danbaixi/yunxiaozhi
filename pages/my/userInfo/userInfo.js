@@ -76,7 +76,7 @@ Page({
       success: function (res) {
         const src = res.tempFilePaths[0]
         wx.navigateTo({
-          url: `../../cropper/cropper?&type=headImg&src=${src}`
+          url: `../../cropper/cropper?&type=avatar&src=${src}&width=300&height=300`
         })
       }
     })

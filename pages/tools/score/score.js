@@ -1,7 +1,7 @@
 const { getScoreList, updateScore } = require('../../api/score') 
 const { getNotice } = require('../../api/common')
 const { canUpdate, setUpdateTime, backPage } = require('../../../utils/common')
-const dayjs = require('dayjs')
+const dayjs = require('../../../utils/dayjs.min')
 const app = getApp()
 Page({
 

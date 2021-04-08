@@ -1,4 +1,6 @@
 const app = getApp()
+const { getCourseShareInfo } = require('../../api/other')
+const { getTermByClassname, getCourseListByStuId } = require('../../api/course')
 Page({
 
   /**
@@ -26,60 +28,18 @@ Page({
     }
     let term = options.term || 0
     let term_name = options.term_name || ''
-    this.getTerms()
     this.setData({
       stu_id: stu_id,
       term: term,
       term_name: term_name
     })
+    this.getTerms()
     if (options.stu_id && term) {
       this.setData({
         share:false
       })
       this.getUserInfo()
     }
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
   },
 
   /**
@@ -92,27 +52,17 @@ Page({
       imageUrl: this.data.image
     }
   },
+
   //获取分享人的信息
   getUserInfo:function(){
     let _this = this
-    app.promiseRequest({
-      url:'data/getNameByStuId',
-      data:{
-        stu_id: _this.data.stu_id
-      },
-      needLogin:false
-    }).then((result) => {
-      let name = result.data.name
-      if(name.length <= 3){
-        result.data.name = name[0] + '同学'
-      }else{
-        result.data.name = name[0] + name[1] + '同学'
-      }
-      _this.setData(result.data)
-    }).catch((error) =>{
-      app.msg(error.message)
+    getCourseShareInfo({
+      stu_id: _this.data.stu_id
+    }).then((res) => {
+      _this.setData(res.data)
     })
   },
+
   //获取学期
   getTerms: function () {
     let _this = this
@@ -120,16 +70,11 @@ Page({
       title: '正在加载',
       mask: true
     })
-    app.promiseRequest({
-      url: 'data/getTermsByClassname',
-      data: {
-        stu_id: wx.getStorageSync('user_id'),
-        classname: ''
-      },
-      needLogin: false,
-    }).then((result) => {
-      wx.hideLoading()
-      let terms = result.data
+    getTermByClassname({
+      stu_id: wx.getStorageSync('user_id'),
+      classname: ''
+    }).then((res) => {
+      let terms = res.data
       let termIndex = 0
       terms.forEach((element, index) => {
         if (element.term == _this.data.term) {
@@ -138,11 +83,12 @@ Page({
         }
       })
       _this.setData({
-        terms: result.data,
+        terms: res.data,
         termIndex: termIndex
       })
     })
   },
+
   changeTerm:function(e){
     let index = e.detail.value
     this.setData({
@@ -151,32 +97,24 @@ Page({
       term_name: this.data.terms[index].name,
     })
   },
+
   viewCourse:function(){
     let _this = this
-    let thisStuId = wx.getStorageSync('user_id')
     wx.showLoading({
       title: '正在加载',
       mask: true
     })
-    app.promiseRequest({
-      url:'data/getCourseByStuId',
-      data:{
-        stu_id: _this.data.stu_id,
-        term: _this.data.term,
-      },
-      needLogin:false
-    }).then((result) => {
-      if (thisStuId != this.data.stu_id) {
-        wx.setStorageSync('course_stu', { stu_id: _this.data.stu_id,name:_this.data.name,classname: _this.data.classname })
-      }
+    getCourseListByStuId({
+      stu_id: _this.data.stu_id,
+      term: _this.data.term,
+    }).then((res) => {
+      wx.setStorageSync('course_stu', { stu_id: _this.data.stu_id,name:_this.data.name,classname: _this.data.classname })
       wx.setStorageSync('course_term', _this.data.terms[_this.data.termIndex])
-      wx.setStorageSync('course', result.data.course);
-      wx.setStorageSync('train', result.data.train_course);
+      wx.setStorageSync('course', res.data.course)
+      wx.setStorageSync('train', res.data.train_course)
       wx.switchTab({
         url: '/pages/course/course',
       })
-    }).catch((error) => {
-      app.msg(error.message)
     })
   }
 })

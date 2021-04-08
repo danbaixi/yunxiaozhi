@@ -2,7 +2,7 @@ const app = getApp()
 const colors = require('../../../utils/colors')
 const course = require('../../../utils/course')
 const util = require('../../../utils/util')
-const { getTermByClassname, getCourseByClassname } = require('../../api/course')
+const { getTermByClassname, getCourseByClassname, getCourseList } = require('../../api/course')
 Page({
 
   /**
@@ -273,26 +273,21 @@ Page({
     if(stu_id == '' && !tmp_class){
       return
     }
-    let url = '', data = { term: term.term },needLogin = false
-    if(!stu_id || tmp_class){
-      url = 'data/getCourseByClassname'
-      data.classname = tmp_class.name
-    }else{
-      url = 'course/getList'
-      needLogin = true
-    }
     wx.showLoading({
       title: '正在加载',
       mask: true
     })
-    //TODO :getCourseByClassname
-    app.promiseRequest({
-      url:url,
-      data:data,
-      needLogin:needLogin
-    }).then((result) =>{
-      wx.hideLoading()
-      wx.setStorageSync('course', result.data.course)
+    let request = getCourseList({
+      term : term.term
+    })
+    if(!stu_id || tmp_class){
+      request = getCourseByClassname({
+        classname: tmp_class.name,
+        term : term.term
+      })
+    }
+    request.then((res) => {
+      wx.setStorageSync('course', res.data.course)
       wx.setStorageSync('course_term', term)
       let courseTerm = course.getNowCourseTerm()
       _this.setData({
@@ -300,8 +295,6 @@ Page({
       })
       _this.getData()
       _this.getCounts()
-    }).catch((error)=>{
-      app.msg(error.message)
     })
   }
 })

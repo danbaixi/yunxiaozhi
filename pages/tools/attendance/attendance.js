@@ -1,7 +1,6 @@
 const app = getApp()
-const { backPage, canUpdate } = require('../../../utils/common')
+const { backPage, canUpdate,setUpdateTime } = require('../../../utils/common')
 const { getAttendanceList, updateAttendanceList } = require('../../api/other')
-const dayjs = require('dayjs')
 Page({
 
   /**
@@ -115,7 +114,7 @@ Page({
     updateAttendanceList().then((res) => {
       if (res.status == 0) {
         app.msg('更新了' + res.data + '条记录')
-        wx.setStorageSync('attendance_update_time', dayjs().unix())
+        setUpdateTime('attendance')
         setTimeout(function () {
           that.onLoad()
         }, 2000)

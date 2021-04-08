@@ -1,6 +1,7 @@
 const app = getApp()
-var md5 = require('../../utils/md5.js');
 const courseFn = require('../../utils/course')
+const { getClassList } = require('../api/other')
+const { getCourseByClassname, getCollectClass, addcollectClass, delCollectClass,getCourseList } = require('../api/course');
 Page({
 
   /**
@@ -14,6 +15,7 @@ Page({
     loading:true,
     finish:false,
     tmpClass:'',
+    course_stu: '',
     collects:[]
   },
 
@@ -23,47 +25,14 @@ Page({
   onLoad: function (options) {
     this.getClass()
     var tmp_class = wx.getStorageSync('tmp_class')
+    var course_stu = wx.getStorageSync('course_stu')
     var user_id = wx.getStorageSync('user_id')
     this.setData({
       tmpClass: tmp_class,
+      course_stu: course_stu,
       userId:user_id
     })
     this.getCollectClass()
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
   },
 
   /**
@@ -76,40 +45,36 @@ Page({
     })
     this.getClass()
   },
+
   getClass:function(){
-    var that = this
-    app.httpRequest({
-      url:'Classes/getClassList',
-      needLogin:false,
-      data:{
-        p:that.data.p,
-        length:that.data.length,
-        search:that.data.search
-      },
-      success:function(res){
-        if(res.data.status == 0){
-          var data = that.data.classes
-          data = data.concat(res.data.data)
-          var finish = false
-          if(res.data.data.length < that.data.length){
-            finish = true
-          }
-          that.setData({
-            classes:data,
-            loading:false,
-            finish:finish
-          })
-        }else{
-          app.msg("获取班级列表失败")
+    const that = this
+    getClassList({
+      p:that.data.p,
+      length:that.data.length,
+      search:that.data.search
+    }).then((res) => {
+      if(res.status == 0){
+        var data = that.data.classes
+        data = data.concat(res.data)
+        var finish = false
+        if(res.data.length < that.data.length){
+          finish = true
         }
+        that.setData({
+          classes:data,
+          loading:false,
+          finish:finish
+        })
       }
     })
   },
+
   searchInput:function(e){
     this.setData({
       search: e.detail.value
     })
   },
+
   search:function(e){
     this.setData({
       search:this.data.search,
@@ -133,37 +98,24 @@ Page({
       name:name
     }
     let courseTerm = courseFn.getNowCourseTerm()
-    app.httpRequest({
-      url: 'data/getCourseByClassname',
-      data: {
-        number: number,
-        term:courseTerm.term,
-        classname: name
-      },
-      needLogin:false,
-      success: function (res) {
-        wx.hideLoading()
-        if (res.data.status !== 0) {
-          app.msg(res.data.message)
-          return
-        }
-        let term = app.getConfig('nowTerm.term')
-        let date = app.getConfig('nowTerm.date')
-        if(term === false){
-          term = '20191'
-          date = '2020-03-02'
-        }
+    getCourseByClassname({
+      number: number,
+      term:courseTerm.term,
+      classname: name
+    }).then((res) => {
+      if(res.status == 0){
         //清空course_stu
         wx.removeStorageSync('course_stu')
         wx.setStorageSync('tmp_class', tmpClass)
-        wx.setStorageSync('course', res.data.data.course)
+        wx.setStorageSync('course', res.data.course)
         wx.navigateBack({
           delta: 0,
         })
       }
+
     })
-    
   },
+
   restore:function(){
     app.isBind().then((resolve) => {
       if(resolve){
@@ -171,50 +123,45 @@ Page({
           title: '正在切换',
           mask: true
         })
-        app.promiseRequest({
-          url: 'course/getList'
-        }).then((data) => {
-          let term = app.getConfig('nowTerm.term')
-          //还原到最新学期
-          let nowTerm = {
-            term: term,
-            name: courseFn.term2Name(term),
-            term_date: app.getConfig('nowTerm.date')
+        getCourseList().then((res) => {
+          if(res.status == 0){
+            let term = app.getConfig('nowTerm.term')
+            //还原到最新学期
+            let nowTerm = {
+              term: term,
+              name: courseFn.term2Name(term),
+              term_date: app.getConfig('nowTerm.date')
+            }
+            //清空course_stu
+            wx.removeStorageSync('course_stu')
+            wx.removeStorageSync('tmp_class')
+            wx.setStorageSync('course_term', nowTerm)
+            wx.setStorageSync('course', res.data.course);
+            wx.setStorageSync('train', res.data.train_course);
+            wx.navigateBack({
+              delta: 0,
+            })
           }
-          //清空course_stu
-          wx.removeStorageSync('course_stu')
-          wx.removeStorageSync('tmp_class')
-          wx.setStorageSync('course_term', nowTerm)
-          wx.setStorageSync('course', data.data.course);
-          wx.setStorageSync('train', data.data.train_course);
-          wx.navigateBack({
-            delta: 0,
-          })
-        }).catch((error) => {
-          app.msg(error.message)
         })
       }
     })
   },
+
   //获取已收藏的班级
   getCollectClass:function(){
     if(!app.getUserId()){
       return
     }
     let _this = this
-    app.httpRequest({
-      url: 'course/getCollectClasses',
-      success:function(res){
-        if(res.data.status != 0){
-          app.msg(res.data.message)
-          return
-        }
+    getCollectClass().then((res) => {
+      if(res.status == 0){
         _this.setData({
-          collects: res.data.data
+          collects: res.data
         })
       }
     })
   },
+
   //收藏班级
   collect:function(e){
     if(!app.getUserId()){
@@ -235,16 +182,11 @@ Page({
       app.msg("你已收藏过这个班的课表啦")
       return
     }
-    app.httpRequest({
-      url:'course/collectClass',
-      data:{
-        class_id: number
-      },
-      success:function(res){
-        app.msg(res.data.message)
-        if(res.data.status != 0){
-          return
-        }
+    addcollectClass({
+      class_id: number
+    }).then((res) => {
+      if(res.status == 0){
+        app.msg("收藏成功")
         collects.push({
           name: name,
           number: number
@@ -255,6 +197,7 @@ Page({
       }
     })
   },
+
   //删除收藏班级
   delectCollect:function(e){
     let _this = this
@@ -264,30 +207,25 @@ Page({
       content: '确定要删除此收藏记录吗？',
       success:function(res){
         if(res.confirm){
-          app.httpRequest({
-            url:'course/deleteCollect',
-            data:{
-              class_id: number
-            },
-            success:function(res){
-              app.msg(res.data.message)
-              if(res.data.status == 0){
-                let collects = _this.data.collects
-                collects.map((item,index) => {
-                  if(item.number == number){
-                    collects.splice(index,1)
-                    return
-                  }
-                })
-                _this.setData({
-                  collects
-                })
-              }
+          delCollectClass({
+            class_id: number
+          }).then((res) => {
+            if(res.status == 0){
+              app.msg("删除成功")
+              let collects = _this.data.collects
+              collects.map((item,index) => {
+                if(item.number == number){
+                  collects.splice(index,1)
+                  return
+                }
+              })
+              _this.setData({
+                collects
+              })
             }
           })
         }
       }
     })
-    
   }
 })

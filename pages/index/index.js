@@ -1,9 +1,8 @@
 const app = getApp()
-const util = require('../../utils/util.js')
 const { likeSoul } = require('../api/soul')
 const { getExamList } = require('../api/other')
 const { checkCourseInWeek,getConfig, openArticle } = require('../../utils/common')
-const dayjs = require('dayjs')
+const dayjs = require('../../utils/dayjs.min')
 Page({
   data: {
     tools: [

@@ -1,12 +1,16 @@
-import WeCropper from 'we-cropper/we-cropper.js'
-const {uploadFile,delFile} = require('../../utils/cos.js');
-
+const app = getApp()
+const WeCropper = require('../components/we-cropper/we-cropper.min')
+const { uploadFile,delFile } = require('../../utils/cos')
+const { isLocal } = require('../../utils/config')
 const device = wx.getSystemInfoSync()
 const width = device.windowWidth
-const height = device.windowHeight - 50
-var app = getApp();
+const height = parseInt(device.windowHeight * 0.9) //减去底部的操作按钮高度
 
 Page({
+
+  /**
+   * 页面的初始数据
+   */
   data: {
     customBar: app.globalData.customBar,
     type:"course",
@@ -16,143 +20,143 @@ Page({
       height,
       scale: 2.5,
       zoom: 8,
-      cut: {
-        x: (width - 300) / 2,
-        y: (height - 300) / 2,
-        width: 300,
-        height: 300
-      }
+      boundStyle:{
+        color: '#fbbd08',
+        lineHeight: 2
+      },
+      cut: {}
     }
   },
+
   touchStart(e) {
-    this.wecropper.touchStart(e)
+    this.cropper.touchStart(e)
   },
   touchMove(e) {
-    this.wecropper.touchMove(e)
+    this.cropper.touchMove(e)
   },
   touchEnd(e) {
-    this.wecropper.touchEnd(e)
+    this.cropper.touchEnd(e)
   },
-  getCropperImage() {
-    let _this = this
-    _this.wecropper.getCropperImage((src) => {
-      if (src) {
-        wx.showLoading({
-          title: '正在上传',
-        });
-        var time = Math.floor(new Date().getTime() / 1000);
-        if (time - wx.getStorageSync('upload_course_bg_time') >= 10) {
-          wx.setStorageSync('upload_course_bg_time', time)
-          var dir_name = 'user_imgs';
-          if(_this.data.type == 'course'){
-            dir_name = 'course_bg'
-            //删除原来的文件
-            var delImg = wx.getStorageSync('upload_course_bg');
-            var returnDel = delFile(dir_name + '/' + delImg);
-            if (returnDel) {
-              console.log('删除成功');
-            }
-          }
-          //上传图片
-          //获取文件名
-          let fileName = ''
-          if (!app.globalData.isLocal){
-            fileName = src.match(/(wxfile:\/\/)(.+)/);
-            fileName = fileName[2];
-          }else{
-            let tmp = src.split(".")
-            if(tmp.length == 4){
-              fileName = tmp[tmp.length-2] + '.' + tmp[tmp.length-1]
-            }
-          }
-          if(fileName == ''){
-            app.msg("获取图片失败，请重试")
-            return
-          }
-          let uploadResult = uploadFile(src, fileName, dir_name);
-          if(uploadResult === false){
-            app.msg("上传失败，请重试")
-            return
-          }
-          app.msg("上传成功")
-          setTimeout(()=>{
-            var pages = getCurrentPages();
-            var prevPage = pages[pages.length - 2];
-            prevPage.setData({
-              uploadFile: fileName
-            })
-            wx.navigateBack({})
-          },1000)
-        } else {
-          app.msg("请勿频繁提交")
-        } 
-      } else {
-        app.msg("获取图片地址失败")
-      }
-    })
-  },
-  uploadTap() {
-    const self = this
 
-    wx.chooseImage({
-      count: 1, // 默认9
-      sizeType: ['original'], // 可以指定是原图还是压缩图，默认二者都有
-      sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
-      success(res) {
-        const src = res.tempFilePaths[0]
-        //  获取裁剪图片资源后，给data添加src属性及其值
-        self.wecropper.pushOrign(src)
-      }
-    })
-  },
-  onLoad(option) {
-    const cropperOpt = this.data.cropperOpt
-    let src = option.src
-    let type = option.type
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    let { src, type, width: cutWidth, height: cutHeight } = options
     this.setData({
       type:type
     })
-    let cutWidth = 0,cutHeight = 0
-    switch (type){
-      case "course":
-        cutWidth = Math.floor(device.windowWidth * 0.8)
-        cutHeight = Math.floor(device.windowHeight * 0.8)
-        break
-      default:
-      case "headImg":
-        cutWidth = 300
-        cutHeight = 300
-        break
-    }
-    if(src){
-      cropperOpt.src = src
-      let cut = {
-        x: (width - cutWidth) / 2,
-        y: (height - cutHeight) / 2,
-        width: cutWidth,
-        height: cutHeight
-      }
-      cropperOpt.cut = cut
-
-      new WeCropper(cropperOpt)
-        .on('ready', (ctx) => {
+    if(!src){
+      app.msg("未选择图片")
+      setTimeout(()=>{
+        wx.navigateBack({
+          delta: 0,
         })
-        .on('beforeImageLoad', (ctx) => {
+      },1000)
+      return
+    }
+    let opt = this.getOption(src,cutWidth,cutHeight)
+    this.cropper = new WeCropper(opt)
+      .on('ready', (ctx) => {
+          console.log(`wecropper is ready for work!`)
+      })
+      .on('beforeImageLoad', (ctx) => {
           wx.showToast({
-            title: '上传中',
-            icon: 'loading',
-            duration: 20000
+              title: '上传中',
+              icon: 'loading',
+              duration: 20000
           })
-        })
-        .on('imageLoad', (ctx) => {
+      })
+      .on('imageLoad', (ctx) => {
           wx.hideToast()
-        })
-        .on('beforeDraw', (ctx, instance) => {
-        })
-        .updateCanvas()
-    }
+      })
   },
+
+  // 获取裁剪属性
+  getOption:function(src,cutWidth,cutHeight){
+    const cropperOpt = this.data.cropperOpt
+    cutHeight *= 0.8
+    cutWidth *= 0.8
+    let cut = {
+      x: parseInt((width - cutWidth) / 2),
+      y: parseInt((height - cutHeight) / 2),
+      width: cutWidth,
+      height: cutHeight
+    }
+    cropperOpt.src = src
+    cropperOpt.cut = cut
+    return cropperOpt
+  },
+
+  // 取消
   cancel:function(){
-    wx.navigateBack({})
+    wx.navigateBack()
+  },
+
+  // 重新选择
+  uploadTap() {
+    const self = this
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['original'],
+      sourceType: ['album', 'camera'],
+      success(res) {
+        const src = res.tempFilePaths[0]
+        self.cropper.pushOrign(src)
+      }
+    })
+  },
+
+  // 裁剪
+  crop:function(){
+    let _this = this
+    _this.cropper.getCropperImage()
+      .then((src) => {
+        _this.upload(src)
+      })
+      .catch((err) => {
+        console.log(err)
+        console.log('获取图片地址失败，请稍后重试')
+      })
+  },
+
+  // 上传图片
+  upload:function(src,){
+    //获取文件名
+    let fileName = ''
+    if (!isLocal){
+      fileName = src.match(/(wxfile:\/\/)(.+)/)
+      fileName = fileName[2]
+    }else{
+      fileName = src.match(/(http:\/\/tmp\/)(.+)/)
+    }
+    fileName = fileName[2]
+    if(fileName == ''){
+      app.msg("获取图片失败，请重试")
+      return
+    }
+    const dir_name = this.data.type == 'avatar' ? 'user_imgs' : 'course_bg' 
+    let uploadResult = uploadFile(src, fileName, dir_name);
+    if(uploadResult === false){
+      app.msg("上传失败，请重试")
+      return
+    }
+    app.msg("上传成功")
+    if(this.data.type == 'course'){
+      //删除原来的文件
+      var delImg = wx.getStorageSync('upload_course_bg');
+      var returnDel = delFile(dir_name + '/' + delImg);
+      if (returnDel) {
+        console.log('删除成功');
+      }
+    } 
+    setTimeout(()=>{
+      var pages = getCurrentPages();
+      var prevPage = pages[pages.length - 2];
+      prevPage.setData({
+        uploadFile: fileName
+      })
+      wx.navigateBack({})
+    },1000)
   }
 })

@@ -21,7 +21,9 @@
   </view>
   <view wx:else class="course">
     <view class="bg-white padding margin-sm y-radius text-cut">
-      <text>姓名：</text><text class="text-theme">{{name}}<text class="text-black">({{classname}})</text></text>
+      <text>姓名：</text>
+      <text wx:if="{{name}}" class="text-theme">{{name}}<text class="text-black">({{classname}})</text></text>
+      <text wx:else>加载中...</text>
     </view>
     <view class="bg-white padding margin-sm y-radius">
       <text>学期：</text><text class="text-theme">{{term_name}}</text>

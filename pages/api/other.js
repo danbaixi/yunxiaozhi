@@ -79,19 +79,21 @@ function editExam(data){
   })
 }
 
-// 根据班级获取课程学期列表
-function getTermByClassname(data){
+// 获取班级列表
+function getClassList(data){
   return R({
-    url:'data/getTermsByClassname',
+    url:'Classes/getClassList',
+    needLogin:false,
     data
   })
 }
 
-// 根据班级获取课表
-function getCourseByClassname(data){
+// 获取课表分享者信息
+function getCourseShareInfo(data){
   return R({
-    url: 'data/getCourseByClassname',
-    data
+    url:'data/getNameByStuId',
+    data,
+    needLogin:false
   })
 }
 
@@ -105,6 +107,6 @@ module.exports = {
   getCourseExamList,
   getExamClassList,
   editExam,
-  getTermByClassname,
-  getCourseByClassname
+  getClassList,
+  getCourseShareInfo
 }
