@@ -80,6 +80,8 @@ Page({
       sender: e.detail.value
     })
   },
+
+  // 废除
   submit:function(){
     let _this = this
     var receiver = _this.data.receiver

@@ -3,7 +3,7 @@ const TIMES = require('../../utils/course-time.js')
 const courseFn = require('../../utils/course')
 const util = require('../../utils/util')
 const { checkCourseInWeek,setUpdateTime, canUpdate, getNotice, noticeClickEvent } = require('../../utils/common')
-const { updateCourse, getCourseList } = require('../api/course')
+const { updateCourse, getCourseList, getAreaInfo } = require('../api/course')
 const app = getApp()
 Page({
   /**
@@ -658,23 +658,6 @@ Page({
     })
   },
 
-  getCourseList(){
-    var user_id = wx.getStorageSync('user_id')
-    app.httpRequest({
-      url: 'course/getList',
-      data: {
-        stu_id: user_id,
-      },
-      success: function (res) {
-        if (res.data.status == 1001) {
-          wx.setStorageSync('course', res.data.data.course);
-        } else {
-          app.msg(res.data.message)
-        }
-      },
-    })
-  },
-
   closeAd:function(){
     var ad = this.data.ad
     ad.display = false
@@ -684,43 +667,7 @@ Page({
     //记录时间，24小时内不再显示广告
     wx.setStorageSync('close_ad_time', (new Date()).getTime())
   },
-  goAd:function(){
-    var ad = this.data.ad
-    var self = this
-    ad.url = encodeURIComponent(ad.url)
-    wx.navigateTo({
-      url: '/pages/ad/ad?ad=' + JSON.stringify(this.data.ad),
-      success:function(){
-        ad.url = decodeURIComponent(ad.url)
-        self.setData({
-          ad: ad
-        })
-      }
-    })
-  },
-  getAd:function(){
-    var self = this
-    var time = (new Date()).getTime()
-    var close_ad_time = wx.getStorageSync('close_ad_time')
-    var user_id = wx.getStorageSync('user_id')
-    if (close_ad_time == '' || Math.floor((time - close_ad_time) / 1000) > 24 * 60 *60){
-      wx.removeStorageSync('close_ad_time')
-      app.httpRequest({
-        url: "ad/getAd",
-        needLogin: false,
-        data:{
-          user_id:user_id
-        },
-        success: function (res) {
-          if (res.data.status == 0) {
-            self.setData({
-              ad: res.data.data
-            })
-          }
-        }
-      })
-    }
-  },
+
   toggleDelay() {
     var that = this;
     that.setData({
@@ -753,20 +700,15 @@ Page({
     var display_course_time = wx.getStorageSync('display_course_time')
     var area = wx.getStorageSync('user_area')
     if (display_course_time === '' || area === ''){
-      app.httpRequest({
-        url: 'user/getareainfo',
-        success: function (res) {
-          if (res.data.status != 0) {
-            app.msg(res.data.message)
-            return
-          }
+      getAreaInfo().then((res) => {
+        if(res.status == 0){
           that.setData({
-            area:res.data.data.area,
-            display_course_time: res.data.data.display,
-            internet_course_time: res.data.data.internet_course_time //上网课时间
+            area:res.data.area,
+            display_course_time: res.data.display,
+            internet_course_time: res.data.internet_course_time //上网课时间
           })
-          wx.setStorageSync('display_course_time',res.data.data.display)
-          wx.setStorageSync('user_area',res.data.data.area)
+          wx.setStorageSync('display_course_time',res.data.display)
+          wx.setStorageSync('user_area',res.data.area)
           that.displayTime()
         }
       })

@@ -1,5 +1,5 @@
-var app = getApp();
-// var md5 = require('../../../utils/md5.js');
+const app = getApp()
+const { getAssessList, assess } = require('../../api/other')
 let videoAd = null
 let interstitialAd = null
 Page({
@@ -19,6 +19,7 @@ Page({
   onLoad: function (options) {
     var that = this;
     app.isLogin('/' + that.route).then(function (res) {
+      //that.loadingAd()
       that.getList()
     })
   },
@@ -29,7 +30,7 @@ Page({
     return app.share()
   },
 
-  //激励广告
+  //激励广告 --暂时取消
   loadingAd:function(){
     if (!this.data.finish && wx.createRewardedVideoAd) {
       console.log('广告加载...')
@@ -37,13 +38,14 @@ Page({
         adUnitId: 'adunit-3c3771d2ae21a30f'
       })
       videoAd.onLoad(() => {})
-      videoAd.onError((err) => {})
+      videoAd.onError((err) => {
+        app.msg("加载失败，请重新进入此页面")
+      })
       videoAd.onClose((res) => {
         if(!res.isEnded){
           app.msg("您未观看完广告，无法使用一键评教")
           return
         }
-        this.assess()
       })
     }else{
       this.setData({
@@ -72,36 +74,22 @@ Page({
   },
 
   getList:function(){
-    var that = this;
-    app.httpRequest({
-      url: "access/getItem",
-      method: "POST",
-      success: function (res) {
-        that.setData({
-          loading:false,
-          assess: res.data.data.assess,
-          term: res.data.data.term,
-          list: res.data.data.list,
-          finish: res.data.data.finish,
-          totalCount: res.data.data.totalCount
-        })
-        if(res.data.status != 0){
-          app.msg(res.data.message)
-          return
-        }
-        //that.loadingAd()
-        that.loadingChaPing()
+    var that = this
+    getAssessList().then((res) => {
+      if(res.status == 0){
+        res.data.loading = false
+        that.setData(res.data)
+        setTimeout(() => {
+          that.loadingChaPing()
+        },1000)
+        return
       }
     })
   },
+
   start:function(){
     let _this = this
-    if (_this.data.finish) {
-      app.msg("你已经完成评教啦！")
-      return
-    }
     _this.assess()
-
     // if (videoAd && !_this.data.finishAd) {
     //   videoAd.show().catch(() => {
     //     // 失败重试
@@ -112,9 +100,10 @@ Page({
     //       })
     //   })
     // }
-    // app.msg("观看完广告后关闭会自动评教，感谢您的理解。")
-
+    // app.msg("正在评教中，等待过程将会播放广告，感谢您的理解。")
   },
+
+  // 评教
   assess: function () {
     if(app.getUserId() === 'test'){
       app.msg('测试号无法更新数据')
@@ -130,177 +119,20 @@ Page({
       title: '努力评教中...',
       mask: true
     })
-    app.httpRequest({
-      url: 'access/accessing',
-      data: {
-        aid:that.data.assess.id,
-      },
-      method:"POST",
-      success: function (res) {
-        wx.hideLoading()
-        if (res.data.status == 0) {
-          wx.showToast({
-            title: res.data.message,
-            icon: res.data.message == '评教成功' ? 'success' : 'none',
-            duration: res.data.message == '评教成功' ? 1500 : 5000
-          })
-          setTimeout(function () {
-            that.getList();
-          }, 1000);
-        } else {
-          app.msg(res.data.message)
-        }
-      }
-    })
-   
-  },
-  /** 刷新验证码 */
-  freshYzm: function () {
-    var num = Math.ceil(Math.random() * 1000000);
-    this.setData({
-      yzmUrl: app.globalData.domain + 'login/getValidateImg?cookie=' + this.data.cookie + '&rand=' + num,
-    })
-  },
-  /**输入验证码时，改变模态框高度 */
-  inputFocus: function () {
-    this.setData({
-      input_focus: 1
-    })
-  },
-  /** 不输入验证码时，恢复 */
-  inputBlur: function () {
-    this.setData({
-      input_focus: 0
-    })
-  },
-  /**
-* 弹窗
-*/
-  updateScore: function (e) {
-    var that = this;
-    if (that.checkStatus) {
-      app.msg("你已完成评教")
-      return
-    }
-    var system_type = wx.getStorageSync('system_type');
-    if (system_type != 2) {
-      app.msg("请退出登录后使用旧教务系统账号登录")
-      setTimeout(function () {
-        app.needLogin(that.route)
-      }, 2000)
-      return;
-    }
-    that.setData({
-      showModal: true
-    });
-    var type = e.target.dataset.type
-    that.setData({
-      type:type
-    })
-    /**获取验证码 */
-    app.httpRequest({
-      url: 'login/getLoginInitData',
-      needLogin:false,
-      success: function (res) {
-        that.setData({
-          cookie: res.data.data['cookie'],
-          __VIEWSTATE: res.data.data['__VIEWSTATE'],
+    assess({
+      aid:that.data.assess.id
+    }).then((res) => {
+      if (res.status == 0) {
+        wx.showToast({
+          title: res.message,
+          icon: res.message == '评教成功' ? 'success' : 'none',
+          duration: res.message == '评教成功' ? 1500 : 5000
         })
-        that.freshYzm();
+        setTimeout(function () {
+          that.getList()
+        }, 1000)
       }
-    });
-  },
-  /**
- * 弹出框蒙层截断touchmove事件
- */
-  preventTouchMove: function () {
-
-  },
-  /**
-   * 隐藏模态对话框
-   */
-  hideModal: function (e) {
-    this.setData({
-      showModal: false
-    })
-  },
-  /**
-   * 对话框取消按钮点击事件
-   */
-  onCancel: function (e) {
-    this.hideModal();
-  },
-  /** 获取验证码 */
-  yzmInput: function (e) {
-    this.setData({
-      yzm: e.detail.value,
     })
   },
 
-  //旧版获取列表
-  assessV0:function(){
-    var that = this
-    if (that.checkStatus){
-      app.msg("你已完成评教")
-      return
-    }
-    var type = that.data.type
-    if(type == 1){
-      app.msg("正在查询")
-    }else{
-      wx.showLoading({
-        title: '加载中',
-        mask: true
-      })
-    }
-    var user_id = wx.getStorageSync('user_id');
-    var user_password = wx.getStorageSync('user_password');
-    var yzm = that.data.yzm;
-    var cookie = that.data.cookie;
-    // var str = app.globalData.key + user_id;
-    // var sign = md5.hexMD5(str);
-    if (yzm == "") {
-      app.msg("请输入验证码")
-    } else {
-      app.httpRequest({
-        url: 'access/accessing',
-        method: 'POST',
-        data: {
-          stu_id: user_id,
-          password: user_password,
-          code: yzm,
-          cookie: cookie,
-          __VIEWSTATE: that.data.__VIEWSTATE,
-          // sign: sign,
-          type: type
-        },
-        success: function (res) {
-          wx.hideLoading()
-          that.hideModal();
-          wx.hideNavigationBarLoading();
-          if (res.data.status == 0) {
-            that.setData({
-              assesses: res.data.data
-            })
-            wx.setStorageSync('assess', that.data.assesses)
-          } else {
-            app.msg(res.data.message)
-          }
-        }
-      })
-    }
-  },
-
-  checkStatus:function(){
-    var assess = this.data.assesses
-    if (assess.length <= 0){
-      return false
-    }
-    for (let i = 0; i < assess.length;i++){
-      if(assess[i].status != '已评'){
-        return false
-      }
-    }
-    return true
-  },
 })

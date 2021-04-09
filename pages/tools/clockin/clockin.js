@@ -1,6 +1,6 @@
 const app = getApp()
-const util = require('../../../utils/util')
 import WxCountUp from '../../../utils/wxCountUp.js'
+const { clockIn, getClockInData, getClockInRank } = require('../../api/other')
 Page({
 
   /**
@@ -35,37 +35,8 @@ Page({
     })
     app.isLogin('/' + _this.route).then(function(res){
       _this.getData()
-      _this.getInfo()
       _this.getRanks()
     })
-
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
 
   },
 
@@ -74,7 +45,6 @@ Page({
    */
   onPullDownRefresh: function () {
     this.getData()
-    this.getInfo()
     this.freshRank(this.data.type)
   },
 
@@ -94,40 +64,32 @@ Page({
   onShareAppMessage: function () {
     return app.share('早起打卡挑战，你敢来吗？', 'clockin.png', this.route)
   },
-  //获取数据
+
+  // 获取数据
   getData:function(){
     let _this = this
-    app.httpRequest({
-      url:'clockin/getData',
-      success:function(res){
-        if(res.data.status == 0){
-          _this.setData(res.data.data)
-          _this.todayCountUp()
-          return
-        }
-        app.msg(res.data.message)
+    getClockInData().then((res) => {
+      if(res.status == 0){
+        _this.setData(res.data)
+        _this.todayCountUp()
       }
     })
   },
-  //打卡
+
+  // 打卡
   clockIn:function(){
     let _this = this
-    app.httpRequest({
-      url:'clockin/clockIn',
-      success:function(res){
-        if(res.data.status == -1){
-          app.msg(res.data.message)
-          return
-        }
+    clockIn().then((res) => {
+      if(res.data.status == -1){
         _this.clockInSuccess()
-        _this.setData(res.data.data)
+        _this.setData(res.data)
         _this.getData()
         _this.freshRank()
       }
     })
   },
   //人数滚动
-  todayCountUp:function(number){
+  todayCountUp:function(){
     this.countUp = new WxCountUp('todayCount', this.data.todayCount, {decimalPlaces:0}, this)
     this.countUp.start()
   },
@@ -151,20 +113,7 @@ Page({
     })
     this.close()
   },
-  getInfo:function(){
-    var _this = this;
-    app.promiseRequest({
-      url: 'user/getInfo'
-    }).then((result) => {
-      let info = result.data
-      info.name = util.isDefaultNickname(info.user_name) ? info.nickname : info.user_name
-      _this.setData({
-        userInfo:result.data
-      })
-    }).catch((message) => {
-      app.msg(message)
-    })
-  },
+
   //获取排名
   getRanks:function(){
     let _this = this
@@ -172,30 +121,16 @@ Page({
     _this.setData({
       loading: true
     })
-    app.httpRequest({
-      url:'clockin/getRank',
-      data:{
-        p:_this.data.p,
-        length:_this.data.length,
-        type:type,
-        value:_this.getValue(type)
-      },
-      success:function(res){
+    getClockInRank({
+      p:_this.data.p,
+      length:_this.data.length,
+      type:type,
+      value:_this.getValue(type)
+    }).then((res) => {
+      if(res.status == 0){
         let list = _this.data.list
-        let data = res.data.data
-        for(let i =0;i<data.length;i++){
-          let name = data[i].stu_name
-          if(data[i].hidden_clockin_name == 1){
-            if(util.isDefaultNickname(data[i].user_name)){
-              name = data[i].nickname
-            }else{
-              name = data[i].user_name
-            }
-          }
-          data[i].name = name
-        }
-        list = list.concat(data)
-        let finish = data.length < _this.data.length
+        list = list.concat(res.data)
+        let finish = res.data.length < _this.data.length
         _this.setData({
           p:_this.data.p + 1,
           list:list,
@@ -204,6 +139,7 @@ Page({
       }
     })
   },
+
   //切换排名
   tabSelect:function(e){
     let _this = this
@@ -212,6 +148,7 @@ Page({
     }
     _this.freshRank(e.currentTarget.dataset.id)
   },
+
   freshRank:function(type){
     this.setData({
       type: type,
@@ -221,6 +158,7 @@ Page({
     })
     this.getRanks()
   },
+
   getValue:function(type){
     switch(type){
       default:return '';break
@@ -248,6 +186,7 @@ Page({
       url: '/pages/tools/clockin/list/list',
     })
   },
+
   //查看打卡记录
   detail:function(e){
     wx.navigateTo({

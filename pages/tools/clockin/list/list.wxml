@@ -2,7 +2,7 @@
   <view slot="back">返回</view>
 	<view slot="content">早起记录</view>
 </cu-custom>
-<view class="container padding margin-top">
+<view class="container padding">
   <view class="head text-lg grid col-2">
     <view class="text-left">
       <text>{{year}}年 <text class="text-theme">{{month}}月</text></text>

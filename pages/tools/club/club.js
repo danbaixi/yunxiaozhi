@@ -1,5 +1,5 @@
 const app = getApp()
-const util = require("../../../utils/util")
+const { getClubList, getClubCategory,starClub } = require('../../api/other')
 Page({
 
   /**
@@ -30,41 +30,6 @@ Page({
   },
 
   /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
@@ -86,6 +51,7 @@ Page({
       title: '找社团，上云小智'
     }
   },
+
   searchInput:function(e){
     this.setData({
       search: e.detail.value
@@ -102,50 +68,49 @@ Page({
     })
     this.getList()
   },
+
+  // 获取列表
   getList:function(){
     let _this = this 
     let stu_id = wx.getStorageSync('user_id')
     _this.setData({
       loading: true
     })
-    app.httpRequest({
-      url:'club/getList',
-      needLogin: false,
-      data:{
-        search:_this.data.search,
-        cid: _this.data.category[_this.data.cid].id,
-        p: _this.data.p,
-        length: _this.data.length,
-        stu_id:stu_id
-      },
-      success:function(res){
+    getClubList({
+      search:_this.data.search,
+      cid: _this.data.category[_this.data.cid].id,
+      p: _this.data.p,
+      length: _this.data.length,
+      stu_id:stu_id
+    }).then((res) => {
+      if(res.status == 0){
         let list = _this.data.list
-        if(res.data.data.list.length < _this.data.length){
-          res.data.data.notMore = true
+        if(res.data.list.length < _this.data.length){
+          res.data.notMore = true
         }else{
-          res.data.data.notMore = false
+          res.data.notMore = false
         }
-        list = list.concat(res.data.data.list)
-        res.data.data.list = list
-        _this.setData(res.data.data)
+        list = list.concat(res.data.list)
+        res.data.list = list
+        _this.setData(res.data)
       }
     })
   },
+
   //获取分类
   getCategory:function(){
     let _this = this
-    app.httpRequest({
-      url:'/club/getCategory',
-      needLogin:false,
-      success:function(res){
+    getClubCategory().then((res) => {
+      if(res.status == 0){
         let category = _this.data.category
-        category = category.concat(res.data.data)
+        category = category.concat(res.data)
         _this.setData({
-          category:category
+          category: category
         })
       }
     })
   },
+
   //选择分类
   selectCategory:function(e){
     let select = e.detail.value
@@ -159,12 +124,17 @@ Page({
     })
     this.getList()
   },
+
+  // 详情
   showItem:function(e){
-    let id = e.currentTarget.dataset.id
+    let index = e.currentTarget.dataset.index
+    let club = this.data.list[index]
     wx.navigateTo({
-      url: '/pages/tools/club/item/item?id=' + id,
+      url: '/pages/tools/club/item/item?id=' + club.id + '&stared=' + club.stared,
     })
   },
+
+  //点赞
   star:function(e){
     let _this = this
     let stu_id = wx.getStorageSync('user_id')
@@ -178,23 +148,18 @@ Page({
       app.msg("你已经点过赞啦！")
       return
     }
-    app.httpRequest({
-      url: 'club/star',
-      method: 'POST',
-      data:{
-        cid:cid,
-        stu_id:stu_id
-      },
-      success:function(res){
-        app.msg(res.data.message)
-        if(res.data.status == 0){
-          let list = _this.data.list
-          list[index].star++
-          list[index].stared = 1
-          _this.setData({
-            list:list
-          })
-        }
+    starClub({
+      cid:cid,
+      stu_id:stu_id
+    }).then((res) => {
+      if(res.status == 0){
+        app.msg(res.message)
+        let list = _this.data.list
+        list[index].star++
+        list[index].stared = 1
+        _this.setData({
+          list: list
+        })
       }
     })
   }

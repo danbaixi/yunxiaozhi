@@ -79,6 +79,14 @@ function editExam(data){
   })
 }
 
+// 删除考试记录
+function delExam(data){
+  return R({
+    url: 'exam/dellist',
+    data
+  })
+}
+
 // 获取班级列表
 function getClassList(data){
   return R({
@@ -97,6 +105,274 @@ function getCourseShareInfo(data){
   })
 }
 
+// 获取离校倒计时数据
+function getUserTimeInfo(){
+  return R({
+    url: 'time/getInfo'
+  })
+}
+
+// 获取校园新闻
+function getSchoolNews(data){
+  return R({
+    url: 'news/getNews',
+    data,
+    needLogin:false
+  })
+}
+
+// 获取文章列表
+function getArticleList(data){
+  return R({
+    url: 'article/getArticleList',
+    data,
+    needLogin: false,
+  })
+}
+
+// 获取内容碎片
+function getContentByKey(data){
+  return R({
+    url: 'data/getContent',
+    needLogin: false,
+    data
+  })
+}
+
+// 接受使用条款
+function acceptTerms(){
+  return R({
+    url: 'user/acceptTerms'
+  })
+}
+
+// 获取评教记录
+function getAssessList(){
+  return R({
+    url: "access/getItem",
+    method: "POST"
+  })
+}
+
+// 一键评教
+function assess(data){
+  return R({
+    url: 'access/accessing',
+    data,
+    method:"POST",
+  })
+}
+
+// 获取同乡会列表
+function getSameCityList(data){
+  return R({
+    url: 'city/getList',
+    needLogin: false,
+    data,
+  })
+}
+
+// 获取羊城通卡号列表
+function getYctList(){
+  return R({
+    url: 'yct/getlist'
+  })
+}
+
+// 添加羊城通卡号
+function addYct(data){
+  return R({
+    url: 'yct/addlist',
+    data,
+    method:'POST'
+  })
+}
+
+// 删除羊城通卡号
+function delYct(data){
+  return R({
+    url: 'yct/delList',
+    data
+  })
+}
+
+// 获取当天打卡记录
+function getClockInData(){
+  return R({
+    url:'clockin/getData'
+  })
+}
+
+// 早起打卡
+function clockIn(){
+  return R({
+    url:'clockin/clockIn'
+  })
+}
+
+// 获取打卡排名
+function getClockInRank(data){
+  return R({
+    url:'clockin/getRank',
+    data
+  })
+}
+
+// 获取月份打卡记录
+function getClockInListByMonth(data){
+  return R({
+    url: 'clockin/getListForMonth',
+    data
+  })
+}
+
+// 获取打卡海报
+function getClockInPoster(){
+  return R({
+    url:'clockin/getPoster'
+  })
+}
+
+// 获取社团列表
+function getClubList(data){
+  return R({
+    url:'club/getList',
+    needLogin: false,
+    data
+  })
+}
+
+// 获取社团分类
+function getClubCategory(){
+  return R({
+    url:'/club/getCategory',
+    needLogin:false,
+  })
+}
+
+// 点赞社团
+function starClub(data){
+  return R({
+    url: 'club/star',
+    method: 'POST',
+    data
+  })
+}
+
+// 获取社团详情
+function getClubItem(data){
+  return R({
+    url:'club/getItem',
+    needLogin:false,
+    data
+  })
+}
+
+// 获取失物招领列表
+function getLostList(){
+  return R({
+    url:'lost/getList',
+    needLogin: false
+  })
+}
+
+// 获取电话本
+function getPhoneList(){
+  return R({
+    url: 'phone/getList',
+    needLogin: false
+  })
+}
+
+// 获取全部选修课列表
+function getPublicCourseList(){
+  return R({
+    url:'Publiccourse/getlist'
+  })
+}
+
+// 查询水电费
+function getQuantityDetail(){
+  return R({
+    url: 'dormitory/getQuantityDetail'
+  })
+}
+
+// 初始化运动排名页面
+function initSport(){
+  return R({
+    url:'sport/init'
+  })
+}
+
+// 更新运动数据
+function updateSport(data){
+  return R({
+    url: 'sport/updateData',
+    method: 'POST',
+    data
+  })
+}
+
+// 获取运动排名
+function getSportRank(data){
+  return R({
+    url: 'sport/getRank',
+    data
+  })
+}
+
+// 获取运动详情
+function getSportDetail(data){
+  return R({
+    url: 'sport/getDetailForMonth',
+    data
+  })
+}
+
+// 初始化毕业报告
+function initSummary(){
+  return R({
+    url: 'user/initSummary'
+  })
+}
+
+// 获取毕业报告
+function getSummary(data){
+  return R({
+    url: 'share/getSummary',
+    data
+  })
+}
+
+// 获取毕业报告分享海报
+function getSummaryPoster(data){
+  return R({
+    url:'share/getSummaryPoster',
+    needLogin: false,
+    data
+  })
+}
+
+// 添加祝福语
+function addSummaryBlessing(data){
+  return R({
+    url:'share/submitBlessing',
+    needLogin: false,
+    method:'POST',
+    data
+  })
+}
+
+// 切换毕业报告分享开关
+function switchSummaryShareStatus(data){
+  return R({
+    url:'user/switchSummaryShare',
+    method:'POST',
+    data
+  })
+}
+
 module.exports = {
   getAttendanceList,
   updateAttendanceList,
@@ -107,6 +383,40 @@ module.exports = {
   getCourseExamList,
   getExamClassList,
   editExam,
+  delExam,
   getClassList,
-  getCourseShareInfo
+  getCourseShareInfo,
+  getUserTimeInfo,
+  getSchoolNews,
+  getArticleList,
+  getContentByKey,
+  acceptTerms,
+  getAssessList,
+  assess,
+  getSameCityList,
+  getYctList,
+  addYct,
+  delYct,
+  getClockInData,
+  clockIn,
+  getClockInRank,
+  getClockInListByMonth,
+  getClockInPoster,
+  getClubList,
+  getClubCategory,
+  starClub,
+  getClubItem,
+  getLostList,
+  getPhoneList,
+  getPublicCourseList,
+  getQuantityDetail,
+  initSport,
+  updateSport,
+  getSportRank,
+  getSportDetail,
+  initSummary,
+  getSummary,
+  getSummaryPoster,
+  addSummaryBlessing,
+  switchSummaryShareStatus
 }

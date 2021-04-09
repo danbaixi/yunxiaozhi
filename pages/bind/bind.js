@@ -139,7 +139,8 @@ Page({
       })
       return
     }
-
+    
+    // 废除
     if (that.data.systemType == 2) {
       var cookie = that.data.cookie;
       var encoded = util.encodeInp(user_id) + "%%%" + util.encodeInp(password);

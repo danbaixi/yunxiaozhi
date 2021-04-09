@@ -4,7 +4,7 @@
 
 const R = require('../../utils/request')
 
-//获取sessionKey，存储在服务器redis备用
+// 获取sessionKey，存储在服务器redis备用
 function getOpenidFromCode(code){
   return R({
     url: 'wechat/getOpenidFromCode',
@@ -15,6 +15,7 @@ function getOpenidFromCode(code){
   })
 }
 
+// 微信登录
 function wechatLogin(code,res){
   return R({
     url: 'wechat/wechatLoginV2',
@@ -27,6 +28,7 @@ function wechatLogin(code,res){
   })
 }
 
+// 绑定青果
 function bindQingguoAccount(data){
   return R({
     url: 'login/bindQingGuoAccount',

@@ -1,4 +1,5 @@
 const app = getApp()
+const { getClubItem,starClub } = require('../../../api/other')
 Page({
 
   /**
@@ -23,51 +24,10 @@ Page({
       return
     }
     this.setData({
-      id:id
+      id:id,
+      stared: options.stared
     })
     this.getItem()
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
   },
 
   /**
@@ -79,37 +39,34 @@ Page({
       imageUrl: this.data.club.logo
     }
   },
+
   //获取详情
   getItem:function(){
     let _this = this
-    app.httpRequest({
-      url:'club/getItem',
-      needLogin:false,
-      data:{
-        id:_this.data.id,
-      },
-      success:function(res){
-        if(res.data.status == -1){
-          app.msg(res.data.message)
-          _this.setData({
-            loading:false,
-            exist:false
-          })
-          return
-        }
-        let item = res.data.data
+    getClubItem({
+      id:_this.data.id,
+    }).then((res) => {
+      if(res.status == 0){
+        let item = res.data
         if(item.displayed == 0 || item.deleted == 1){
           app.msg("该社团不存在")
           return
         }
         _this.setData({
-          loading:false,
-          exist:true,
-          club:item
+          loading: false,
+          exist: true,
+          club: item
         })
+        return
       }
+      _this.setData({
+        loading: false,
+        exist: false
+      })
     })
   },
+
+  // 点赞
   star:function(){
     let _this = this
     let stu_id = wx.getStorageSync('user_id')
@@ -121,30 +78,22 @@ Page({
       app.msg("你已经点过赞啦！")
       return
     }
-    app.httpRequest({
-      url: 'club/star',
-      method: 'POST',
-      data:{
-        cid: _this.data.id,
-        stu_id:stu_id
-      },
-      success:function(res){
-        app.msg(res.data.message)
-        if(res.data.status == 0){
-          let club = _this.data.club
-          club.star++
-          _this.setData({
-            stared:1,
-            club:club
-          })
-        }else if(res.data.status == 1001){
-          _this.setData({
-            stared:1
-          })
-        }
+    starClub({
+      cid: _this.data.id,
+      stu_id:stu_id
+    }).then((res) => {
+      if(res.status == 0){
+        app.msg(res.message)
+        let club = _this.data.club
+        club.star++
+        _this.setData({
+          stared:1,
+          club:club
+        })
       }
     })
   },
+
   viewPhotos:function(){
     if(this.data.club.photos == ''){
       app.msg("暂无照片")
@@ -160,9 +109,8 @@ Page({
       urls: photos
     })
   },
+
   edit:function(){
-    wx.navigateTo({
-      url: '/pages/article/article?src=' + encodeURIComponent(this.data.article),
-    })
+    openArticle(this.data.article)
   }
 })

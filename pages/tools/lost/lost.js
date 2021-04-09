@@ -1,4 +1,5 @@
 const app = getApp()
+const { getLostList } = require('../../api/other')
 Page({
 
   /**
@@ -19,66 +20,23 @@ Page({
   },
 
   /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    app.share('点击查看失物招领列表')
   },
   getList:function(){
     let _this = this
     _this.setData({
       loading: true
     })
-    app.httpRequest({
-      url:'lost/getList',
-      needLogin: false,
-      success:function(res){
-        _this.setData(res.data.data)
+    getLostList().then((res) => {
+      if(res.status == 0){
+        _this.setData(res.data)
       }
     })
   },
+
   search: function (e) {
     let val = e.detail.value.toLowerCase()
     let list = this.data.list
@@ -102,6 +60,7 @@ Page({
       isNull: count == 0
     })
   },
+
   viewItem:function(e){
     let index = e.currentTarget.dataset.index
     this.setData({
@@ -109,11 +68,13 @@ Page({
       showDetail: true
     })
   },
+
   hideModal:function(){
     this.setData({
       showDetail: false
     })
   },
+  
   goQuanzi(){
     wx.navigateToMiniProgram({
       appId: "wxb036cafe2994d7d0",

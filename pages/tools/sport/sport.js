@@ -1,6 +1,7 @@
 const app = getApp()
 import WxCountUp from '../../../utils/wxCountUp.js'
 const util = require('../../../utils/util')
+const { getSportRank, initSport, updateSport, } = require('../../api/other')
 Page({
 
   /**
@@ -27,48 +28,6 @@ Page({
   },
 
   /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
@@ -76,29 +35,24 @@ Page({
       title:"谁是白云最高步数的人？"
     }
   },
+
   init:function(){
     let _this = this
     _this.setData({
       stuId: app.getUserId()
     })
-    app.promiseRequest({
-      url:'sport/init'
-    }).then((data) => {
-      _this.setData(data.data)
-      if(data.data.updateTime){
-        _this.getData(true)
-        return
+    initSport().then((res) => {
+      if(res.status == 0){
+        _this.setData(res.data)
+        if(res.data.updateTime){
+          _this.getData(true)
+          return
+        }
+        _this.numberRun(res.data.todayStep)
       }
-      _this.numberRun(data.data.todayStep)
-    }).catch((error) => {
-      app.msg(error)
     })
   },
-  login:function(){
-    return app.promiseRequest({
-      url: ''
-    })
-  },
+
   getData:function(refresh){
     if(!app.getUserId()){
       app.msg("登录后才能参与运动排名")
@@ -138,68 +92,65 @@ Page({
     })
     
   },
+
   getWeRunData:function(code){
     let _this = this
     app.msg("同步数据中","loading")
     wx.getWeRunData({
-      success (res) {
-        app.promiseRequest({
-          url: 'sport/updateData',
-          method: 'POST',
-          data:{
-            code: code,
-            iv: res.iv,
-            encryptedData: res.encryptedData
-          }
-        }).then((data) => {
-          app.msg(data.message)
-          if(data.status == 0){
+      success (result) {
+        updateSport({
+          code: code,
+          iv: result.iv,
+          encryptedData: result.encryptedData
+        }).then((res) => {
+          if(res.status == 0){
             //刷新
-            _this.setData(data.data)
-            _this.numberRun(data.data.todayStep)
+            _this.setData(res.data)
+            _this.numberRun(res.data.todayStep)
             let list = _this.data.list
             let len = list.length
-            if(len == 0 || data.data.todayStep > list[len-1].step){
+            if(len == 0 || res.data.todayStep > list[len-1].step){
               _this.getRank(true)
             }
             let now_time = parseInt(new Date().getTime() / 1000)
             wx.setStorageSync('sport_update_time', now_time)
           }
-        }).catch((error) => {
-          app.msg(error)
         })
       }
     })
   },
+
   //数字滚动
   numberRun:function(number){
     this.countUp = new WxCountUp('todayStep', number, {separator:''}, this)
     this.countUp.start()
   },
+
   viewDetail:function(){
     wx.navigateTo({
       url: '/pages/tools/sport/detail/detail',
     })
   },
+
   viewClockin:function(){
     wx.navigateTo({
       url: '/pages/tools/clockin/clockin',
     })
   },
+
   viewSetting:function(){
     wx.navigateTo({
       url: '/pages/my/set/set',
     })
   },
+
   getRank:function(refresh){
     let _this = this
-    app.httpRequest({
-      url: 'sport/getRank',
-      data:{
-        update: refresh === true ? true : false
-      },
-      success:function(res){
-        let list = res.data.data.list
+    getSportRank({
+      update: refresh === true ? true : false
+    }).then((res) => {
+      if(res.status == 0){
+        let list = res.data.list
         list.map((item) => {
           item.name = util.isDefaultNickname(item.user_name) ? item.nickname : item.user_name
           return item

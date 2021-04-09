@@ -1,4 +1,6 @@
 const app = getApp()
+const { openArticle } = require('../../../utils/common')
+const {initSummary,getSummary,getSummaryPoster,addSummaryBlessing,switchSummaryShareStatus} = require('../../api/other')
 Page({
 
   /**
@@ -53,7 +55,7 @@ Page({
     if(id == 0){
       myself = true
       id = wx.getStorageSync('user_id')
-      app.isLogin('/'+this.route).then((res)=>{
+      app.isLogin(this.route).then((res)=>{
         if(res){
           this.initData()
         }
@@ -73,13 +75,6 @@ Page({
   },
 
   /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
@@ -89,31 +84,10 @@ Page({
   },
 
   /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
     this.stopMusic()
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
   },
 
   /**
@@ -139,25 +113,22 @@ Page({
     _this.setData({
       loading:true
     })
-    app.httpRequest({
-      url: 'user/initSummary',
-      redirect: '/' + _this.route,
-      success:function(res){
-        wx.hideLoading()
-        if(res.data.status == -1){
-          _this.setData({
-            isGraduation:false
-          })
-          return
-        }
+    initSummary().then((res) => {
+      if(res.status == 0){
         _this.setData({
           loading:false
         })
-        _this.setData(res.data.data)
+        _this.setData(res.data)
         _this.getPoster()
+        return
       }
+      _this.setData({
+        isGraduation:false
+      })
     })
   },
+
+  // 获取毕业报告
   getSummary:function(stu_id){
     let _this = this
     wx.showLoading({
@@ -167,34 +138,25 @@ Page({
     _this.setData({
       loading: true
     })
-    app.httpRequest({
-      url: 'share/getSummary',
-      data:{
-        stu_id:stu_id
-      },
-      needLogin:false,
-      success: function (res) {
-        wx.hideLoading()
-        _this.setData({
-          loading: false
-        })
-        if (res.data.status == -1) {
-          app.msg(res.data.message)
-          return
-        }
-        _this.setData(res.data.data)
-        if(res.data.data.isOpen == 1){
+    getSummary({
+      stu_id:stu_id
+    }).then((res) => {
+      _this.setData({
+        loading: false
+      })
+      if (res.status == 0) {
+        _this.setData(res.data)
+        if(res.data.isOpen == 1){
           let ta = '他'
-          if (res.data.data.summary.data.sex == '女') {
+          if (res.data.summary.data.sex == '女') {
             ta = '她'
           }
           _this.setData({
-            stuName: res.data.data.summary.data.name ? res.data.data.summary.data.name : ta,
+            stuName: res.data.summary.data.name ? res.data.summary.data.name : ta,
             ta: ta
           })
           _this.getPoster()
         }
-
       }
     })
   },
@@ -364,22 +326,17 @@ Page({
       return this.data.posterUrl
     }
     let _this = this
-    app.httpRequest({
-      url:'share/getSummaryPoster',
-      needLogin: false,
-      data:{
-        stu_id:_this.data.id
-      },
-      success:function(res){
-        if(res.data.status == -1){
-          app.msg("获取分享海报失败")
-          return false
-        }
-        _this.setData({
-          posterUrl: res.data.data.url
-        })
-        return res.data.data.url
+    getSummaryPoster({
+      stu_id:_this.data.id
+    }).then((res) => {
+      if(res.data.status == -1){
+        app.msg("获取分享海报失败")
+        return false
       }
+      _this.setData({
+        posterUrl: res.data.url
+      })
+      return res.data.url
     })
   },
   savePoster:function(){
@@ -463,33 +420,22 @@ Page({
     _this.setData({
       submiting:true
     })
-    app.httpRequest({
-      url:'share/submitBlessing',
-      needLogin: false,
-      method:'POST',
-      data:{
-        stu_id:_this.data.id,
-        content:_this.data.blessing,
-        name:_this.data.name || ''
-      },
-      success:function(res){
-        _this.setData({
-          submiting:false
-        })
-        app.msg(res.data.message)
-        if(res.data.status == 0){
-          let benediction = _this.data.benediction
-          let content = {
-            author: _this.data.name,
-            content: _this.data.blessing
-          }
-          benediction.unshift(content)
-          _this.setData({
-            benediction:benediction,
-            blessing:''
-          })
-          _this.hideEditor()
+    addSummaryBlessing().then((res) => {
+      _this.setData({
+        submiting:false
+      })
+      if(res.status == 0){
+        let benediction = _this.data.benediction
+        let content = {
+          author: _this.data.name,
+          content: _this.data.blessing
         }
+        benediction.unshift(content)
+        _this.setData({
+          benediction:benediction,
+          blessing:''
+        })
+        _this.hideEditor()
       }
     })
   },
@@ -497,27 +443,19 @@ Page({
     let _this = this
     let isOpen = _this.data.summary.is_open
     let result = isOpen == 1 ? 0 : 1
-    app.httpRequest({
-      url:'user/switchSummaryShare',
-      method:'POST',
-      data:{
-        status: result
-      },
-      success:function(res){
-        app.msg(res.data.message)
-        if(res.data.status == 0){
-          let summary = _this.data.summary
-          summary.is_open = result
-          _this.setData({
-            summary: summary
-          })
-        }
+    switchSummaryShareStatus({
+      status: result
+    }).then((res) => {
+      if(res.status == 0){
+        let summary = _this.data.summary
+        summary.is_open = result
+        _this.setData({
+          summary: summary
+        })
       }
     })
   },
   showArticle:function(){
-    wx.navigateTo({
-      url: '/pages/article/article?src=' + encodeURIComponent(this.data.article),
-    })
+    openArticle(this.data.article)
   }
 })

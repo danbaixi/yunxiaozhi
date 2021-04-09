@@ -102,7 +102,9 @@ function R(datas){
             title: err,
             icon: 'none'
           })
-          return reject(err)
+          return resolve(res.data)
+          // 不抛出错误
+          // return reject(err)
         }
       },
       fail:function(res){

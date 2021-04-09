@@ -1,6 +1,6 @@
 const app = getApp();
 const util = require('../../../../utils/util.js')
-const { editExam } = require('../../../api/other')
+const { editExam, delExam } = require('../../../api/other')
 Page({
 
   /**
@@ -86,91 +86,11 @@ Page({
         }, 1000)
       }
     })
-    return
-    if(that.data.action =="修改"){
-
-      let result = 
-      editExam(data).then((res) => {
-        if (res.status == 0) {
-          app.msg("修改成功","success")
-          wx.setStorageSync('my_exams','')
-          setTimeout(function () {
-            //返回后刷新
-            var pages = getCurrentPages();
-            var prevPage = pages[pages.length - 2];
-            prevPage.setData({
-              isFresh: true
-            })
-            wx.navigateBack({})
-          }, 1000)
-        }
-      })
-      app.httpRequest({
-        url: 'exam/editlist',
-        data: {
-          id:that.data.id,
-          name: name,
-          date: date,
-          address: address,
-          num: num,
-          position: position
-        },
-        success: function (res) {
-          wx.hideLoading()
-          if (res.data.status == 0) {
-            app.msg("修改成功","success")
-            wx.setStorageSync('my_exams','')
-            setTimeout(function () {
-              //返回后刷新
-              var pages = getCurrentPages();
-              var prevPage = pages[pages.length - 2];
-              prevPage.setData({
-                isFresh: true
-              })
-              wx.navigateBack({})
-            }, 1000)
-          } else {
-            app.msg("修改失败")
-          }
-        },
-      })
-      return
-    }
-    addExam().then((res) => {
-        
-    })
-    app.httpRequest({
-      url: 'exam/addlist',
-      data: {
-        name: name,
-        date: date,
-        address: address,
-        num: num,
-        position: position
-      },
-      success: function (res) {
-        wx.hideLoading()
-        if (res.data.status == 0) {
-          app.msg("添加成功", "success")
-          wx.setStorageSync('my_exams', '')
-          setTimeout(function () {
-            //返回后刷新
-            var pages = getCurrentPages();
-            var prevPage = pages[pages.length - 2];
-            prevPage.setData({
-              isFresh: true
-            })
-            wx.navigateBack({})
-          }, 1000)
-        } else {
-          app.msg("添加失败")
-        }
-      },
-    })
   },
+
   //删除
-  del:function(e){
-    var that = this;
+  del:function(){
+    const that = this
     wx.showModal({
       title: '提示',
       content: '确定要删除此记录吗？',
@@ -180,28 +100,21 @@ Page({
             title: "加载中",
             mask: true
           })
-          app.httpRequest({
-            url: 'exam/dellist',
-            data: {
-              id:that.data.id,
-            },
-            success:function(res){
-              wx.hideLoading()
-              if(res.data.status == 0){
-                app.msg("删除成功","success")
-                wx.setStorageSync('my_exams', '')
-                setTimeout(function () {
-                  //返回后刷新
-                  var pages = getCurrentPages();
-                  var prevPage = pages[pages.length - 2];
-                  prevPage.setData({
-                    isFresh: true
-                  })
-                  wx.navigateBack({})
-                }, 1000)
-              }else{
-                app.msg("删除失败")
-              }
+          delExam({
+            id: that.data.id,
+          }).then((res) => {
+            if(res.status == 0){
+              app.msg("删除成功","success")
+              wx.setStorageSync('my_exams', '')
+              setTimeout(function () {
+                //返回后刷新
+                var pages = getCurrentPages();
+                var prevPage = pages[pages.length - 2];
+                prevPage.setData({
+                  isFresh: true
+                })
+                wx.navigateBack()
+              }, 1000)
             }
           })
         }

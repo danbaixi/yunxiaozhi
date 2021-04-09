@@ -43,7 +43,7 @@ App({
         console.log('get config error')
       }
     }).catch((error) => {
-      console.log(error.message)
+      console.log(error)
     })
   },
   //设置存储文件地址

@@ -47,36 +47,10 @@ Page({
       month: now_month,
       now_day: now_day
     })
-    app.httpRequest({
-      url: 'calendar/getList',
-      needLogin: false,
-      success: function (res) {
-        var data = res.data.data.calendar;
-        var semester = res.data.data.semester;
-        for (var i = 0; i < data.length; i++) {
-          var stemp = data[i].startDate.split('-');
-          var start = new Array(parseInt(stemp[0]), parseInt(stemp[1]), parseInt(stemp[2]));
-          var etemp = data[i].endDate.split('-');
-          var end = new Array(parseInt(etemp[0]), parseInt(etemp[1]), parseInt(etemp[2]));
-          var calendar = {
-            semester: data[i].semester,
-            title: data[i].title,
-            start: start,
-            end: end,
-          }
-          that.setData({ jilu: that.data.jilu.concat(calendar) });
-        }
-        that.setData({
-          semester: semester,
-          loading: false
-        })
-        that.getDayData(now_year, now_month);
-        that.zhouci();
-      }
-    })
-    // that.getData()
+    that.getData()
   },
-  //获取数据
+
+  // 获取数据
   getData:function(){
     const that = this
     getCalendarList().then((res) => {

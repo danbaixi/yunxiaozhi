@@ -1,4 +1,5 @@
 const app = getApp()
+const { getClockInPoster } = require('../../../api/other')
 Page({
 
   /**
@@ -16,76 +17,17 @@ Page({
     this.getPoster()
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  },
-
   getPoster:function(){
     let _this = this
     wx.showLoading({
       title: '生成中...',
       mask: true
     })
-    app.httpRequest({
-      url:'clockin/getPoster',
-      success:function(res){
-        wx.hideLoading({
-          complete: (res) => {},
-        })
+    getClockInPoster().then((res) => {
+      if(res.status == 0){
         _this.setData({
-          loading:false
-        })
-        if(res.data.status == -1){
-          app.msg(res.data.status)
-          return
-        }
-        _this.setData({
-          url:res.data.data.url
+          loading: false,
+          url:res.data.url
         })
       }
     })
@@ -111,6 +53,7 @@ Page({
       }
     })
   },
+  
   downloadImage:function(){
     let _this = this
     wx.getImageInfo({
@@ -132,5 +75,4 @@ Page({
       }
     })
   }
-  
 })

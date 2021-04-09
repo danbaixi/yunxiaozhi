@@ -1,5 +1,7 @@
 const app = getApp()
+import { openArticle } from '../../../utils/common.js'
 import WxCountUp from '../../../utils/wxCountUp.js'
+const { getQuantityDetail } = require('../../api/other')
 Page({
 
   /**
@@ -21,16 +23,7 @@ Page({
    */
   onLoad: function (options) {
     let that = this
-    app.isLogin('/' + that.route).then(function (res) {
-      that.getData()
-    })
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+    that.getData()
   },
 
   /**
@@ -46,65 +39,38 @@ Page({
   },
 
   /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: '点击查询水电费'
+    }
   },
 
   //获取宿舍信息和水电余额
   getData:function(){
     let _this = this
-    app.httpRequest({
-      url: 'dormitory/getQuantityDetail',
-      success:function(res){
-        _this.setData({
-          loading: false
-        })
-        if(res.data.data != []){
-          let data = res.data.data
-          data.waterGrade = _this.getGrade(data.water)
-          data.electricityGrade = _this.getGrade(data.electricity)
-          _this.setData(data)
-          _this.startWaterUp(data.water)
-          _this.startElectricityUp(data.electricity)
-        }
+    getQuantityDetail().then((res) => {
+      _this.setData({
+        loading: false
+      })
+      if(res.status == 0 && res.data != []){
+        let data = res.data
+        data.waterGrade = _this.getGrade(data.water)
+        data.electricityGrade = _this.getGrade(data.electricity)
+        _this.setData(data)
+        _this.startWaterUp(data.water)
+        _this.startElectricityUp(data.electricity)
       }
     })
   },
+
   setDormitory:function(){
     wx.navigateTo({
       url: '/pages/my/dormitory/dormitory',
     })
   },
+
   //获取等级
   getGrade:function(number){
     if(number <=0){
@@ -119,19 +85,20 @@ Page({
       return 'd'
     }
   },
+
   //水量滚动
   startWaterUp:function(number){
     this.countUp = new WxCountUp('water', number, { decimalPlaces:2}, this)
     this.countUp.start()
   },
+
   //电量滚动
   startElectricityUp:function(number){
     this.countUp = new WxCountUp('electricity', number, { decimalPlaces:2}, this)
     this.countUp.start()
   },
+
   viewArticle:function(){
-    wx.navigateTo({
-      url: '/pages/article/article?src=' + encodeURIComponent(this.data.articleUrl),
-    })
+    openArticle(this.data.articleUrl)
   }
 })

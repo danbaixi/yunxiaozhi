@@ -1,4 +1,6 @@
-var app = getApp();
+const app = getApp()
+const { openArticle } = require('../../utils/common')
+const { getSchoolNews, getArticleList } = require('../api/other')
 Page({
 
   /**
@@ -31,41 +33,6 @@ Page({
   },
 
   /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
@@ -84,60 +51,49 @@ Page({
     return app.share()
   },
 
+  // 获取校园新闻
+  getSchoolNewsList: function(type){
+    const that = this
+    getSchoolNews({
+      type: type,
+      num: 20,
+    }).then((res) => {
+      console.log(res)
+      var data = {}
+      var key = type + "_list"
+      data[key] = res.data
+      that.setData(data)
+    })
+  },
+
   /** 获取新闻列表 */
   getList: function (type) {
-    var that = this;
+    const that = this
     if(type != 'yunxiaozhi'){
-      app.httpRequest({
-        url: 'news/getNews',
-        data: {
-          type: type,
-          num: 20,
-        },
-        needLogin:false,
-        success: function (res) {
-          wx.hideLoading();
-          if (res.data.status == 1001) {
-            var data = {};
-            var key = type + "_list";
-            data[key] = res.data.data;
-            that.setData(data);
-          } else {
-            app.msg("获取资讯失败")
-          }
-        }
-      })
+      that.getSchoolNewsList()
+      return
     }
-    app.httpRequest({
-      url: 'article/getList',
-      data: {
-        p: that.data.p,
-        length: that.data.length,
-      },
-      needLogin: false,
-      success: function (res) {
-        wx.hideLoading()
-        if (res.data.status == 1001) {
-          var data = that.data.article
-          data = data.concat(res.data.data)
-          var finish = false
-          if(res.data.data.length < that.data.length){
-            finish = true
-          }
-          that.setData({
-            article: data,
-            finish:finish
-          })
-        } else {
-          app.msg("获取推文失败，请关注云小智公众号查看")
+    getArticleList({
+      p: that.data.p,
+      length: that.data.length,
+    }).then((res) => {
+      if (res.status == 0) {
+        var data = that.data.article
+        data = data.concat(res.data)
+        var finish = false
+        if(res.data.length < that.data.length){
+          finish = true
         }
+        that.setData({
+          article: data,
+          finish:finish
+        })
       }
     })
-    
   },
+
   /** 打开新闻 */
   display: function (e) {
-    var that = this;
     var num = e.currentTarget.dataset.num;
     var title = e.currentTarget.dataset.title;
     var date = e.currentTarget.dataset.date;
@@ -170,8 +126,6 @@ Page({
 
   //打开推文
   viewArticle:function(e){
-    wx.navigateTo({
-      url: '/pages/article' + '/article?src=' + encodeURIComponent(e.currentTarget.dataset.src),
-    })
+    openArticle(e.currentTarget.dataset.src)
   },
 })

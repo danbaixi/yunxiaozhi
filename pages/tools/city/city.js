@@ -1,4 +1,5 @@
 const app = getApp()
+const { getSameCityList } = require('../../api/other')
 Page({
 
   /**
@@ -27,41 +28,6 @@ Page({
   },
 
   /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
@@ -82,11 +48,13 @@ Page({
       title: '快来找到你的白云同乡会'
     }
   },
+
   searchInput: function (e) {
     this.setData({
       search: e.detail.value
     })
   },
+
   search: function () {
     if (this.data.search == this.data.oldSearch) {
       return
@@ -98,32 +66,33 @@ Page({
     })
     this.getList()
   },
+
+  // 获取列表
   getList: function () {
     let _this = this
     _this.setData({
       loading: true
     })
-    app.httpRequest({
-      url: 'city/getList',
-      needLogin: false,
-      data: {
-        search: _this.data.search,
-        p: _this.data.p,
-        length: _this.data.length,
-      },
-      success: function (res) {
+    getSameCityList({
+      search: _this.data.search,
+      p: _this.data.p,
+      length: _this.data.length,
+    }).then((res) => {
+      if(res.status == 0){
         let list = _this.data.list
-        if (res.data.data.list.length < _this.data.length) {
-          res.data.data.notMore = true
+        if (res.data.list.length < _this.data.length) {
+          res.data.notMore = true
         } else {
-          res.data.data.notMore = false
+          res.data.notMore = false
         }
-        list = list.concat(res.data.data.list)
-        res.data.data.list = list
-        _this.setData(res.data.data)
+        list = list.concat(res.data.list)
+        res.data.list = list
+        _this.setData(res.data)
       }
     })
   },
+
+  // 详情
   viewItem:function(e){
     if(this.data.auditing == 1){
       return

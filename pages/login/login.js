@@ -41,38 +41,7 @@ Page({
       }
     })
   },
-  //获取sessionKey，存储在redis
-  getSessionKey:function(code){
-    return new Promise((resolve) => {
-      app.httpRequest({
-        url: 'wechat/wechatLogin',
-        data: {
-          code:code
-        },
-        needLogin:false,
-        success:function(res){
-          resolve(res.data)
-        }
-      })
-    })
-  },
-  //获取授权用户信息
-  getUserInfo:function(code,res){
-    return new Promise((resolve) => {
-      app.httpRequest({
-        url: 'wechat/getWechatUserInfo',
-        data: {
-          code: code,
-          encryptedData:res.encryptedData,
-          iv:res.iv,
-        },
-        needLogin:false,
-        success:function(res){
-          resolve(res.data)
-        }
-      })
-    })
-  },
+
   //执行登录
   doWechatLogin:function(){
     let _this = this

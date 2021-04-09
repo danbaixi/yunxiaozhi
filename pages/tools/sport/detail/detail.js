@@ -1,5 +1,6 @@
 const app = getApp()
 const util = require('../../../../utils/util')
+const { getSportDetail } = require('../../../api/other')
 Page({
 
     /**
@@ -28,53 +29,12 @@ Page({
     },
 
     /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
-    onReady: function () {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面显示
-     */
-    onShow: function () {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面隐藏
-     */
-    onHide: function () {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面卸载
-     */
-    onUnload: function () {
-
-    },
-
-    /**
-     * 页面相关事件处理函数--监听用户下拉动作
-     */
-    onPullDownRefresh: function () {
-
-    },
-
-    /**
-     * 页面上拉触底事件的处理函数
-     */
-    onReachBottom: function () {
-
-    },
-
-    /**
      * 用户点击右上角分享
      */
     onShareAppMessage: function () {
-
+        return app.share('点击查询你的运动情况')
     },
+
     getDays:function(){
         let len = util.getThisMonthDays(this.data.year,this.data.month)
         let dayStart = util.getFirstDayOfWeek(this.data.year,this.data.month)
@@ -97,33 +57,27 @@ Page({
             lineCount: Math.ceil(days.length / 7)
         })
     },
+    
     getMonth:function(month){
         return month > 9 ? month : '0' + month
     },
+
     //获取数据
     getData:function(){
         let _this = this
         wx.showLoading({
           title: '加载中',
         })
-        app.httpRequest({
-            url: 'sport/getDetailForMonth',
-            data:{
-                year: _this.data.year,
-                month: _this.data.month
-            },
-            success:function(res){
-                wx.hideLoading({
-                  success: (res) => {},
-                })
-                if(res.data.status != 0){
-                    app.msg(res.data.message)
-                    return
-                }
-                _this.setData(res.data.data)
+        getSportDetail({
+            year: _this.data.year,
+            month: _this.data.month
+        }).then((res) => {
+            if(res.status == 0){
+                _this.setData(res.data)
             }
         })
     },
+
     setMonth:function(e){
         let year = this.data.year
         let month = this.data.month

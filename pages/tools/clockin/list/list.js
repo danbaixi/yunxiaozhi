@@ -1,5 +1,6 @@
 const app = getApp()
 const util = require('../../../../utils/util')
+const { getClockInListByMonth } = require('../../../api/other')
 Page({
 
   /**
@@ -29,63 +30,23 @@ Page({
       year:year,
       month:month
     })
-    app.isLogin('/'+this.route).then(function(){
+    app.isLogin(this.route).then(function(){
       _this.getList()
       _this.getDays()
     })
   },
 
   /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    const _this = this
+    return {
+      path: _this.route + '?stu_id=' + app.getUserId(),
+      title: '点击查看我的早起记录'
+    }
   },
-  getDay:function(){
 
-  },
   //获取月打卡记录
   getList: function () {
     let _this = this
@@ -93,21 +54,14 @@ Page({
       title: '正在加载',
       mask: true
     })
-    app.httpRequest({
-      url: 'clockin/getListForMonth',
-      data: {
-        state:_this.data.getState,
-        stu_id: _this.data.stu_id,
-        year: _this.data.year,
-        month: _this.data.month
-      },
-      success: function (res) {
-        wx.hideLoading()
-        if(res.data.status == -1){
-          app.msg(res.data.message)
-          return
-        }
-        _this.setData(res.data.data)
+    getClockInListByMonth({
+      state:_this.data.getState,
+      stu_id: _this.data.stu_id,
+      year: _this.data.year,
+      month: _this.data.month
+    }).then((res) => {
+      if(res.status == 0){
+        _this.setData(res.data)
       }
     })
   },
@@ -130,6 +84,7 @@ Page({
       days:days
     })
   },
+
   setMonth:function(e){
     let year = this.data.year
     let month = this.data.month

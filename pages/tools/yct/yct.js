@@ -1,5 +1,6 @@
-var util = require('../../../utils/util.js');
-var app = getApp();
+const dayjs = require('../../../utils/dayjs.min')
+const app = getApp()
+const { getYctList, delYct } = require('../../api/other')
 Page({
 
   /**
@@ -21,9 +22,7 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-    app.isLogin('/' + that.route).then(function (res) {
-      that.getAccount()
-    })
+    that.getAccount()
     //加载历史查询记录
     var data = wx.getStorageSync('yct-data');
     if (data) {
@@ -42,6 +41,7 @@ Page({
   onShareAppMessage: function () {
     return app.share('点击查询羊城通余额','yct.png',this.route)
   },
+
   /**
  * 生命周期函数--监听页面显示
  */
@@ -55,6 +55,7 @@ Page({
       })
     }
   },
+
   /**
  * 页面相关事件处理函数--监听用户下拉动作
  */
@@ -62,6 +63,8 @@ Page({
     var that = this;
     that.getAccount();
   },
+
+  // 查询
   query:function(e){
     var that = this;
     var num = e.target.dataset.num;
@@ -86,7 +89,7 @@ Page({
           service: "yct.base.card.face.balance",
           sign: "D6B9AC55D193DC18148D0A535875DF00",
           sign_type: "MD5",
-          timestamp: util.formatTime3(new Date()),
+          timestamp: dayjs().unix(),
           user_id: "18611001106",
           version: 1
         },
@@ -116,6 +119,8 @@ Page({
       });
     }
   },
+  
+  // 删除
   delete:function(num){
     var that = this;
     var tip = "确定要删除"+num+"吗？"
@@ -124,32 +129,28 @@ Page({
       content: tip,
       success: function (res) {
         if (res.confirm) {
-          app.httpRequest({
-            url: 'yct/delList',
-            data: {
-              account: num
-            },
-            success: function (res) {
-              if(res.data.status == 0){
-                app.msg("删除成功","success")
-                setTimeout(function(){
-                  wx.removeStorageSync("ycts");
-                  that.onLoad();
-                },1000)
-              }else{
-                app.msg("删除失败")
-              }
-            },
+          delYct({
+            account: num
+          }).then((res) => {
+            if(res.status == 0){
+              app.msg("删除成功","success")
+              setTimeout(function(){
+                wx.removeStorageSync("ycts");
+                that.onLoad();
+              },1000)
+            }
           })
         }
       }
     })
   },
+
   add:function(){
     wx.navigateTo({
       url: 'add/add',
     })
   },
+
   //按下事件开始  
   mytouchstart: function (e) {
     let that = this;
@@ -157,6 +158,7 @@ Page({
       touch_start: e.timeStamp
     })
   },
+
   //按下事件结束  
   mytouchend: function (e) {
     let that = this;
@@ -164,30 +166,17 @@ Page({
       touch_end: e.timeStamp
     })
   },
+
   //获取卡号
   getAccount:function(){
-    var that = this;
-    var ycts = wx.getStorageSync("ycts");
-    if(ycts){
-      that.setData({
-        loading:false,
-        yct: ycts,
-      });
-      return
-    }
-    app.httpRequest({
-      url: 'yct/getlist',
-      success: function (res) {
-        if (res.data.status == 0) {
-          that.setData({
-            loading:false,
-            yct: res.data.data,
-          });
-          wx.setStorageSync("ycts", res.data.data)
-        } else {
-          app.msg(res.data.message)
-        }
-      },
-    });
+    var that = this
+    getYctList().then((res) => {
+      if (res.status == 0) {
+        that.setData({
+          loading: false,
+          yct: res.data,
+        })
+      }
+    })
   }
 })

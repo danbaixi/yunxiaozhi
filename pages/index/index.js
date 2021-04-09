@@ -591,7 +591,9 @@ Page({
     }
     let index = e.currentTarget.dataset.index
     let article = this.data.articleBanners[index]
-    openArticle(article.src)
+    wx.navigateTo({
+      url: '/pages/news/news?src=' + encodeURIComponent(article.src),
+    })
   },
 
   //展示新生专题提示

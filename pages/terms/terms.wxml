@@ -4,7 +4,7 @@
 </cu-custom>
 <view class="container padding-bottom-sm">
   <view class="padding margin bg-white text-theme text-center y-radius">
-    为了让你更好地使用云小智，请认真阅读以下条款
+    为了让您更好地使用云小智，请认真阅读以下条款！
   </view>
   <view class="padding margin bg-white y-radius">
     <rich-text nodes="{{content}}"></rich-text>

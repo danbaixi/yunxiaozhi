@@ -148,6 +148,13 @@ function getBgList(){
   })
 }
 
+// 获取校区设置
+function getAreaInfo(){
+  return R({
+    url: 'user/getareainfo',
+  })
+}
+
 module.exports = {
   getCourseList,
   updateCourse,
@@ -167,5 +174,6 @@ module.exports = {
   addcollectClass,
   delCollectClass,
   getCourseListByStuId,
-  getBgList
+  getBgList,
+  getAreaInfo
 }

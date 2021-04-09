@@ -74,7 +74,7 @@
           <view class="rank-num">{{index+1}}</view>
           <view class="cu-avatar round lg" style="background-image:url({{item.user_img?headImgUrl+item.user_img:item.avatar}});"></view>
           <view class="content">
-            <view class="text-grey">{{item.name}}</view>
+            <view class="text-grey text-cut">{{item.stu_name}}</view>
             <view class="text-gray text-sm flex">
               <text class="text-cut">{{type>=2?item.stu_class:item.stu_department}}</text>
             </view>
