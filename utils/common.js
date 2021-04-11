@@ -45,7 +45,8 @@ async function updateAndGetCourseList(){
       wx.removeStorageSync('tmp_class')
       wx.setStorageSync('course', res.data.course)
       wx.setStorageSync('train', res.data.train_course)
-      wx.setStorageSync('course_update_time', dayjs().unix())
+      // 不记录时间
+      // wx.setStorageSync('course_update_time', dayjs().unix())
       return true
     }else if(res.status == 1005){
       //重新获取一遍
