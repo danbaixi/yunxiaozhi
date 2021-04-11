@@ -11,8 +11,14 @@
   border-radius: 12rpx;
   box-shadow: 0 0 4rpx 0 rgba(255,255,255, .3)
 }
-.score .gpa{
-  margin: 16rpx 0;
+.score-nav{
+  margin: 0 3%;
+  padding: 16rpx 20rpx 0;
+}
+.nav .cu-item{
+  height: 70rpx;
+  line-height: 70rpx;
+  padding: 0 4%;
 }
 .score .gpa>text{
   background: var(--theme);

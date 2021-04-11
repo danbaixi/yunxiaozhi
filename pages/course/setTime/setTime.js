@@ -23,6 +23,7 @@ Page({
       mask: true
     })
     getAreaInfo().then((data) => {
+      wx.hideLoading()
       that.setData({
         area:data.data.area,
         areas:data.data.areas,

@@ -47,7 +47,11 @@ Page({
     let _this = this
     //通过微信接口获取用户基本&加密信息
     if(!wx.getUserProfile){
-      app.msg("微信版本过低，请先升级微信")
+      wx.showToast({
+        title: '微信版本过低，请先升级微信版本',
+        icon: 'none',
+        duration: 4000
+      })
       return
     }
     wx.getUserProfile({
@@ -58,6 +62,14 @@ Page({
           title: '正在登录',
           mask: true
         })
+        if(!wechatInfo.encryptedData || !wechatInfo.iv){
+          wx.showToast({
+            title: '微信版本过低，请先升级微信版本',
+            icon: 'none',
+            duration: 4000
+          })
+          return
+        }
         //获取SessionKey
         loginApi.getOpenidFromCode(_this.data.code).then((res) => {
           if(res.status == 0){

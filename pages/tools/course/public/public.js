@@ -1,5 +1,6 @@
 const { getPublicCourseList } = require('../../../api/course')
-const { backPage } = require('../../../../utils/common')
+const { backPage,getGradeList } = require('../../../../utils/common')
+const { sort } = require('../../../../utils/colors')
 const app = getApp()
 Page({
 
@@ -43,6 +44,19 @@ Page({
             term: res.data.term,
             loading: false
           })
+          if(res.data.term){
+            getGradeList(res.data.term).then((grades) => {
+              let termNum = Object.keys(res.data.term)
+              termNum.sort((x,y) => y - x)
+              for(let i of termNum){
+                res.data.term[i] += `(${grades[i]})`
+              }
+              _this.setData({
+                termNum,
+                term: res.data.term
+              })
+            })
+          }
         }
       })
   },

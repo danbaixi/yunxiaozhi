@@ -24,6 +24,7 @@ Page({
       mask: true
     })
     getClockInPoster().then((res) => {
+      wx.hideLoading()
       if(res.status == 0){
         _this.setData({
           loading: false,

@@ -29,6 +29,7 @@ Page({
       account: e.detail.value['number'],
       remark: null,
     }).then((res) => {
+      wx.hideLoading()
       if (res.status == 0) {
         app.msg("添加成功", "success")
         setTimeout(function () {

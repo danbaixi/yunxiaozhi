@@ -1,4 +1,5 @@
 const { getAllCredit } = require('../../api/score')
+const { getGradeList } = require('../../../utils/common')
 const app = getApp()
 Page({
 
@@ -34,6 +35,15 @@ Page({
       if(res.status == 0){
         res.data.isNull = res.data.credit.length == 0 ? true : false
         _this.setData(res.data)
+        if(res.data.term.length > 0){
+          let terms = res.data.term.map((t) => t.num)
+          getGradeList(terms).then((grades) => {
+            _this.setData({
+              grades
+            })
+          })
+
+        }
       }
     })
   },

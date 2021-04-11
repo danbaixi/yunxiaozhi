@@ -245,8 +245,8 @@ Page({
       mask: true
     })
     getCourseById({id: id}).then((res) => {
+      app.msg(res.message)
       if(res.status != 0){
-        app.msg(res.message)
         wx.navigateBack({})
         return
       }

@@ -13,9 +13,6 @@
     <text>当前班级：{{tmpClass && tmpClass.name ? tmpClass.name: (courseStu && courseStu.classname ? courseStu.classname : '本班')}}</text>
     <text class="text-yellow fr">切换 <text class="icon-right"></text></text>
   </view>
-  <!-- <view class="bg-white padding margin-sm y-radius text-center">
-    <text>暂停学期与班级切换，仅支持查看本学期的个人课表</text>
-  </view> -->
   <view class="fiter padding-sm">
     <button wx:for="{{fiters}}" wx:key="key" bindtap="fiterCourse" data-index="{{index}}"
       class="cu-btn margin-right-sm margin-bottom-sm {{fiter==index?'bg-theme':''}}">

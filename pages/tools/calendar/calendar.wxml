@@ -30,15 +30,15 @@
     <view class='data' style='height:{{30+60*hangshu}}px;top:{{customBar+50}}px'>
       <view class='title'>
         <view class='week'>周次</view>
-        <view class='weekly' wx:for='{{weekly}}' wx:key='{{index}}'>{{item}}</view>
+        <view class='weekly' wx:for='{{weekly}}' wx:key='index'>{{item}}</view>
       </view>
       <view class='day'>
         <view class='zhoushu'>
-          <view class='zhou' wx:for='{{weekData}}' wx:key='{{index}}'>{{item}}</view>
+          <view class='zhou' wx:for='{{weekData}}' wx:key='index'>{{item}}</view>
         </view>
         <view class='riqi'>
           <view class='empyt' style="width:{{14.28*empytGrids}}%"></view> 
-          <view class='ri' wx:for='{{day}}' wx:key='{{index}}'>
+          <view class='ri' wx:for='{{day}}' wx:key='index'>
             <view class="num {{now_year == year && now_month == month && now_day == item.day && index < dayNum ?'thisDay':''}}">
               <view class="text-df {{index<dayNum?'text-black':'text-grey'}}">{{item.day}}</view>
               <view class="text-grey text-xs">{{item.ext}}</view>
@@ -52,7 +52,7 @@
       </view>
     </view>
     <view class='shijianAll' style='margin-top:{{80+60*hangshu}}px'>
-      <view class='shijian'  wx:for="{{shijianOfThisMonth}}" wx:key="{{index}}">
+      <view class='shijian'  wx:for="{{shijianOfThisMonth}}" wx:key="index">
         <view style='border-left: 5px solid {{colors[index]}};float:left;height:38px;margin:5px 0'></view>
           <text class='li'>{{item.start[1]}}月{{item.start[2]<10?'0'+item.start[2]:item.start[2]}}日-{{item.end[1]}}月{{item.end[2]<10?'0'+item.end[2]:item.end[2]}}日　{{item.title}}
           </text>

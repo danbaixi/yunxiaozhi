@@ -2,6 +2,7 @@ const app = getApp();
 const ccFile = require('../../../utils/calendar-converter.js')
 const calendarConverter = new ccFile.CalendarConverter();
 const { getCalendarList } = require('../../api/other')
+const { getGradeList } = require('../../../utils/common')
 Page({
 
   /**
@@ -76,6 +77,15 @@ Page({
         })
         that.getDayData(that.data.now_year, that.data.now_month);
         that.zhouci()
+        let termNum = semester.map(s => s.semester)
+        getGradeList(termNum).then((grades) => {
+          for(let i in semester){
+            semester[i].title += `(${grades[semester[i].semester]})`
+          }
+          that.setData({
+            semester
+          })
+        })
       }
     })
   },

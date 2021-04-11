@@ -12,7 +12,7 @@
   <view class='content' wx:if="{{!isNull}}">
    <block wx:for="{{term}}" wx:key="key" wx:for-item="xueqi" wx:for-index="index">   
     <view class="yxz-cel">
-      <view class='title'>{{xueqi}}</view>
+      <view class='title'>{{xueqi}}({{grade[xueqi]}})</view>
       <view class="tr bg-w">
         <view class="th">课程</view>
         <view class="th">老师</view>
@@ -44,20 +44,4 @@
   </view>
 </view>
 
-  <!--更新考勤输入验证码弹窗-->
-  <view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
-  <view class="modal-dialog" wx:if="{{showModal}}" class="{{input_focus == 1?'modal-dialog input_focus':'modal-dialog'}}">
-    <view class="modal-title">更新考勤记录</view>
-      <view class="modal-content">
-        <view class="modal-input">
-          <input placeholder-class="input-holder" bindfocus="inputFocus" bindblur="inputBlur" bindinput="yzmInput" maxlength="4" class="input">
-          </input>
-          <image bindtap='freshYzm' class="img_yzm" src="{{yzmUrl}}"></image>
-        </view>  
-      </view>
-      <view class="modal-footer">
-        <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
-        <view class="btn-confirm" bindtap="update" data-status="confirm">确定</view>
-      </view>
-  </view>
 </view>

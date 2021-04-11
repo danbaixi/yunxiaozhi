@@ -24,7 +24,7 @@
       </view>
     </view>
       <view class="cu-list menu" style="margin-top:0px" wx:for="{{term}}" wx:key="key" wx:for-item="t">
-        <view class="bg-gray padding-sm text-center" wx:if="{{search==''}}">{{t.name}}</view>
+        <view class="bg-gray padding-sm text-center" wx:if="{{search==''}}">{{t.name}}({{grades[t.num]}})</view>
         <view class="cu-item" wx:if="{{search==''}}">
           <view class="content text-grey text-center">
             <text class="text-grey">总学分绩点：</text><text class="text-theme text-bold">{{t.creditGpaSum}} </text> 

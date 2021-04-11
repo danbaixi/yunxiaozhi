@@ -9,9 +9,9 @@
 </view>
 <list-loading loading="{{loading}}"></list-loading>
 <view class="container bg-white padding-bottom" wx:if="{{!loading&&course.length>0}}">
-  <block wx:for="{{term}}" wx:key="key" wx:for-item="xueqi" wx:for-index="termNum">   
+  <block wx:for="{{termNum}}" wx:key="key" wx:for-item="termNum">   
     <view class="yxz-cel">
-      <view class='title'>{{xueqi}}</view>
+      <view class='title'>{{term[termNum]}}</view>
       <view class="tr bg-w">
         <view class="th b">名称</view>
         <view class="th s">学分</view>
@@ -25,7 +25,7 @@
           <view class="td s">{{item.course_credit?item.course_credit:'未知'}}</view>
           <view class="td s">{{item.course_hours?item.course_hours:'未知'}}</view>
           <view class="td">{{item.course_teacher?item.course_teacher:'未知'}}</view>
-          <view class="td b">{{item.course_address}}</view>
+          <view class="td b">{{item.course_address?item.course_address:'未知'}}</view>
         </view>
       </block>
     </view>  

@@ -46,13 +46,13 @@ Page({
       title: '正在加载...',
       mask: true
     })
-    getRoomList()
-      .then((res) => {
-        _this.setData({
-          rooms: res.data,
-          areas: res.data[1]
-        })
+    getRoomList().then((res) => {
+      wx.hideLoading()
+      _this.setData({
+        rooms: res.data,
+        areas: res.data[1]
       })
+    })
   },
 
   // 获取选择器选项
@@ -124,14 +124,14 @@ Page({
       title: '正在加载',
       mask: true
     })
-    getLevelList({area,build})
-      .then((res) => {
-        if(res.status == 0){
-          _this.setData({
-            levels:res.data
-          })
-        }
-      })
+    getLevelList({area,build}).then((res) => {
+      wx.hideLoading()
+      if(res.status == 0){
+        _this.setData({
+          levels:res.data
+        })
+      }
+    })
   },
 
   //获取宿舍号
@@ -148,8 +148,8 @@ Page({
       area:area,
       build:build,
       level:level
-    })
-    .then((res) => {
+    }).then((res) => {
+      wx.hideLoading()
       _this.setData({
         dormitorys:res.data
       })

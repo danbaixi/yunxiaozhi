@@ -72,6 +72,7 @@ Page({
       data.id = that.data.id
     }
     editExam(data).then((res) => {
+      wx.hideLoading()
       if (res.status == 0) {
         app.msg(`${that.data.action}成功`,"success")
         wx.setStorageSync('my_exams','')
@@ -103,6 +104,7 @@ Page({
           delExam({
             id: that.data.id,
           }).then((res) => {
+            wx.hideLoading()
             if(res.status == 0){
               app.msg("删除成功","success")
               wx.setStorageSync('my_exams', '')

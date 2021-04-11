@@ -1,5 +1,5 @@
 const { getTrainCourseList, updateTrainCourse } = require('../../../api/course')
-const { backPage } = require('../../../../utils/common')
+const { backPage, getGradeList } = require('../../../../utils/common')
 const app = getApp()
 Page({
 
@@ -35,13 +35,12 @@ Page({
       title: '更新中...',
       mask: true
     })
-    updateTrainCourse()
-      .then((res) => {
-        app.msg(res.message)
-        if(res.status == 0){
-          _this.setData(res.data)
-        }
-      })
+    updateTrainCourse().then((res) => {
+      app.msg(res.message)
+      if(res.status == 0){
+        _this.setData(res.data)
+      }
+    })
   },
 
   getList:function(){
@@ -53,6 +52,16 @@ Page({
           term: res.data.term,
           loading: false
         })
+        if(res.data.term){
+          getGradeList(res.data.term).then((grades) => {
+            for(let i in res.data.term){
+              res.data.term[i] += `(${grades[i]})`
+            }
+            _this.setData({
+              term: res.data.term
+            })
+          })
+        }
       }
     })
   },

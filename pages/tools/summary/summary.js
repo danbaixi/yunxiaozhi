@@ -114,6 +114,7 @@ Page({
       loading:true
     })
     initSummary().then((res) => {
+      wx.hideLoading()
       if(res.status == 0){
         _this.setData({
           loading:false
@@ -141,6 +142,7 @@ Page({
     getSummary({
       stu_id:stu_id
     }).then((res) => {
+      wx.hideLoading()
       _this.setData({
         loading: false
       })

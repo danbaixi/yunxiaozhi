@@ -1,5 +1,5 @@
 const { updateTheoryCourse, getTheoryCourseList } = require('../../../api/course')
-const { backPage } = require('../../../../utils/common')
+const { backPage, getGradeList } = require('../../../../utils/common')
 const app = getApp()
 Page({
 
@@ -34,13 +34,13 @@ Page({
     wx.showLoading({
       title: '更新中...',
     })
-    updateTheoryCourse()
-      .then((res) => {
-        if (res.status == 0) {
-          app.msg(res.message)
-          _this.setData(res.data)
-        }
-      })
+    updateTheoryCourse().then((res) => {
+      wx.hideLoading()
+      if (res.status == 0) {
+        app.msg(res.message)
+        _this.setData(res.data)
+      }
+    })
   },
 
   // 获取列表
@@ -53,6 +53,16 @@ Page({
           term: res.data.term,
           loading: false
         })
+        if(res.data.term){
+          getGradeList(res.data.term).then((grades) => {
+            for(let i in res.data.term){
+              res.data.term[i] += `(${grades[i]})`
+            }
+            _this.setData({
+              term: res.data.term
+            })
+          })
+        }
       }
     })
   },

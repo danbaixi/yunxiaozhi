@@ -6,13 +6,7 @@
         <text class="icon-refresh text-black text-bold" bindtap="update"></text>
       </view>
       <view class="content-yxz" style="top:{{StatusBar}}px">
-        <picker wx:if="{{!isNull&&!loading}}" mode="selector" range="{{year}}" bindchange="selectYear" value="{{year_index}}">
-          <view style="line-height:{{Custom.height}}px;height:100%">
-            <text class="text-black text-lg">{{year[year_index]}}</text>
-            <text class="icon-triangledownfill lg text-black"></text>
-          </view>
-        </picker>
-        <text wx:else>成绩</text>
+        <text>成绩</text>
       </view>
     </view>
   </view>
@@ -39,35 +33,43 @@
         </view>
       </view>
     </view>
-    <view class="score" wx:for="{{termNumber}}" wx:key="key" wx:if="{{term[year[year_index]+'-'+item]}}">
-      <view class="text-center">{{term[year[year_index]+'-'+item]}}</view>
-      <view class="gpa text-center">
-        <text bindtap="goRank" data-term="{{year[year_index]+'-'+item}}">平均绩点:{{gpa[year[year_index]+'-'+item]?gpa[year[year_index]+'-'+item]:'暂无'}}<text class="icon-right"></text></text>
+    <view class="score">
+      <view class="score-nav solid-bottom">
+        <scroll-view scroll-x class="bg-white nav text-center">
+          <view class="cu-item flex-sub {{index==tabCur?'text-theme cur':''}}" wx:for="{{grades}}" wx:key="key" bindtap="selectGrade" data-index="{{index}}" style="padding:0 {{160 / year.length}}rpx">
+              {{item}}
+            </view>
+        </scroll-view>
       </view>
-      <view class="cu-list menu sm-border">
-        <view class='cu-item' style="min-height: {{type==0?84:100}}rpx;" wx:for="{{type==0?score:original_score}}" wx:for-item="s" wx:key="key" wx:if="{{s.term == year[year_index]+'-'+item}}" bindtap='itemData' data-index="{{index}}">
-          <view class="content" wx:if="{{type==0}}">
-            <text class="text-black">{{s.name}}</text>
-            <text class="text-grey" wx:if="{{s.mark!=''&&s.mark!=null}}">({{s.mark}})</text>
-          </view>
-          <view class="content" wx:else>
-            <view>
+      <view class="score-item padding-top-sm" wx:for="{{termNumber}}" wx:key="key">
+        <view class="text-center padding-tb-xs">{{term[tabCur+'-'+item]}}</view>
+        <view class="gpa text-center padding-xs">
+          <text bindtap="goRank" data-term="{{tabCur+'-'+item}}">平均绩点:{{gpa[tabCur+'-'+item]?gpa[tabCur+'-'+item]:'暂无'}}<text class="icon-right"></text></text>
+        </view>
+        <view class="cu-list menu sm-border padding-top-sm">
+          <view class='cu-item' style="min-height: {{type==0?84:100}}rpx;" wx:for="{{type==0?score:original_score}}" wx:for-item="s" wx:key="key" wx:if="{{s.term == tabCur+'-'+item}}" bindtap='itemData' data-index="{{index}}">
+            <view class="content" wx:if="{{type==0}}">
               <text class="text-black">{{s.name}}</text>
               <text class="text-grey" wx:if="{{s.mark!=''&&s.mark!=null}}">({{s.mark}})</text>
             </view>
-            <view class="text-sm">
-              <text class="text-grey" wx:if="{{s.performance>0}}">平时:<text class="text-theme">{{s.performance}} </text></text>
-              <text class="text-grey" wx:if="{{s.middle>0}}">期中:<text class="text-theme">{{s.middle}} </text></text>
-              <text class="text-grey" wx:if="{{s.final>0}}">期末:<text class="text-theme">{{s.final}} </text></text>
-              <text class="text-grey" wx:if="{{s.skill>0}}">技能:<text class="text-theme">{{s.skill}}</text></text>
+            <view class="content" wx:else>
+              <view>
+                <text class="text-black">{{s.name}}</text>
+                <text class="text-grey" wx:if="{{s.mark!=''&&s.mark!=null}}">({{s.mark}})</text>
+              </view>
+              <view class="text-sm">
+                <text class="text-grey" wx:if="{{s.performance>0}}">平时:<text class="text-theme">{{s.performance}} </text></text>
+                <text class="text-grey" wx:if="{{s.middle>0}}">期中:<text class="text-theme">{{s.middle}} </text></text>
+                <text class="text-grey" wx:if="{{s.final>0}}">期末:<text class="text-theme">{{s.final}} </text></text>
+                <text class="text-grey" wx:if="{{s.skill>0}}">技能:<text class="text-theme">{{s.skill}}</text></text>
+              </view>
             </view>
-          </view>
-          <view class="action">
-            <text class="text-{{s.score<60?'red':'theme'}} text-lg">{{s.score}}</text>
+            <view class="action">
+              <text class="text-{{s.score<60?'red':'theme'}} text-lg">{{s.score}}</text>
+            </view>
           </view>
         </view>
       </view>
-
     </view>
   </view>
   <view class="null" wx:if="{{isNull}}">

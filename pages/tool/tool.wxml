@@ -52,7 +52,7 @@
     <text class='title'>校园服务</text>
   </view>
   <view class="cu-list grid col-{{gridCol}}">
-    <view class="cu-item" wx:for="{{life}}" wx:key data-url="{{item.url}}" data-needLogin="{{item.needLogin}}" data-appid="{{item.appid}}" data-path="{{item.path}}" bindtap='openTool'>
+    <view class="cu-item" wx:for="{{life}}" wx:key="key" data-url="{{item.url}}" data-needLogin="{{item.needLogin}}" data-appid="{{item.appid}}" data-path="{{item.path}}" bindtap='openTool'>
       <view class="app-icon">
         <image mode="widthFix" src="/pages/assets/imgs/app_icon/{{item.icon}}.png"></image>
         <view class="cu-tag badge" wx:if="{{item.badge!=0}}">
@@ -67,7 +67,7 @@
     <text class='title'>娱乐互动</text>
   </view>
   <view class="cu-list grid col-{{gridCol}}">
-    <view class="cu-item" wx:for="{{play}}" wx:key data-url="{{item.url}}" data-needLogin="{{item.needLogin}}" data-appid="{{item.appid}}" data-path="{{item.path}}" bindtap='openTool'>
+    <view class="cu-item" wx:for="{{play}}" wx:key="key" data-url="{{item.url}}" data-needLogin="{{item.needLogin}}" data-appid="{{item.appid}}" data-path="{{item.path}}" bindtap='openTool'>
       <view class="app-icon">
         <image mode="widthFix" src="/pages/assets/imgs/app_icon/{{item.icon}}.png"></image>
         <view class="cu-tag badge" wx:if="{{item.badge!=0}}">

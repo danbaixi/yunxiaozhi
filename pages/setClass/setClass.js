@@ -103,6 +103,7 @@ Page({
       term:courseTerm.term,
       classname: name
     }).then((res) => {
+      wx.hideLoading()
       if(res.status == 0){
         //清空course_stu
         wx.removeStorageSync('course_stu')
@@ -124,6 +125,7 @@ Page({
           mask: true
         })
         getCourseList().then((res) => {
+          wx.hideLoading()
           if(res.status == 0){
             let term = app.getConfig('nowTerm.term')
             //还原到最新学期

@@ -124,7 +124,6 @@ Page({
     let fileName = ''
     if (!isLocal){
       fileName = src.match(/(wxfile:\/\/)(.+)/)
-      fileName = fileName[2]
     }else{
       fileName = src.match(/(http:\/\/tmp\/)(.+)/)
     }

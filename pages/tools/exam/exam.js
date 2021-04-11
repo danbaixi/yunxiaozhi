@@ -1,6 +1,7 @@
 const app = getApp();
 const dayjs = require('../../../utils/dayjs.min')
 const { getExamClassList, getExamList, getCourseExamList } = require('../../api/other')
+const { getGradeList } = require('../../../utils/common')
 Page({
 
   /**
@@ -127,6 +128,15 @@ Page({
         if(that.data.classList.length == 0){
           that.getClassList()
         }
+        getGradeList(picker_term).then((grades) => {
+          grades = Object.values(grades)
+          for(let i in picker_term){
+            picker_term[i] += `(${grades[i]})`
+          }
+          that.setData({
+            picker_term
+          })
+        })
       }
     })
   },

@@ -74,6 +74,7 @@ Page({
       stu_id: wx.getStorageSync('user_id'),
       classname: ''
     }).then((res) => {
+      wx.hideLoading()
       let terms = res.data
       let termIndex = 0
       terms.forEach((element, index) => {
@@ -108,6 +109,7 @@ Page({
       stu_id: _this.data.stu_id,
       term: _this.data.term,
     }).then((res) => {
+      wx.hideLoading()
       wx.setStorageSync('course_stu', { stu_id: _this.data.stu_id,name:_this.data.name,classname: _this.data.classname })
       wx.setStorageSync('course_term', _this.data.terms[_this.data.termIndex])
       wx.setStorageSync('course', res.data.course)

@@ -72,6 +72,7 @@ Page({
             year: _this.data.year,
             month: _this.data.month
         }).then((res) => {
+            wx.hideLoading()
             if(res.status == 0){
                 _this.setData(res.data)
             }

@@ -138,19 +138,12 @@ Page({
     bgHeight: 180,//背景高度
     bgFix:false,//是否固定背景
     newVersionTip:false,//新版本提示,
-    articleBanners:[],
     showNewsList: true,
     showNewStudentTips: false,
-    articleBanners:[
-      {
-        src:"",
-        img:"https://mmbiz.qpic.cn/mmbiz_jpg/YWKTC18p77JNk4Iyh99tsRmnHLUFunCcic5ZqFABFAtmqfT4DBuAH4sDsbTCugj9o8JJsRoBfbotQLgAllHAfDQ/0?wx_fmt=jpeg"
-      }
-    ]
+    articleBanners:[]
   },
 
   onLoad: function () {
-    this.getArticleBanner()
     //新版本更新提示
     let login_session = wx.getStorageSync('login_session')
     let user_id = wx.getStorageSync('user_id')
@@ -204,10 +197,10 @@ Page({
     that.getNowWeek();//获取第几周
     that.getWeekday();//获取星期几
     that.getCourse(that.data.now_week);//获取课表
-
+    that.getArticleBanner()
     //判断是否为本班课表
     var tmpClass = wx.getStorageSync('tmp_class')
-    this.setData({
+    that.setData({
       tmpClass: tmpClass
     })
   },
@@ -567,6 +560,9 @@ Page({
 
   //获取文章轮播
   getArticleBanner:function(){
+    if(this.data.articleBanners.length > 0){
+      return
+    }
     const banners = getConfig('banners')
     if(!banners){
       return

@@ -39,6 +39,7 @@ Page({
     getContentByKey({
       key: 'user_terms'
     }).then((res) => {
+      wx.hideLoading()
       if(res.status === 0){
         _this.setData(res.data)
         return

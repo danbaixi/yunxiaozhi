@@ -1,6 +1,6 @@
 const { getScoreList, updateScore } = require('../../api/score') 
 const { getNotice } = require('../../api/common')
-const { canUpdate, setUpdateTime, backPage } = require('../../../utils/common')
+const { canUpdate, setUpdateTime, backPage, getGradeList } = require('../../../utils/common')
 const dayjs = require('../../../utils/dayjs.min')
 const app = getApp()
 Page({
@@ -97,6 +97,7 @@ Page({
         year: scores.year,
         original_score: scores.originalScore
       })
+      that.getGradeList()
       return
     }
     // 读数据库
@@ -106,14 +107,15 @@ Page({
       })
       if(res.status == 0){
         wx.setStorageSync('scores', res.data.data);
-          that.setData({
-            isNull: false,
-            gpa: res.data.gpa,
-            score: res.data.score,
-            term: res.data.term,
-            year: res.data.year,
-            original_score: res.data.originalScore
-          })
+        that.setData({
+          isNull: false,
+          gpa: res.data.gpa,
+          score: res.data.score,
+          term: res.data.term,
+          year: res.data.year,
+          original_score: res.data.originalScore
+        })
+        that.getGradeList()
       }else if(res.status == 1001){
         that.setData({
           isNull:true
@@ -161,26 +163,26 @@ Page({
       mask: true
     })
     const time = dayjs().unix()
-    updateScore({time})
-      .then((res) => {
-        if (res.status == 0) {
-          app.msg(res.message,'success') 
-          wx.setStorageSync('scores', '')
-          that.getScore(true)
-          setUpdateTime('score',time)
+    updateScore({time}).then((res) => {
+      wx.hideLoading()
+      if (res.status == 0) {
+        app.msg(res.message,'success') 
+        wx.setStorageSync('scores', '')
+        that.getScore(true)
+        setUpdateTime('score',time)
+        that.setData({
+          update_time: dayjs().format('YYYY-MM-DD HH:mm:ss')
+        })
+      } else {
+        if (res.status == 1002) {
+          that.freshYzm()
+        } else if (res.status == 1006) {
           that.setData({
-            update_time: dayjs().format('YYYY-MM-DD HH:mm:ss')
+            showModal: false
           })
-        } else {
-          if (res.status == 1002) {
-            that.freshYzm()
-          } else if (res.status == 1006) {
-            that.setData({
-              showModal: false
-            })
-          }
         }
-      })
+      }
+    })
   },
   backPageBtn:function(){
     backPage(this.data.from)
@@ -233,6 +235,25 @@ Page({
   viewAllScore:function(){
     wx.navigateTo({
       url: '/pages/tools/credit/credit',
+    })
+  },
+
+  // 获取年级列表
+  getGradeList: function(){
+    getGradeList(this.data.year).then((list) => {
+      let tabCur = Object.keys(list)[0]
+      this.setData({
+        grades: list,
+        tabCur
+      })
+    })
+
+  },
+  
+  // 选择年级
+  selectGrade: function(e){
+    this.setData({
+      tabCur: e.currentTarget.dataset.index
     })
   }
 })

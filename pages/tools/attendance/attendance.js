@@ -1,5 +1,5 @@
 const app = getApp()
-const { backPage, canUpdate,setUpdateTime } = require('../../../utils/common')
+const { backPage, canUpdate,setUpdateTime,getGradeList } = require('../../../utils/common')
 const { getAttendanceList, updateAttendanceList } = require('../../api/other')
 Page({
 
@@ -47,53 +47,6 @@ Page({
   },
 
   /**
-* 弹窗
-*/
-  showDialogBtn: function () {
-    var that = this;
-    that.setData({
-      showModal: true
-    });
-    /**获取验证码 */
-    wx.request({
-      url: app.globalData.domain + 'login/getLoginInitData',
-      success: function (res) {
-        that.setData({
-          cookie: res.data.data['cookie'],
-          __VIEWSTATE: res.data.data['__VIEWSTATE'],
-        })
-        that.freshYzm();
-      }
-    });
-  },
-  /**
-   * 弹出框蒙层截断touchmove事件
-   */
-  preventTouchMove: function () {
-  },
-  /**
-   * 隐藏模态对话框
-   */
-  hideModal: function () {
-    this.setData({
-      showModal: false
-    });
-    wx.hideNavigationBarLoading();
-    wx.stopPullDownRefresh();
-  },
-  /**
-   * 对话框取消按钮点击事件
-   */
-  onCancel: function () {
-    this.hideModal();
-  },
-  /** 获取验证码 */
-  yzmInput: function (e) {
-    this.setData({
-      yzm: e.detail.value,
-    })
-  },
-  /**
    * 对话框确认按钮点击事件
    */
   update: function (e) {
@@ -112,6 +65,7 @@ Page({
       mask: true
     })
     updateAttendanceList().then((res) => {
+      wx.hideLoading()
       if (res.status == 0) {
         app.msg('更新了' + res.data + '条记录')
         setUpdateTime('attendance')
@@ -121,25 +75,7 @@ Page({
       }
     })
   },
-  /** 刷新验证码 */
-  freshYzm: function () {
-    var num = Math.ceil(Math.random() * 1000000);
-    this.setData({
-      yzmUrl: app.globalData.domain + 'login/getValidateImg?cookie=' + this.data.cookie + '&rand=' + num,
-    })
-  },
-  /**输入验证码时，改变模态框高度 */
-  inputFocus: function () {
-    this.setData({
-      input_focus: 1
-    })
-  },
-  /** 不输入验证码时，恢复 */
-  inputBlur: function () {
-    this.setData({
-      input_focus: 0
-    })
-  },
+
   backPageBtn: function () {
     backPage(this.data.from)
   },
@@ -150,8 +86,16 @@ Page({
     getAttendanceList().then((res) => {
       if (res.status == 0) {
         res.data.loading = false
-        res.data.isNull = res.data.term.length == 0
+        res.data.isNull = res.data.attendance.length == 0
         that.setData(res.data)
+        if(res.data.attendance.length > 0){
+          getGradeList(Object.values(res.data.term)).then((list) => {
+            console.log(list)
+            that.setData({
+              grade: list
+            })
+          })
+        }
       }
     })
   }

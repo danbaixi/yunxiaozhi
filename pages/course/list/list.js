@@ -3,6 +3,7 @@ const colors = require('../../../utils/colors')
 const course = require('../../../utils/course')
 const util = require('../../../utils/util')
 const { getTermByClassname, getCourseByClassname, getCourseList } = require('../../api/course')
+const { getGradeList } = require('../../../utils/common')
 Page({
 
   /**
@@ -131,31 +132,26 @@ Page({
           return true;
         }
         return false
-        break
       case 2:
         if(course.course_category && course.course_category.indexOf('任选课') != -1){
           return true;
         }
         return false
-        break
       case 3:
         if(course.course_method == '统考'){
           return true
         }
         return false
-        break
       case 4:
         if(course.course_method != '统考'){
           return true
         }
         return false
-        break
       case 5:
         if(course.course_type == 2){
           return true
         }  
         return false
-        break
     }
   },
 
@@ -247,10 +243,13 @@ Page({
       stu_id: stu_id,
       classname: classname
     }).then((result) => {
+      wx.hideLoading()
       let terms = result.data
       let termIndex = 0
       if(_this.data.courseTerm){
+        let termNames = []
         terms.forEach((element,index) => {
+          termNames.push(element.name)
           if(element.term == _this.data.courseTerm.term){
             termIndex = index
           } 
@@ -258,6 +257,15 @@ Page({
         _this.setData({
           terms: result.data,
           termIndex: termIndex
+        })
+        getGradeList(termNames).then((grades) => {
+          grades = Object.values(grades)
+          for(let i in terms){
+            terms[i].name += `(${grades[i]})`
+          }
+          _this.setData({
+            terms: terms
+          })
         })
       }
     })
@@ -287,6 +295,7 @@ Page({
       })
     }
     request.then((res) => {
+      wx.hideLoading()
       wx.setStorageSync('course', res.data.course)
       wx.setStorageSync('course_term', term)
       let courseTerm = course.getNowCourseTerm()

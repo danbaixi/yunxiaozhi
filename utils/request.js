@@ -77,7 +77,6 @@ function R(datas){
         'session-token': session
       },
       success:function(res){
-        wx.hideLoading()
         if(res.data.status == 0){
           return resolve(res.data)
         }

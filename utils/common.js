@@ -2,6 +2,7 @@
  * 公共函数
  */
 const { updateCourse, getCourseList } = require('../pages/api/course')
+const { getUserData } = require('../pages/api/user')
 const dayjs = require('../utils/dayjs.min')
 
 //是否为Tab页路径
@@ -236,6 +237,53 @@ function noticeClickEvent(notice){
   }
 }
 
+// 获取年级
+function getSchoolDay(){
+  let info = wx.getStorageSync('user_info')
+  if(!info){
+    return false
+  }
+  if(info['stu_schoolday']){
+    return info['stu_schoolday']
+  }
+  getUserData().then((res) => {
+    info = Object.assign(info,res.data)
+    wx.setStorageSync('user_info', info)
+    return info['stu_schoolday']
+  })
+}
+
+// 根据学期编号获取年级
+function getGradeFromTerm(schoolDay,term){
+  //这里还需要根据学制来考虑是四年还是五年，暂时考虑四年
+  let nums = ['一','二','三','四']
+  let s = (term.toString()).split('-')[0]
+  if(s == term){
+    s = parseInt(s/10)
+  }
+  let num = s - schoolDay
+  if(num < 0 || num > nums.length - 1){
+    return '未知'
+  }
+  return `大${nums[num]}`
+}
+
+// 获取年级列表
+async function getGradeList(terms){
+  let list = {}
+  let schoolDay = await getSchoolDay()
+  if(Array.isArray(terms)){
+    for(let y of terms){
+      list[y] = getGradeFromTerm(schoolDay,y)
+    }
+  }else{
+    for(let y in terms){
+      list[y] = getGradeFromTerm(schoolDay,y)
+    }
+  }
+  return list
+}
+
 module.exports = {
   loginRedirect,
   updateAndGetCourseList,
@@ -248,5 +296,8 @@ module.exports = {
   acceptTerms,
   checkCourseInWeek,
   getNotice,
-  noticeClickEvent
+  noticeClickEvent,
+  getSchoolDay,
+  getGradeFromTerm,
+  getGradeList,
 }

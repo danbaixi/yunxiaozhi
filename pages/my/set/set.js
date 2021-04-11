@@ -106,14 +106,15 @@ Page({
           if(res.confirm){
             app.msg('正在解绑','loading')
             untieWechat().then((res) => {
-                if(res.status != 0){
-                  app.msg(res.message)
-                  return
-                }
-                exitSaveData()
-                wx.navigateTo({
-                  url: '/pages/login/login',
-                })
+              wx.hideLoading()
+              if(res.status != 0){
+                app.msg(res.message)
+                return
+              }
+              exitSaveData()
+              wx.navigateTo({
+                url: '/pages/login/login',
+              })
             })
           }
         }

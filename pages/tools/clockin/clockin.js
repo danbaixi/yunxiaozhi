@@ -80,7 +80,8 @@ Page({
   clockIn:function(){
     let _this = this
     clockIn().then((res) => {
-      if(res.data.status == -1){
+      app.msg(res.message)
+      if(res.status == 0){
         _this.clockInSuccess()
         _this.setData(res.data)
         _this.getData()

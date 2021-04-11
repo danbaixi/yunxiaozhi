@@ -72,6 +72,10 @@ Page({
     }
   },
 
+  onUnload: function(){
+    this.stopMusic()
+  },
+
   /**
    * 用户点击右上角分享
    */
@@ -209,6 +213,13 @@ Page({
         music: false
       })
     }
+  },
+
+  stopMusic:function(){
+    this.audio.stop();
+    this.setData({
+      music: false
+    })
   },
 
   login:function(){
