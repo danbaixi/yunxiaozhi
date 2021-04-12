@@ -36,18 +36,18 @@
     <view class="score">
       <view class="score-nav solid-bottom">
         <scroll-view scroll-x class="bg-white nav text-center">
-          <view class="cu-item flex-sub {{index==tabCur?'text-theme cur':''}}" wx:for="{{grades}}" wx:key="key" bindtap="selectGrade" data-index="{{index}}" style="padding:0 {{160 / year.length}}rpx">
+          <view class="cu-item flex-sub {{index==tabCur?'text-theme cur':''}}" wx:for="{{grades}}" wx:key="key" bindtap="selectGrade" data-index="{{index}}" style="padding:0 {{year.length > 1 ? (160 / year.length) : 80}}rpx">
               {{item}}
             </view>
         </scroll-view>
       </view>
-      <view class="score-item padding-top-sm" wx:for="{{termNumber}}" wx:key="key">
-        <view class="text-center padding-tb-xs">{{term[tabCur+'-'+item]}}</view>
+      <view class="score-item padding-top-sm" wx:for="{{termNums}}" wx:for-item="termNum" wx:key="key" wx:if="{{termNum.year == tabCur}}">
+        <view class="text-center padding-tb-xs">{{term[termNum.term]}}</view>
         <view class="gpa text-center padding-xs">
-          <text bindtap="goRank" data-term="{{tabCur+'-'+item}}">平均绩点:{{gpa[tabCur+'-'+item]?gpa[tabCur+'-'+item]:'暂无'}}<text class="icon-right"></text></text>
+          <text bindtap="goRank" data-term="{{termNum.term}}">平均绩点:{{gpa[termNum.term]?gpa[termNum.term]:'暂无'}}<text class="icon-right"></text></text>
         </view>
         <view class="cu-list menu sm-border padding-top-sm">
-          <view class='cu-item' style="min-height: {{type==0?84:100}}rpx;" wx:for="{{type==0?score:original_score}}" wx:for-item="s" wx:key="key" wx:if="{{s.term == tabCur+'-'+item}}" bindtap='itemData' data-index="{{index}}">
+          <view class='cu-item' style="min-height: {{type==0?84:100}}rpx;" wx:for="{{type==0?score:original_score}}" wx:for-item="s" wx:key="key" wx:if="{{s.term == termNum.term}}" bindtap='itemData' data-index="{{index}}">
             <view class="content" wx:if="{{type==0}}">
               <text class="text-black">{{s.name}}</text>
               <text class="text-grey" wx:if="{{s.mark!=''&&s.mark!=null}}">({{s.mark}})</text>

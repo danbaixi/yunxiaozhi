@@ -60,8 +60,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that = this;
-    that.isStop()
+    var _this = this;
+    _this.isStop()
     //设置默认参数
     if (wx.getStorageSync('Kopacity') == '') {
       wx.setStorageSync('Kopacity', 90)
@@ -75,7 +75,7 @@ Page({
     //每周起始日
     var startDay = wx.getStorageSync('start_day') || 1
     var winHeight = wx.getSystemInfoSync().windowHeight;
-    that.setData({
+    _this.setData({
       list_is_display: false,
       Kopacity: wx.getStorageSync('Kopacity'),
       Copacity: wx.getStorageSync('Copacity'),
@@ -84,27 +84,22 @@ Page({
       onlyThisWeek: wx.getStorageSync('onlyThisWeek'),
       startDay:startDay,
       colorArrays: colors
-    });
-    //课表学期
-    that.getCourseTerm()
-    var week = that.getNowWeek();
-    var day = that.getDayOfWeek(week,startDay)
-    var zhou_num = that.data.zhou_num;
-    var n = zhou_num[week - 1].search(/(本周)/i);
-    if (n == -1) {
-      zhou_num[week - 1] = zhou_num[week - 1] + "(本周)";
-    }
+    })
 
-    var month = that.getMonth((week - 1) * 7);
+    _this.getCourseTerm()
+    var week = _this.getNowWeek();
+    var startDay = wx.getStorageSync('start_day')
+    var day = _this.getDayOfWeek(week,startDay)
+    var month = _this.getMonth((week - 1) * 7);
 
-    that.setData({
+    _this.setData({
+      now_day: day,
       now_week: week,
       nowWeek: week,
-      zhou_num: zhou_num,
       now_month: month,
       now_month_number: month / 1, // 当前月份数字类型，用于数字运算
-      now_day: day
     })
+
     // ad
     var time = (new Date).getTime()
     var score_ad = wx.getStorageSync('score_ad_display');
@@ -122,77 +117,50 @@ Page({
       }
     }
     //获取公告
-    that.getCourseNotice()
+    _this.getCourseNotice()
   },
 
   onShow:function(){
     let _this = this
+    // 背景
+    _this.setData({
+      imageUrl: wx.getStorageSync('bg_img')
+    })
+    // 判断班级是否变化
     var tmpClass = wx.getStorageSync('tmp_class');//临时设置班级
+
+    // 以 上个周数来获取数据
+    var week = _this.data.now_week
+    // 如果不是当前学期的课表，就变回当前周
+    if(_this.data.courseTerm.term != _this.data.thisTerm){
+      _this.getCourseTerm()
+      week = _this.getNowWeek()
+    }
+    
     //课表学期
     _this.getCourseTerm()
-    var week = _this.getNowWeek();
-    var startDay = wx.getStorageSync('start_day')
-    var day = _this.getDayOfWeek(week,startDay)
-    var month = _this.getMonth((week - 1) * 7);
+    // 更新日期
+    _this.selectWeek(week)
+
     //获取当前日期
     let {todayMonth, todayDay} =  _this.getTodayDate()
+
     //获取课表
-    _this.getCourse(_this.data.now_week, true, false);
-    //获取设置，隐藏上课时间
-    _this.getConfigData()
+    _this.getCourse(week, true, false);
     _this.setData({
-      now_day: day,
-      now_week: week,
-      nowWeek: week,
-      now_month: month,
-      now_month_number: month / 1, // 当前月份数字类型，用于数字运算
       todayMonth,
       todayDay,
-      imageUrl: wx.getStorageSync('bg_img'),
-      list_is_display: false,
-      tmpClass: tmpClass,
-      showMoreCourse:false
+      tmpClass,
+      showMoreCourse:false,
+      list_is_display: false
     })
-    //判断背景图片是否存在
-    let bg_img = wx.getStorageSync('bg_img')
-    if (bg_img){
-      let bg_imgs = wx.getStorageSync('bg_imgs')
-      const fs = wx.getFileSystemManager()
-      fs.access({
-        path: bg_img,
-        complete: function (res) {
-          if (res.errMsg != 'access:ok') {
-            //图片被删了，重新下载
-            let bg_type = wx.getStorageSync('bg_type')
-            let url
-            if(!bg_type){
-              app.msg("课表背景图片不存在，请重新设置")
-              return
-            }else if (bg_type == 'diy') {
-              url = _this.data.courseFileUrl + wx.getStorageSync('upload_course_bg')
-            } else {
-              url = _this.data.fileUrl + '/course_bg/' + bg_type + '.jpg'
-            }
-            if(!url){
-              return
-            }
-            _this.download(url).then((url) => {
-              if(bg_type != 'diy'){
-                bg_imgs[bg_type] = url
-                wx.setStorageSync('bg_imgs', bg_imgs)
-              }
-              wx.setStorageSync('bg_img', url)
-              _this.setData({
-                imageUrl: url
-              })
-            }).catch((error) => {
-              app.msg('课表背景文件已被删除，请重新设置')
-            })
-            return
-          }
-        }
-      })
-    }
+
+    //获取设置，隐藏上课时间
+    _this.getConfigData()
+    
+    // 判断背景图片是否存在
+    _this.bgIsExist()
+    
   },
   /**
    * 用户点击右上角分享
@@ -528,8 +496,8 @@ Page({
     let that = this
     getCourseList().then((res) => {
       if(res.status == 0){
-        wx.setStorageSync('course', res.data.data.course);
-        wx.setStorageSync('train', res.data.data.train_course);
+        wx.setStorageSync('course', res.data.course);
+        wx.setStorageSync('train', res.data.train_course);
         that.onShow()
       }
     })
@@ -544,6 +512,12 @@ Page({
         setUpdateTime('course')
         //切换为当前学期
         courseFn.setCourseToNowTerm()
+        //切换成当周
+        let week = that.getNowWeek()
+        that.selectWeek(week)
+        that.setData({
+          now_week: week
+        })
         app.msg("更新成功", 'success')
         return
       }
@@ -1076,5 +1050,49 @@ Page({
     this.setData({
       acceptTerms: true
     })
+  },
+  
+  //判断背景图片是否存在
+  bgIsExist: function(){
+    let _this = this
+    let bg_img = wx.getStorageSync('bg_img')
+    if (bg_img){
+      let bg_imgs = wx.getStorageSync('bg_imgs')
+      const fs = wx.getFileSystemManager()
+      fs.access({
+        path: bg_img,
+        complete: function (res) {
+          if (res.errMsg != 'access:ok') {
+            //图片被删了，重新下载
+            let bg_type = wx.getStorageSync('bg_type')
+            let url
+            if(!bg_type){
+              app.msg("课表背景图片不存在，请重新设置")
+              return
+            }else if (bg_type == 'diy') {
+              url = _this.data.courseFileUrl + wx.getStorageSync('upload_course_bg')
+            } else {
+              url = _this.data.fileUrl + '/course_bg/' + bg_type + '.jpg'
+            }
+            if(!url){
+              return
+            }
+            _this.download(url).then((url) => {
+              if(bg_type != 'diy'){
+                bg_imgs[bg_type] = url
+                wx.setStorageSync('bg_imgs', bg_imgs)
+              }
+              wx.setStorageSync('bg_img', url)
+              _this.setData({
+                imageUrl: url
+              })
+            }).catch((error) => {
+              app.msg('课表背景文件已被删除，请重新设置')
+            })
+            return
+          }
+        }
+      })
+    }
   }
 })

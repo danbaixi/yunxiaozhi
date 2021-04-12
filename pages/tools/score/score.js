@@ -240,11 +240,32 @@ Page({
 
   // 获取年级列表
   getGradeList: function(){
+    // 学期倒序
+    let termNum = Object.keys(this.data.term)
+    termNum.sort((x,y) => {
+      x = x.split('-')
+      y = y.split('-')
+      return y[y.length-1] - x[x.length-1]
+    })
     getGradeList(this.data.year).then((list) => {
+      // 学期倒序
+      let termNums = Object.keys(this.data.term)
+      termNums.sort((x,y) => {
+        x = x.split('-').join('')
+        y = y.split('-').join('')
+        return y - x
+      })
+      for(let t in termNums){
+        termNums[t] = {
+          year: termNums[t].slice(0,9),
+          term: termNums[t]
+        }
+      }
       let tabCur = Object.keys(list)[0]
       this.setData({
         grades: list,
-        tabCur
+        tabCur,
+        termNums
       })
     })
 

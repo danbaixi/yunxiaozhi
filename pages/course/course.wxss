@@ -49,10 +49,11 @@ page{
 .settings{
   position: absolute;
   justify-content: center;
-  left: 22rpx;
+  left: 0;
   font-size: 48rpx!important;
   /* line-height: 32px; */
   transition: 0.5s;
+  padding: 0 30rpx;
 }
 .course-labels{
   position: fixed;
