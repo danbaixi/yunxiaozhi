@@ -1,4 +1,5 @@
 const app = getApp()
+const { getScoreFailRank } = require('../../../api/score')
 Page({
 
   /**
@@ -37,9 +38,7 @@ Page({
     self.setData({
       loading: true
     })
-    app.promiseRequest({
-      url: 'score/getScoreFailRank'
-    }).then((res) => {
+    getScoreFailRank().then((res) => {
       self.setData({
         loading: false
       })
@@ -66,8 +65,6 @@ Page({
         return
       }
       app.msg(res.data.message)
-    }).catch((msg) => {
-      app.msg(msg)
     })
   },
 

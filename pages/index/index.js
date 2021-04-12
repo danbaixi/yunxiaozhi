@@ -1,7 +1,8 @@
 const app = getApp()
 const { likeSoul } = require('../api/soul')
-const { getExamList } = require('../api/other')
-const { checkCourseInWeek,getConfig, openArticle } = require('../../utils/common')
+const { getExamList, getIsHideSoul } = require('../api/other')
+const { getCourseList } = require('../api/course')
+const { checkCourseInWeek,getConfig } = require('../../utils/common')
 const dayjs = require('../../utils/dayjs.min')
 Page({
   data: {
@@ -177,17 +178,12 @@ Page({
     //是否隐藏毒鸡汤
     var hide_soul = wx.getStorageSync('hide_soul')
     if (session != "" && user_id && !hide_soul) {
-      app.promiseRequest({
-        url: 'user/isHideSoul'
-      }).then((data) => {
+      getIsHideSoul().then((res) => {
         that.setData({
-          hideSoul: data.data
+          hideSoul: res.data
         })
-        wx.setStorageSync('hide_soul', data.data)
-      }).catch((message) => {
-        app.msg(message)
+        wx.setStorageSync('hide_soul', res.data)
       })
-
     } else {
       that.setData({
         hideSoul: hide_soul
@@ -534,19 +530,16 @@ Page({
           title: '正在切换',
           mask: true
         })
-        app.promiseRequest({
-          url: 'course/getList'
-        }).then((data) => {
+        getCourseList().then((res) => {
           wx.hideLoading()
           app.msg('切换成功', 'success')
           _this.setData({
             tmpClass:''
           })
           wx.removeStorageSync('tmp_class')
-          wx.setStorageSync('course', data.data.course);
-          wx.setStorageSync('train', data.data.train_course);
-        }).catch((error) => {
-          app.msg(error.message)
+          wx.setStorageSync('course', res.data.course)
+          wx.setStorageSync('train', res.data.train_course)
+          _this.getCourse(_this.data.now_week);//获取课
         })
       }
     })

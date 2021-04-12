@@ -57,6 +57,13 @@ function getScoreAnalysis(){
   })
 }
 
+// 获取挂科率榜
+function getScoreFailRank(){
+  return R({
+    url: 'score/getScoreFailRank'
+  })
+}
+
 module.exports = {
   getScoreList,
   updateScore,
@@ -64,5 +71,6 @@ module.exports = {
   getTermRank,
   getAllRank,
   getCourseScoreData,
-  getScoreAnalysis
+  getScoreAnalysis,
+  getScoreFailRank
 }

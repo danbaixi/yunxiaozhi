@@ -373,6 +373,13 @@ function switchSummaryShareStatus(data){
   })
 }
 
+// 是否隐藏毒鸡汤
+function getIsHideSoul(){
+  return R({
+    url: 'user/isHideSoul'
+  })
+}
+
 module.exports = {
   getAttendanceList,
   updateAttendanceList,
@@ -418,5 +425,6 @@ module.exports = {
   getSummary,
   getSummaryPoster,
   addSummaryBlessing,
-  switchSummaryShareStatus
+  switchSummaryShareStatus,
+  getIsHideSoul
 }

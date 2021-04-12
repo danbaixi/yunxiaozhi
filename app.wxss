@@ -59,7 +59,8 @@ checkbox.theme[checked] .wx-checkbox-input, radio.theme[checked] .wx-radio-input
   width: 100%;
   border-radius: 8rpx;
   min-height: 60rpx;
-  background: #f7cca2;
+  background: var(--yellow);
+  text-align: center;
   color: #fff;
   padding: 0 12rpx;
   line-height: 60rpx;

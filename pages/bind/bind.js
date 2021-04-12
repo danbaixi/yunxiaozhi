@@ -74,12 +74,6 @@ Page({
     }
   },
 
-  getCourseList:function(){
-    return app.promiseRequest({
-      url: 'course/getList'
-    })
-  },
-
   /**
    * 绑定教务系统
    */
