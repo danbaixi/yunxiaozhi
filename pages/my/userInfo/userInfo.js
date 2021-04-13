@@ -1,6 +1,6 @@
-const util = require('../../../utils/util.js')
 const { getUserData, setNickname, setAvatar,updateUserInfo } = require('../../api/user')
 const app = getApp()
+const dayjs = require('../../../utils/dayjs.min')
 Page({
 
   /**
@@ -45,7 +45,7 @@ Page({
       var stu_class = data.stu_class.split('（')[0];
       //时间戳转换
       var date = new Date(parseInt(data.user_regTime) * 1000);
-      var regTime = util.formatTime2(date);
+      var regTime = dayjs(date).format('YYYY-MM-DD')
       var xueji = [
         { 'title': '姓名', 'data': data.name },
         { 'title': '年级', 'data': data.stu_schoolday },

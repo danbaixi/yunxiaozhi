@@ -1,5 +1,6 @@
-//获取应用实例
-var app = getApp();
+const app = getApp()
+const { isDebug } = require('../../../utils/config')
+
 Page({
   data: {
     display:false,
@@ -208,9 +209,9 @@ Page({
     this.loadData()
   },
   getUrl:function(){
-    let url = 'http://danbaixi1.utools.club/yxz_v1/resource/guide/'
-    if (!app.globalData.isDebug){
-      url = 'https://www.yunxiaozhi.cn/v1/resource/guide/'
+    let url = 'https://www.yunxiaozhi.cn/v1/resource/guide/'
+    if (isDebug){
+      url = 'https://danbaixi.cn.utools.club/yxz_v1/resource/guide/'
     }
     if(this.data.areaId == 0){
       return false;

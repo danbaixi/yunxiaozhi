@@ -239,7 +239,7 @@ function noticeClickEvent(notice){
 }
 
 // 获取年级
-function getSchoolDay(){
+async function getSchoolDay(){
   let info = wx.getStorageSync('user_info')
   if(!info){
     return false
@@ -247,11 +247,10 @@ function getSchoolDay(){
   if(info['stu_schoolday']){
     return info['stu_schoolday']
   }
-  getUserData().then((res) => {
-    info = Object.assign(info,res.data)
-    wx.setStorageSync('user_info', info)
-    return info['stu_schoolday']
-  })
+  let res = await getUserData()
+  info = Object.assign(info,res.data)
+  wx.setStorageSync('user_info', info)
+  return info['stu_schoolday']
 }
 
 // 根据学期编号获取年级
