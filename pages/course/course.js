@@ -131,10 +131,15 @@ Page({
 
     // 以 上个周数来获取数据
     var week = _this.data.now_week
+    var zhou_num = _this.data.zhou_num
     // 如果不是当前学期的课表，就变回当前周
     if(_this.data.courseTerm.term != _this.data.thisTerm){
       _this.getCourseTerm()
       week = _this.getNowWeek()
+    }
+    var n = zhou_num[week - 1].search(/(本周)/i);
+    if (n == -1) {
+      zhou_num[week - 1] = zhou_num[week - 1] + "(本周)";
     }
     
     //课表学期
@@ -148,11 +153,14 @@ Page({
     //获取课表
     _this.getCourse(week, true, false);
     _this.setData({
+      now_week: week,
+      nowWeek: week,
       todayMonth,
       todayDay,
       tmpClass,
       showMoreCourse:false,
-      list_is_display: false
+      list_is_display: false,
+      zhou_num
     })
 
     //获取设置，隐藏上课时间
@@ -208,7 +216,7 @@ Page({
     var week = Math.floor(days / 7) + 1;
     var result = week
     if(week>20 || week <= 0){
-      result = 1;
+      result = this.data.now_week;
     }
     return result
   },

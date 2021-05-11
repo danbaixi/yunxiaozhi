@@ -1,5 +1,5 @@
 const app = getApp();
-const util = require('../../../../utils/util.js')
+const dayjs = require('../../../../utils/dayjs.min')
 const { editExam, delExam } = require('../../../api/other')
 Page({
 
@@ -27,7 +27,7 @@ Page({
       })
     }else{
       this.setData({
-        date: util.formatTime2(new Date())
+        date: dayjs().format('YYYY-MM-DD')
       })
     }
   },

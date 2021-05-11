@@ -556,7 +556,7 @@ Page({
     if(this.data.articleBanners.length > 0){
       return
     }
-    const banners = getConfig('banners')
+    let banners = getConfig('banners')
     if(!banners){
       return
     }
