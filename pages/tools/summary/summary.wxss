@@ -33,6 +33,7 @@ page{
   top: 0;
   opacity: 0;
   transition: opacity 2s ease-in-out;
+  font-family: 'diy';
 }
 .summary-content.show{
   z-index: 1;
@@ -54,8 +55,8 @@ page{
 .section{
   position: relative;
 	height: 100%;
-  font-size: 36rpx;
-  letter-spacing: 2px;
+  font-size: 40rpx;
+  letter-spacing: 2rpx;
 }
 .scroll-fullpage{
 	height: 100%;

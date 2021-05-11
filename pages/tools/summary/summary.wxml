@@ -217,10 +217,9 @@
           <view class="padding-xs {{animationPlay?'animation-fade':''}}"><text class="h">{{summary.data.regTime}}</text></view>
           <view class="padding-xs {{animationPlay?'animation-fade':''}}">是{{stuName}}和<text class="h">云小智</text>第一次相遇</view>
           <view wx:if="{{myself}}">
-            <view class="padding-xs {{animationPlay?'animation-fade':''}}">与你相遇，好幸运</view>
+            <view class="padding-xs {{animationPlay?'animation-fade':''}}">与你相遇，好幸运！</view>
             <view class="padding"></view>
-            <view class="padding-xs {{animationPlay?'animation-fade':''}}">希望你继续兴致盎然地与世界交手，</view>
-            <view class="padding-xs {{animationPlay?'animation-fade':''}}">一直走在开满鲜花的路上。</view>
+            <view class="padding-xs {{animationPlay?'animation-fade':''}}">希望你继续兴致盎然地与世界交手，一直走在开满鲜花的路上。</view>
           </view>
           <view wx:else>
             <view class="padding"></view>
@@ -239,7 +238,7 @@
             青春的脚印留在校园的小路上，笑语欢歌留在花坛的馨香中。大学的生活美好、难忘，一切回首，是珍惜，是缘分，是感动。
           </view>
           <view class="padding-xs {{animationPlay?'animation-fade':''}}">
-            2020年，这个毕业季注定特殊又难忘。祝福每一位即将远行的白云学子，愿有前程可奔赴，亦有岁月可回首。
+            {{summary.year}}年，这个毕业季注定特殊又难忘。祝福每一位即将远行的白云学子，愿有前程可奔赴，亦有岁月可回首。
           </view>
           <view class="padding-xs"></view>
           <view class="text-right padding-bottom-xs padding-right-xs {{animationPlay?'animation-fade':''}}">
@@ -249,7 +248,7 @@
             2020/6/26
           </view>
           <view class="padding-top-xl text-center">
-            <button class="cu-btn bg-theme text-white lg padding radius" bindtap="showShare">分享给同学们</button>
+            <button class="cu-btn bg-theme text-white lg padding radius" bindtap="showShare">分享毕业报告</button>
             <view class="text-grey padding-sm text-sm" bindtap="hide">重新观看</view>
           </view>
         </view>
@@ -314,7 +313,7 @@
     <view class="padding-xs"></view>
     <view class="padding">
       <button open-type="share" class="cu-btn bg-theme text-white">分享给好友</button>
-      <button class="cu-btn bg-yellow text-white margin-left" bindtap="savePoster">保存海报发票圈</button>
+      <button class="cu-btn bg-yellow text-white margin-left" bindtap="savePoster">保存海报</button>
     </view>
   </view>
   <view class="dialog-close" bindtap="hideShare">

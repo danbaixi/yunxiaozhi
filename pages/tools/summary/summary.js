@@ -1,6 +1,7 @@
 const app = getApp()
 const { openArticle } = require('../../../utils/common')
 const {initSummary,getSummary,getSummaryPoster,addSummaryBlessing,switchSummaryShareStatus} = require('../../api/other')
+const R = require('../../../utils/request')
 Page({
 
   /**
@@ -72,6 +73,20 @@ Page({
       totalnum: totalnum,
       isAuditing: app.getConfig('auditing') == 1 ? true : false
     })
+    //加载字体
+    wx.showLoading({
+      title: '加载字体中',
+    })
+    wx.loadFontFace({
+      family: 'diy',
+      source: 'url("https://yunxiaozhi-1251388077.cos.ap-guangzhou.myqcloud.com/mini/font/yangrendong.ttf")',
+      complete: function(){
+        wx.hideLoading()
+      },
+      fail: function(){
+        app.msg('加载字体失败')
+      }
+    })
   },
 
   /**
@@ -122,6 +137,8 @@ Page({
         _this.setData(res.data)
         _this.getPoster()
         return
+      }else{
+        app.msg(res.message)
       }
       _this.setData({
         isGraduation:false
@@ -179,22 +196,22 @@ Page({
       loadingWidth:20
     })
     let updates = _this.data.updates
-    _this.updateData(updates.info).then((res1) => {
+    _this.updateData(updates.info).then(() => {
       _this.setData({
         loadingWidth: 40
       })
-      _this.updateData(updates.score).then((res2) => {
+      _this.updateData(updates.score).then(() => {
         _this.setData({
           loadingWidth: 60
         })
-        _this.updateData(updates.attendance).then((res3) => {
+        _this.updateData(updates.attendance).then(() => {
           _this.setData({
             loadingWidth: 80
           })
-          _this.updateData(updates.summary).then((res4) => {
+          _this.updateData(updates.summary).then((res) => {
             app.msg("生成报告完成")
             _this.setData({
-              summary:res4.data.summary,
+              summary:res.data.summary,
               loadingWidth: 100,
               needBuild:0,
               loadingData:false
@@ -213,7 +230,7 @@ Page({
     })
   },
   updateData:function(url){
-    return app.promiseRequest({
+    return R({
       url: url
     })
   },
@@ -354,6 +371,9 @@ Page({
             scope: 'scope.writePhotosAlbum',
             success() {
               _this.downloadImage()
+            },
+            fail(res){
+              console.log("授权失败：",res)
             }
           })
         } else {
