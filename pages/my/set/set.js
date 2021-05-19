@@ -93,6 +93,9 @@ Page({
       mask: true
     });
     (async function(){
+      wx.hideLoading({
+        success: (res) => {},
+      })
       const countData = await getUntieCount()
       const {total,level} = countData.data
       if(level <= 0){
