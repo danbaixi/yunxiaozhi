@@ -442,7 +442,11 @@ Page({
     _this.setData({
       submiting:true
     })
-    addSummaryBlessing().then((res) => {
+    addSummaryBlessing({
+      stu_id: _this.data.id,
+      content: _this.data.blessing,
+      name: _this.data.name
+    }).then((res) => {
       _this.setData({
         submiting:false
       })
