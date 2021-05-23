@@ -321,10 +321,10 @@ Page({
       {
         color: 'red',
         badge: '新',
-        name: '出行优惠',
-        icon: 'travel',
+        name: '优惠中心',
+        icon: 'discount',
         needLogin: false,
-        url: '../article/article?src=' + encodeURIComponent('http://mp.weixin.qq.com/s?__biz=MzI1NTUwNDIzNQ==&mid=100003692&idx=1&sn=c21e5155ab32ea4de14ffe0f8904d743&chksm=6a35b5685d423c7e6c527975257db09bda09f2062d1e9fb1c1b8a875c77f3dc6372397a5cb2a#rd'),
+        url: '/pages/tools/discount/discount'
       },
     ]
   },

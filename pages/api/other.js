@@ -380,6 +380,23 @@ function getIsHideSoul(){
   })
 }
 
+// 获取优惠列表
+function getDiscountList(data){
+  return R({
+    url: 'discount/getList',
+    data,
+    needLogin: false
+  })
+}
+
+// 获取优惠分类列表
+function getDiscountTypes(){
+  return R({
+    url: 'discount/getTypes',
+    needLogin: false
+  })
+}
+
 module.exports = {
   getAttendanceList,
   updateAttendanceList,
@@ -426,5 +443,7 @@ module.exports = {
   getSummaryPoster,
   addSummaryBlessing,
   switchSummaryShareStatus,
-  getIsHideSoul
+  getIsHideSoul,
+  getDiscountList,
+  getDiscountTypes
 }

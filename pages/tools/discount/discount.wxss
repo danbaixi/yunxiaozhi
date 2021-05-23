@@ -1,0 +1,9 @@
+page{
+  background: #f2f5f7;
+}
+.title{
+  margin: 0!important;
+}
+.img{
+  width: 100%;
+}

@@ -1,0 +1,33 @@
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">优惠中心</view>
+</cu-custom>
+<view class="container">
+  <scroll-view scroll-x class="bg-white nav">
+    <view class="flex text-center">
+      <view class="cu-item flex-sub {{item.id==label?'text-theme cur':''}}" wx:for="{{labels}}" wx:key bindtap="tabSelect" data-id="{{item.id}}">
+        {{item.title}}
+      </view>
+    </view>
+  </scroll-view>
+  <view wx:for="{{labels}}" wx:key wx:if="{{label == item.id}}">
+    <view class="list">
+      <view class="item margin padding-lr-sm y-radius bg-white" wx:for="{{list}}" wx:key>
+        <view class="cu-bar bg-white solid-bottom">
+          <view class="action text-bold text-lg title">
+            {{item.title}}
+          </view>
+          <view class="action title">
+            <button class="cu-btn bg-theme round" bindtap="get" data-index="{{index}}">
+              {{ item.type ==2 ? '复制口令' : '免费领取' }}
+            </button>
+          </view>
+        </view>
+        <view class="padding-tb-sm">
+          <image class="img y-radius" src="{{item.img}}" mode="widthFix"></image>
+        </view>
+      </view>
+      <view class="cu-load {{!finish?'loading':'over'}}"></view>
+    </view>
+  </view>   
+</view>

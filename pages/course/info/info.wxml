@@ -85,3 +85,5 @@
   <text class="icon-info text-red"></text>上课时间与校区和教学楼有关，具体上课时间请看
   <text bindtap="rest" class="text-blue">白云作息表</text>
 </view>
+
+<view class="margin ad-radius"><ad-custom unit-id="adunit-4158848ec8237978"></ad-custom></view>

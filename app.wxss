@@ -107,6 +107,10 @@ checkbox.theme[checked] .wx-checkbox-input, radio.theme[checked] .wx-radio-input
 ad{
   border-radius: 8px!important;
 }
+.ad-radius{
+  border-radius: 16rpx;
+  overflow: hidden;
+}
 
 /* 弹窗 */
 
