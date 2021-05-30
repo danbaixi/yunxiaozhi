@@ -13,9 +13,9 @@
   <view class="padding" style="margin-top:100rpx">
     <view class="text-theme bg-gray padding-sm y-radius">{{notice}}</view>
   </view>
-  <view class="margin-bottom padding-lr">
+  <!-- <view class="margin-bottom padding-lr">
     <button class="cu-btn bg-theme block" bindtap="goQuanzi">去发布失物招领信息</button>
-  </view>
+  </view> -->
   <view style="margin-top:6px" wx:if="{{!isNull}}">
     <view class="yxz-cel">
       <view class="tr bg-w">
