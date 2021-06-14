@@ -324,6 +324,7 @@ Page({
         name: '优惠中心',
         icon: 'discount',
         needLogin: false,
+        auditing: true,
         url: '/pages/tools/discount/discount'
       },
     ]
