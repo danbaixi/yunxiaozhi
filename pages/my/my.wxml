@@ -73,12 +73,12 @@
           <text class="text-black">问题反馈</text>
         </view>
       </view>
-      <view class="cu-item arrow">
+      <!-- <view class="cu-item arrow">
         <navigator class="content" target="miniProgram"open-type="navigate" app-id="wxb036cafe2994d7d0" path="/portal/group-profile/group-profile?group_id=13104375827371700&invite_ticket=BgAARwqnU-49GW8g92KH3E7WFA&fromScene=bizArticle">
           <text class="icon-comment lg text-black"></text>
           <text class="text-black">官方社区</text>
         </navigator>
-      </view>
+      </view> -->
       <view class="cu-item arrow" bindtap="clearStorage">
         <view class="content">
           <text class="icon-delete lg text-black"></text>

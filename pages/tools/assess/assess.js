@@ -19,7 +19,7 @@ Page({
   onLoad: function (options) {
     var that = this;
     app.isLogin('/' + that.route).then(function (res) {
-      //that.loadingAd()
+      that.loadingAd()
       that.getList()
     })
   },
@@ -30,7 +30,7 @@ Page({
     return app.share()
   },
 
-  //激励广告 --暂时取消
+  //激励广告
   loadingAd:function(){
     if (!this.data.finish && wx.createRewardedVideoAd) {
       console.log('广告加载...')
@@ -46,6 +46,7 @@ Page({
           app.msg("您未观看完广告，无法使用一键评教")
           return
         }
+        this.assess()
       })
     }else{
       this.setData({
@@ -56,6 +57,7 @@ Page({
 
   //插屏广告
   loadingChaPing:function(){
+    const that = this
     if (wx.createInterstitialAd) {
       interstitialAd = wx.createInterstitialAd({
         adUnitId: 'adunit-925818f6261b9dc9'
@@ -79,9 +81,6 @@ Page({
       if(res.status == 0){
         res.data.loading = false
         that.setData(res.data)
-        setTimeout(() => {
-          that.loadingChaPing()
-        },1000)
         return
       }
     })
@@ -89,18 +88,18 @@ Page({
 
   start:function(){
     let _this = this
-    _this.assess()
-    // if (videoAd && !_this.data.finishAd) {
-    //   videoAd.show().catch(() => {
-    //     // 失败重试
-    //     videoAd.load()
-    //       .then(() => videoAd.show())
-    //       .catch(err => {
-    //         console.log('激励视频 广告显示失败')
-    //       })
-    //   })
-    // }
-    // app.msg("正在评教中，等待过程将会播放广告，感谢您的理解。")
+    // _this.assess()
+    if (videoAd && !_this.data.finishAd) {
+      videoAd.show().catch(() => {
+        // 失败重试
+        videoAd.load()
+          .then(() => videoAd.show())
+          .catch(err => {
+            console.log('激励视频 广告显示失败')
+          })
+      })
+    }
+    app.msg("正在评教中，等待过程将会播放广告，感谢您的理解。")
   },
 
   // 评教
