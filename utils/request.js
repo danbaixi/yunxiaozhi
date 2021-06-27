@@ -10,7 +10,7 @@ function getDomain(){
     if(isTest){
       return 'https://www.yunxiaozhi.cn/test/public/api/'
     }
-    return 'http://danbaixi.cn.utools.club/yxz_v1/public/index.php/api/'
+    return 'http://localhost/yxz_v1/public/index.php/api/'
   }
   return 'https://www.yunxiaozhi.cn/v1/public/api/'
 }

@@ -97,7 +97,8 @@ function getStudentList(data){
 function getTermByClassname(data){
   return R({
     url:'data/getTermsByClassname',
-    data
+    data,
+    needLogin: false
   })
 }
 
@@ -105,7 +106,8 @@ function getTermByClassname(data){
 function getCourseByClassname(data){
   return R({
     url: 'data/getCourseByClassname',
-    data
+    data,
+    needLogin: false
   })
 }
 
@@ -144,7 +146,8 @@ function getCourseListByStuId(data){
 // 获取课表背景列表
 function getBgList(){
   return R({
-    url: 'course/getBgList'
+    url: 'data/getBgList',
+    needLogin: false
   })
 }
 

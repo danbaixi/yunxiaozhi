@@ -7,9 +7,9 @@
 <view class="container" wx:if="{{myself || summary!=null || loading}}" style="top:-{{customBar}}px;width:{{winWidth}}px;Height:{{winHeight}}px">
   <view class="index">
     <view class="mark bg-white {{show?'show':''}}"></view>
-    <image class="bg" src="{{fileUrl}}/index-1.png" mode="aspectFill"></image>
+    <image class="bg" src="{{imgs.welcome}}" mode="aspectFill"></image>
     <view class="summary text-center" style="padding-top:{{120+customBar}}px">
-      <image class="logo" src="{{fileUrl}}/baiyun-logo.png" mode="widthFix"></image>
+      <image class="logo" src="{{imgs.logo}}" mode="widthFix"></image>
       <view class="content" style="padding-top:80rpx;">
         <button wx:if="{{isGraduation}}" class="cu-btn lg text-white view" bindtap="view">
           {{myself?'追忆我的大学':'查看'+(summary.data.name?summary.data.name:'某某')+'的毕业报告'}}
@@ -43,7 +43,7 @@
     </view>
     <view class="scroll-fullpage" bindtouchstart="scrollTouchstart" bindtouchmove="scrollTouchmove" bindtouchend="scrollTouchend" style="transform:translateY(-{{scrollindex*100}}%);margin-top: {{margintop}}px">
       <view class="section {{scrollindex==0?'active':''}}">
-        <image class='section-bg'  mode="aspectFill" src='{{fileUrl}}/gotoschool.png'></image>
+        <image class='section-bg'  mode="aspectFill" src='{{imgs.gotoschool}}'></image>
         <view class='section-content' style="top:{{customBar+40}}px">
           <view class="padding-xs {{animationPlay?'animation-fade':''}}"><text class="h">{{summary.data.entryDate}}年</text>，夏天</view>
           <view class="padding-xs {{animationPlay?'animation-fade':''}}">{{stuName}}结束了紧张的考试</view>
@@ -55,7 +55,7 @@
       </view>
 
       <view class="section {{scrollindex==1?'active':''}}">
-        <image class='section-bg'  mode="aspectFill" src='{{fileUrl}}/course.png'></image>
+        <image class='section-bg'  mode="aspectFill" src='{{imgs.course}}'></image>
         <view class='section-content' style="top:{{customBar+180}}px">
           <view class="padding-xs {{animationPlay?'animation-fade':''}}">大学期间，{{stuName}}一共学了<text class="h"> {{summary.data.courseCount}}</text> 门课程</view>
           <view wx:if="{{myself}}">
@@ -76,7 +76,7 @@
       </view>
 
       <view class="section {{scrollindex==2?'active':''}}">
-        <image class='section-bg'  mode="aspectFill" src='{{fileUrl}}/exam-1.png'></image>
+        <image class='section-bg'  mode="aspectFill" src='{{imgs.exam}}'></image>
         <view class='section-content' style="top:{{customBar+40}}px">
           <view class="padding-xs {{animationPlay?'animation-fade':''}}">{{stuName}}一共参与了<text class="h"> {{summary.data.examCourseCount}}</text> 场考试</view>
           <view class="padding-xs {{animationPlay?'animation-fade':''}}">
@@ -103,7 +103,7 @@
       </view>
 
       <view class="section {{scrollindex==3?'active':''}}">
-        <image class='section-bg'  mode="aspectFill" src='{{fileUrl}}/attendance.png'></image>
+        <image class='section-bg'  mode="aspectFill" src='{{imgs.attendance}}'></image>
         <view class='section-content' style="top:{{customBar+40}}px">
           <view wx:if="{{summary.data.attendanceCount == 0}}">
             <view wx:if="{{myself}}">
@@ -158,7 +158,7 @@
       </view>
 
       <view class="section {{scrollindex==4?'active':''}}">
-        <image class='section-bg'  mode="aspectFill" src='{{fileUrl}}/junxun.png'></image>
+        <image class='section-bg'  mode="aspectFill" src='{{imgs.junxun}}'></image>
         <view class='section-content' style="top:{{customBar+40}}px">
           <view class="padding-xs {{animationPlay?'animation-fade':''}}">那年夏天，</view>
           <view class="padding-xs {{animationPlay?'animation-fade':''}}">还未熟悉校园的{{stuName}}</view>
@@ -172,7 +172,7 @@
       </view>
 
       <view class="section {{scrollindex==5?'active':''}}">
-        <image class='section-bg'  mode="aspectFill" src='{{fileUrl}}/sushe.png'></image>
+        <image class='section-bg'  mode="aspectFill" src='{{imgs.sushe}}'></image>
         <view class='section-content' style="top:{{customBar+40}}px">
           <view class="padding-xs {{animationPlay?'animation-fade':''}}">宿舍那么小，</view>
           <view class="padding-xs {{animationPlay?'animation-fade':''}}">还是装满了我们的青春回忆</view>
@@ -185,7 +185,7 @@
       </view>
 
       <view class="section {{scrollindex==6?'active':''}}">
-        <image class='section-bg'  mode="aspectFill" src='{{fileUrl}}/caochang2.png'></image>
+        <image class='section-bg'  mode="aspectFill" src='{{imgs.caochang2}}'></image>
         <view class='section-content' style="top:{{customBar+100}}px">
           <view class="padding-xs {{animationPlay?'animation-fade':''}}">到后来才明白，</view>
           <view class="padding-xs {{animationPlay?'animation-fade':''}}">操场上挥洒的不仅仅是汗水</view>
@@ -198,7 +198,7 @@
       </view>
 
       <view class="section {{scrollindex==7?'active':''}}">
-        <image class='section-bg'  mode="aspectFill" src='{{fileUrl}}/yiqing.png'></image>
+        <image class='section-bg'  mode="aspectFill" src='{{imgs.yiqing}}'></image>
         <view class='section-content' style="top:{{customBar+40}}px">
           <view class="padding-xs {{animationPlay?'animation-fade':''}}">
             突如其来的<text class="h">新冠肺炎疫情</text>
@@ -212,7 +212,7 @@
       </view>
 
       <view class="section {{scrollindex==8?'active':''}}">
-        <image class='section-bg'  mode="aspectFill" src='{{fileUrl}}/yunxiaozhi.png'></image>
+        <image class='section-bg'  mode="aspectFill" src='{{imgs.yunxiaozhi}}'></image>
         <view class='section-content' style="top:{{customBar+40}}px">
           <view class="padding-xs {{animationPlay?'animation-fade':''}}"><text class="h">{{summary.data.regTime}}</text></view>
           <view class="padding-xs {{animationPlay?'animation-fade':''}}">是{{stuName}}和<text class="h">云小智</text>第一次相遇</view>
@@ -230,7 +230,7 @@
       </view>
 
       <view wx:if="{{myself}}" class="section {{scrollindex==9?'active':''}}">
-        <image class='section-bg'  mode="aspectFill" src='{{fileUrl}}/caochang.png'></image>
+        <image class='section-bg'  mode="aspectFill" src='{{imgs.caochang}}'></image>
         <view class='section-content' style="top:{{customBar+30}}px">
           <view class="padding-xs text-xl text-bold {{animationPlay?'animation-fade':''}}">亲爱的{{summary.data.name}}同学：</view>
           <view class="padding-xs {{animationPlay?'animation-fade':''}}">从走进白云学院的那一刻起，你我便与白云结下了永恒的缘分...</view>
@@ -256,13 +256,13 @@
       </view>
 
       <view class="section {{myself&&scrollindex==10 || !myself&&scrollindex==9 ? 'active':''}}">
-        <image class='section-bg'  mode="aspectFill" src='{{fileUrl}}/liuyan-1.png'></image>
+        <image class='section-bg'  mode="aspectFill" src='{{imgs.liuyan}}'></image>
         <view class="blessings" style="padding-top:{{customBar+10}}px">
           <view class="padding bg-white radius">
             <view class="padding-sm text-theme text-xxl text-center">来自好友的祝福</view>
             <scroll-view scroll-y="true" class="list" wx:if="{{benediction.length>0}}">
               <view class="padding-xs text-default" wx:for="{{benediction}}" wx:key="key">
-                <text class="text-theme">{{item.author?item.author:'好友'}}</text>：{{item.content}}
+                <text class="text-theme">{{item.author&&item.author !== 'undefined'?item.author:'好友'}}</text>：{{item.content}}
               </view>
             </scroll-view>
             <empty display="{{benediction.length == 0}}" content="{{myself?'分享到朋友圈就能收到祝福哦':'还没有祝福，快给'+ta+'送上真挚的祝福吧！'}}"></empty>
@@ -287,7 +287,7 @@
     <view class="padding bg-white">
       <view class="building" wx:if="{{!buildFail}}">
         <view class="padding text-center">
-          <image src="{{fileUrl}}/loading-white.gif" mode="widthFix"></image>
+          <image src="{{imgs.loading}}" mode="widthFix"></image>
         </view>
         <view class="cu-progress round">
           <view class="bg-theme" style="width:{{loadingWidth}}%;">{{loadingWidth}}%</view>

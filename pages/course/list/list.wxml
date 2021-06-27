@@ -9,9 +9,9 @@
       <text class="text-yellow fr"><text>切换</text> <text class="icon-right"></text></text>
     </picker>
   </view>
-  <view class="bg-white padding margin-sm y-radius" bindtap="changeClass">
-    <text>当前班级：{{tmpClass && tmpClass.name ? tmpClass.name: (courseStu && courseStu.classname ? courseStu.classname : '本班')}}</text>
-    <text class="text-yellow fr">切换 <text class="icon-right"></text></text>
+  <view class="bg-white padding margin-sm y-radius flex justify-between" bindtap="changeClass">
+    <view class="text-cut basis-xl">当前班级：{{tmpClass && tmpClass.name ? tmpClass.name: (courseStu && courseStu.classname ? courseStu.classname : '本班')}}</view>
+    <view class="text-yellow fr">切换 <text class="icon-right"></text></view>
   </view>
   <view class="fiter padding-sm">
     <button wx:for="{{fiters}}" wx:key="key" bindtap="fiterCourse" data-index="{{index}}"

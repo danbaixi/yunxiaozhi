@@ -64,16 +64,6 @@ Page({
         needLogin: true,
         url: '../tools/yct/yct?from=index',
       }, 
-      // {
-      //   icon: 'apps',
-      //   color: 'theme',
-      //   badge: 1,
-      //   needLogin: false,
-      //   tab:true,
-      //   name: '全部应用',
-      //   icon: 'apps',
-      //   url: '../tool/tool?from=index',
-      // }
       {
         color: 'olive',
         badge: 0,
@@ -111,13 +101,23 @@ Page({
       //   path: "/portal/group-profile/group-profile?group_id=13104375827371700&invite_ticket=BgAAOQPnZwBIXbie9VzbA61wtWz6QPMmh78lsDF6ofDhQxYeLwki4LGpz1Ns33MyJffI00v6&fromScene=bizArticle",
       //   url: '/pages/tools/summary/summary',
       // },
+      // {
+      //   color: 'red',
+      //   badge: '新',
+      //   name: '优惠中心',
+      //   icon: 'discount',
+      //   needLogin: false,
+      //   url: '/pages/tools/discount/discount'
+      // }
       {
-        color: 'red',
-        badge: '新',
-        name: '优惠中心',
-        icon: 'discount',
+        icon: 'apps',
+        color: 'theme',
+        badge: 1,
         needLogin: false,
-        url: '/pages/tools/discount/discount'
+        tab:true,
+        name: '全部应用',
+        icon: 'apps',
+        url: '../tool/tool?from=index',
       }
     ],
     gridCol: 5,

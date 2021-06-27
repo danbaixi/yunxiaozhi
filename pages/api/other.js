@@ -341,6 +341,7 @@ function initSummary(){
 function getSummary(data){
   return R({
     url: 'share/getSummary',
+    needLogin: false,
     data
   })
 }

@@ -285,12 +285,14 @@ Page({
       title: '正在加载',
       mask: true
     })
-    let request = getCourseList({
-      term : term.term
-    })
+    let request = null
     if(!stu_id || tmp_class){
       request = getCourseByClassname({
         classname: tmp_class.name,
+        term : term.term
+      })
+    }else {
+      request = getCourseList({
         term : term.term
       })
     }

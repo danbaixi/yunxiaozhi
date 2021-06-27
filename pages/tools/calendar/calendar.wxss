@@ -150,3 +150,8 @@ image{
 .clearfloat{
   clear: both;
 }
+.ad {
+  position: fixed;
+  bottom: 10rpx;
+  right: 10rpx;
+}

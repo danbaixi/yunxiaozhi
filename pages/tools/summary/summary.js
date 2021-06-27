@@ -37,6 +37,21 @@ Page({
       score: 'score/updateScoreV0',
       attendance: 'attendance/update',
       summary: 'user/buildGraduation'
+    },
+    imgs: {
+      loading: 'https://mmbiz.qpic.cn/mmbiz_gif/YWKTC18p77IvhTFXslbNAWiaKWDhoQJU6F6wjClva0iclpic1VOApb2O2vOAlH6uhDDEbsCM3YSMtm7mXOr3bX6qg/0?wx_fmt=gif',
+      logo: 'https://mmbiz.qpic.cn/mmbiz_png/YWKTC18p77IvhTFXslbNAWiaKWDhoQJU6dU2R5rGvR2gefEbVcPR8xJAl2s5LsyvJKZSZoyZuxBNKEfib9L3Y37Q/0?wx_fmt=png',
+      welcome: 'https://mmbiz.qpic.cn/mmbiz_png/YWKTC18p77IvhTFXslbNAWiaKWDhoQJU6pBzOGb5lz66O7RFRUUjkIib0bxZgQiaDAdl3Cyiauqoe1qkJjXPTHEnWg/0?wx_fmt=png',
+      gotoschool: 'https://mmbiz.qpic.cn/mmbiz_png/YWKTC18p77IvhTFXslbNAWiaKWDhoQJU6iaH9j83hwHCJrkrqyeIYLwLwv4kVJqnel3fzr7fsqB2XbAGhic5iaqicUg/0?wx_fmt=png',
+      course: 'https://mmbiz.qpic.cn/mmbiz_png/YWKTC18p77IvhTFXslbNAWiaKWDhoQJU6cQibpD1ibDTuMVqZRcVGibkYkPiacQH0ZDBibHUXuCOISzW4HIJvJFbOCNg/0?wx_fmt=png',
+      exam: 'https://mmbiz.qpic.cn/mmbiz_png/YWKTC18p77IvhTFXslbNAWiaKWDhoQJU6qQ61xInsYCZZOR4MMuYFqILTUj2Ax7OljXNgkYwO69EHw9Dt4SX22A/0?wx_fmt=png',
+      attendance: 'https://mmbiz.qpic.cn/mmbiz_png/YWKTC18p77IvhTFXslbNAWiaKWDhoQJU6PmuODFeXFxvzA2xHsiacqGFCfYBQngDD931XC8Nsz0tP4gDibPcO6d6w/0?wx_fmt=png',
+      junxun: 'https://mmbiz.qpic.cn/mmbiz_png/YWKTC18p77IvhTFXslbNAWiaKWDhoQJU6gF5mDYcVuSHQAsuXibVa0wj8C01doJywVaexELvfYaR3uhapKvmGetw/0?wx_fmt=png',
+      sushe: 'https://mmbiz.qpic.cn/mmbiz_png/YWKTC18p77IvhTFXslbNAWiaKWDhoQJU6fR4LqdzpHOhOjWITticBRsuQPcrGuN5r3lQOj42ev8ytCJxd5FdvJ8g/0?wx_fmt=png',
+      caochang2: 'https://mmbiz.qpic.cn/mmbiz_png/YWKTC18p77IvhTFXslbNAWiaKWDhoQJU6giaKHibDSqFf8k6wtpRU4pkjjicyc4TCsCibVB7A84cHtqzPUMBcpcicQUA/0?wx_fmt=png',
+      yiqing: 'https://mmbiz.qpic.cn/mmbiz_png/YWKTC18p77IvhTFXslbNAWiaKWDhoQJU6ED4B5RlQVTz75hnibRvaPlCMwRO6YPEBytz1DPHHpS09yjCCbicAkicTA/0?wx_fmt=png',
+      yunxiaozhi: 'https://mmbiz.qpic.cn/mmbiz_png/YWKTC18p77IvhTFXslbNAWiaKWDhoQJU6JfxBcrIqz1v5vOopvTRhk4bNZxRDvUsrzVaKDZZgXh0UiawoEJibTSpw/0?wx_fmt=png',
+      liuyan: 'https://mmbiz.qpic.cn/mmbiz_png/YWKTC18p77IvhTFXslbNAWiaKWDhoQJU6BPPPLbAs7K9MdC8cxKaJTa7oMePrBiciatT8pqExsMY8Jlu4kvLeC5Pg/0?wx_fmt=png'
     }
   },
 
