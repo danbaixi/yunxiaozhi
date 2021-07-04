@@ -26,7 +26,10 @@ Component({
       wx.setClipboardData({
         data: content,
         success (res) {
-          
+          wx.showToast({
+            title: '已复制',
+            icon: 'none'
+          })
         }
       })
     }

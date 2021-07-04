@@ -211,6 +211,33 @@ Page({
         needLogin: true,
         url: '/pages/tools/sport/sport',
       },
+      {
+        icon: 'bad',
+        color: 'red',
+        badge: '',
+        name: '找社团',
+        icon: 'club',
+        needLogin: false,
+        url: '/pages/tools/club/club',
+      },  
+      {
+        icon: 'bad',
+        color: 'red',
+        badge: '',
+        name: '找群聊',
+        icon: 'qunliao',
+        needLogin: false,
+        url: '../article/article?src=' + encodeURIComponent('http://mp.weixin.qq.com/s?__biz=MzI1NTUwNDIzNQ==&mid=100002002&idx=1&sn=79069994b1793c33e8ce49431c1d0bd6&chksm=6a35b2d65d423bc097f66072ce82aa4aecc9a1b12da127418eb273f43ce16b4b68f8cde2afc4#rd' + "&title=云小智邀请你加入群聊"),
+      },
+      {
+        icon: 'bad',
+        color: 'red',
+        badge: '',
+        name: '找同乡',
+        icon: 'tongxiang',
+        needLogin: false,
+        url: '/pages/tools/city/city'
+      }
     ],
     query:[
       {

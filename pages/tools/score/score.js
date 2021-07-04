@@ -41,6 +41,22 @@ Page({
     app.isLogin(that.route).then(function (res) {
       that.getScore(false)
     })
+    // ad
+    var time = (new Date).getTime()
+    var score_ad = wx.getStorageSync('score_v2_ad_display');
+    if (!score_ad || (Math.floor((time - score_ad) / 1000) > 24 * 60)) {
+      if (wx.createInterstitialAd) {
+        var interstitialAd = wx.createInterstitialAd({
+          adUnitId: 'adunit-0012824b1281826a'
+        })
+        setTimeout(()=>{
+          interstitialAd.show()
+        },1500)
+        wx.setStorageSync('score_v2_ad_display', time)
+      } else {
+        app.msg("您当前微信版本较低，建议升级到最新版本")
+      }
+    }
   },
 
   /**
