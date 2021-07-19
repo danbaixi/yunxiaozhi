@@ -1,99 +1,114 @@
-<view class="page padding-bottom-xl" style="min-height:{{winHeight}}px;background-color:{{loading||isNull?'#f5f6f7':'#1380ff'}}">
-  <view class="cu-custom" style="height:{{CustomBar}}px">
-    <view class="cu-bar fixed bg-white" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px">
-      <view class="action border-custom" style="width:{{Custom.width}}px;height:{{Custom.height}}px;margin-left:calc(750rpx - {{Custom.right}}px)">
-        <text class="icon-back text-black text-bold" bindtap="backPageBtn"></text>
-        <text class="icon-refresh text-black text-bold" bindtap="update"></text>
-      </view>
-      <view class="content-yxz" style="top:{{StatusBar}}px">
-        <text>成绩</text>
+<import src="score.skeleton.wxml" />
+<template is="skeleton" wx:if="{{loading}}" />
+<view wx:else>
+  <view class="page padding-bottom-xl"
+    style="min-height:{{winHeight}}px;background-color:{{loading||isNull?'#f5f6f7':'#1380ff'}}">
+    <view class="cu-custom" style="height:{{CustomBar}}px">
+      <view class="cu-bar fixed bg-white" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px">
+        <view class="action border-custom"
+          style="width:{{Custom.width}}px;height:{{Custom.height}}px;margin-left:calc(750rpx - {{Custom.right}}px)">
+          <text class="icon-back text-black text-bold" bindtap="backPageBtn"></text>
+          <text class="icon-refresh text-black text-bold" bindtap="update"></text>
+        </view>
+        <view class="content-yxz" style="top:{{StatusBar}}px">
+          <text>成绩</text>
+        </view>
       </view>
     </view>
-  </view>
-  <list-loading loading="{{loading}}"></list-loading>
-  <view class="container" wx:if="{{!isNull && !loading}}">
-    <notice page="score"></notice>
-    <view class="info score">
-      <view class="padding-bottom-sm">
-        <text class="text-black">上次更新：</text>
-        <text class="text-gray">{{update_time}}</text>
-        <text class="bg-yellow option-btn" bindtap="update">更新成绩</text>
-      </view>
-      <view class="padding-top-sm">
-        <radio-group bindchange="changeType">
-          <radio class="theme" checked="{{type==1}}"></radio>
-          <text bindtap="changeType" data-val="1"> 原始成绩</text>
-          <radio class="theme margin-left" checked="{{type==0}}"></radio> 
-          <text bindtap="changeType" data-val="0"> 有效成绩</text>
-        </radio-group>
-        <view class="fr">
-          <view class="text-yellow" bindtap="viewAllScore">
-            查看已修科目<text class="icon-right"></text>
+    <!-- <list-loading loading="{{loading}}"></list-loading> -->
+    <view class="container" wx:if="{{!isNull && !loading}}">
+      <notice page="score"></notice>
+      <view class="info score">
+        <view class="padding-bottom-sm">
+          <text class="text-black">上次更新：</text>
+          <text class="text-gray">{{update_time}}</text>
+          <text class="bg-yellow option-btn" bindtap="update">更新成绩</text>
+        </view>
+        <view class="padding-top-sm">
+          <radio-group bindchange="changeType">
+            <radio class="theme" checked="{{type==1}}"></radio>
+            <text bindtap="changeType" data-val="1"> 原始成绩</text>
+            <radio class="theme margin-left" checked="{{type==0}}"></radio>
+            <text bindtap="changeType" data-val="0"> 有效成绩</text>
+          </radio-group>
+          <view class="fr">
+            <view class="text-yellow" bindtap="viewAllScore">
+              查看已修科目<text class="icon-right"></text>
+            </view>
           </view>
         </view>
       </view>
-    </view>
-    <view class="score">
-      <view class="score-nav solid-bottom">
-        <scroll-view scroll-x class="bg-white nav text-center">
-          <view class="cu-item flex-sub {{index==tabCur?'text-theme cur':''}}" wx:for="{{grades}}" wx:key="key" bindtap="selectGrade" data-index="{{index}}" style="padding:0 {{year.length > 1 ? (160 / year.length) : 80}}rpx">
+      <view class="score">
+        <view class="score-nav solid-bottom">
+          <scroll-view scroll-x class="bg-white nav text-center">
+            <view class="cu-item flex-sub {{index==tabCur?'text-theme cur':''}}" wx:for="{{grades}}" wx:key="key"
+              bindtap="selectGrade" data-index="{{index}}"
+              style="padding:0 {{year.length > 1 ? (160 / year.length) : 80}}rpx">
               {{item}}
             </view>
-        </scroll-view>
-      </view>
-      <view class="score-item padding-top-sm" wx:for="{{termNums}}" wx:for-item="termNum" wx:key="key" wx:if="{{termNum.year == tabCur}}">
-        <view class="text-center padding-tb-xs">{{term[termNum.term]}}</view>
-        <view class="gpa text-center padding-xs">
-          <text bindtap="goRank" data-term="{{termNum.term}}">平均绩点:{{gpa[termNum.term]?gpa[termNum.term]:'暂无'}}<text class="icon-right"></text></text>
+          </scroll-view>
         </view>
-        <view class="cu-list menu sm-border padding-top-sm">
-          <view class='cu-item' style="min-height: {{type==0?84:100}}rpx;" wx:for="{{type==0?score:original_score}}" wx:for-item="s" wx:key="key" wx:if="{{s.term == termNum.term}}" bindtap='itemData' data-index="{{index}}">
-            <view class="content" wx:if="{{type==0}}">
-              <text class="text-black">{{s.name}}</text>
-              <text class="text-grey" wx:if="{{s.mark!=''&&s.mark!=null}}">({{s.mark}})</text>
-            </view>
-            <view class="content" wx:else>
-              <view>
+        <view class="score-item padding-top-sm" wx:for="{{termNums}}" wx:for-item="termNum" wx:key="key"
+          wx:if="{{termNum.year == tabCur}}">
+          <view class="text-center padding-tb-xs">{{term[termNum.term]}}</view>
+          <view class="gpa text-center padding-xs">
+            <text bindtap="goRank" data-term="{{termNum.term}}">平均绩点:{{gpa[termNum.term]?gpa[termNum.term]:'暂无'}}<text
+                class="icon-right"></text></text>
+          </view>
+          <view class="cu-list menu sm-border padding-top-sm">
+            <view class='cu-item' style="min-height: {{type==0?84:100}}rpx;" wx:for="{{type==0?score:original_score}}"
+              wx:for-item="s" wx:key="key" wx:if="{{s.term == termNum.term}}" bindtap='itemData' data-index="{{index}}">
+              <view class="content" wx:if="{{type==0}}">
                 <text class="text-black">{{s.name}}</text>
                 <text class="text-grey" wx:if="{{s.mark!=''&&s.mark!=null}}">({{s.mark}})</text>
               </view>
-              <view class="text-sm">
-                <text class="text-grey" wx:if="{{s.performance>0}}">平时:<text class="text-theme">{{s.performance}} </text></text>
-                <text class="text-grey" wx:if="{{s.middle>0}}">期中:<text class="text-theme">{{s.middle}} </text></text>
-                <text class="text-grey" wx:if="{{s.final>0}}">期末:<text class="text-theme">{{s.final}} </text></text>
-                <text class="text-grey" wx:if="{{s.skill>0}}">技能:<text class="text-theme">{{s.skill}}</text></text>
+              <view class="content" wx:else>
+                <view>
+                  <text class="text-black">{{s.name}}</text>
+                  <text class="text-grey" wx:if="{{s.mark!=''&&s.mark!=null}}">({{s.mark}})</text>
+                </view>
+                <view class="text-sm">
+                  <text class="text-grey" wx:if="{{s.performance>0}}">平时:<text class="text-theme">{{s.performance}}
+                    </text></text>
+                  <text class="text-grey" wx:if="{{s.middle>0}}">期中:<text class="text-theme">{{s.middle}} </text></text>
+                  <text class="text-grey" wx:if="{{s.final>0}}">期末:<text class="text-theme">{{s.final}} </text></text>
+                  <text class="text-grey" wx:if="{{s.skill>0}}">技能:<text class="text-theme">{{s.skill}}</text></text>
+                </view>
               </view>
-            </view>
-            <view class="action">
-              <text class="text-{{s.score<60?'red':'theme'}} text-lg">{{s.score}}</text>
+              <view class="action">
+                <text class="text-{{s.score<60?'red':'theme'}} text-lg">{{s.score}}</text>
+              </view>
             </view>
           </view>
         </view>
       </view>
     </view>
-  </view>
-  <view class="null" wx:if="{{isNull}}">
-    <image mode="widthFix" src="/pages/assets/imgs/other/null.png"></image>
-    <view class="text-grey text-center">
-      <view class="margin-top-sm">没有记录</view>
-      <view class="margin-top-sm">请点击左上角更新成绩</view>
+    <view class="null" wx:if="{{isNull}}">
+      <image mode="widthFix" src="/pages/assets/imgs/other/null.png"></image>
+      <view class="text-grey text-center">
+        <view class="margin-top-sm">没有记录</view>
+        <view class="margin-top-sm">请点击左上角更新成绩</view>
+      </view>
     </view>
   </view>
-</view>
   <!--更新课表输入验证码弹窗-->
-  <view class="modal-mask" bindtap="hideModal" style='height:{{winHeight-32}}px;top:32px' catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
-  <view class="modal-dialog" wx:if="{{showModal}}" class="{{input_focus == 1?'modal-dialog input_focus':'modal-dialog'}}">
+  <view class="modal-mask" bindtap="hideModal" style='height:{{winHeight-32}}px;top:32px'
+    catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
+  <view class="modal-dialog" wx:if="{{showModal}}"
+    class="{{input_focus == 1?'modal-dialog input_focus':'modal-dialog'}}">
     <view class="modal-title">更新成绩</view>
-      <view class="modal-content">
-        <view class="modal-input">
-          <input placeholder-class="input-holder" bindfocus="inputFocus" bindblur="inputBlur" bindinput="yzmInput" maxlength="4" class="input">
-          </input>
-          <image bindtap='freshYzm' class="img_yzm" src="{{yzmUrl}}"></image>
-        </view>  
+    <view class="modal-content">
+      <view class="modal-input">
+        <input placeholder-class="input-holder" bindfocus="inputFocus" bindblur="inputBlur" bindinput="yzmInput"
+          maxlength="4" class="input">
+        </input>
+        <image bindtap='freshYzm' class="img_yzm" src="{{yzmUrl}}"></image>
       </view>
-      <view class="modal-footer">
-        <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
-        <view class="btn-confirm" bindtap="update" data-status="confirm">确定</view>
-      </view>
+    </view>
+    <view class="modal-footer">
+      <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
+      <view class="btn-confirm" bindtap="update" data-status="confirm">确定</view>
+    </view>
+  </view>
+  <float-tool page="score"></float-tool>
 </view>
-<float-tool page="score"></float-tool>

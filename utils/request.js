@@ -95,6 +95,11 @@ function R(datas){
               url: '/pages/login/login?redirect=' + redirect,
             })
           },1000)
+        }else if (res.data.status == 4004){
+          // 密码已修改
+          wx.redirectTo({
+            url: '/pages/bind/bind?rebind=1'
+          })
         }else{
           const err = res.data.message || '服务器开小差了 ╯﹏╰'
           wx.showToast({

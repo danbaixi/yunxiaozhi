@@ -120,6 +120,7 @@ Page({
         url: '../tool/tool?from=index',
       }
     ],
+    loading: false,
     gridCol: 5,
     news_loading:false,
     course_loading:false,
@@ -168,6 +169,9 @@ Page({
       })
     }
     this.getMyExam()
+    this.setData({
+      loading: false
+    })
   },
 
   onShow:function(){

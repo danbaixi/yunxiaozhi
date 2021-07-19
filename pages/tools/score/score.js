@@ -1,4 +1,4 @@
-const { getScoreList, updateScore } = require('../../api/score') 
+const { getScoreList, updateScore, getScoreDemand, subscribeScore } = require('../../api/score') 
 const { getNotice } = require('../../api/common')
 const { canUpdate, setUpdateTime, backPage, getGradeList } = require('../../../utils/common')
 const dayjs = require('../../../utils/dayjs.min')
@@ -40,6 +40,7 @@ Page({
     })
     app.isLogin(that.route).then(function (res) {
       that.getScore(false)
+      that.getScoreDemand()
     })
     // ad
     var time = (new Date).getTime()
@@ -72,6 +73,20 @@ Page({
   onShareAppMessage: function () {
     return app.share('您有一份期末成绩单待查收','score.png',this.route)
   }, 
+
+  // 获取需求结果
+  getScoreDemand() {
+    getScoreDemand().then((res) => {
+      if (res.message) {
+        wx.showToast({
+          title: res.message,
+          duration: 4000,
+          icon: 'none'
+        })
+        return
+      }
+    })
+  },
   
   // 进入成绩详情
   itemData:function(e){
@@ -103,19 +118,19 @@ Page({
   getScore:function(update){
     var that = this;
     //读缓存
-    var scores = wx.getStorageSync('scores');
-    if (scores != '' && JSON.stringify(scores) != "{}" && scores.score.length>0 && !update){
-      that.setData({
-        loading: false,
-        gpa: scores.gpa,
-        score: scores.score,
-        term: scores.term,
-        year: scores.year,
-        original_score: scores.originalScore
-      })
-      that.getGradeList()
-      return
-    }
+    // var scores = wx.getStorageSync('scores');
+    // if (scores != '' && JSON.stringify(scores) != "{}" && scores.score.length>0 && !update){
+    //   that.setData({
+    //     loading: false,
+    //     gpa: scores.gpa,
+    //     score: scores.score,
+    //     term: scores.term,
+    //     year: scores.year,
+    //     original_score: scores.originalScore
+    //   })
+    //   that.getGradeList()
+    //   return
+    // }
     // 读数据库
     getScoreList(that.route).then((res) => {
       that.setData({
@@ -196,6 +211,25 @@ Page({
           that.setData({
             showModal: false
           })
+        } else if (res.status == 2001) {
+          const temaplteId = 'lhKCIfBKo9GZc2Vd1zQSxpirSKHBe3czDG0OliOcXgg'
+          setTimeout(() => {
+            wx.requestSubscribeMessage({
+              tmplIds: [temaplteId],
+              success (result) {
+                if (result[temaplteId] === 'accept') {
+                  subscribeScore({id: res.data.id}).then((res) => {
+                    app.msg(res.message)
+                  })
+                  return
+                }
+                app.msg('你未订阅成绩通知，将无法收到成绩更新信息')
+              },
+              fail() {
+                app.msg('订阅失败，请重试！')
+              }
+            })
+          }, 2000);
         }
       }
     })

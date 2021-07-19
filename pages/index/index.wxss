@@ -1,3 +1,4 @@
+@import 'index.skeleton.wxss';
 page{
   position: relative;
   width: 100%;
