@@ -3,6 +3,7 @@
 	<view slot="content">水电查询</view>
 </cu-custom>
 <view wx:if="{{!loading}}">
+  <notice page="quantity"></notice>
   <view class="info" wx:if="{{dormitory}}">
     <view class="cu-bar bg-white margin-sm padding-sm radius">
       <text>当前宿舍：<text class="text-theme">{{dormitory.dormitory_name}}</text></text>
