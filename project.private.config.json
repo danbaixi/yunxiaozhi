@@ -1,51 +1,6 @@
 {
-  "description": "项目配置文件。",
-  "setting": {
-    "urlCheck": false,
-    "es6": true,
-    "enhance": true,
-    "postcss": true,
-    "preloadBackgroundData": false,
-    "minified": true,
-    "newFeature": true,
-    "coverView": true,
-    "nodeModules": false,
-    "autoAudits": false,
-    "showShadowRootInWxmlPanel": true,
-    "scopeDataCheck": false,
-    "uglifyFileName": true,
-    "checkInvalidKey": true,
-    "checkSiteMap": true,
-    "uploadWithSourceMap": true,
-    "compileHotReLoad": false,
-    "useMultiFrameRuntime": false,
-    "useApiHook": false,
-    "useApiHostProcess": false,
-    "babelSetting": {
-      "ignore": [],
-      "disablePlugins": [],
-      "outputPath": ""
-    },
-    "useIsolateContext": true,
-    "userConfirmedBundleSwitch": false,
-    "packNpmManually": false,
-    "packNpmRelationList": [],
-    "minifyWXSS": true,
-    "showES6CompileOption": false
-  },
-  "compileType": "miniprogram",
-  "libVersion": "2.17.3",
-  "appid": "wxe0f03cdec8ab9416",
-  "projectname": "%E4%BA%91%E5%B0%8F%E6%99%BA",
-  "simulatorType": "wechat",
-  "simulatorPluginLibVersion": {},
+  "setting": {},
   "condition": {
-    "search": {
-      "list": []
-    },
-    "conversation": {
-      "list": []
-    },
     "plugin": {
       "list": []
     },
@@ -94,10 +49,9 @@
           "query": ""
         },
         {
-          "id": 6,
           "name": "绑定教务系统",
           "pathName": "pages/bind/bind",
-          "query": "",
+          "query": "redirect=pages/tools/score/score",
           "scene": null
         },
         {
@@ -217,10 +171,9 @@
           "scene": null
         },
         {
-          "id": -1,
           "name": "登录",
           "pathName": "pages/login/login",
-          "query": "",
+          "query": "redirect=pages/my/my",
           "scene": null
         },
         {
@@ -238,10 +191,9 @@
           "scene": null
         },
         {
-          "id": -1,
           "name": "设置课表背景",
           "pathName": "pages/course/setBg/setBg",
-          "query": "",
+          "query": "from=index",
           "scene": null
         },
         {
@@ -476,9 +428,15 @@
           "scene": null
         },
         {
-          "id": -1,
           "name": "挂科率榜",
           "pathName": "pages/tools/score/fail/fail",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "优惠中心",
+          "pathName": "pages/tools/discount/discount",
+          "query": "from=index",
           "scene": null
         }
       ]

@@ -1,0 +1,181 @@
+<!--
+此文件为开发者工具生成，生成时间: 2021/7/17 下午6:53:51
+使用方法：
+在 D:\小程序开发\云小智\pages\tools\score\score.wxml 引入模板
+
+```
+<import src="score.skeleton.wxml"/>
+<template is="skeleton" wx-if="{{loading}}" />
+```
+
+在 D:\小程序开发\云小智\pages\tools\score\score.wxss 中引入样式
+```
+@import "./score.skeleton.wxss";
+```
+
+更多详细信息可以参考文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/skeleton.html
+-->
+<template name="skeleton">
+  <view class="sk-container">
+    <view>
+      <view class="page padding-bottom-xl" style="min-height:736px;background-color:#1380ff">
+        <view class="cu-custom" style="height:60px">
+          <view class="cu-bar fixed bg-white" style="height:60px;padding-top:20px">
+            <view class="action border-custom sk-pseudo sk-pseudo-circle" style="width: 87px; height: 32px; margin-left: calc(7px); border: none;">
+              <text class="icon-back text-black text-bold sk-pseudo sk-pseudo-circle"></text>
+              <text class="icon-refresh text-black text-bold sk-pseudo sk-pseudo-circle"></text>
+            </view>
+            <view class="content-yxz" style="top:20px">
+              <text class="sk-transparent sk-text-24-2424-768 sk-text" style="background-position-x: 50%;">成绩</text>
+            </view>
+          </view>
+        </view>
+        <view class="container">
+          <view is="pages/components/notice/notice">
+            <view class="notice--container">
+              <view class="notice--notice" style="true">
+                <view class="notice--content sk-transparent sk-text-32-9545-777 sk-text">暂时无法更新课表，请到教务系统查成绩。</view>
+                <text class="notice--icon-close sk-pseudo sk-pseudo-circle"></text>
+              </view>
+            </view>
+          </view>
+          <view class="info score">
+            <view class="padding-bottom-sm">
+              <text class="text-black sk-transparent sk-text-14-2857-871 sk-text">上次更新：</text>
+              <text class="text-gray sk-transparent sk-text-14-2857-560 sk-text">2021-07-17 17:57:05</text>
+              <text class="bg-yellow option-btn sk-transparent sk-text-14-2857-676 sk-text">更新成绩</text>
+            </view>
+            <view class="padding-top-sm">
+              <radio-group>
+                <radio class="theme sk-pseudo sk-pseudo-circle" color="#EFEFEF"></radio>
+                <text data-val="1" class="sk-transparent sk-text-14-2857-895 sk-text"> 原始成绩</text>
+                <radio class="theme margin-left sk-pseudo sk-pseudo-circle" color="#EFEFEF"></radio>
+                <text data-val="0" class="sk-transparent sk-text-14-2857-971 sk-text"> 有效成绩</text>
+              </radio-group>
+              <view class="fr">
+                <view class="text-yellow sk-transparent">
+                  查看已修科目
+                  <text class="icon-right sk-pseudo sk-pseudo-circle"></text>
+                </view>
+              </view>
+            </view>
+          </view>
+          <view class="score">
+            <view class="score-nav solid-bottom sk-pseudo sk-pseudo-circle">
+              <scroll-view scroll-x="true" class="bg-white nav text-center">
+                <view class="cu-item flex-sub text-theme cur sk-transparent sk-text-30-2632-649 sk-text" data-index="2020-2021" style="padding: 0px 29px; border: none; background-position-x: 50%;">
+                  大三
+                </view>
+                <view class="cu-item flex-sub sk-transparent sk-text-30-2632-810 sk-text" data-index="2019-2020" style="padding: 0px 29px; background-position-x: 50%;">
+                  大二
+                </view>
+                <view class="cu-item flex-sub sk-transparent sk-text-30-2632-523 sk-text" data-index="2018-2019" style="padding: 0px 29px; background-position-x: 50%;">
+                  大一
+                </view>
+              </scroll-view>
+            </view>
+            <view class="score-item padding-top-sm">
+              <view class="text-center padding-tb-xs sk-transparent sk-text-14-2857-53 sk-text" style="background-position-x: 50%;">2020-2021学年 第2学期</view>
+              <view class="gpa text-center padding-xs">
+                <text data-term="2020-2021-2" class="sk-transparent">平均绩点:2.91<text class="icon-right sk-pseudo sk-pseudo-circle"></text></text>
+              </view>
+              <view class="cu-list menu sm-border padding-top-sm">
+                <view class="cu-item sk-pseudo sk-pseudo-circle" data-index="61" style="min-height: 55px;">
+                  <view class="content">
+                    <view>
+                      <text class="text-black sk-transparent sk-text-18-7500-919 sk-text">SPSS软件应用</text>
+                    </view>
+                    <view class="text-sm"></view>
+                  </view>
+                  <view class="action">
+                    <text class="text-theme text-lg sk-transparent sk-text-14-2857-616 sk-text">60.00</text>
+                  </view>
+                </view>
+                <view class="cu-item sk-pseudo sk-pseudo-circle" data-index="62" style="min-height: 55px;">
+                  <view class="content">
+                    <view>
+                      <text class="text-black sk-transparent sk-text-18-7500-849 sk-text">企业信息组织综合训练</text>
+                    </view>
+                    <view class="text-sm"></view>
+                  </view>
+                  <view class="action">
+                    <text class="text-theme text-lg sk-transparent sk-text-14-2857-686 sk-text">91.00</text>
+                  </view>
+                </view>
+                <view class="cu-item sk-pseudo sk-pseudo-circle" data-index="63" style="min-height: 55px;">
+                  <view class="content">
+                    <view>
+                      <text class="text-black sk-transparent sk-text-18-7500-509 sk-text">会计学</text>
+                    </view>
+                    <view class="text-sm">
+                      <text class="text-grey sk-transparent">平时:<text class="text-theme sk-transparent sk-text-24-6094-339 sk-text">100.00
+                    </text></text>
+                      <text class="text-grey sk-transparent">期中:<text class="text-theme sk-transparent sk-text-24-6094-149 sk-text">79.00 </text></text>
+                      <text class="text-grey sk-transparent">期末:<text class="text-theme sk-transparent sk-text-24-6094-598 sk-text">86.00 </text></text>
+                    </view>
+                  </view>
+                  <view class="action">
+                    <text class="text-theme text-lg sk-transparent sk-text-14-2857-920 sk-text">89.00</text>
+                  </view>
+                </view>
+                <view class="cu-item sk-pseudo sk-pseudo-circle" data-index="64" style="min-height: 55px;">
+                  <view class="content">
+                    <view>
+                      <text class="text-black sk-transparent sk-text-18-7500-899 sk-text">信息安全</text>
+                    </view>
+                    <view class="text-sm">
+                      <text class="text-grey sk-transparent">平时:<text class="text-theme sk-transparent sk-text-24-6094-222 sk-text">100.00
+                    </text></text>
+                      <text class="text-grey sk-transparent">期中:<text class="text-theme sk-transparent sk-text-24-6094-415 sk-text">88.00 </text></text>
+                      <text class="text-grey sk-transparent">期末:<text class="text-theme sk-transparent sk-text-24-6094-256 sk-text">83.00 </text></text>
+                    </view>
+                  </view>
+                  <view class="action">
+                    <text class="text-theme text-lg sk-transparent sk-text-14-2857-203 sk-text">89.00</text>
+                  </view>
+                </view>
+                <view class="cu-item sk-pseudo sk-pseudo-circle" data-index="65" style="min-height: 55px;">
+                  <view class="content">
+                    <view>
+                      <text class="text-black sk-transparent sk-text-18-7500-357 sk-text">信息经济学</text>
+                    </view>
+                    <view class="text-sm">
+                      <text class="text-grey sk-transparent">平时:<text class="text-theme sk-transparent sk-text-24-6094-330 sk-text">100.00
+                    </text></text>
+                      <text class="text-grey sk-transparent">期中:<text class="text-theme sk-transparent sk-text-24-6094-37 sk-text">88.00 </text></text>
+                      <text class="text-grey sk-transparent">期末:<text class="text-theme sk-transparent sk-text-24-6094-543 sk-text">81.00 </text></text>
+                    </view>
+                  </view>
+                  <view class="action">
+                    <text class="text-theme text-lg sk-transparent sk-text-14-2857-481 sk-text">88.00</text>
+                  </view>
+                </view>
+                <view class="cu-item sk-pseudo sk-pseudo-circle" data-index="66" style="min-height: 55px;">
+                  <view class="content">
+                    <view>
+                      <text class="text-black sk-transparent sk-text-18-7500-273 sk-text">信息资源管理</text>
+                    </view>
+                    <view class="text-sm"></view>
+                  </view>
+                  <view class="action">
+                    <text class="text-theme text-lg sk-transparent sk-text-14-2857-590 sk-text">71.00</text>
+                  </view>
+                </view>
+                <view class="cu-item sk-pseudo sk-pseudo-circle" data-index="67" style="min-height: 55px;">
+                  <view class="content">
+                    <view>
+                      <text class="text-black sk-transparent sk-text-18-7500-825 sk-text">就业指导</text>
+                    </view>
+                  </view>
+                  <view class="action">
+                    <text class="text-theme text-lg sk-transparent sk-text-14-2857-713 sk-text">87.00</text>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>

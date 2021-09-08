@@ -1,0 +1,139 @@
+<!--
+此文件为开发者工具生成，生成时间: 2021/7/17 下午6:54:55
+使用方法：
+在 D:\小程序开发\云小智\pages\index\index.wxml 引入模板
+
+```
+<import src="index.skeleton.wxml"/>
+<template is="skeleton" wx-if="{{loading}}" />
+```
+
+在 D:\小程序开发\云小智\pages\index\index.wxss 中引入样式
+```
+@import "./index.skeleton.wxss";
+```
+
+更多详细信息可以参考文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/skeleton.html
+-->
+<template name="skeleton">
+  <view class="sk-container">
+    <swiper autoplay="false" circular="true" class="screen-swiper square-dot" duration="500" interval="5000" indicator-dots="true" current="0">
+      <swiper-item data-index="0" style="position: absolute; width: 100%; height: 100%; transform: translate(0%, 0px) translateZ(0px);">
+        <image mode="aspectFill" class="sk-image"></image>
+        <view>
+          <text class="sk-transparent sk-text-14-2857-295 sk-text">请查收，你的毕业报告</text>
+        </view>
+      </swiper-item>
+    </swiper>
+    <view class="container">
+      <view class="cu-list grid col-5 no-border tools">
+        <view class="cu-item sk-pseudo sk-pseudo-circle" data-appid="undefined" data-needlogin="true" data-path="undefined" data-tab="undefined" data-url="../tools/score/score?from=index">
+          <view class="app-icon" style="position: relative; left: 0px; top: 5px">
+            <image mode="widthFix" style="height: 30px;" class="sk-image"></image>
+          </view>
+          <text class="sk-transparent sk-text-18-1818-928 sk-text" style="background-position-x: 50%;">成绩查询</text>
+        </view>
+        <view class="cu-item sk-pseudo sk-pseudo-circle" data-appid="undefined" data-needlogin="true" data-path="undefined" data-tab="undefined" data-url="../tools/rank/rank?from=index">
+          <view class="app-icon" style="position: relative; left: 0px; top: 5px">
+            <image mode="widthFix" style="height: 30px;" class="sk-image"></image>
+          </view>
+          <text class="sk-transparent sk-text-18-1818-763 sk-text" style="background-position-x: 50%;">绩点排行</text>
+        </view>
+        <view class="cu-item sk-pseudo sk-pseudo-circle" data-appid="undefined" data-needlogin="true" data-path="undefined" data-tab="undefined" data-url="../tools/score/ana/ana?from=index">
+          <view class="app-icon" style="position: relative; left: 0px; top: 5px">
+            <image mode="widthFix" style="height: 30px;" class="sk-image"></image>
+          </view>
+          <text class="sk-transparent sk-text-18-1818-679 sk-text" style="background-position-x: 50%;">学业分析</text>
+        </view>
+        <view class="cu-item sk-pseudo sk-pseudo-circle" data-appid="undefined" data-needlogin="true" data-path="undefined" data-tab="undefined" data-url="../tools/attendance/attendance?from=index">
+          <view class="app-icon" style="position: relative; left: 0px; top: 5px">
+            <image mode="widthFix" style="height: 30px;" class="sk-image"></image>
+          </view>
+          <text class="sk-transparent sk-text-18-1818-500 sk-text" style="background-position-x: 50%;">考勤记录</text>
+        </view>
+        <view class="cu-item sk-pseudo sk-pseudo-circle" data-appid="undefined" data-needlogin="false" data-path="undefined" data-tab="undefined" data-url="../tools/emptyroom/emptyroom?from=index">
+          <view class="app-icon" style="position: relative; left: 0px; top: 5px">
+            <image mode="widthFix" style="height: 30px;" class="sk-image"></image>
+          </view>
+          <text class="sk-transparent sk-text-18-1818-404 sk-text" style="background-position-x: 50%;">空教室</text>
+        </view>
+        <view class="cu-item sk-pseudo sk-pseudo-circle" data-appid="undefined" data-needlogin="false" data-path="undefined" data-tab="undefined" data-url="../tools/calendar/calendar?from=index">
+          <view class="app-icon" style="position: relative; left: 0px; top: 5px">
+            <image mode="widthFix" style="height: 30px;" class="sk-image"></image>
+          </view>
+          <text class="sk-transparent sk-text-18-1818-362 sk-text" style="background-position-x: 50%;">校历</text>
+        </view>
+        <view class="cu-item sk-pseudo sk-pseudo-circle" data-appid="undefined" data-needlogin="true" data-path="undefined" data-tab="undefined" data-url="../tools/yct/yct?from=index">
+          <view class="app-icon" style="position: relative; left: 0px; top: 5px">
+            <image mode="widthFix" style="height: 30px;" class="sk-image"></image>
+          </view>
+          <text class="sk-transparent sk-text-18-1818-904 sk-text" style="background-position-x: 50%;">羊城通</text>
+        </view>
+        <view class="cu-item sk-pseudo sk-pseudo-circle" data-appid="undefined" data-needlogin="false" data-path="undefined" data-tab="undefined" data-url="/pages/tools/newstudent/newstudent">
+          <view class="app-icon" style="position: relative; left: 0px; top: 5px">
+            <image mode="widthFix" style="height: 30px;" class="sk-image"></image>
+          </view>
+          <text class="sk-transparent sk-text-18-1818-41 sk-text" style="background-position-x: 50%;">新生必看</text>
+        </view>
+        <view class="cu-item sk-pseudo sk-pseudo-circle" data-appid="undefined" data-needlogin="true" data-path="undefined" data-tab="undefined" data-url="/pages/tools/clockin/clockin">
+          <view class="app-icon" style="position: relative; left: 0px; top: 5px">
+            <image mode="widthFix" style="height: 30px;" class="sk-image"></image>
+          </view>
+          <text class="sk-transparent sk-text-18-1818-756 sk-text" style="background-position-x: 50%;">早起打卡</text>
+        </view>
+        <view class="cu-item sk-pseudo sk-pseudo-circle" data-appid="undefined" data-needlogin="false" data-path="undefined" data-tab="true" data-url="../tool/tool?from=index">
+          <view class="app-icon" style="position: relative; left: 0px; top: 5px">
+            <image mode="widthFix" style="height: 30px;" class="sk-image"></image>
+          </view>
+          <text class="sk-transparent sk-text-18-1818-293 sk-text" style="background-position-x: 50%;">全部应用</text>
+        </view>
+      </view>
+      <view class="box">
+        <view class="cu-bar bg-white solid-bottom arrow sk-pseudo sk-pseudo-circle">
+          <view class="action">
+            <text class="text-black text-xl text-bold sk-transparent sk-text-14-2857-901 sk-text">今日课表</text>
+          </view>
+          <view class="action sk-transparent sk-text-14-2857-286 sk-text">
+            第20周 周六
+          </view>
+        </view>
+        <view class="course_list unlogin">
+          <view class="sk-transparent sk-text-14-2857-468 sk-text" style="background-position-x: 50%;">
+            今天没课，去充实一下自己呗
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="cu-modal sk-pseudo sk-pseudo-circle">
+      <view class="cu-dialog">
+        <view class="cu-bar bg-white justify-end">
+          <view class="content sk-transparent sk-text-24-2424-400 sk-text" style="background-position-x: 50%;">新版本提示</view>
+          <view class="action">
+            <text class="icon-close text-red padding-right sk-pseudo sk-pseudo-circle"></text>
+          </view>
+        </view>
+        <view class="padding-xl">
+          <view class="padding-top-xs sk-transparent sk-text-14-2857-793 sk-text" style="background-position-x: 50%;">新版本的云小智已采用微信登录</view>
+          <view class="text-theme padding-top-xs sk-transparent sk-text-14-2857-188 sk-text" style="background-position-x: 50%;">请退出后重新登录即可正常使用</view>
+          <view class="padding-top-xs sk-transparent sk-text-14-2857-985 sk-text" style="background-position-x: 50%;">感谢您的理解与支持</view>
+        </view>
+        <view class="cu-bar bg-white justify-end">
+          <view class="action">
+            <button class="cu-btn bg-gray margin-right sk-transparent sk-button sk-pseudo sk-pseudo-circle">取消</button>
+            <button class="cu-btn bg-green margin-right sk-transparent sk-button sk-pseudo sk-pseudo-circle">点击重新登录</button>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="cu-modal sk-pseudo sk-pseudo-circle">
+      <view class="cu-dialog new-student-tips">
+        <view class="bg-img" style="height:400px;background-image: url('https://mmbiz.qpic.cn/mmbiz_png/YWKTC18p77KMycwJceMjyNQfWT4d5DXibImp9udEzVty9esBSDTyicbzDEZoibxpvDrH0kTaJX7lvfR1GpcOFHY3w/0?wx_fmt=png')"></view>
+        <view class="cu-bar bg-transparent">
+          <view class="action margin-0 flex-sub solid-left sk-pseudo sk-pseudo-circle">
+            <view class="margin-left-xs text-grey text-sm sk-transparent sk-text-14-2857-134 sk-text" style="background-position-x: 50%;">不再弹出</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>

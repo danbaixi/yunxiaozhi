@@ -16,6 +16,7 @@ Page({
    */
   onLoad: function (options) {
     let id = options.id
+    let stared = options.stared || false
     if(id <= 0){
       this.setData({
         loading:false,
@@ -24,8 +25,8 @@ Page({
       return
     }
     this.setData({
-      id:id,
-      stared: options.stared
+      id,
+      stared
     })
     this.getItem()
   },
@@ -36,7 +37,8 @@ Page({
   onShareAppMessage: function () {
     return {
       title: "欢迎加入我们" + this.data.club.name,
-      imageUrl: this.data.club.logo
+      imageUrl: this.data.club.logo,
+      path: `/pages/tools/club/item/item?id=${this.data.id}`
     }
   },
 

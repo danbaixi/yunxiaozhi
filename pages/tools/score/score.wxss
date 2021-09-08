@@ -64,5 +64,5 @@
   padding: 10rpx 18rpx;
   border-radius: 8rpx;
   color: #fff;
-  margin-left: 20rpx;
+  margin-right: 20rpx;
 }

@@ -76,7 +76,11 @@ Page({
 
   // 获取需求结果
   getScoreDemand() {
+    const that = this
     getScoreDemand().then((res) => {
+      that.setData({
+        demandId: res.data.id
+      })
       if (res.message) {
         wx.showToast({
           title: res.message,
@@ -212,28 +216,37 @@ Page({
             showModal: false
           })
         } else if (res.status == 2001) {
-          const temaplteId = 'lhKCIfBKo9GZc2Vd1zQSxpirSKHBe3czDG0OliOcXgg'
-          setTimeout(() => {
-            wx.requestSubscribeMessage({
-              tmplIds: [temaplteId],
-              success (result) {
-                if (result[temaplteId] === 'accept') {
-                  subscribeScore({id: res.data.id}).then((res) => {
-                    app.msg(res.message)
-                  })
-                  return
-                }
-                app.msg('你未订阅成绩通知，将无法收到成绩更新信息')
-              },
-              fail() {
-                app.msg('订阅失败，请重试！')
-              }
-            })
-          }, 2000);
+          that.setData({
+            demandId: res.data.id
+          })
+          that.subscribe()
         }
       }
     })
   },
+
+  subscribe() {
+    const that = this
+    const temaplteId = 'lhKCIfBKo9GZc2Vd1zQSxpirSKHBe3czDG0OliOcXgg'
+    wx.requestSubscribeMessage({
+      tmplIds: [temaplteId],
+      success (result) {
+        if (result[temaplteId] === 'accept') {
+          subscribeScore({
+            id: that.data.demandId
+          }).then((res) => {
+            app.msg(res.message)
+          })
+          return
+        }
+        app.msg('你未订阅成绩通知，将无法收到成绩更新信息')
+      },
+      fail() {
+        app.msg('订阅失败，请重试！')
+      }
+    })
+  },
+
   backPageBtn:function(){
     backPage(this.data.from)
   },

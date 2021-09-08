@@ -25,7 +25,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  filter: blur(4px);
+  filter: blur(60rpx) opacity(60%);
   z-index: -1;
 }
 .options{

@@ -20,9 +20,10 @@
       <notice page="score"></notice>
       <view class="info score">
         <view class="padding-bottom-sm">
-          <text class="text-black">上次更新：</text>
-          <text class="text-gray">{{update_time}}</text>
+          <!-- <text class="text-black">上次更新：</text>
+          <text class="text-gray">{{update_time}}</text> -->
           <text class="bg-yellow option-btn" bindtap="update">更新成绩</text>
+          <text class="bg-theme option-btn" bindtap="subscribe">订阅通知</text>
         </view>
         <view class="padding-top-sm">
           <radio-group bindchange="changeType">
