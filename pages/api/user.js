@@ -108,7 +108,8 @@ function getDormitory(){
 // 获取宿舍楼列表
 function getRoomList(){
   return R({
-    url:'dormitory/getRoom'
+    url:'dormitory/getRoom',
+    needLogin: false
   })
 }
 
@@ -116,6 +117,7 @@ function getRoomList(){
 function getLevelList(data){
   return R({
     url:'dormitory/getLevelsList',
+    needLogin: false,
     data
   })
 }
@@ -124,6 +126,7 @@ function getLevelList(data){
 function getDormitoryList(data){
   return R({
     url:'dormitory/getDormitoryList',
+    needLogin: false,
     data
   })
 }

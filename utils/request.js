@@ -38,6 +38,7 @@ function getRedirect(){
 function R(datas){
   datas.data = datas.data == undefined ? {} : datas.data
   let session = ''
+  let login = 1
   if (datas.needLogin == undefined || datas.needLogin == true){
     session = wx.getStorageSync('login_session')
     if(session == ""){
@@ -55,6 +56,8 @@ function R(datas){
         return resolve('请先登录')
       })
     }
+  } else {
+    login = 0
   }
   var url = getUrl(datas.url),
       data = typeof datas.data == undefined ? '': datas.data,
@@ -74,7 +77,8 @@ function R(datas){
       timeout: 20000,
       header: {
         'content-type': contentType,
-        'session-token': session
+        'session-token': session,
+        'login': login
       },
       success:function(res){
         if(res.data.status == 0){

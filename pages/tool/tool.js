@@ -135,7 +135,7 @@ Page({
         badge: '',
         name: '水电查询',
         icon: 'quantity',
-        needLogin: true,
+        needLogin: false,
         url: '/pages/tools/quantity/quantity',
       }, 
       {

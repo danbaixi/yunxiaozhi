@@ -1,4 +1,10 @@
-const { getDormitory, getRoomList, getLevelList, getDormitoryList, setDormitory } = require('../../api/user')
+const {
+  getDormitory,
+  getRoomList,
+  getLevelList,
+  getDormitoryList,
+  setDormitory
+} = require('../../api/user')
 const app = getApp()
 Page({
 
@@ -7,15 +13,15 @@ Page({
    */
   data: {
     optype: 1, //类型
-    pid: 0,//父级id
-    rooms:{},
+    pid: 0, //父级id
+    rooms: {},
     area: -1,
     build: -1,
     level: -1,
     room: -1,
-    areas:[],
-    builds:[],
-    levels:[],
+    areas: [],
+    builds: [],
+    levels: [],
     dormitorys: []
   },
 
@@ -23,24 +29,34 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    app.isLogin()
+    this.setData({
+      loginStatus: app.getLoginStatus()
+    })
     this.getItem()
     this.getInfo()
   },
 
   //获取设置
-  getInfo:function(){
+  getInfo: function () {
     let _this = this
-    getDormitory()
-      .then((res) => {
-        _this.setData({
-          dormitory:res.data
+    if (_this.data.loginStatus) {
+      getDormitory()
+        .then((res) => {
+          _this.setData({
+            dormitory: res.data
+          })
         })
-      })
+      return
+    }
+    // 获取临时宿舍
+    const dormitory = wx.getStorageSync('tmp_dormitory')
+    _this.setData({
+      dormitory
+    })
   },
 
   //获取数据
-  getItem:function(){
+  getItem: function () {
     let _this = this
     wx.showLoading({
       title: '正在加载...',
@@ -56,16 +72,18 @@ Page({
   },
 
   // 获取选择器选项
-  getOptions:function(type,id){
+  getOptions: function (type, id) {
     let rooms = this.data.rooms
     let coloum = ''
-    switch(type){
-      case 1:coloum = 'area';break
+    switch (type) {
+      case 1:
+        coloum = 'area';
+        break
     }
     let result = []
     type = type + 1
-    for(let i=0;i<rooms[type].length;i++){
-      if(rooms[type][i][coloum] == id){
+    for (let i = 0; i < rooms[type].length; i++) {
+      if (rooms[type][i][coloum] == id) {
         result.push(rooms[type][i])
       }
     }
@@ -73,16 +91,16 @@ Page({
   },
 
   //设置校区
-  select:function(e){
+  select: function (e) {
     let optype = Number(e.currentTarget.dataset.optype)
     let val = e.detail.value
     let ops = []
-    if(optype < 2){
+    if (optype < 2) {
       let id = this.data.rooms[optype][val]['id']
-      ops = this.getOptions(optype,id)
+      ops = this.getOptions(optype, id)
     }
     let data = {}
-    switch(optype){
+    switch (optype) {
       case 1:
         data = {
           area: val,
@@ -108,15 +126,15 @@ Page({
         }
     }
     this.setData(data)
-    if(optype == 2){
+    if (optype == 2) {
       this.getLevels()
-    }else if(optype == 3){
+    } else if (optype == 3) {
       this.getRooms()
     }
   },
 
   //获取楼层
-  getLevels:function(){
+  getLevels: function () {
     let _this = this
     let area = _this.data.areas[_this.data.area].id
     let build = _this.data.builds[_this.data.build].id
@@ -124,18 +142,21 @@ Page({
       title: '正在加载',
       mask: true
     })
-    getLevelList({area,build}).then((res) => {
+    getLevelList({
+      area,
+      build
+    }).then((res) => {
       wx.hideLoading()
-      if(res.status == 0){
+      if (res.status == 0) {
         _this.setData({
-          levels:res.data
+          levels: res.data
         })
       }
     })
   },
 
   //获取宿舍号
-  getRooms:function(){
+  getRooms: function () {
     let _this = this
     let area = _this.data.areas[_this.data.area].id
     let build = _this.data.builds[_this.data.build].id
@@ -145,57 +166,75 @@ Page({
       mask: true
     })
     getDormitoryList({
-      area:area,
-      build:build,
-      level:level
+      area: area,
+      build: build,
+      level: level
     }).then((res) => {
       wx.hideLoading()
       _this.setData({
-        dormitorys:res.data
+        dormitorys: res.data
       })
     })
   },
 
   //保存
-  save:function(){
+  save: function () {
     let _this = this
-    if(_this.data.area < 0){
+    if (_this.data.area < 0) {
       app.msg('请选择校区')
       return
     }
-    if(_this.data.build < 0){
+    if (_this.data.build < 0) {
       app.msg('请选择宿舍楼')
       return
     }
-    if(_this.data.level < 0){
+    if (_this.data.level < 0) {
       app.msg('请选择楼层')
       return
     }
-    if(_this.data.room < 0){
+    if (_this.data.room < 0) {
       app.msg('请选择房号')
       return
     }
     let id = _this.data.dormitorys[_this.data.room].id
     let name = _this.data.areas[_this.data.area].name + '-' + _this.data.builds[_this.data.build].name + '-' + _this.data.dormitorys[_this.data.room].name
-    setDormitory({
-      id: id,
-      name: name
-    })
-    .then((res) => {
-      if(res.status == 0){
-        app.msg(res.message)
-        _this.setData({
-          dormitory: name
-        })
-        var pages = getCurrentPages();
-        var prevPage = pages[pages.length - 2];
-        if(!prevPage){
-          return
+    if (_this.data.loginStatus) {
+      setDormitory({
+        id,
+        name
+      }).then((res) => {
+        if (res.status == 0) {
+          _this.settingSuccess(name)
         }
-        prevPage.setData({
-          isFresh: true
-        })
-      }
+      }).catch(() => {
+        app.msg('设置失败，请联系客服解决')
+      })
+    } else {
+      wx.setStorageSync('tmp_dormitory', {
+        id,
+        name
+      })
+
+      _this.settingSuccess(name)
+    }
+  },
+
+  // 设置成功
+  settingSuccess(name) {
+    app.msg('设置成功')
+    this.setData({
+      dormitory: name
+    })
+    var pages = getCurrentPages();
+    var prevPage = pages[pages.length - 2];
+    if (!prevPage) {
+      return
+    }
+    prevPage.setData({
+      isFresh: true
+    })
+    wx.navigateBack({
+      delta: 1,
     })
   }
 })

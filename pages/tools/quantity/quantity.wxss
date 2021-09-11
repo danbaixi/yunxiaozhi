@@ -165,3 +165,7 @@
 .null{
   box-shadow: 0 14px 28px rgba(69,58,148, 0.1), 0 10px 10px rgba(244,59,71, 0.8);
 }
+
+.action {
+  flex: none;
+}

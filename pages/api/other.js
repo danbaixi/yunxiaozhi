@@ -298,6 +298,15 @@ function getQuantityDetail(){
   })
 }
 
+// 通过宿舍号查询水电费
+function getQuantityFromDormitory(data) {
+  return R({
+    url: 'dormitory/getDetailFromDormitory',
+    needLogin: false,
+    data
+  })
+}
+
 // 初始化运动排名页面
 function initSport(){
   return R({
@@ -446,5 +455,6 @@ module.exports = {
   switchSummaryShareStatus,
   getIsHideSoul,
   getDiscountList,
-  getDiscountTypes
+  getDiscountTypes,
+  getQuantityFromDormitory
 }
