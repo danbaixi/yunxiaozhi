@@ -718,10 +718,12 @@ Page({
     //先判断今天是否有课，没课显示默认的
     var week = (new Date()).getDay()
     if(week == 0 || week == 6){
-      this.setData({
-        course_time : times[this.data.area - 1]
-      })
-      return
+      // 周末显示周一的
+      week = 1
+      // this.setData({
+      //   course_time : times[this.data.area - 1]
+      // })
+      // return
     }
 
     var courses = wx.getStorageSync('course');
@@ -779,10 +781,10 @@ Page({
           //北校区
           if((course.jie == 3 && course.jieshu == 2 || course.jie == 1 && course.jieshu == 4) && floorNum > 4){
             //楼层>4的情况，三四节分开上
-            // times[1][2][0] = "10:20"
-            // times[1][2][1] = "11:05"
-            // times[1][3][0] = "11:10"
-            // times[1][3][1] = "11:55"
+            times[1][2][0] = "10:20"
+            times[1][2][1] = "11:05"
+            times[1][3][0] = "11:15"
+            times[1][3][1] = "12:00"
           }
         }
         
