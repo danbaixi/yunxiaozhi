@@ -51,7 +51,7 @@ Page({
     // 获取临时宿舍
     const dormitory = wx.getStorageSync('tmp_dormitory')
     _this.setData({
-      dormitory
+      dormitory: dormitory.name
     })
   },
 
