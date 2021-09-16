@@ -78,7 +78,7 @@
     <view class="cu-item arrow" bindtap="untieWechat">
       <view class="content">
         <text class="cuIcon-circlefill text-grey"></text>
-        <text class="text-grey">解绑微信账号</text>
+        <text class="text-grey">解绑教务系统账号</text>
       </view>
     </view>
   </view>

@@ -1,6 +1,6 @@
 .container{
   text-align: center;
-  padding: 30rpx;
+  padding: 30rpx 50rpx;
 }
 .empty-img{
   width: 240rpx;
@@ -8,6 +8,7 @@
 }
 .title{
   margin-top: 40rpx;
-  font-size: 30rpx;
+  font-size: 36rpx;
   color: #333;
+  line-height: 60rpx;
 }

@@ -2,7 +2,10 @@
   <view slot="back">返回</view>
 	<view slot="content">找同乡</view>
 </cu-custom>
-<view class="container" style="top:{{customBar}}px">
+<view wx:if="{{openStatus == 0}}" class="empty">
+  <empty display="{{true}}" content="{{openTips}}"></empty>
+</view>
+<view wx:else class="container" style="top:{{customBar}}px">
   <view class="cu-bar bg-white search fixed" style="top:{{customBar}}px">
     <view class="search-form round">
       <text class="icon-search"></text>

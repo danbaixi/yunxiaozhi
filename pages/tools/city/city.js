@@ -14,17 +14,25 @@ Page({
     search: '',
     oldSearch: '',
     notMore: false,
+    openStatus: 1
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getList()
     let auditing = app.getConfig('auditing')
+    const functionStatus = app.getConfig('functions.city')
+    if(!functionStatus || functionStatus.status == 0){
+      this.setData({
+        openStatus:functionStatus.status,
+        openTips: functionStatus.tips
+      })
+    }
     this.setData({
       auditing:auditing
     })
+    this.getList()
   },
 
   /**
