@@ -1,13 +1,22 @@
 const app = getApp()
-const { likeSoul } = require('../api/soul')
-const { getExamList, getIsHideSoul } = require('../api/other')
-const { getCourseList } = require('../api/course')
-const { checkCourseInWeek,getConfig } = require('../../utils/common')
+const {
+  likeSoul
+} = require('../api/soul')
+const {
+  getExamList,
+  getIsHideSoul
+} = require('../api/other')
+const {
+  getCourseList
+} = require('../api/course')
+const {
+  checkCourseInWeek,
+  getConfig
+} = require('../../utils/common')
 const dayjs = require('../../utils/dayjs.min')
 Page({
   data: {
-    tools: [
-      {
+    tools: [{
         icon: 'form',
         color: 'blue',
         badge: 0,
@@ -23,7 +32,7 @@ Page({
         icon: 'gpa',
         needLogin: true,
         url: '../tools/rank/rank?from=index',
-      },{
+      }, {
         icon: 'rank',
         color: 'green',
         badge: 0,
@@ -39,7 +48,7 @@ Page({
         icon: 'attendance',
         needLogin: true,
         url: '../tools/attendance/attendance?from=index',
-      },{
+      }, {
         icon: 'search',
         color: 'olive',
         badge: 0,
@@ -63,7 +72,7 @@ Page({
         icon: 'yct',
         needLogin: true,
         url: '../tools/yct/yct?from=index',
-      }, 
+      },
       {
         color: 'olive',
         badge: 0,
@@ -109,48 +118,55 @@ Page({
       //   needLogin: false,
       //   url: '/pages/tools/discount/discount'
       // }
+      // {
+      //   icon: 'apps',
+      //   color: 'theme',
+      //   badge: 1,
+      //   needLogin: false,
+      //   tab:true,
+      //   name: '全部应用',
+      //   icon: 'apps',
+      //   url: '../tool/tool?from=index',
+      // }
       {
-        icon: 'apps',
-        color: 'theme',
-        badge: 1,
+        icon: 'countdown',
+        color: 'olive',
+        badge: '新',
+        name: '小智助手',
+        icon: 'zhushou',
         needLogin: false,
-        tab:true,
-        name: '全部应用',
-        icon: 'apps',
-        url: '../tool/tool?from=index',
-      }
+        url: '../article/article?src=' + encodeURIComponent('http://mp.weixin.qq.com/s?__biz=MzI1NTUwNDIzNQ==&mid=2247488770&idx=1&sn=f7d7747e97ab377bd5f915c506d7a7e7&chksm=ea35af06dd42261028b0b3554e22111d7f8c312e0d7ed34f1679a2b15c2cb287f62287503cb6#rd'),
+      },
     ],
     loading: false,
     gridCol: 5,
-    news_loading:false,
-    course_loading:false,
-    message_loading:false,
-    message:'暂无公告',
+    news_loading: false,
+    course_loading: false,
+    message_loading: false,
+    message: '暂无公告',
     indicatorDots: true,
     autoplay: true,
     interval: 5000,
     duration: 10001,
-    displayExam:false,
-    tmpClass:'',
-    imgDomain:app.globalData.fileDomain,
-    likeSoul:false,
-    hideSoul:1,
-    soul:'',
-    banner:[
-      {
-        img_src:'/pages/assets/imgs/other/bgImage.jpg',
-        display:1,
-        type:0
-      }
-    ],
+    displayExam: false,
+    tmpClass: '',
+    imgDomain: app.globalData.fileDomain,
+    likeSoul: false,
+    hideSoul: 1,
+    soul: '',
+    banner: [{
+      img_src: '/pages/assets/imgs/other/bgImage.jpg',
+      display: 1,
+      type: 0
+    }],
     statusBar: app.globalData.statusBar,
     customBar: app.globalData.customBar,
-    bgHeight: 180,//背景高度
-    bgFix:false,//是否固定背景
-    newVersionTip:false,//新版本提示,
+    bgHeight: 180, //背景高度
+    bgFix: false, //是否固定背景
+    newVersionTip: false, //新版本提示,
     showNewsList: true,
     showNewStudentTips: false,
-    articleBanners:[]
+    articleBanners: []
   },
 
   onLoad: function () {
@@ -163,7 +179,7 @@ Page({
       })
     }
     this.newStudentTips()
-    if(!wx.getStorageSync('add_my_tips')){
+    if (!wx.getStorageSync('add_my_tips')) {
       this.setData({
         add_tips: true
       })
@@ -174,7 +190,7 @@ Page({
     })
   },
 
-  onShow:function(){
+  onShow: function () {
     var that = this;
     let session = app.getLoginStatus()
     let user_id = app.getUserId()
@@ -202,9 +218,9 @@ Page({
       })
     }
 
-    that.getNowWeek();//获取第几周
-    that.getWeekday();//获取星期几
-    that.getCourse(that.data.now_week);//获取课表
+    that.getNowWeek(); //获取第几周
+    that.getWeekday(); //获取星期几
+    that.getCourse(that.data.now_week); //获取课表
     that.getArticleBanner()
     //判断是否为本班课表
     var tmpClass = wx.getStorageSync('tmp_class')
@@ -214,7 +230,7 @@ Page({
   },
 
   /** 下拉刷新 */
-  onPullDownRefresh:function(){
+  onPullDownRefresh: function () {
     var that = this;
     wx.showNavigationBarLoading() //在标题栏中显示加载
     that.setData({
@@ -233,10 +249,10 @@ Page({
     })
   },
   onShareAppMessage: function () {
-    return app.share('课表成绩考勤校历都在这里','index.png',this.route)
+    return app.share('课表成绩考勤校历都在这里', 'index.png', this.route)
   },
   /** 打开应用 */
-  openTool:function(e){
+  openTool: function (e) {
     var url = e.currentTarget.dataset.url
     var needLogin = e.currentTarget.dataset.needlogin
     var tab = e.currentTarget.dataset.tab
@@ -250,14 +266,14 @@ Page({
       app.msg("请先绑定教务系统账号")
       return;
     }
-    if(appid){
+    if (appid) {
       wx.navigateToMiniProgram({
-        appId:appid,
+        appId: appid,
         path: path
       })
       return
     }
-    if(tab === true){
+    if (tab === true) {
       wx.switchTab({
         url: url,
       })
@@ -273,7 +289,7 @@ Page({
     var that = this;
     var date = new Date();
     let termDate = app.getConfig('nowTerm.date')
-    if(termDate === false){
+    if (termDate === false) {
       termDate = '2020-03-02' // 配置过渡
       that.setData({
         now_week: 1,
@@ -282,7 +298,7 @@ Page({
       return
     }
     let data = termDate.split('-')
-    let [year, month, day] = [data[0], data[1], data[2]]  
+    let [year, month, day] = [data[0], data[1], data[2]]
     var start = new Date(year, month - 1, day);
     //计算时间差
     var left_time = parseInt((date.getTime() - start.getTime()) / 1000);
@@ -291,12 +307,12 @@ Page({
 
     if (week <= 0 || week > 20) {
       var now_week_text = '假期'
-    }else {
+    } else {
       var now_week_text = '第' + week + '周';
     }
     that.setData({
-      now_week:week,
-      now_week_text:now_week_text
+      now_week: week,
+      now_week_text: now_week_text
     })
   },
 
@@ -317,7 +333,7 @@ Page({
           var jieshu = data[a]['course_section'].split("-")[1] - data[a]['course_section'].split("-")[0] + 1;
           //格式化上课地点
           data[a]['full_address'] = data[a]['course_address']
-          data[a]['course_address'] = data[a]['course_address'].replace('-', '_')//把-换成_
+          data[a]['course_address'] = data[a]['course_address'].replace('-', '_') //把-换成_
           var temp = data[a]['course_address'].split('_');
           var address;
           if (temp.length > 1) {
@@ -330,10 +346,10 @@ Page({
             week: data[a]['course_week'],
             jie: jie,
             jieshu: jieshu,
-            jie_end:parseInt(jie) + parseInt(jieshu) -1,
+            jie_end: parseInt(jie) + parseInt(jieshu) - 1,
             name: data[a]['course_name'],
             address: address,
-            fullAddress:data[a]['full_address'],
+            fullAddress: data[a]['full_address'],
             num: data[a]['num'],
             zhoushu: data[a]['course_weekly'],
             teacher: data[a]['course_teacher'],
@@ -341,69 +357,83 @@ Page({
             method: data[a]['course_method'],
             category: data[a]['course_category']
           }];
-          if (courses.length > 0 && course[0].num == courses[courses.length - 1].num && courses[courses.length - 1].end - course[0].jie_end == 1){
-            if (course[0].jie_end > courses[courses.length - 1].jie_end){
+          if (courses.length > 0 && course[0].num == courses[courses.length - 1].num && courses[courses.length - 1].end - course[0].jie_end == 1) {
+            if (course[0].jie_end > courses[courses.length - 1].jie_end) {
               courses[courses.length - 1].jie_end = course[0].jie_end;
-            }else{
+            } else {
               courses[courses.length - 1].jie = course[0].jie;
             }
-            
-          }else{
+
+          } else {
             courses = courses.concat(course);
           }
         }
       }
-      for(var i=0;i<courses.length;i++){
-        for(var j=i+1;j<courses.length;j++){
-          if (Number(courses[i]['jie']) > Number(courses[j]['jie'])){
+      for (var i = 0; i < courses.length; i++) {
+        for (var j = i + 1; j < courses.length; j++) {
+          if (Number(courses[i]['jie']) > Number(courses[j]['jie'])) {
             var temp = courses[i];
             courses[i] = courses[j];
             courses[j] = temp;
           }
         }
       }
-      
+
     }
     that.setData({
       course: courses
     });
 
     //获取毒鸡汤
-    if (that.data.hideSoul == 0 && (that.data.course == null || that.data.course.length == 0)){
+    if (that.data.hideSoul == 0 && (that.data.course == null || that.data.course.length == 0)) {
       that.getSoul()
     }
     // that.getTrain(week);
   },
 
   /** 获取星期几 */
-  getWeekday:function(){
+  getWeekday: function () {
     var that = this;
     var weekday = (new Date()).getDay();
     var WEEKDAY;
-    switch(weekday){
-      case 0: WEEKDAY = '日';break;
-      case 1: WEEKDAY = '一';break;
-      case 2: WEEKDAY = '二';break;
-      case 3: WEEKDAY = '三';break;
-      case 4: WEEKDAY = '四';break;
-      case 5: WEEKDAY = '五';break;
-      case 6: WEEKDAY = '六';break;
+    switch (weekday) {
+      case 0:
+        WEEKDAY = '日';
+        break;
+      case 1:
+        WEEKDAY = '一';
+        break;
+      case 2:
+        WEEKDAY = '二';
+        break;
+      case 3:
+        WEEKDAY = '三';
+        break;
+      case 4:
+        WEEKDAY = '四';
+        break;
+      case 5:
+        WEEKDAY = '五';
+        break;
+      case 6:
+        WEEKDAY = '六';
+        break;
     }
     that.setData({
-      weekday:weekday,
-      WEEKDAY:WEEKDAY,
+      weekday: weekday,
+      WEEKDAY: WEEKDAY,
     })
   },
 
   /** 跳转登录页面 */
-  goLogin:function(){
+  goLogin: function () {
     wx.navigateTo({
       url: '../login/login?redirect=' + this.route,
     })
     this.hideVersionTips()
   },
 
-  goBind:function(){
+  goBind: function () {
     wx.navigateTo({
       url: '../bind/bind',
     })
@@ -424,7 +454,7 @@ Page({
   },
 
   /** 跳转公告页面 */
-  goMessage:function(){
+  goMessage: function () {
     wx.navigateTo({
       url: 'message/message',
     })
@@ -435,12 +465,12 @@ Page({
     var indexNum = e.currentTarget.dataset.num;
     var data = this.data.course;
     var course = null
-    for(let i=0;i<data.length;i++){
-      if(data[i].indexNum == indexNum){
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].indexNum == indexNum) {
         course = data[i]
       }
     }
-    if(course == null){
+    if (course == null) {
       app.msg("获取信息失败")
       return
     }
@@ -451,10 +481,10 @@ Page({
 
   //获取考试列表
   getMyExam: function () {
-    if (!app.getUserId()){
+    if (!app.getUserId()) {
       this.setData({
-        my_exams:[],
-        displayExam:false
+        my_exams: [],
+        displayExam: false
       })
       return
     }
@@ -464,9 +494,9 @@ Page({
     getExamList().then((res) => {
       let data = res.data
       for (let i = 0; i < data.length; i++) {
-        let days = dayjs(data[i].exam_date).diff(now,'day')
+        let days = dayjs(data[i].exam_date).diff(now, 'day')
         data[i].days = days
-        if(days > 0){
+        if (days > 0) {
           displayExam = true
         }
       }
@@ -477,16 +507,16 @@ Page({
     })
   },
 
-  goExam:function(e){
+  goExam: function (e) {
     wx.navigateTo({
       url: '../tools/exam/exam?currentTab=1',
     })
   },
 
-  closeAddTip(){
+  closeAddTip() {
     var time = (new Date).getTime()
     this.setData({
-      add_tips:false
+      add_tips: false
     })
     wx.setStorageSync('add_my_tips', time)
   },
@@ -494,11 +524,11 @@ Page({
   //获取毒鸡汤
   getSoul: function () {
     const list = wx.getStorageSync('souls')
-    if(list){
+    if (list) {
       let soul = list[Math.floor(Math.random() * list.length)]
       this.setData({
         soul: soul,
-        likeSoul:false
+        likeSoul: false
       })
     }
   },
@@ -511,11 +541,14 @@ Page({
     }
     let id = e.currentTarget.dataset.id
     let stu_id = app.getUserId()
-    if(!stu_id){
+    if (!stu_id) {
       app.msg("登录才能点赞")
       return
     }
-    likeSoul({id,stu_id}).then((data) => {
+    likeSoul({
+      id,
+      stu_id
+    }).then((data) => {
       let soul = that.data.soul
       soul.like_count = soul.like_count + 1;
       that.setData({
@@ -527,7 +560,7 @@ Page({
     })
   },
 
-  goSoul:function(){
+  goSoul: function () {
     wx.navigateTo({
       url: '/pages/soul/soul',
     })
@@ -546,39 +579,39 @@ Page({
           wx.hideLoading()
           app.msg('切换成功', 'success')
           _this.setData({
-            tmpClass:''
+            tmpClass: ''
           })
           wx.removeStorageSync('tmp_class')
           wx.setStorageSync('course', res.data.course)
           wx.setStorageSync('train', res.data.train_course)
-          _this.getCourse(_this.data.now_week);//获取课
+          _this.getCourse(_this.data.now_week); //获取课
         })
       }
     })
   },
 
-  hideVersionTips:function(){
+  hideVersionTips: function () {
     this.setData({
-      newVersionTip:false
+      newVersionTip: false
     })
   },
 
   //获取文章轮播
-  getArticleBanner:function(){
-    if(this.data.articleBanners.length > 0){
+  getArticleBanner: function () {
+    if (this.data.articleBanners.length > 0) {
       return
     }
     let banners = getConfig('banners')
-    if(!banners){
+    if (!banners) {
       return
     }
     const audit = getConfig('auditing')
-    if(audit == 1){
+    if (audit == 1) {
       banners = [{
-          title : '',
-          img : 'https://mmbiz.qpic.cn/mmbiz_jpg/YWKTC18p77JNk4Iyh99tsRmnHLUFunCcic5ZqFABFAtmqfT4DBuAH4sDsbTCugj9o8JJsRoBfbotQLgAllHAfDQ/0?wx_fmt=jpeg',
-          src : ''
-        }]
+        title: '',
+        img: 'https://mmbiz.qpic.cn/mmbiz_jpg/YWKTC18p77JNk4Iyh99tsRmnHLUFunCcic5ZqFABFAtmqfT4DBuAH4sDsbTCugj9o8JJsRoBfbotQLgAllHAfDQ/0?wx_fmt=jpeg',
+        src: ''
+      }]
     }
     this.setData({
       articleBanners: banners
@@ -586,8 +619,8 @@ Page({
   },
 
   //点击轮播的文章
-  viewArticle:function(e){
-    if (this.data.articleBanners.length <= 1){
+  viewArticle: function (e) {
+    if (this.data.articleBanners.length <= 1) {
       return
     }
     let index = e.currentTarget.dataset.index
@@ -598,37 +631,37 @@ Page({
   },
 
   //展示新生专题提示
-  newStudentTips:function(){
+  newStudentTips: function () {
     let audit = app.getConfig('auditing')
     let user_id = app.getUserId()
     let setting = wx.getStorageSync('hide_new_studnet_tips')
     //不再弹出
     setting = 1
-    if(audit == 0 && !user_id && !setting){
+    if (audit == 0 && !user_id && !setting) {
       this.setData({
-        showNewStudentTips:true
+        showNewStudentTips: true
       })
     }
   },
 
-  hideNewStudentTips:function(){
+  hideNewStudentTips: function () {
     this.setData({
-      showNewStudentTips:false
+      showNewStudentTips: false
     })
   },
 
-  goNewStudent:function(){
+  goNewStudent: function () {
     wx.navigateTo({
       url: '/pages/tools/newstudent/newstudent',
     })
   },
 
-  closeNewStudentTips:function(){
+  closeNewStudentTips: function () {
     wx.setStorageSync('hide_new_studnet_tips', true)
     app.msg("已设置不再弹出")
   },
 
-  closeNewStudentFloat:function(){
+  closeNewStudentFloat: function () {
     this.setData({
       hideNewStudentFloat: true
     })

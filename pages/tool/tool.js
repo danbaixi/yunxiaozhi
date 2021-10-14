@@ -236,7 +236,7 @@ Page({
         name: '找群聊',
         icon: 'qunliao',
         needLogin: false,
-        url: '../article/article?src=' + encodeURIComponent('http://mp.weixin.qq.com/s?__biz=MzI1NTUwNDIzNQ==&mid=100002002&idx=1&sn=79069994b1793c33e8ce49431c1d0bd6&chksm=6a35b2d65d423bc097f66072ce82aa4aecc9a1b12da127418eb273f43ce16b4b68f8cde2afc4#rd' + "&title=云小智邀请你加入群聊"),
+        url: '../article/article?src=' + encodeURIComponent('http://mp.weixin.qq.com/s?__biz=MzI1NTUwNDIzNQ==&mid=2247488770&idx=1&sn=f7d7747e97ab377bd5f915c506d7a7e7&chksm=ea35af06dd42261028b0b3554e22111d7f8c312e0d7ed34f1679a2b15c2cb287f62287503cb6#rd' + "&title=云小智邀请你加入群聊"),
       },
     ],
     query:[

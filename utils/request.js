@@ -85,7 +85,7 @@ function R(datas){
         if(res.data.status == 0){
           return resolve(res.data)
         }
-        if(res.data.status == 4003){
+        if(res.data.status == 4001 || res.data.status == 4003){
           //登陆已过期
           wx.showToast({
             icon: 'none',

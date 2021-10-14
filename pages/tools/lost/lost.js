@@ -1,5 +1,6 @@
 const app = getApp()
 const { getLostList } = require('../../api/other')
+import { openArticle } from '../../../utils/common'
 Page({
 
   /**
@@ -75,10 +76,7 @@ Page({
     })
   },
   
-  goQuanzi(){
-    wx.navigateToMiniProgram({
-      appId: "wxb036cafe2994d7d0",
-      path: "/portal/topic-profile/topic-profile?group_id=13104375827371700&invite_ticket=BgAARwqnU-49GW8g92KH3E7WFA&topic_id=1&fromScene=bizArticle",
-    })
+  release(){
+    openArticle('http://mp.weixin.qq.com/s?__biz=MzI1NTUwNDIzNQ==&mid=2247488770&idx=1&sn=f7d7747e97ab377bd5f915c506d7a7e7&chksm=ea35af06dd42261028b0b3554e22111d7f8c312e0d7ed34f1679a2b15c2cb287f62287503cb6#rd')
   }
 })
