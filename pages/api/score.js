@@ -15,7 +15,7 @@ function getScoreList(redirect){
 // 更新成绩
 function updateScore(data){
   return R({
-    url: 'score/updateScoreV0',
+    url: 'score/updateScoreList',
     data
   })
 }

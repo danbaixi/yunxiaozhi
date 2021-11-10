@@ -85,7 +85,9 @@ Page({
         let termNum = semester.map(s => s.semester)
         getGradeList(termNum).then((grades) => {
           for(let i in semester){
-            semester[i].title += `(${grades[semester[i].semester]})`
+            if (grades[semester[i].semester] != '未知') {
+              semester[i].title += `(${grades[semester[i].semester]})`
+            }
           }
           that.setData({
             semester
