@@ -1,0 +1,16 @@
+<home wx:if="{{tabCur === 'index'}}"></home>
+<mine wx:if="{{tabCur === 'mine'}}"></mine>
+<view class="cu-bar tabbar bg-white shadow foot">
+  <view class="action" bindtap="navChange" data-cur="index">
+    <view class='icon-cu-image'>
+      <image src="/pages/assets/imgs/index_icon/app{{tabCur=='index'?'_press':''}}.png"></image>
+    </view>
+    <view class="{{tabCur=='index'?'text-theme':'text-gray'}}">首页</view>
+  </view>
+  <view class="action" bindtap="navChange" data-cur="mine">
+    <view class='icon-cu-image'>
+      <image src="/pages/assets/imgs/index_icon/my{{tabCur=='mine'?'_press':''}}.png"></image>
+    </view>
+    <view class="{{tabCur=='mine'?'text-theme':'text-gray'}}">我的</view>
+  </view>
+</view>

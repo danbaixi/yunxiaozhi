@@ -1,0 +1,3 @@
+<view bindtap="toTop" class="to-top">
+  <image mode="aspectFill" src="/pages/assets/imgs/other/totop.png"></image>
+</view>

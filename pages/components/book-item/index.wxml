@@ -1,0 +1,26 @@
+<view bindtap="viewDetail" class="book-item-container">
+  <view class="book-item_img">
+    <image mode="aspectFill" src="{{img ? img : '/pages/assets/imgs/other/book_default.png'}}"></image>
+  </view>
+  <view class="book-item_detail">
+    <view class="book-detail_title">{{info.title}}</view>
+    <view wx:if="{{info.loanCount}}" class="book-item_count">借阅次数：{{info.loanCount}}</view>
+    <view class="">{{info.author}}{{info.publisher || info.publish ? ' ' + (info.publisher || info.publish) : ''}}</view>
+    <view wx:if="{{info.callNoOne}}" class="">检索书号：{{info.callNoOne}}</view>
+    <view wx:if="{{info.physicalCount || info.canLoanCount}}" class="text-yellow">可借数量：{{info.physicalCount || info.canLoanCount}}本</view>
+    <block wx:if="{{reNew}}">
+      <view wx:if="{{info.loanDate}}" class="book-item_borrow-date">
+        借阅日期：{{info.loanDate}}
+      </view>
+      <view wx:if="{{info.normReturnDate}}" class="book-item_borrow-date">
+        应还日期：{{info.normReturnDate}}
+      </view>
+    </block>
+    <view wx:if="{{reNew}}" class="book-item_renew">
+      <button catchtap="reNew" class="cu-btn bg-theme radius">续借</button>
+    </view>
+    <!-- <view wx:if="{{collect}}" class="book-item_renew">
+      <button catchtap="cancelCollect" class="cu-btn bg-yellow radius">取消收藏</button>
+    </view> -->
+  </view>
+</view>

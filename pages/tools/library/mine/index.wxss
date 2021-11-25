@@ -1,0 +1,17 @@
+page {
+  height: 100%;
+}
+.list {
+  padding: 30rpx 20rpx 180rpx;
+}
+.nav {
+  position: fixed;
+  z-index: 2;
+}
+.list {
+  margin-top: 80rpx;
+}
+.need-login {
+  margin-top: 400rpx;
+  text-align: center;
+}

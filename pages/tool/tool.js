@@ -218,15 +218,15 @@ Page({
         needLogin: false,
         url: '/pages/tools/club/club',
       },
-      {
-        icon: 'bad',
-        color: 'red',
-        badge: '',
-        name: '找同乡',
-        icon: 'tongxiang',
-        needLogin: false,
-        url: '/pages/tools/city/city'
-      },
+      // {
+      //   icon: 'bad',
+      //   color: 'red',
+      //   badge: '',
+      //   name: '找同乡',
+      //   icon: 'tongxiang',
+      //   needLogin: false,
+      //   url: '/pages/tools/city/city'
+      // },
       {
         icon: 'bad',
         color: 'red',
@@ -235,6 +235,15 @@ Page({
         icon: 'qunliao',
         needLogin: false,
         url: '../article/article?src=' + encodeURIComponent('http://mp.weixin.qq.com/s?__biz=MzI1NTUwNDIzNQ==&mid=2247488770&idx=1&sn=f7d7747e97ab377bd5f915c506d7a7e7&chksm=ea35af06dd42261028b0b3554e22111d7f8c312e0d7ed34f1679a2b15c2cb287f62287503cb6#rd' + "&title=云小智邀请你加入群聊"),
+      },
+      {
+        icon: 'bad',
+        color: 'red',
+        badge: '新',
+        name: '图书馆',
+        icon: 'library',
+        needLogin: false,
+        url: '/pages/tools/library/index',
       },
     ],
     query: [{

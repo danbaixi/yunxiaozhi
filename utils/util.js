@@ -35,7 +35,7 @@ function formatNumber(n) {
 }
 
 //函数防抖
-function debounce(fn,delay,immediate){
+function debounce(fn,delay = 500,immediate){
   let timeout,result
   return function(){
     let context = this
@@ -189,6 +189,19 @@ function exitSaveData(){
   app.updateConfigRequest()
 }
 
+// 节流
+function ttrottle(fn, delay = 500) {
+  let startTime = 0
+  return function() {
+    const context = this
+    let endTime = new Date()
+    if (endTime - startTime > delay) {
+      fn.call(context, arguments)
+      startTime = endTime
+    }
+  }
+}
+
 module.exports = {
   encodeInp: encodeInp,
   debounce: debounce,
@@ -202,5 +215,6 @@ module.exports = {
   getThisMonthDays: getThisMonthDays,
   getFirstDayOfWeek: getFirstDayOfWeek,
   checkNetWorkStatus,
-  exitSaveData
+  exitSaveData,
+  ttrottle
 }

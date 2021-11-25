@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "home": "/pages/tools/library/home/index",
+    "mine": "/pages/tools/library/mine"
+  }
+}

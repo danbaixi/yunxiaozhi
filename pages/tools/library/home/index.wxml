@@ -1,0 +1,61 @@
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+  <view slot="content">图书馆</view>
+</cu-custom>
+<view class="container">
+  <view bindtap="search" class="cu-bar search bg-white">
+    <view class="search-form round">
+      <text class="icon-search"></text>
+      <text class="text-gray">搜索书籍</text>
+    </view>
+  </view>
+  <view class="section-list">
+    <view class="section">
+      <view class="title">
+        <view>当前账户</view>
+        <view wx:if="{{cookie}}" bindtap="logout" class="action">退出<text class="icon-right"></text></view>
+      </view>
+      <view class="section-content">
+        <view wx:if="{{cookie}}">已登录账号：{{stu_id}}</view>
+        <view wx:else bindtap="showLogin" class="empty no-login">未登录，<text class="text-theme">点击登录</text></view>
+      </view>
+    </view>
+    <view wx:if="{{showLogin}}">
+      <lib-login bind:hide="hideLogin" bind:success="loginSuccess"></lib-login>
+    </view>
+    <view class="section" mark:type="hot">
+      <view class="title">
+        <view>热读推荐</view>
+        <view bindtap="viewMore" class="action">更多<text class="icon-right"></text></view>
+      </view>
+      <view class="section-content">
+        <scroll-view scroll-x class="book-list" wx:if="{{hot.length > 0}}">
+          <view bindtap="viewDetail" data-index="{{index}}" class="book-item" wx:for="{{hot}}" wx:key="key">
+            <view>
+              <image class="book-item-img" mode="aspectFill" src="{{item.img ? item.img : '/pages/assets/imgs/other/book_default.png'}}"></image>
+            </view>
+            <view class="book-item-title">{{item.title}}</view>
+          </view>
+        </scroll-view>
+        <view wx:else class="empty">暂无数据</view>
+      </view>
+    </view>
+    <view class="section" mark:type="new">
+      <view class="title">
+        <view>新书速递</view>
+        <view bindtap="viewMore" class="action">更多<text class="icon-right"></text></view>
+      </view>
+      <view class="section-content">
+        <scroll-view scroll-x class="book-list" wx:if="{{new.length > 0}}">
+          <view bindtap="viewDetail" data-index="{{index}}" class="book-item" wx:for="{{new}}" wx:key="key">
+            <view>
+              <image class="book-item-img" mode="aspectFill" src="{{item.img ? item.img : '/pages/assets/imgs/other/book_default.png'}}"></image>
+            </view>
+            <view class="book-item-title">{{item.title}}</view>
+          </view>
+        </scroll-view>
+        <view wx:else class="empty">暂无数据</view>
+      </view>
+    </view>
+  </view>
+</view>

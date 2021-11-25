@@ -438,6 +438,36 @@
           "pathName": "pages/tools/discount/discount",
           "query": "from=index",
           "scene": null
+        },
+        {
+          "name": "图书馆",
+          "pathName": "pages/tools/library/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "搜索数据",
+          "pathName": "pages/tools/library/search/index",
+          "query": "from=library",
+          "scene": null
+        },
+        {
+          "name": "图书详情",
+          "pathName": "pages/tools/library/detail/index",
+          "query": "id=384859&img=https%3A%2F%2Funicover.duxiu.com%2FcoverNew%2FCoverNew.dll%3Fiid%3D6A6D686C696B68696A6A5FA7A898B09AAD9EABA69AABA45F6A3135303931363939",
+          "scene": null
+        },
+        {
+          "name": "我的借阅",
+          "pathName": "pages/tools/library/mine/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "热榜和新书",
+          "pathName": "pages/tools/library/top/index",
+          "query": "type=new",
+          "scene": null
         }
       ]
     }

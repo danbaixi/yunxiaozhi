@@ -1,5 +1,10 @@
-const { acceptTerms,checkCourseInWeek } = require('./utils/common')
-const { exitSaveData } = require('./utils/util')
+const {
+  acceptTerms,
+  checkCourseInWeek
+} = require('./utils/common')
+const {
+  exitSaveData
+} = require('./utils/util')
 App({
   /** 小程序入口 */
   onLaunch: function () {
@@ -15,24 +20,24 @@ App({
   },
 
   /** 全局变量 */
-  globalData:{
-    isDebug:false,
-    isTest:false,
-    isLocal:false,
+  globalData: {
+    isDebug: false,
+    isTest: false,
+    isLocal: false,
     themeColor: '#1380ff',
-    xdebug:"?XDEBUG_SESSION_START=14473",
-    domain:'https://www.yunxiaozhi.cn/v1/public/api/',
-    key:'ihzoaixnuy4f8835032505e8a45ac102c52d58593e',
+    xdebug: "?XDEBUG_SESSION_START=14473",
+    domain: 'https://www.yunxiaozhi.cn/v1/public/api/',
+    key: 'ihzoaixnuy4f8835032505e8a45ac102c52d58593e',
     markers_json: "markers.json",
-    adTime: 24,//小时出现一次
+    adTime: 24, //小时出现一次
   },
-  updateConfigRequest:function(){
+  updateConfigRequest: function () {
     let time = parseInt((new Date()).getTime() / 1000)
     this.promiseRequest({
       url: 'config/getMiniConfig',
       needLogin: false,
-      data:{
-        stu_id : wx.getStorageSync('user_id') || ''
+      data: {
+        stu_id: wx.getStorageSync('user_id') || ''
       }
     }).then((data) => {
       if (data.status == 0) {
@@ -47,20 +52,20 @@ App({
     })
   },
   //设置存储文件地址
-  setFileUrl:function(){
+  setFileUrl: function () {
     let url = this.getConfig('fileUrl')
-    if(url){
+    if (url) {
       this.globalData.fileDomain = url + '/mini/'
       this.globalData.fileUrl = url + '/mini/'
       this.globalData.headImgUrl = url + '/user_imgs/'
-    }else{
+    } else {
       this.globalData.fileDomain = 'http://file.yunxiaozhi.cn/mini/'
       this.globalData.fileUrl = 'http://file.yunxiaozhi.cn/mini'
       this.globalData.headImgUrl = 'http://file.yunxiaozhi.cn/user_imgs/'
     }
   },
   //设置导航栏数据
-  setNavgition:function(){
+  setNavgition: function () {
     wx.getSystemInfo({
       success: e => {
         this.globalData.statusBar = e.statusBarHeight;
@@ -75,7 +80,7 @@ App({
     })
   },
   //检查版本更新
-  checkVersion:function(){
+  checkVersion: function () {
     const updateManager = wx.getUpdateManager()
     updateManager.onCheckForUpdate(function (res) {})
     updateManager.onUpdateReady(function () {
@@ -92,51 +97,54 @@ App({
   },
 
   //获取请求domain
-  getDomain:function(){
-    if(this.globalData.isDebug){
+  getDomain: function () {
+    if (this.globalData.isDebug) {
       return this.globalData.isTest ? 'https://www.yunxiaozhi.cn/test/public/api/' : 'http://danbaixi.cn.utools.club/yxz_v1/public/index.php/api/'
     }
     return 'https://www.yunxiaozhi.cn/v1/public/api/'
   },
 
   //封装request 
-  httpRequest: function (datas){
+  httpRequest: function (datas) {
     datas.data = datas.data == undefined ? {} : datas.data
     datas.redirect = datas.redirect || ''
-    if (datas.needLogin == undefined || datas.needLogin == true){
+    if (datas.needLogin == undefined || datas.needLogin == true) {
       let session = this.getLoginStatus()
-      if(session == ""){
+      if (session == "") {
         this.msg('请先登录')
         return
       }
       datas.data.session = session
     }
     var that = this,
-        isDebug = this.globalData.isDebug,
-        domain = this.getDomain(),
-        contentType = 'application/json'
+      isDebug = this.globalData.isDebug,
+      domain = this.getDomain(),
+      contentType = 'application/json'
 
-    if (typeof datas.method == undefined){
+    if (typeof datas.method == undefined) {
       datas.method = "GET"
     }
-    if(datas.method == "POST"){
+    if (datas.method == "POST") {
       contentType = 'application/x-www-form-urlencoded'
     }
     wx.request({
-      url: domain + datas.url + (isDebug?this.globalData.xdebug:""),
-      data: typeof datas.data == undefined ? '': datas.data,
+      url: domain + datas.url + (isDebug ? this.globalData.xdebug : ""),
+      data: typeof datas.data == undefined ? '' : datas.data,
       method: datas.method,
       header: {
         'content-type': contentType
       },
-      success:function(res){
-        switch(res.data.status){
+      success: function (res) {
+        switch (res.data.status) {
           default:
-            datas.success(res);break;
+            datas.success(res);
+            break;
           case 4001:
-            that.msg('请先登录');break;
+            that.msg('请先登录');
+            break;
           case 4002:
-            that.msg('请先绑定账号'); break;
+            that.msg('请先绑定账号');
+            break;
           case 4003:
             //登陆已过期
             that.msg(res.data.message)
@@ -157,53 +165,60 @@ App({
             break;
         }
       },
-      fail:function(res){
+      fail: function (res) {
         wx.showToast({
           title: '请求超时',
-          icon:'none',
-          duration:2000
+          icon: 'none',
+          duration: 2000
         })
       }
     })
   },
 
   //toast
-  msg:function(text,type){
+  msg: function (text, type) {
     var type = typeof type === "undefined" ? '' : type
     var icon = 'none'
-    if(type != ''){
+    if (type != '') {
       icon = type
     }
     wx.showToast({
       title: text,
       icon: icon,
-      duration:2000
+      duration: 2000
     })
   },
 
   //分享
-  share: function (title, img, path){
-    if(typeof title == "undefined"){
+  share: function (title, img, path) {
+    if (typeof title == "undefined") {
       return {
-        title:"课表成绩考勤校历都在这里",
+        title: "课表成绩考勤校历都在这里",
         imageUrl: this.globalData.fileDomain + 'share/v1/index.png',
         path: 'pages/index/index'
       }
     }
+    path = typeof path === "undefined" ? 'pages/index/index' : path
+    if (!img) {
+      return {
+        title,
+        path
+      }
+    }
     return {
-      title: title,
-      path: typeof path === "undefined" ? 'pages/index/index' : path,
+      title,
+      path,
       imageUrl: this.globalData.fileDomain + 'share/v1/' + img,
     }
   },
 
   //强制需要登录
-  isLogin:function(route){
+  isLogin: function (route) {
     let _this = this
     var route = route || ''
     return new Promise((resolve) => {
       let session = wx.getStorageSync('login_session')
-      if(session == ''){
+      if (session == '') {
         _this.msg('请先登录')
         setTimeout(() => {
           wx.reLaunch({
@@ -214,32 +229,32 @@ App({
       }
       return resolve(true)
     })
-    
+
   },
 
   //获取登录状态
-  getLoginStatus:function(){
+  getLoginStatus: function () {
     let session = wx.getStorageSync('login_session')
     return session == '' ? false : session
   },
 
   //获取绑定状态
-  getUserId:function(){
+  getUserId: function () {
     let user_id = wx.getStorageSync('user_id')
     return user_id == '' ? false : user_id
   },
 
   //登录or绑定提示
-  isBind:function(){
+  isBind: function () {
     let _this = this
     return new Promise((resolve) => {
       let session = wx.getStorageSync('login_session')
-      if(session == ''){
+      if (session == '') {
         _this.msg('请先登录')
         return resolve(false)
       }
       let user_id = wx.getStorageSync('user_id')
-      if(user_id == ''){
+      if (user_id == '') {
         _this.msg('请先绑定教务系统账号')
         return resolve(false)
       }
@@ -248,41 +263,41 @@ App({
   },
 
   //promise封装请求
-  promiseRequest: function (datas){
+  promiseRequest: function (datas) {
     datas.data = datas.data == undefined ? {} : datas.data
     datas.redirect = datas.redirect || ''
-    if (datas.needLogin == undefined || datas.needLogin == true){
+    if (datas.needLogin == undefined || datas.needLogin == true) {
       let session = this.getLoginStatus()
-      if(session == ""){
+      if (session == "") {
         this.msg('请先登录')
         return
       }
       datas.data.session = session
     }
     var that = this,
-        isDebug = this.globalData.isDebug,
-        domain = this.getDomain(),
-        contentType = 'application/json'
+      isDebug = this.globalData.isDebug,
+      domain = this.getDomain(),
+      contentType = 'application/json'
 
-    if (typeof datas.method == undefined){
+    if (typeof datas.method == undefined) {
       datas.method = "GET"
     }
-    if(datas.method == "POST"){
+    if (datas.method == "POST") {
       contentType = 'application/x-www-form-urlencoded'
     }
-    let promise = new Promise((resolve,reject) => {
+    let promise = new Promise((resolve, reject) => {
       wx.request({
-        url: domain + datas.url + (isDebug?this.globalData.xdebug:""),
-        data: typeof datas.data == undefined ? '': datas.data,
+        url: domain + datas.url + (isDebug ? this.globalData.xdebug : ""),
+        data: typeof datas.data == undefined ? '' : datas.data,
         method: datas.method,
         header: {
           'content-type': contentType
         },
-        success:function(res){
+        success: function (res) {
           wx.hideLoading()
-          if(res.data.status == 0){
+          if (res.data.status == 0) {
             resolve(res.data)
-          }else if(res.data.status == 4003){
+          } else if (res.data.status == 4003) {
             //登陆已过期
             that.msg(res.data.message)
             exitSaveData()
@@ -290,41 +305,41 @@ App({
               wx.navigateTo({
                 url: '/pages/login/login?redirect=' + datas.redirect,
               })
-            },1000)
-          }else{
+            }, 1000)
+          } else {
             reject(res.data.message || '服务器开小差了 ╯﹏╰')
           }
         },
-        fail:function(res){
+        fail: function (res) {
           wx.showToast({
             title: '请求超时，请重试',
-            icon:'none',
-            duration:2000
+            icon: 'none',
+            duration: 2000
           })
         }
       })
     })
-    
+
     return promise
   },
 
   //获取配置，支持使用“.”
   //key为空，返回全部
-  getConfig:function(key){
+  getConfig: function (key) {
     let configs = wx.getStorageSync('configs')
-    if(key){
+    if (key) {
       let keyArr = key.split('.')
       let result = ""
-      if(configs.hasOwnProperty(keyArr[0])){
+      if (configs.hasOwnProperty(keyArr[0])) {
         result = configs[keyArr[0]]
       }
-      if(keyArr.length == 1){
+      if (keyArr.length == 1) {
         return result
       }
-      for(let i=1;i<keyArr.length;i++){
-        if(result.hasOwnProperty(keyArr[i])){
+      for (let i = 1; i < keyArr.length; i++) {
+        if (result.hasOwnProperty(keyArr[i])) {
           result = result[keyArr[i]]
-        }else{
+        } else {
           return false
         }
       }
@@ -332,4 +347,19 @@ App({
     }
     return configs
   },
+
+  back(delay = 1500, delta = 1) {
+    if (delay > 0) {
+      setTimeout(() => {
+        wx.navigateBack({
+          delta,
+          fail() {
+            wx.switchTab({
+              url: '/pages/index',
+            })
+          }
+        })
+      }, delay);
+    }
+  }
 })
