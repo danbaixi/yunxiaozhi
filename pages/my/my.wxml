@@ -35,6 +35,10 @@
     </view>
     <view style="clear:both"></view>
   </view>
+
+  <view class="test-tips" bindtap="untieWechat" wx:if="{{user_id == 'test'}}">
+    <view class="bg-red padding-xs text-white y-radius">当前绑定的是「测试号」，请点击重新绑定账号</view>
+  </view>
   
   <view class="banners">
     <view class="grid col-2">

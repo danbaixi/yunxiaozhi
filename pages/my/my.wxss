@@ -168,3 +168,7 @@ button::after{
   background: transparent;
   z-index: 1;
 }
+
+.test-tips {
+  padding: 10rpx 3%;
+}

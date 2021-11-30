@@ -1,6 +1,7 @@
 const util = require('../../utils/util');
 const app = getApp();
 const { getUserData, getCountDatas } = require('../api/user')
+const { untieWechat } = require('../api/user')
 const { openArticle } = require('../../utils/common')
 const { exitSaveData } = require('../../utils/util')
 Page({
@@ -121,7 +122,7 @@ Page({
         app.msg(err)
       })
     }
-    if (user_id){
+    if (user_id && user_id != 'test'){
       let start = user_id.substring(0, 3);
       let end = user_id.substring(8);
       user_id = start + "*****" + end;
@@ -269,6 +270,21 @@ Page({
           })
         }
       }
+    })
+  },
+
+  // 解绑
+  untieWechat() {
+    untieWechat().then((res) => {
+      wx.hideLoading()
+      if(res.status != 0){
+        app.msg(res.message)
+        return
+      }
+      exitSaveData()
+      wx.navigateTo({
+        url: '/pages/login/login',
+      })
     })
   }
 })

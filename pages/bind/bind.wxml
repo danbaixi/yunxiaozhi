@@ -15,7 +15,7 @@
     </view>
     <form>
       <view class="cu-form-group">
-        <input bindinput='inputUserId' placeholder='请输入学号' type='number' value='{{user_id}}'></input>
+        <input bindinput='inputUserId' placeholder='请输入学号' type='text' value='{{user_id}}'></input>
         <text wx:if="{{user_id!=''}}" class="icon-close text-black" bindtap='clearUserId'></text>
       </view>
 
@@ -32,9 +32,9 @@
       <view class="padding-top-xl flex flex-direction">
         <button class="cu-btn round bg-theme shadow text-white lg" bindtap='login'>绑定</button>
       </view>
-      <view class="padding-top text-center">
+      <!-- <view class="padding-top text-center">
         <text class="text-gray" bindtap="loginTest">使用测试账号登录</text>
-      </view>
+      </view> -->
       <view class="padding-top-xl text-center">
         <text bindtap="help" class="text-yellow">新生登录指南</text>
       </view>
