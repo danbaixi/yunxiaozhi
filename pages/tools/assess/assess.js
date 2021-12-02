@@ -19,7 +19,7 @@ Page({
   onLoad: function (options) {
     var that = this;
     app.isLogin('/' + that.route).then(function (res) {
-      that.loadingAd()
+      // that.loadingAd()
       that.getList()
     })
   },
@@ -88,7 +88,8 @@ Page({
 
   start:function(){
     let _this = this
-    // _this.assess()
+    _this.assess()
+    return
     if (videoAd && !_this.data.finishAd) {
       videoAd.show().catch(() => {
         // 失败重试

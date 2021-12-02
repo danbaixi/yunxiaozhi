@@ -42,4 +42,5 @@
   <view class="text-grey {{assess == null ? 'bottom-text':''}}">
     <view class="text-center block">累计已完成 <text class="text-bold text-theme">{{totalCount}}</text> 次评教工作</view>
   </view>
+  <view class="margin ad-radius"><ad-custom unit-id="adunit-70b9e67953983fc1"></ad-custom></view>
 </view>
