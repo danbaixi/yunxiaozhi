@@ -197,8 +197,9 @@
 .open-status{
   position: absolute;
   padding: 30rpx;
-  right:-40rpx;
+  right: -50rpx;
   top: 10rpx;
+  color: #ccc;
 }
 .split{
   border-bottom: 4px solid var(--theme)
@@ -207,5 +208,5 @@
   border-bottom: none
 }
 .cu-list{
-  transition: all .3s ease-in
+  transition: height .35s ease
 }
