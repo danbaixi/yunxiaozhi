@@ -177,7 +177,6 @@ Component({
           finish,
           loadings
         })
-        console.log(list, finish)
       })
     },
     // 获取封面

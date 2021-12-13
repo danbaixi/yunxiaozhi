@@ -1,9 +1,12 @@
 const app = getApp()
+const CryptoJS = require('crypto-js')
 import {
   getVerifyImg,
   login
 } from '../../api/library'
-import { openArticle } from '../../../utils/common'
+import {
+  openArticle
+} from '../../../utils/common'
 Component({
   options: {
     addGlobalClass: true
@@ -78,9 +81,11 @@ Component({
         })
         return
       }
+      // 加密密码
+      const passwordEncode = this.encodePwd(password)
       login({
         stu_id,
-        password,
+        password:passwordEncode,
         code,
         codeKey,
         cookie
@@ -116,6 +121,14 @@ Component({
     },
     viewHelp() {
       openArticle(this.data.article)
+    },
+    encodePwd(message) {
+      const key = CryptoJS.enc.Utf8.parse("Libstar_%$#tx501")
+      const encrypted = CryptoJS.DES.encrypt(message, key, {
+        mode: CryptoJS.mode.ECB,
+        padding: CryptoJS.pad.Pkcs7,
+      })
+      return encrypted.ciphertext.toString()
     }
   }
 })
