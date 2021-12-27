@@ -199,7 +199,6 @@ Page({
     })
     const time = dayjs().unix()
     updateScore({time}).then((res) => {
-      wx.hideLoading()
       if (res.status == 0) {
         app.msg(res.message,'success') 
         wx.setStorageSync('scores', '')
@@ -227,6 +226,10 @@ Page({
 
   subscribe() {
     const that = this
+    if (!that.data.demandId) {
+      app.msg('目前无需订阅，请直接更新成绩')
+      return
+    }
     const temaplteId = 'lhKCIfBKo9GZc2Vd1zQSxpirSKHBe3czDG0OliOcXgg'
     wx.requestSubscribeMessage({
       tmplIds: [temaplteId],
