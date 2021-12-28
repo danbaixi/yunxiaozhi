@@ -1,6 +1,6 @@
 <cu-custom bgColor="bg-white" isBack="true">
   <view slot="back">返回</view>
-	<view slot="content">绩点排行</view>
+  <view slot="content">绩点排行</view>
 </cu-custom>
 <view class="my bg-white text-center padding-bottom-sm">
   <list-loading loading="{{loading}}" errmsg="{{errmsg}}"></list-loading>
@@ -24,6 +24,7 @@
         <view class="text-gray">班级排名</view>
       </view>
     </view>
+    <view class="text-center text-red margin-top">Tips：数据仅供参考，请以学校成绩单为准！</view>
   </view>
 </view>
 <view class="rank bg-white padding-sm margin-top-sm">

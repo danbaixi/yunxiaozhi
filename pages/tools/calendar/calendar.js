@@ -283,7 +283,7 @@ Page({
         if(calendar[b].semester == semester[a].semester){
           if (calendar[b].title.indexOf('正式上课') != -1){
             start[a] = calendar[b].start;
-          } else if (calendar[b].title == '考试周'){
+          } else if (calendar[b].title == '考试周' || calendar[b].title.indexOf('统考') > -1){
             end[a] = calendar[b].end;
           }
         }
