@@ -44,7 +44,7 @@
           <scroll-view scroll-x class="bg-white nav text-center">
             <view class="cu-item flex-sub {{index==tabCur?'text-theme cur':''}}" wx:for="{{grades}}" wx:key="key"
               bindtap="selectGrade" data-index="{{index}}"
-              style="padding:0 {{year.length > 1 ? (160 / year.length) : 80}}rpx">
+              style="padding:0 {{year.length > 1 ? (120 / year.length) : 80}}rpx">
               {{item}}
             </view>
           </scroll-view>

@@ -256,7 +256,7 @@ async function getSchoolDay(){
 // 根据学期编号获取年级
 function getGradeFromTerm(schoolDay,term){
   //这里还需要根据学制来考虑是四年还是五年，暂时考虑四年
-  let nums = ['一','二','三','四']
+  let nums = ['一','二','三','四','五']
   let s = (term.toString()).split('-')[0]
   if(s == term){
     s = parseInt(s/10)
