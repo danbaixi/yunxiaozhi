@@ -1,0 +1,18 @@
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">
+    舔狗日记
+  </view>
+</cu-custom>
+<view class="container">
+  <view class="box-side" style="height:{{winHeight * 0.78}}px">
+    <view class="box">
+      <text><text wx:for="{{arr}}" wx:key="key" class="{{index%2==1?'mark':''}}">{{item}}</text></text>
+    </view>
+  </view>
+  <view class="options text-center">
+    <view><button class="cu-btn line-theme" open-type="share">分享</button></view>
+    <view class="get" bindtap="get"><image src="https://mmbiz.qpic.cn/mmbiz_gif/YWKTC18p77J5UftPiaFHMPk0qsa3fE6Gm2bxfUNia5JHCA9K2tzY2QLymCssbbKWJXibibmoJRvf2VMQA682Mn1ouw/0?wx_fmt=gif"></image></view>
+    <view><button class="cu-btn line-yellow" bindtap="copy">复制</button></view>
+  </view>
+</view>

@@ -31,7 +31,7 @@ Page({
         name: '绩点排行',
         icon: 'gpa',
         needLogin: true,
-        url: '../tools/rank/rank?from=index',
+        url: '/subPages/score-rank/index?from=index',
       }, {
         icon: 'rank',
         color: 'green',
@@ -39,7 +39,7 @@ Page({
         name: '学业分析',
         icon: 'ana',
         needLogin: true,
-        url: '../tools/score/ana/ana?from=index',
+        url: '/subPages/score-ana/index?from=index',
       }, {
         icon: 'list',
         color: 'orange',

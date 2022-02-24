@@ -29,13 +29,16 @@
     "enableEngineNative": false,
     "useIsolateContext": false,
     "userConfirmedBundleSwitch": false,
-    "packNpmManually": false,
-    "packNpmRelationList": [],
     "minifyWXSS": true,
     "disableUseStrict": false,
     "minifyWXML": true,
     "showES6CompileOption": false,
-    "useCompilerPlugins": false
+    "useCompilerPlugins": false,
+    "packNpmManually": true,
+    "packNpmRelationList": [{
+      "packageJsonPath": "./package.json",
+      "miniprogramNpmDistDir": "./"
+    }]
   },
   "compileType": "miniprogram",
   "libVersion": "2.21.0",
@@ -60,8 +63,7 @@
       "list": []
     },
     "miniprogram": {
-      "list": [
-        {
+      "list": [{
           "id": -1,
           "name": "评教",
           "pathName": "pages/tools/assess/assess",
@@ -125,7 +127,7 @@
         {
           "id": -1,
           "name": "成绩分析",
-          "pathName": "pages/tools/score/ana/ana",
+          "pathName": "subPages/score-ana/index",
           "query": ""
         },
         {
@@ -258,7 +260,7 @@
         {
           "id": -1,
           "name": "绩点排行",
-          "pathName": "pages/tools/rank/rank",
+          "pathName": "subPages/score-rank/index",
           "query": "",
           "scene": null
         },
@@ -419,7 +421,7 @@
         {
           "id": 53,
           "name": "舔狗日记",
-          "pathName": "pages/tools/tiangou/tiangou",
+          "pathName": "subPages/tiangou/index",
           "query": "id=103",
           "scene": null
         },

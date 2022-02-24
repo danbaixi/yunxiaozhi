@@ -268,7 +268,7 @@ Page({
       return
     }
     wx.navigateTo({
-      url: 'rank/rank?source=score&term=' + term,
+      url: '/subPages/term-rank/index?source=score&term=' + term,
     })
   },
 

@@ -13,6 +13,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "crypto-js": "^4.1.1"
+    "@vant/weapp": "^1.10.2"
   }
 }

@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "lib-login": "/subPages/components/lib-login/index"
+  }
+}

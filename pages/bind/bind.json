@@ -1,3 +1,6 @@
 {
-  "navigationBarTitleText": ""
+  "navigationBarTitleText": "",
+  "usingComponents": {
+    "notice": "/pages/components/notice/notice"
+  }
 }

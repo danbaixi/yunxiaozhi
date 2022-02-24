@@ -10,6 +10,7 @@
     <view class="padding"><text class="text-xl text-white text-shadow">绑定教务系统账号</text></view>
   </view>
   <view class="login">
+    <notice page="bind" Style="border: 1px solid #1380ff"></notice>
     <view wx:if="{{rebind}}" class="yxz-tips margin-bottom">
       您已修改了教务系统密码，请使用新密码绑定账号
     </view>
@@ -26,7 +27,7 @@
 
       <view class="cu-form-group" wx:if="{{systemType==1&&needValidate}}">
         <input placeholder='请输入验证码' maxlength="4" value='{{code}}' bindinput='inputCode' type='text'></input>
-        <image mode="widthFix" bindtap='freshYzm' bindload='imageLoad' class="validate" src="{{yzmUrl}}"></image> 
+        <image mode="widthFix" bindtap='freshYzm' bindload='imageLoad' class="validate" src="{{yzmUrl}}"></image>
       </view>
 
       <view class="padding-top-xl flex flex-direction">

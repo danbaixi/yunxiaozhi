@@ -92,8 +92,8 @@ Page({
               }, 500);
               return
             }
-            //更新获取课表
-            updateAndGetCourseList()
+            //更新获取课表 不更新课表
+            // updateAndGetCourseList()
             setTimeout(() => {
               loginRedirect(_this.data.redirect)
             },1000)

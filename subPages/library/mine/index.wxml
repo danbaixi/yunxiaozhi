@@ -1,0 +1,57 @@
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+  <view slot="content">我的借阅</view>
+</cu-custom>
+<view class="container">
+  <scroll-view scroll-x class="bg-white nav" style="top:{{customBar}}px">
+    <view class="flex text-center">
+      <view class="cu-item flex-sub {{item.key==tabCur?'text-theme cur':''}}" wx:for="{{labels}}" wx:key="key" bindtap="tabSelect" data-key="{{item.key}}">
+        {{item.name}}
+      </view>
+    </view>
+  </scroll-view>
+  <block wx:if="{{cookie}}">
+    <view wx:if="{{tabCur == item.key}}" wx:for="{{labels}}" wx:key="key" class="list">
+      <scroll-view scroll-y bindscrolltolower="loadMore" style="height: {{winHeight - customBar - 117}}px;">
+        <block wx:if="{{tabCur == 'now'}}">
+          <view wx:if="{{list.now.length > 0}}" class="flex margin-bottom">
+            <button bindtap="reNew" class="cu-btn bg-theme lg radius">一键续借</button>
+          </view>
+        </block>
+        <book-item wx:for="{{list[item.key]}}" wx:for-item="book" wx:for-index="bookIndex" wx:key="key" info="{{book}}" img="{{bookImgList[item.key][bookIndex]}}" reNew="{{tabCur == 'now'}}" bind:success="reNewSuccess" bind:cancel="cancelSuccess"></book-item>
+        <view wx:if="{{cookie && (loading || finish[item.key])}}" class="cu-load {{!finish[item.key]?'loading':(list[item.key].length>0?'over':'')}}"></view>
+        <empty display="{{finish[item.key] && list[item.key].length == 0}}" content="暂无记录"></empty>
+      </scroll-view>
+    </view>
+  </block>
+  <view class="need-login" wx:else>
+    <view class="text-gray padding">登录后可查看记录</view>
+    <view><button bindtap="showLogin" class="cu-btn bg-theme round">点击登录</button></view>
+  </view>
+</view>
+
+<view wx:if="{{showLogin}}">
+  <lib-login bind:hide="hideLogin" bind:success="loginSuccess"></lib-login>
+</view>
+
+<view class="cu-modal {{showResult ? 'show' : ''}}" bindtap="hideResult">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">续借结果</view>
+      <view class="action" bindtap="hideResult">
+        <text class="icon-close text-red"></text>
+      </view>
+    </view>
+    <view class="padding-sm bg-white text-left">
+      <view class="padding-bottom text-center text-bold text-lg">
+        <text class="text-theme">成功：{{reNewResult.success}}本</text>，
+        <text class="text-red">失败：{{reNewResult.fail}}本</text>
+      </view>
+      <view class="renew-list">
+        <view class="renew-item padding-bottom-sm" wx:for="{{reNewResult.result}}" wx:key="key">
+          <text>{{index}}：<text class="text-theme">{{item}}</text></text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
