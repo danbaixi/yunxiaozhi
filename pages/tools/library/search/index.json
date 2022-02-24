@@ -1,6 +1,0 @@
-{
-  "usingComponents": {
-    "top": "/pages/components/top/index",
-    "book-item": "/pages/components/book-item/index"
-  }
-}
