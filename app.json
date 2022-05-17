@@ -67,7 +67,8 @@
     "pages/tools/score/fail/fail",
     "pages/news/news",
     "pages/tools/discount/discount",
-    "pages/qingguo/index"
+    "pages/qingguo/index",
+    "pages/article/article"
   ],
   "subpackages": [
     {
