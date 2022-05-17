@@ -30,6 +30,11 @@ App({
     key: 'ihzoaixnuy4f8835032505e8a45ac102c52d58593e',
     markers_json: "markers.json",
     adTime: 24, //小时出现一次
+    updateStatus: {
+      '-1': '更新失败',
+      '0': '正在更新',
+      '1': '更新成功'
+    }
   },
   updateConfigRequest: function () {
     let time = parseInt((new Date()).getTime() / 1000)

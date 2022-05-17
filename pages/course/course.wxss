@@ -320,13 +320,6 @@ input-holder {
 /**下拉列表**/
 .list{
   width: 100%;
-  position: absolute;
-  top:-180px; 
-  background: #fff;
-  z-index: 101;
-  overflow: hidden;
-  transition: all .4s;
-  border-radius: 0 0 20rpx 20rpx;
 }
 .text_left{
   float: left;
@@ -474,4 +467,32 @@ input-holder {
   align-items: center;
   padding: 0 20%;
   line-height: 50rpx;
+}
+
+.share-course {
+  padding: 60rpx 40rpx;
+}
+
+.share-title {
+  font-size: 40rpx;
+  font-weight: bold;
+  text-align: center;
+}
+
+.share-content {
+  margin-top: 30rpx;
+}
+
+.content-item {
+  margin-bottom: 20rpx;
+}
+
+.options {
+  margin-top: 50rpx;
+  display: flex;
+  justify-content: space-between;
+}
+
+.options .cu-btn {
+  width: 40%;
 }

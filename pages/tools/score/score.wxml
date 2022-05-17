@@ -1,14 +1,12 @@
 <import src="score.skeleton.wxml" />
 <template is="skeleton" wx:if="{{loading}}" />
 <view wx:else>
-  <view class="page padding-bottom-xl"
-    style="min-height:{{winHeight}}px;background-color:{{loading||isNull?'#f5f6f7':'#1380ff'}}">
+  <view class="page padding-bottom-xl" style="min-height:{{winHeight}}px;background-color:{{loading||isNull?'#f5f6f7':'#1380ff'}}">
     <view class="cu-custom" style="height:{{CustomBar}}px">
       <view class="cu-bar fixed bg-white" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px">
-        <view class="action border-custom"
-          style="width:{{Custom.width}}px;height:{{Custom.height}}px;margin-left:calc(750rpx - {{Custom.right}}px)">
+        <view class="action border-custom" style="width:{{Custom.width}}px;height:{{Custom.height}}px;margin-left:calc(750rpx - {{Custom.right}}px)">
           <text class="icon-back text-black text-bold" bindtap="backPageBtn"></text>
-          <text class="icon-refresh text-black text-bold" bindtap="update"></text>
+          <text class="icon-refresh text-black text-bold" bindtap="showUpdate"></text>
         </view>
         <view class="content-yxz" style="top:{{StatusBar}}px">
           <text>成绩</text>
@@ -20,10 +18,10 @@
       <notice page="score"></notice>
       <view class="info score">
         <view class="padding-bottom-sm">
-          <!-- <text class="text-black">上次更新：</text>
-          <text class="text-gray">{{update_time}}</text> -->
-          <text class="bg-yellow option-btn" bindtap="update">更新成绩</text>
-          <text class="bg-{{demandId ? 'theme' : 'grey'}} option-btn" bindtap="subscribe">订阅通知</text>
+          <text class="text-black">上次更新：</text>
+          <text class="text-gray">{{update_time}}</text>
+          <text class="bg-yellow option-btn margin-left-sm" bindtap="showUpdate">更新成绩</text>
+          <!-- <text class="bg-{{demandId ? 'theme' : 'grey'}} option-btn" bindtap="subscribe">订阅通知</text> -->
         </view>
         <view class="padding-top-sm">
           <radio-group bindchange="changeType">
@@ -42,23 +40,18 @@
       <view class="score">
         <view class="score-nav solid-bottom">
           <scroll-view scroll-x class="bg-white nav text-center">
-            <view class="cu-item flex-sub {{index==tabCur?'text-theme cur':''}}" wx:for="{{grades}}" wx:key="key"
-              bindtap="selectGrade" data-index="{{index}}"
-              style="padding:0 {{year.length > 1 ? (120 / year.length) : 80}}rpx">
+            <view class="cu-item flex-sub {{index==tabCur?'text-theme cur':''}}" wx:for="{{grades}}" wx:key="key" bindtap="selectGrade" data-index="{{index}}" style="padding:0 {{year.length > 1 ? (120 / year.length) : 80}}rpx">
               {{item}}
             </view>
           </scroll-view>
         </view>
-        <view class="score-item padding-top-sm" wx:for="{{termNums}}" wx:for-item="termNum" wx:key="key"
-          wx:if="{{termNum.year == tabCur}}">
+        <view class="score-item padding-top-sm" wx:for="{{termNums}}" wx:for-item="termNum" wx:key="key" wx:if="{{termNum.year == tabCur}}">
           <view class="text-center padding-tb-xs">{{term[termNum.term]}}</view>
           <view class="gpa text-center padding-xs">
-            <text bindtap="goRank" data-term="{{termNum.term}}">平均绩点:{{gpa[termNum.term]?gpa[termNum.term]:'暂无'}}<text
-                class="icon-right"></text></text>
+            <text bindtap="goRank" data-term="{{termNum.term}}">平均绩点:{{gpa[termNum.term]?gpa[termNum.term]:'暂无'}}<text class="icon-right"></text></text>
           </view>
           <view class="cu-list menu sm-border padding-top-sm">
-            <view class='cu-item' style="min-height: {{type==0?84:100}}rpx;" wx:for="{{type==0?score:original_score}}"
-              wx:for-item="s" wx:key="key" wx:if="{{s.term == termNum.term}}" bindtap='itemData' data-index="{{index}}">
+            <view class='cu-item' style="min-height: {{type==0?84:100}}rpx;" wx:for="{{type==0?score:original_score}}" wx:for-item="s" wx:key="key" wx:if="{{s.term == termNum.term}}" bindtap='itemData' data-index="{{index}}">
               <view class="content" wx:if="{{type==0}}">
                 <text class="text-black">{{s.name}}</text>
                 <text class="text-grey" wx:if="{{s.mark!=''&&s.mark!=null}}">({{s.mark}})</text>
@@ -93,15 +86,12 @@
     </view>
   </view>
   <!--更新课表输入验证码弹窗-->
-  <view class="modal-mask" bindtap="hideModal" style='height:{{winHeight-32}}px;top:32px'
-    catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
-  <view class="modal-dialog" wx:if="{{showModal}}"
-    class="{{input_focus == 1?'modal-dialog input_focus':'modal-dialog'}}">
+  <view class="modal-mask" bindtap="hideModal" style='height:{{winHeight-32}}px;top:32px' catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
+  <view class="modal-dialog" wx:if="{{showModal}}" class="{{input_focus == 1?'modal-dialog input_focus':'modal-dialog'}}">
     <view class="modal-title">更新成绩</view>
     <view class="modal-content">
       <view class="modal-input">
-        <input placeholder-class="input-holder" bindfocus="inputFocus" bindblur="inputBlur" bindinput="yzmInput"
-          maxlength="4" class="input">
+        <input placeholder-class="input-holder" bindfocus="inputFocus" bindblur="inputBlur" bindinput="yzmInput" maxlength="4" class="input">
         </input>
         <image bindtap='freshYzm' class="img_yzm" src="{{yzmUrl}}"></image>
       </view>
@@ -113,3 +103,33 @@
   </view>
   <float-tool page="score"></float-tool>
 </view>
+<van-popup show="{{ showUpdate }}" round closeable="{{!updateScoreStatus}}" close-on-click-overlay="{{false}}" custom-style="width: 90%" bind:close="hideUpdate">
+  <view class="padding">
+    <view class="text-center bg-white y-radius text-left">
+      <view class="text-blod text-center text-lg">温馨提示</view>
+      <view class="margin-top-sm bg-gray padding-sm y-radius">
+        <view>
+          由于教务系统限制了访问频率，导致更新成绩不稳定。
+          <text class="text-theme">现在每次自动更新3遍，若还是失败请重新点击更新，只到更新成功为止。</text>
+        </view>
+      </view>
+    </view>
+    <view class="margin-top-sm">
+      <button disabled="{{updateScoreStatus}}" class="cu-btn block bg-theme lg" bindtap="update">更新成绩</button>
+    </view>
+    <view class="margin-top-sm" wx:if="{{updateList.length > 0}}">
+      <view class="text-lg">更新结果</view>
+      <view class="update-list margin-top-xs">
+        <view class="update-item margin-bottom-sm" wx:for="{{updateList}}" wx:key="index">
+          <text wx:if="{{item == 0}}">正在尝试第{{index+1}}次更新...</text>
+          <text wx:else>
+            <text class="text-grey">第{{index+1}}次更新结果：</text><text class="text-{{item == 1 ? 'theme' : (item == -1 ? 'red' : 'orange')}}">{{updateStatus[item]}}</text>
+          </text>
+        </view>
+      </view>
+      <view wx:if="{{updateList.length == updateMaxCount && updateList[updateList.length - 1] == -1}}" class="margin-top-sm text-red">
+        {{updateMaxCount}}次更新失败，请重新点击更新
+      </view>
+    </view>
+  </view>
+</van-popup>

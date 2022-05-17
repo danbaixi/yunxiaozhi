@@ -1,66 +1,77 @@
+<wxs src="/utils/tools.wxs" module="tools"></wxs>
 <cu-custom bgColor="bg-white" isBack="true">
   <view slot="back">返回</view>
-	<view slot="content">校历</view>
+  <view slot="content">校历</view>
 </cu-custom>
 <list-loading loading="{{loading}}"></list-loading>
 <view class='calendar' wx:if="{{!loading}}">
   <view class="head">
     <view class="text-left">
-      <picker mode="selector" range="{{semester}}" range-key="title" value="{{semesterIndex}}" bindchange="seleteTerm">
+      <picker mode="date" value="{{now_year}}-{{now_month}}" start="2015-09-01" end="2100-09-01" fields="month" bindchange="seleteDate">
         <view class="picker">
-          <text class="text-theme">{{semester[semesterIndex].title}}</text>
-          <text class="icon-triangledownfill text-black"></text>
+          <text class="now-month">{{now_month}}月</text><text class="now-year">{{now_year}}年</text>
+          <text class="icon-triangledownfill text-grey"></text>
         </view>
       </picker>
     </view>
     <view class="text-left">
-      <picker mode="date" value="{{now_year}}-{{now_month}}" start="2015-09-01" end="2100-09-01" fields="month" bindchange="seleteDate">
-        <view class="picker">
-          <text>{{now_year}}年 <text class="text-theme">{{now_month}}月</text></text>
-          <text class="icon-triangledownfill text-black"></text>
+      <picker mode="selector" range="{{semester}}" range-key="title" value="{{semesterIndex}}" bindchange="seleteTerm">
+        <view class="picker select-term">
+          <text>{{semester[semesterIndex].title}}</text>
+          <text class="icon-triangledownfill"></text>
         </view>
       </picker>
     </view>
     <view class="text-right">
       <text class="icon-back option" data-type="reduce" bindtap="alterMonth"></text>
-      <text class="icon-right option"  data-type="add" bindtap="alterMonth"></text>
+      <text class="icon-right option" data-type="add" bindtap="alterMonth"></text>
     </view>
   </view>
-  <view>
-    <view class='data' style='height:{{30+60*hangshu}}px;top:{{customBar+50}}px'>
-      <view class='title'>
-        <view class='week'>周次</view>
-        <view class='weekly' wx:for='{{weekly}}' wx:key='index'>{{item}}</view>
+  <view class='calendar-content'>
+    <view class='column-list'>
+      <view class='week'>周次</view>
+      <view class='weekly' wx:for='{{weekly}}' wx:key='index'>{{item}}</view>
+    </view>
+    <view class='day-list'>
+      <view class='week-list'>
+        <view class='week-item' wx:for='{{weekData}}' wx:key='index'>{{item}}</view>
       </view>
-      <view class='day'>
-        <view class='zhoushu'>
-          <view class='zhou' wx:for='{{weekData}}' wx:key='index'>{{item}}</view>
-        </view>
-        <view class='riqi'>
-          <view class='empyt' style="width:{{14.28*empytGrids}}%"></view> 
-          <view class='ri' wx:for='{{day}}' wx:key='index'>
-            <view class="num {{now_year == year && now_month == month && now_day == item.day && index < dayNum ?'thisDay':''}}">
-              <view class="text-df {{index<dayNum?'text-black':'text-grey'}}">{{item.day}}</view>
-              <view class="text-grey text-xs">{{item.ext}}</view>
-            </view>
-            <view class='spotAll' style='width:{{(shijian[index].length-1)*4+shijian[index].length*5}}px;'>
-              <view class='spot' wx:for="{{shijian[index]}}" wx:key="color" style="background:{{item}}"></view>   
+      <view class='date-list'>
+        <view bindtap="clickDate" data-index="{{index}}" class="date-item" wx:for='{{days}}' wx:key='index'>
+          <view class="date-content {{now_year == year && now_month == month && now_day == item.day && index < dayCount ?'this-day':''}} {{selectEventIndex > -1 && tools.indexOf(item.events, selectEventIndex) ? 'selected-event' : ''}} {{item.position[selectEventIndex]}} {{selectEventIndex > -1 && tools.indexOf(item.events, selectEventIndex) && thisMonthEvents[selectEventIndex].dayCount == 1 ? 'onlyone' : '' }}" style="{{selectEventIndex > -1 && tools.indexOf(item.events, selectEventIndex) ? 'background-color: rgba(' + colors[selectEventIndex] + ',0.1)' : ''}}">
+            <view class="day-item__num {{item.month == now_month ?'':'not-this-month'}}">{{item.day}}</view>
+            <view class="day-item__ext">{{item.ext}}</view>
+            <view class='spot-list'>
+              <view class='spot-item' wx:for="{{item['events']}}" wx:key="index" style="background-color: rgb({{colors[item]}})"></view>
             </view>
           </view>
         </view>
-        <view class="clearfloat"></view>
       </view>
+      <view class="clearfloat"></view>
     </view>
-    <view class='shijianAll' style='margin-top:{{80+60*hangshu}}px'>
-      <view class='shijian'  wx:for="{{shijianOfThisMonth}}" wx:key="index">
-        <view style='border-left: 5px solid {{colors[index]}};float:left;height:38px;margin:5px 0'></view>
-          <text class='li'>{{item.start[1]}}月{{item.start[2]<10?'0'+item.start[2]:item.start[2]}}日-{{item.end[1]}}月{{item.end[2]<10?'0'+item.end[2]:item.end[2]}}日　{{item.title}}
-          </text>
-        <view class='name'>
+  </view>
+  <scroll-view style="height: {{windowHeight * 2 - customBar * 2 - 100 - 76 - 120 * rowCount - 60 }}rpx;" scroll-with-animation id="event-list" class='event-list' scroll-y>
+    <view id="event-{{index}}" bindtap="selectEvent" data-index="{{index}}" class="event-item {{selectEventIndex == index ? 'select-event' : ''}}" wx:for="{{thisMonthEvents}}" wx:key="index">
+      <view class="event-date">
+        <view class="event-date__item">
+          <view class="date-day">{{item.start[2]}}</view>
+          <view wx:if="{{item.start[2] == item.end[2] || item.start[1] != item.end[1]}}" class="date-month">{{item.start[1]}}月</view>
+        </view>
+        <block wx:if="{{item.start[2] != item.end[2] || item.start[1] != item.end[1]}}">
+          <view class="split-line"></view>
+          <view class="event-date__item">
+            <view class="date-day">{{item.end[2]}}</view>
+            <view class="date-month">{{item.end[1]}}月</view>
+          </view>
+        </block>
+      </view>
+      <view class="event-content" style="background-color: rgba({{colors[index]}}{{(selectEventIndex == index ? '' : ',0.2')}});color: {{selectEventIndex == index ? '#fff' : 'rgb(' + colors[index] + ')'}}">
+        <view class="event-title">{{item.title}}</view>
+        <view class="event-desc">
+          <text class="icon-time"></text>
+          <text> {{item.dayCount}}天</text>
         </view>
       </view>
     </view>
-  </view>
-
+  </scroll-view>
 </view>
-<!-- <view class="ad"><ad-custom unit-id="adunit-c053591044b34234"></ad-custom></view> -->

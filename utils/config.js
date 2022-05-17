@@ -7,4 +7,5 @@ module.exports = {
   isTest: false, //测试环境
   isLocal: false, //本地or真机
   xdebugID:"11405",
+  timeout: 20000
 }

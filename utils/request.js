@@ -2,7 +2,7 @@
  * 封装wx.request
  */
 
-const { isDebug, isTest, xdebugID } = require('./config')
+const { isDebug, isTest, xdebugID, timeout } = require('./config')
 const { checkNetWorkStatus, exitSaveData } = require('./util')
 //请求路径
 function getDomain(){
@@ -70,12 +70,13 @@ function R(datas){
   if(datas.method == "POST"){
     contentType = 'application/x-www-form-urlencoded'
   }
+  const maxTimeout = datas.timeout || timeout
   return new Promise((resolve,reject) => {
     wx.request({
       url: url,
       data: data,
       method: datas.method,
-      timeout: 20000,
+      timeout: maxTimeout,
       header: {
         'content-type': contentType,
         'session-token': session,
@@ -128,6 +129,7 @@ function R(datas){
             icon:'none',
             duration:2000
           })
+          return reject(message)
         })
       }
     })

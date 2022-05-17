@@ -2,6 +2,7 @@
   "navigationBarTitleText": "学业成绩",
   "enablePullDownRefresh": false,
   "usingComponents": {
+    "van-popup": "@vant/weapp/popup/index",
     "notice": "/pages/components/notice/notice",
     "float-tool": "/pages/components/float-tool/float-tool"
   }

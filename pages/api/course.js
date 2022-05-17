@@ -12,7 +12,8 @@ function getCourseList(data){
 // 更新课表
 function updateCourse(){
   return R({
-    url: 'course/updateV1'
+    url: 'course/updateV1',
+    timeout: 30000
   })
 }
 
@@ -105,7 +106,7 @@ function getTermByClassname(data){
 // 根据班级获取课表
 function getCourseByClassname(data){
   return R({
-    url: 'data/getCourseByClassname',
+    url: 'data/getCourseByClassnameV2',
     data,
     needLogin: false
   })
