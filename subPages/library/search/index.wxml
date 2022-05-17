@@ -1,4 +1,4 @@
-<wxs src="../../../../utils/tools.wxs" module="tools" />
+<wxs src="../../../utils/tools.wxs" module="tools" />
 <cu-custom bgColor="bg-white" isBack="true">
   <view slot="back">返回</view>
   <view slot="content">{{showFilter ? '筛选' : '搜索书籍'}}</view>

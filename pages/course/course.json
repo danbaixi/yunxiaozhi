@@ -1,6 +1,7 @@
 {
   "navigationBarTitleText": "课表 - 云小智",
   "usingComponents": {
+    "van-popup": "@vant/weapp/popup/index",
     "float-tool": "/pages/components/float-tool/float-tool"
   }
 }

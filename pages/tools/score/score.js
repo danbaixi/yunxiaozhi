@@ -1,6 +1,18 @@
-const { getScoreList, updateScore, getScoreDemand, subscribeScore } = require('../../api/score') 
-const { getNotice } = require('../../api/common')
-const { canUpdate, setUpdateTime, backPage, getGradeList } = require('../../../utils/common')
+const {
+  getScoreList,
+  updateScore,
+  getScoreDemand,
+  subscribeScore
+} = require('../../api/score')
+const {
+  getNotice
+} = require('../../api/common')
+const {
+  canUpdate,
+  setUpdateTime,
+  backPage,
+  getGradeList
+} = require('../../../utils/common')
 const dayjs = require('../../../utils/dayjs.min')
 const app = getApp()
 Page({
@@ -13,17 +25,22 @@ Page({
     winWidth: 0,
     winHeight: 0,
     // tab切换  
-    currentTab: 0, 
-    isNull:false,
-    maxUpdateTime:2,
-    refreshAnimation:"",
+    currentTab: 0,
+    isNull: false,
+    maxUpdateTime: 2,
+    refreshAnimation: "",
     StatusBar: app.globalData.statusBar,
     CustomBar: app.globalData.customBar,
     Custom: app.globalData.custom,
-    termNumber:[2,1],
-    year_index:0,
-    type:1, // 0为有效成绩，1为原始成绩
-    loading:true
+    termNumber: [2, 1],
+    year_index: 0,
+    type: 1, // 0为有效成绩，1为原始成绩
+    loading: true,
+    showUpdate: false, // 显示更新弹窗
+    updateScoreStatus: false, // 正在更新课表状态
+    updateList: [], // 更新记录
+    updateMaxCount: 3, // 最多更新次数
+    updateStatus: app.globalData.updateStatus
   },
 
   /**
@@ -36,7 +53,7 @@ Page({
     that.setData({
       from: options.from,
       winHeight: winHeight,
-      update_time: update_time ? dayjs.unix(update_time).format('YYYY-MM-DD HH:mm:ss') :'无记录'
+      update_time: update_time ? dayjs.unix(update_time).format('YYYY-MM-DD HH:mm:ss') : '无记录'
     })
     app.isLogin(that.route).then(function (res) {
       that.getScore(false)
@@ -50,9 +67,9 @@ Page({
         var interstitialAd = wx.createInterstitialAd({
           adUnitId: 'adunit-0012824b1281826a'
         })
-        setTimeout(()=>{
+        setTimeout(() => {
           interstitialAd.show()
-        },1500)
+        }, 1500)
         wx.setStorageSync('score_v2_ad_display', time)
       } else {
         app.msg("您当前微信版本较低，建议升级到最新版本")
@@ -63,7 +80,7 @@ Page({
   /**
    * 下拉刷新，更新成绩
    */
-  onPullDownRefresh:function(){
+  onPullDownRefresh: function () {
     app.msg('请点击黄色按钮更新成绩')
   },
 
@@ -71,8 +88,8 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-    return app.share('您有一份期末成绩单待查收','score.png',this.route)
-  }, 
+    return app.share('您有一份期末成绩单待查收', 'score.png', this.route)
+  },
 
   // 获取需求结果
   getScoreDemand() {
@@ -91,9 +108,9 @@ Page({
       }
     })
   },
-  
+
   // 进入成绩详情
-  itemData:function(e){
+  itemData: function (e) {
     let type = this.data.type
     let score = type == 1 ? this.data.original_score : this.data.score
     let index = e.currentTarget.dataset.index;
@@ -104,22 +121,22 @@ Page({
       return
     }
     wx.navigateTo({
-      url: 'top/top?from=score&data=' + encodeURIComponent(JSON.stringify(data))  
+      url: 'top/top?from=score&data=' + encodeURIComponent(JSON.stringify(data))
     })
   },
 
-  analysis:function(){
+  analysis: function () {
     wx.navigateTo({
-      url:'ana/ana'
+      url: 'ana/ana'
     })
   },
 
-  refresh:function(){
+  refresh: function () {
     this.onPullDownRefresh();
   },
 
   // 获取成绩
-  getScore:function(update){
+  getScore: function (update) {
     var that = this;
     //读缓存
     // var scores = wx.getStorageSync('scores');
@@ -138,9 +155,9 @@ Page({
     // 读数据库
     getScoreList(that.route).then((res) => {
       that.setData({
-        loading:false
+        loading: false
       })
-      if(res.status == 0){
+      if (res.status == 0) {
         wx.setStorageSync('scores', res.data.data);
         that.setData({
           isNull: false,
@@ -151,11 +168,11 @@ Page({
           original_score: res.data.originalScore
         })
         that.getGradeList()
-      }else if(res.status == 1001){
+      } else if (res.status == 1001) {
         that.setData({
-          isNull:true
+          isNull: true
         })
-      }else{
+      } else {
         app.msg(res.message)
       }
     })
@@ -172,7 +189,7 @@ Page({
           hasNotice: res.data.display == 1 ? true : false,
           notice: res.data.content
         })
-      }else {
+      } else {
         that.setData({
           hasNotice: false
         })
@@ -181,46 +198,61 @@ Page({
   },
 
   //更新成绩
-  update:function(){
-    if(app.getUserId() === 'test'){
-      app.msg('测试号无法更新数据')
-      return
-    }
-    var that = this;
-    that.setData({ list_is_display: false })
-    const canUpdateResult = canUpdate('score')
-    if(canUpdateResult !== true){
-      app.msg(canUpdateResult)
-      return
-    }
-    wx.showLoading({
-      title: "更新中..",
-      mask: true
-    })
+  update: function () {
+    const that = this
     const time = dayjs().unix()
-    updateScore({time}).then((res) => {
+    let updateList = that.data.updateList
+    if (updateList.length >= that.data.updateMaxCount) {
+      updateList = []
+    }
+    updateList.push(0)
+    that.setData({
+      updatingCourse: false,
+      updateList,
+      updateScoreStatus: true
+    })
+    updateScore({
+      time
+    }).then((res) => {
       if (res.status == 0) {
-        app.msg(res.message,'success') 
+        app.msg(res.message, 'success')
         wx.setStorageSync('scores', '')
         that.getScore(true)
-        setUpdateTime('score',time)
+        setUpdateTime('score', time)
+        updateList[updateList.length - 1] = 1
         that.setData({
+          updateList,
+          updateCourseStatus: false,
           update_time: dayjs().format('YYYY-MM-DD HH:mm:ss')
         })
-      } else {
-        if (res.status == 1002) {
-          that.freshYzm()
-        } else if (res.status == 1006) {
+        setTimeout(() => {
+          that.hideUpdate()
           that.setData({
-            showModal: false
+            showConfirm: true
           })
-        } else if (res.status == 2001) {
-          that.setData({
-            demandId: res.data.id
-          })
-          that.subscribe()
-        }
+        }, 1000);
+        return
       }
+      return Promise.reject('更新失败')
+    }).catch(err => {
+      console.log(err)
+      //再获取一遍
+      updateList[updateList.length - 1] = -1
+      that.setData({
+        updateList
+      })
+      if (updateList.length >= that.data.updateMaxCount) {
+        // 更新次数上限还是失败
+        app.msg('更新失败，请重试！')
+        that.setData({
+          updateScoreStatus: false
+        })
+        return
+      }
+      app.msg('更新失败，3秒后再次更新')
+      setTimeout(() => {
+        that.update()
+      }, 3000);
     })
   },
 
@@ -233,7 +265,7 @@ Page({
     const temaplteId = 'lhKCIfBKo9GZc2Vd1zQSxpirSKHBe3czDG0OliOcXgg'
     wx.requestSubscribeMessage({
       tmplIds: [temaplteId],
-      success (result) {
+      success(result) {
         if (result[temaplteId] === 'accept') {
           subscribeScore({
             id: that.data.demandId
@@ -250,20 +282,20 @@ Page({
     })
   },
 
-  backPageBtn:function(){
+  backPageBtn: function () {
     backPage(this.data.from)
   },
 
-  selectYear:function(e){
+  selectYear: function (e) {
     let index = e.detail.value
     this.setData({
       year_index: index
     })
   },
 
-  goRank:function(e){
-    let term  = e.currentTarget.dataset.term
-    if (!this.data.gpa.hasOwnProperty(term)){
+  goRank: function (e) {
+    let term = e.currentTarget.dataset.term
+    if (!this.data.gpa.hasOwnProperty(term)) {
       app.msg("当前学期还未出有效成绩，不支持查看排名")
       return
     }
@@ -273,9 +305,9 @@ Page({
   },
 
   //切换成绩模式
-  changeType:function(e){
+  changeType: function (e) {
     let val = e.currentTarget.dataset.val
-    if(!val){
+    if (!val) {
       val = this.data.type == 0 ? 1 : 0
     }
     this.setData({
@@ -284,13 +316,13 @@ Page({
   },
 
   //是否存在有效成绩
-  hasEffectScore:function(name){
-    if(this.data.score.length <= 0){
+  hasEffectScore: function (name) {
+    if (this.data.score.length <= 0) {
       return false
     }
     let isExist = false
-    this.data.score.forEach(function(s){
-      if(s.name == name){
+    this.data.score.forEach(function (s) {
+      if (s.name == name) {
         isExist = true
         return
       }
@@ -298,32 +330,32 @@ Page({
     return isExist
   },
 
-  viewAllScore:function(){
+  viewAllScore: function () {
     wx.navigateTo({
       url: '/pages/tools/credit/credit',
     })
   },
 
   // 获取年级列表
-  getGradeList: function(){
+  getGradeList: function () {
     // 学期倒序
     let termNum = Object.keys(this.data.term)
-    termNum.sort((x,y) => {
+    termNum.sort((x, y) => {
       x = x.split('-')
       y = y.split('-')
-      return y[y.length-1] - x[x.length-1]
+      return y[y.length - 1] - x[x.length - 1]
     })
     getGradeList(this.data.year).then((list) => {
       // 学期倒序
       let termNums = Object.keys(this.data.term)
-      termNums.sort((x,y) => {
+      termNums.sort((x, y) => {
         x = x.split('-').join('')
         y = y.split('-').join('')
         return y - x
       })
-      for(let t in termNums){
+      for (let t in termNums) {
         termNums[t] = {
-          year: termNums[t].slice(0,9),
+          year: termNums[t].slice(0, 9),
           term: termNums[t]
         }
       }
@@ -336,11 +368,33 @@ Page({
     })
 
   },
-  
+
   // 选择年级
-  selectGrade: function(e){
+  selectGrade: function (e) {
     this.setData({
       tabCur: e.currentTarget.dataset.index
+    })
+  },
+
+  // 显示更新成绩弹窗
+  showUpdate() {
+    if (app.getUserId() === 'test') {
+      app.msg('测试号无法更新数据')
+      return
+    }
+    const canUpdateResult = canUpdate('score')
+    if (canUpdateResult !== true) {
+      app.msg(canUpdateResult)
+      return
+    }
+    this.setData({
+      showUpdate: true
+    })
+  },
+  hideUpdate() {
+    this.setData({
+      showUpdate: false,
+      updateList: []
     })
   }
 })

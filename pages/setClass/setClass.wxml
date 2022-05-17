@@ -18,7 +18,7 @@
     <view>
       <view wx:if="{{collects.length>0}}">
         <button class="cu-btn sm text-xs text-gray margin-top-xs margin-right-xs collect-class" 
-          wx:for="{{collects}}" wx:key="key" data-name="{{item.name}}" data-number="{{item.number}}" bindtap="select" bindlongtap="delectCollect" >
+          wx:for="{{collects}}" wx:key="key" data-type="collect" data-index="{{index}}" bindtap="select" bindlongtap="delectCollect" >
           {{item.name}}
         </button>
       </view>
@@ -32,11 +32,11 @@
     </view>
     <view class="cu-item" wx:for="{{classes}}" wx:key="key">
       <view class="content">
-        <text class="text-grey">{{item.name}}</text>
+        <text class="text-grey">{{item.class_name}}</text>
       </view>
-      <view class="action">
-        <button class="cu-btn line-yellow radius margin-right-sm" wx:if="{{userId}}" data-number="{{item.number}}" data-name="{{item.name}}" bindtap="collect">收藏</button>
-        <button class="cu-btn bg-theme text-white" data-name="{{item.name}}" data-number="{{item.number}}" bindtap="select">选择</button>
+      <view class="action" mark:index="{{index}}">
+        <button class="cu-btn line-yellow radius margin-right-sm" wx:if="{{userId}}" bindtap="collect">收藏</button>
+        <button class="cu-btn bg-theme text-white" bindtap="select">选择</button>
       </view>
     </view>
   </view>

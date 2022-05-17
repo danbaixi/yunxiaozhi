@@ -90,7 +90,7 @@ function delExam(data){
 // 获取班级列表
 function getClassList(data){
   return R({
-    url:'Classes/getClassList',
+    url:'Classes/getCourseClassList',
     needLogin:false,
     data
   })

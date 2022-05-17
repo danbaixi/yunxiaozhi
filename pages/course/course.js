@@ -27,7 +27,7 @@ Page({
     now_month: 1,
     course: [],
     train_course_id: 0,
-    list_is_display: false,
+    showSetting: false,
     sheet_visible: false,
     toggleDelay: false, //延迟加载
     ad: {
@@ -63,7 +63,14 @@ Page({
     scrollTop: "",
     courseTerm: null,
     noticeDisplay: false,
-    acceptTerms: false
+    acceptTerms: false,
+    showUpdate: false, // 显示更新弹窗
+    updateCourseStatus: false, // 正在更新课表状态
+    updateList: [], // 更新记录
+    updateMaxCount: 3, // 最多更新次数
+    updateStatus: app.globalData.updateStatus,
+    showConfirm: false, // todo:显示确认课表弹窗
+    showShare: false, // 分享课表
   },
 
   /**
@@ -86,7 +93,7 @@ Page({
     var startDay = wx.getStorageSync('start_day') || 1
     var winHeight = wx.getSystemInfoSync().windowHeight;
     _this.setData({
-      list_is_display: false,
+      showSetting: false,
       Kopacity: wx.getStorageSync('Kopacity'),
       Copacity: wx.getStorageSync('Copacity'),
       fontSize: wx.getStorageSync('fontSize'),
@@ -176,7 +183,7 @@ Page({
       todayDay,
       tmpClass,
       showMoreCourse: false,
-      list_is_display: false,
+      showSetting: false,
       zhou_num
     })
 
@@ -191,6 +198,21 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
+    if (this.data.showShare) {
+      let className = ''
+      if (this.data.tmpClass) {
+        className = this.data.tmpClass.name
+      } else {
+        className = wx.getStorageSync('user_info')['stu_class']
+      }
+      const path = `/pages/course/share/share?class_name=${className}&term=${this.data.courseTerm.term}&term_name=${this.data.courseTerm.name}&term_date=${this.data.courseTerm.term_date}`
+      // console.log(path)
+      return {
+        title: `点击查看${className}的课表`,
+        path,
+        imageUrl: 'https://mmbiz.qpic.cn/mmbiz_png/YWKTC18p77JpsbMIEeKeaD54MUVydoyuJbYJS6fZR2UO7f3lhoibXichN3YLeZYlRaZCfP9FV9OmdnxicVRBQJ5TQ/0?wx_fmt=png'
+      }
+    }
     return app.share('看课表，一个云小智就够了！', 'course.png', this.route)
   },
   /**
@@ -534,8 +556,19 @@ Page({
   //更新课表
   updateCourseRequest() {
     let that = this
+    const updateList = that.data.updateList
+    updateList.push(0)
+    that.setData({
+      updateList,
+      updateCourseStatus: true
+    })
     updateCourse().then((res) => {
       if (res.status == 0) {
+        updateList[updateList.length - 1] = 1
+        that.setData({
+          updateList,
+          updateCourseStatus: false
+        })
         that.getCourseListRequest()
         setUpdateTime('course')
         //切换为当前学期
@@ -547,14 +580,34 @@ Page({
           now_week: week
         })
         app.msg("更新成功", 'success')
+        setTimeout(() => {
+          that.hideUpdate()
+          that.setData({
+            showConfirm: true
+          })
+        }, 1000);
         return
       }
-      if (res.status == 1005) {
-        //再获取一遍
-        that.updateCourseRequest()
-      } else {
-        app.msg(res.message)
+      return reject('更新失败')
+    }).catch(err => {
+      //再获取一遍
+      updateList[updateList.length - 1] = -1
+      that.setData({
+        updateList
+      })
+      if (updateList.length >= that.data.updateMaxCount) {
+        // 更新次数上限还是失败
+        app.msg('更新失败，请重试！')
+        that.setData({
+          updateCourseStatus: false
+        })
+        return
       }
+      app.msg('更新失败，3秒后再次更新')
+      setTimeout(() => {
+        that.updateCourseRequest()
+      }, 3000);
+      console.log(err)
     })
   },
 
@@ -573,7 +626,7 @@ Page({
       return
     }
     that.setData({
-      list_is_display: false
+      showSetting: false
     })
     const canUpdateResult = canUpdate('course')
     if (canUpdateResult !== true) {
@@ -581,11 +634,8 @@ Page({
       return
     }
     that.setData({
-      updatingCourse: false
-    })
-    wx.showLoading({
-      title: '更新中',
-      mask: true
+      updatingCourse: false,
+      updateList: []
     })
     wx.removeStorageSync('tmp_class')
     that.updateCourseRequest()
@@ -593,14 +643,14 @@ Page({
 
   //是否显示列表
   listDisplay: function () {
-    var list = this.data.list_is_display;
+    var list = this.data.showSetting;
     if (list == 0) {
       this.setData({
-        list_is_display: true,
+        showSetting: true,
       });
     } else if (list == 1) {
       this.setData({
-        list_is_display: false,
+        showSetting: false,
       })
     }
   },
@@ -671,7 +721,7 @@ Page({
 
   hideMask: function () {
     this.setData({
-      list_is_display: false
+      showSetting: false
     })
   },
 
@@ -874,7 +924,7 @@ Page({
       now_week: week,
       now_day: day,
       zhou_num: zhou_num,
-      list_is_display: 0,
+      showSetting: 0,
       now_month: month,
       now_month_number: month / 1, // 当前月份数字类型，用于数字运算
     })
@@ -927,8 +977,14 @@ Page({
       app.msg("你还没有登录哦")
       return
     }
-    wx.navigateTo({
-      url: '/pages/course/share/share?term=' + this.data.courseTerm.term + '&term_name=' + this.data.courseTerm.name,
+    const course = wx.getStorageSync('course')
+    if (!course || course.length == 0) {
+      app.msg('当前没有课表')
+      return
+    }
+    this.setData({
+      showSetting: false,
+      showShare: true
     })
   },
 
@@ -1076,16 +1132,6 @@ Page({
       courseConfig: setting
     })
   },
-  updateCourseModal() {
-    if (!app.getUserId()) {
-      app.msg("请先登录")
-      return
-    }
-    this.setData({
-      list_is_display: false,
-      updatingCourse: true
-    })
-  },
   closeUpdateCourseModal() {
     this.setData({
       updatingCourse: false
@@ -1139,5 +1185,42 @@ Page({
         }
       })
     }
+  },
+  // 显示更新
+  showUpdate() {
+    if (!app.getUserId()) {
+      app.msg("请先登录")
+      return
+    }
+    this.setData({
+      showSetting: false,
+      showUpdate: true
+    })
+  },
+  // 隐藏更新
+  hideUpdate() {
+    this.setData({
+      showUpdate: false,
+      updateList: []
+    })
+  },
+
+  // 隐藏分享
+  hideShare() {
+    this.setData({
+      showShare: false
+    })
+  },
+
+  confirmShareCourse() {
+    setTimeout(() => {
+      this.hideShare()
+    }, 100);
+  },
+
+  hideSetting() {
+    this.setData({
+      showSetting: false
+    })
   }
 })
