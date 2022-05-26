@@ -68,7 +68,8 @@
     "pages/news/news",
     "pages/tools/discount/discount",
     "pages/qingguo/index",
-    "pages/article/article"
+    "pages/article/article",
+    "pages/tools/emptyroom/list/list"
   ],
   "subpackages": [
     {

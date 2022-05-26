@@ -22,6 +22,8 @@ Page({
     electricity: 0,
     water: 0,
     isFresh: false,
+    waterGrade: null,
+    electricityGrade: null,
     articleUrl: 'http://mp.weixin.qq.com/s?__biz=MzI1NTUwNDIzNQ==&mid=100003016&idx=1&sn=5d3dc0dcc63f5691c7bf98ec4146fbf8&chksm=6a35b6cc5d423fdaf32d2718d2df9c0c83ef11e08af49def86ba18300d261d587ce6bfa81a6f#rd'
   },
 
@@ -83,11 +85,15 @@ Page({
       })
       if (res.status == 0 && res.data != []) {
         let data = res.data
-        data.waterGrade = _this.getGrade(data.water)
-        data.electricityGrade = _this.getGrade(data.electricity)
+        if (data.water !== false) {
+          data.waterGrade = _this.getGrade(data.water)
+          _this.startWaterUp(data.water ? data.water : 0)
+        }
+        if (data.electricity !== false) {
+          data.electricityGrade = _this.getGrade(data.electricity)
+          _this.startElectricityUp(data.electricity ? data.electricity : 0)
+        }
         _this.setData(data)
-        _this.startWaterUp(data.water ? data.water : 0)
-        _this.startElectricityUp(data.electricity ? data.electricity : 0)
       }
     })
   },
@@ -101,7 +107,7 @@ Page({
   //获取等级
   getGrade: function (number) {
     if (number <= 0) {
-      return 'null'
+      return null
     } else if (number <= 50) {
       return 'a'
     } else if (number <= 100) {
