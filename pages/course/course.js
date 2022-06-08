@@ -140,7 +140,7 @@ Page({
   onShow: function () {
     let _this = this
     // 获取课表
-    if (!wx.getStorageSync('course')) {
+    if (!wx.getStorageSync('course') && wx.getStorageSync('login_session')) {
       _this.getCourseListRequest()
     }
     // 背景

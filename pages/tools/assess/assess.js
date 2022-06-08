@@ -11,6 +11,7 @@ Page({
     loading:true,
     finish: false,
     finishAd: false, //观看完广告
+    errorMessage: ''
   },
 
   /**
@@ -77,12 +78,21 @@ Page({
 
   getList:function(){
     var that = this
+    that.setData({
+      loading: true
+    })
     getAssessList().then((res) => {
       if(res.status == 0){
-        res.data.loading = false
-        that.setData(res.data)
+        that.setData({
+          loading: false,
+          ...res.data
+        })
         return
       }
+      that.setData({
+        loading: false,
+        errorMessage: res.message
+      })
     })
   },
 
