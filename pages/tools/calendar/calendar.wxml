@@ -38,7 +38,7 @@
       </view>
       <view class='date-list'>
         <view bindtap="clickDate" data-index="{{index}}" class="date-item" wx:for='{{days}}' wx:key='index'>
-          <view class="date-content {{now_year == year && now_month == month && now_day == item.day && index < dayCount ?'this-day':''}} {{selectEventIndex > -1 && tools.indexOf(item.events, selectEventIndex) ? 'selected-event' : ''}} {{item.position[selectEventIndex]}} {{selectEventIndex > -1 && tools.indexOf(item.events, selectEventIndex) && thisMonthEvents[selectEventIndex].dayCount == 1 ? 'onlyone' : '' }}" style="{{selectEventIndex > -1 && tools.indexOf(item.events, selectEventIndex) ? 'background-color: rgba(' + colors[selectEventIndex] + ',0.1)' : ''}}">
+          <view class="date-content {{year == item.year && month == item.month && now_day == item.day ?'this-day':''}} {{selectEventIndex > -1 && tools.indexOf(item.events, selectEventIndex) ? 'selected-event' : ''}} {{item.position[selectEventIndex]}} {{selectEventIndex > -1 && tools.indexOf(item.events, selectEventIndex) && thisMonthEvents[selectEventIndex].dayCount == 1 ? 'onlyone' : '' }}" style="{{selectEventIndex > -1 && tools.indexOf(item.events, selectEventIndex) ? 'background-color: rgba(' + colors[selectEventIndex] + ',0.1)' : ''}}">
             <view class="day-item__num {{item.month == now_month ?'':'not-this-month'}}">{{item.day}}</view>
             <view class="day-item__ext">{{item.ext}}</view>
             <view class='spot-list'>
