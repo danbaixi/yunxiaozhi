@@ -13,7 +13,7 @@ page{
   width: 100%;
   background: #fff;
   margin: 20rpx 0 20rpx;
-  padding: 0 3%;
+  padding: 0 3% 20rpx;
 }
 .screen-swiper {
   min-height: 320rpx;
@@ -187,7 +187,7 @@ page{
 }
 .unlogin{
   text-align: center;
-  padding: 40rpx 30rpx;
+  padding: 40rpx 30rpx 20rpx;
 }
 
 .banner {
