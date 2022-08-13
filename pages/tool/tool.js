@@ -20,14 +20,14 @@ Page({
         name: '绩点排行',
         icon: 'gpa',
         needLogin: true,
-        url: '../tools/rank/rank?from=index',
+        url: '/subPages/score-rank/index?from=index',
       }, {
         color: 'green',
         badge: 0,
         name: '学业分析',
         icon: 'ana',
         needLogin: true,
-        url: '../tools/score/ana/ana?from=index',
+        url: '/subPages/score-ana/index?from=index',
       }, {
         color: 'green',
         badge: 0,
@@ -243,7 +243,7 @@ Page({
         name: '图书馆',
         icon: 'library',
         needLogin: false,
-        url: '/pages/tools/library/index',
+        url: '/subPages/library/index',
       },
     ],
     query: [{
@@ -339,7 +339,7 @@ Page({
         name: '舔狗日记',
         icon: 'tiangou',
         needLogin: false,
-        url: '/pages/tools/tiangou/tiangou',
+        url: '/subPages/tiangou/index',
       },
       {
         color: 'red',

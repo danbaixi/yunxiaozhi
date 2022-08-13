@@ -1,0 +1,7 @@
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+	<view slot="content">教务系统状态</view>
+</cu-custom>
+<view class="container">
+  
+</view>

@@ -77,3 +77,10 @@ button{
   left: 0;
   right: 0;
 }
+
+.load-fail {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

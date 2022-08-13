@@ -34,7 +34,7 @@ Component({
     // 查看详情
     viewDetail() {
       wx.navigateTo({
-        url: `/pages/tools/library/detail/index?id=${this.properties.info.recordId}&img=${this.properties.img ? encodeURIComponent(this.properties.img) : ''}`,
+        url: `/subPages/library/detail/index?id=${this.properties.info.recordId}&img=${this.properties.img ? encodeURIComponent(this.properties.img) : ''}`,
       })
     },
     // 续借

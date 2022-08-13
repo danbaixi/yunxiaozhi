@@ -90,7 +90,6 @@ Page({
         that.setData(res.data)
         if(res.data.attendance.length > 0){
           getGradeList(Object.values(res.data.term)).then((list) => {
-            console.log(list)
             that.setData({
               grade: list
             })

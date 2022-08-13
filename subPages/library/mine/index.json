@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "lib-login": "/subPages/components/lib-login/index",
+    "book-item": "/pages/components/book-item/index"
+  }
+}

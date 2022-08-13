@@ -1,5 +1,7 @@
 {
-  "setting": {},
+  "setting": {
+    "urlCheck": false
+  },
   "condition": {
     "miniprogram": {
       "list": [
@@ -56,8 +58,9 @@
         },
         {
           "name": "成绩分析",
-          "pathName": "pages/tools/score/ana/ana",
-          "query": ""
+          "pathName": "subPages/score-ana/index",
+          "query": "",
+          "scene": null
         },
         {
           "name": "考勤记录",
@@ -169,7 +172,7 @@
         },
         {
           "name": "绩点排行",
-          "pathName": "pages/tools/rank/rank",
+          "pathName": "subPages/score-rank/index",
           "query": "",
           "scene": null
         },
@@ -320,7 +323,7 @@
         {
           "name": "查看分享课表",
           "pathName": "pages/course/share/share",
-          "query": "stu_id=201802004663&term=20190&term_name=2019-2020学年 第一学期",
+          "query": "class_name=19计算机科学与技术3班&term=20201&term_name=2020-2021学年 第2学期(大二)&term_date=2021-03-01",
           "scene": null
         },
         {
@@ -373,36 +376,37 @@
         },
         {
           "name": "图书馆",
-          "pathName": "pages/tools/library/index",
+          "pathName": "subPages/library/index",
           "query": "",
           "scene": null
         },
         {
           "name": "搜索数据",
-          "pathName": "pages/tools/library/search/index",
+          "pathName": "subPages/library/search/index",
           "query": "from=library",
           "scene": null
         },
         {
           "name": "图书详情",
-          "pathName": "pages/tools/library/detail/index",
+          "pathName": "subPages/library/detail/index",
           "query": "id=384859&img=https%3A%2F%2Funicover.duxiu.com%2FcoverNew%2FCoverNew.dll%3Fiid%3D6A6D686C696B68696A6A5FA7A898B09AAD9EABA69AABA45F6A3135303931363939",
           "scene": null
         },
         {
           "name": "我的借阅",
-          "pathName": "pages/tools/library/mine/index",
+          "pathName": "subPages/library/mine/index",
           "query": "",
           "scene": null
         },
         {
           "name": "热榜和新书",
-          "pathName": "pages/tools/library/top/index",
+          "pathName": "subPages/library/top/index",
           "query": "type=new",
           "scene": null
         }
       ]
     }
   },
-  "description": "项目私有配置文件。此文件中的内容将覆盖 project.config.json 中的相同字段。项目的改动优先同步到此文件中。详见文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/projectconfig.html"
+  "description": "项目私有配置文件。此文件中的内容将覆盖 project.config.json 中的相同字段。项目的改动优先同步到此文件中。详见文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/projectconfig.html",
+  "libVersion": "2.24.3"
 }

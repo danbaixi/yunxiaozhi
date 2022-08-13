@@ -1,31 +1,39 @@
 <cu-custom bgColor="bg-white" isBack="true">
   <view slot="back">返回</view>
-	<view slot="content">一键评教</view>
+  <view slot="content">一键评教</view>
 </cu-custom>
 <list-loading loading="{{loading}}"></list-loading>
 <view class="container" wx:if="{{!loading}}">
   <notice page="assess" Style="border: 1px solid #1380ff"></notice>
-  <view class="term">
-    <view class="cu-bar bg-white">
-      <view class="action sub-title">
-        <text class="text-xl text-bold text-theme">当前学期</text>
-        <text class="bg-theme"></text>
+  <block wx:if="{{errorMessage != ''}}">
+    <view class="load-fail">
+      <van-empty image="error" description="{{errorMessage}}">
+        <button bindtap="getList" class="cu-btn round lg bg-theme">重新加载</button>
+      </van-empty>
+    </view>
+  </block>
+  <block wx:else>
+    <view class="term">
+      <view class="cu-bar bg-white">
+        <view class="action sub-title">
+          <text class="text-xl text-bold text-theme">当前学期</text>
+          <text class="bg-theme"></text>
+        </view>
+      </view>
+      <view style="margin:0 30rpx;position:relative">
+        <view class="text-lg">{{term}}</view>
+        <view class="text-sm text-grey margin-top-xs" wx:if="{{assess!=null}}">截止时间：{{assess.start}}至{{assess.end}}</view>
+        <button class="cu-btn bg-theme assessing" wx:if="{{assess!=null}}" bindtap="start">点击一键评教</button>
       </view>
     </view>
-    <view style="margin:0 30rpx;position:relative">
-      <view class="text-lg">{{term}}</view>
-      <view class="text-sm text-grey margin-top-xs" wx:if="{{assess!=null}}">截止时间：{{assess.start}}至{{assess.end}}</view>
-      <button class="cu-btn bg-theme assessing" wx:if="{{assess!=null}}" bindtap="start">点击一键评教</button>
-    </view>
-  </view>
-  <view class="assess">
-    <view class="null text-grey" wx:if="{{assess==null}}">
-      <view>本学期的评教工作暂未开始</view>
-      <view>请留意云小智公众号的通知</view>
-    </view>
-    <view class="content" wx:if="{{assess!=null}}">
-      <view class="tr bg-w">
-        <view class="th" style='width:60%'>课程</view>
+    <view class="assess">
+      <view class="null text-grey" wx:if="{{assess==null}}">
+        <view>本学期的评教工作暂未开始</view>
+        <view>请留意云小智公众号的通知</view>
+      </view>
+      <view class="content" wx:if="{{assess!=null}}">
+        <view class="tr bg-w">
+          <view class="th" style='width:60%'>课程</view>
           <view class="th" style='width:25%'>教师</view>
           <view class="th" style='width:15%'>状态</view>
         </view>
@@ -38,9 +46,12 @@
         </block>
         <view class="text-grey text-center padding" wx:if="{{list.length==0}}">没有相关数据</view>
       </view>
-  </view>
-  <view class="text-grey {{assess == null ? 'bottom-text':''}}">
-    <view class="text-center block">累计已完成 <text class="text-bold text-theme">{{totalCount}}</text> 次评教工作</view>
-  </view>
-  <view class="margin ad-radius"><ad-custom unit-id="adunit-70b9e67953983fc1"></ad-custom></view>
+    </view>
+    <view class="text-grey {{assess == null ? 'bottom-text':''}}">
+      <view class="text-center block">累计已完成 <text class="text-bold text-theme">{{totalCount}}</text> 次评教工作</view>
+    </view>
+    <view class="margin ad-radius">
+      <ad-custom unit-id="adunit-70b9e67953983fc1"></ad-custom>
+    </view>
+  </block>
 </view>

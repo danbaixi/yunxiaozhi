@@ -1,6 +1,7 @@
 {
   "navigationBarTitleText": "一键评教",
   "usingComponents": {
-    "notice": "/pages/components/notice/notice"
+    "notice": "/pages/components/notice/notice",
+    "van-empty": "@vant/weapp/empty/index"
   }
 }

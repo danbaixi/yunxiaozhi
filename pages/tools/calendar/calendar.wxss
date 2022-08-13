@@ -1,70 +1,73 @@
-page{
+page {
   background: #fff;
+  height: 100vh;
+  overflow-y: hidden;
 }
-.head{
-  position: fixed;
-  height: 50px;
-  line-height: 50px;
+.head {
+  height: 100rpx;
+  line-height: 100rpx;
+  padding: 0 30rpx;
   width: 100%;
   justify-content: center;
   background: #fff;
-  padding: 0 20rpx;
 }
-.head view{
+.head view {
   display: inline-block;
   margin-right: 20rpx;
 }
-.head view:last-child{
+.head view:last-child {
   margin-right: 0;
   float: right;
 }
-image{
+image {
   padding: 10px;
   height: 20px;
   width: 20px;
 }
-.now_month{
-  position: relative; 
+.now_month {
+  position: relative;
   text-align: center;
   line-height: 40px;
   z-index: -1;
-} 
-.data{
-  position: fixed;
-  background: #fff;
-  top: 40px;
-  width: 100%;
-  height: 286px;
 }
-.title{
+.calendar-content {
+  background: #fff;
   width: 100%;
-  height: 30px;
-  background: #eee;
+  padding: 0 10rpx;
+}
+.column-list {
+  color: #333;
+  width: 100%;
+  height: 60rpx;
   display: flex;
   text-align: center;
-  line-height: 30px;
-  font-size: 12px;
+  line-height: 60rpx;
+  font-size: 28rpx;
+  font-weight: 700;
 }
-.week{
+.week {
   width: 14%;
 }
-.weekly{
+.weekly {
   width: calc(86% / 7);
 }
-.zhoushu{
+.week-list {
   position: relative;
   float: left;
   width: 14%;
   text-align: center;
   line-height: 30px;
 }
-.zhou{
- height: 60px;
- color: #0099CC;
- line-height: 60px;
- border-bottom: 1px solid #f2f4f5;
+.week-item {
+  font-size: 26rpx;
+  height: 120rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #333;
+  font-weight: 500;
 }
-.riqi{
+.date-list {
   position: relative;
   float: left;
   width: 86%;
@@ -72,71 +75,115 @@ image{
   text-align: center;
   line-height: 30px;
 }
-.ri{
-  height: 60px;
-  width: calc(100% / 7); 
-  line-height: 60px;
+.date-item {
+  position: relative;
+  width: calc(100% / 7);
+  height: 120rpx;
+  padding: 8rpx 0;
   float: left;
-  border-bottom: 1px solid #f2f4f5;
 }
-.num{
-  height: 60px;
+
+.spot-list {
+  height: 20rpx;
+  bottom: 4rpx;
 }
-.num .text-df{
-  padding-top: 4px;
-  height: 34px;
-  line-height: 34px;
-  font-size: 32rpx;
-}
-.num .text-xs{
-  height: 14px;
-  line-height: 14px;
-}
-.spotAll{
-  height: 5px;
-  margin: -8px auto;
-}
-.spot{
-  width: 5px;
-  height: 5px;
+.spot-item {
+  width: 10rpx;
+  height: 10rpx;
   border-radius: 50%;
-  float: left;
+  margin: 0 4rpx;
 }
-.spot:not(:first-child){
+.spot:not(:first-child) {
   margin-left: 2px;
 }
-.empyt{
-  height: 60px;
-  float: left;
-  border-bottom: 1px solid #f2f4f5;
-}
-.shijianAll{
+
+.event-list {
+  position: relative;
   width: 100%;
-  float: left;
+  padding: 30rpx 30rpx 80rpx;
+  z-index: 0;
 }
-.shijian{
-  height: 50px;
+
+.event-item {
+  display: flex;
+  margin-bottom: 30rpx;
+}
+
+.event-item .event-date {
+  padding-top: 6rpx;
+  width: 100rpx;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 50rpx;
+  text-align: center;
+}
+
+.event-date .date-day {
+  font-size: 30rpx;
+  color: #999;
+  font-weight: 700;
+}
+
+.event-date .date-month {
+  font-size: 18rpx;
+  color: #999;
+  font-weight: 700;
+  margin-top: -4rpx;
+}
+
+.event-date__item {
+  line-height: 32rpx;
+  position: relative;
+}
+
+.event-date .split-line {
+  width: 2rpx;
+  height: 16rpx;
+  background-color: #e1e1e1;
+}
+
+.event-item .event-content {
+  position: relative;
   width: 100%;
-  line-height: 50px;
-  border-bottom: 1px solid #f2f4f5;
-  float: left;
-  z-index: -10;
+  padding: 24rpx 30rpx;
+  border-radius: 18rpx;
+  transition: all ease-in .2s;
 }
-.li{
-  margin-left: 10px;
-  float: left;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow:ellipsis;
+
+.event-item:not(:last-child) .event-content::before {
+  content: '';
+  width: 2rpx;
+  height: calc(100% + 4rpx);
+  background-color: #f4f4f4;
+  position: absolute;
+  top: 30rpx;
+  left: -36rpx;
 }
-.icon-back,.icon-right{
+
+.event-item .event-content::after {
+  content: '';
+  width: 16rpx;
+  height: 16rpx;
+  background-color: inherit;
+  border-radius: 50%;
+  position: absolute;
+  top: 10rpx;
+  left: -42rpx;
+}
+
+.icon-back,
+.icon-right {
   border-radius: 100%;
   padding: 16rpx;
 }
-.thisDay{
-  background: #f1f1f1;
+.this-day .day-item__num {
+  color: var(--theme);
+  font-weight: bold;
 }
-.option{
+.option {
   color: #fff;
   background: var(--theme);
   border-radius: 50%;
@@ -144,14 +191,121 @@ image{
   text-align: right;
   line-height: 50px;
 }
-.option:nth-child(1){
+.option:nth-child(1) {
   margin-right: 30rpx;
 }
-.clearfloat{
+.clearfloat {
   clear: both;
 }
 .ad {
   position: fixed;
   bottom: 10rpx;
   right: 10rpx;
+}
+
+.now-month {
+  font-size: 42rpx;
+  color: #333;
+  font-weight: 500;
+  margin-right: 16rpx;
+}
+
+.now-year {
+  font-size: 30rpx;
+  color: #666;
+  font-size: 400;
+}
+
+.day-item__num {
+  color: #333;
+  font-size: 30rpx;
+  height: 40rpx;
+  top: 10rpx;
+}
+
+.not-this-month {
+  color: #ccc;
+}
+
+.day-item__ext {
+  color: #ccc;
+  font-size: 20rpx;
+  height: 30rpx;
+  top: 50rpx;
+}
+
+.day-list {
+  margin-top: 16rpx;
+}
+
+.select-term {
+  color: #666;
+}
+
+.select-term .icon-triangledownfill {
+  color: #999;
+}
+
+.event-title {
+  font-size: 32rpx;
+  font-weight: 500;
+  margin-bottom: 10rpx;
+}
+
+.event-desc {
+  font-size: 26rpx;
+  font-weight: 400;
+}
+
+.selected-event .day-item__ext {
+  color: #666;
+}
+
+.selected-event.mid {
+  border-radius: 0;
+}
+
+.selected-event.start {
+  border-top-left-radius: 18rpx;
+  border-bottom-left-radius: 18rpx;
+}
+
+.selected-event.end {
+  border-top-right-radius: 18rpx;
+  border-bottom-right-radius: 18rpx;
+}
+
+.selected-event.onlyone {
+  border-radius: 18rpx;
+}
+
+.date-content {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.date-content > view {
+  position: absolute;
+  width: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.select-event .date-day {
+  color: #333;
+}
+
+.select-event .date-month {
+  color: #666;
+}
+
+.fixed {
+  position: fixed;
+  width: 100%;
+  background-color: #fff;
+  z-index: 1;
 }

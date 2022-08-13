@@ -130,7 +130,7 @@ function backPage(from = ''){
 }
 
 // 判断是否可以更新数据
-const UPDATE_TIME = 60 //时间间隔60s
+const UPDATE_TIME = 3600 //时间间隔1h
 const TIME_KEY = {
   score: 'score_update_time', //成绩
   course: 'course_update_time', //课表
@@ -153,7 +153,9 @@ function canUpdate(type){
   const now = dayjs().unix()
   const level = cacheTime + UPDATE_TIME - now
   if(level > 0){
-    return `请在${level}秒后更新`
+    const levelMin = Math.floor(level / 60)
+    const levelSecond = level - levelMin * 60
+    return `请在${levelMin > 0 ? levelMin + '分钟' : ''}${levelSecond}秒后更新`
   }
   return true
 }

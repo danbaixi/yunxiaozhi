@@ -219,7 +219,7 @@ Page({
 
   changeClass:function(){
     wx.navigateTo({
-      url: '/pages/setClass/setClass',
+      url: `/pages/setClass/setClass?term=${this.data.courseTerm.term}`,
     })
   },
 
@@ -288,7 +288,7 @@ Page({
     let request = null
     if(!stu_id || tmp_class){
       request = getCourseByClassname({
-        classname: tmp_class.name,
+        class_name: tmp_class.name,
         term : term.term
       })
     }else {
@@ -298,7 +298,11 @@ Page({
     }
     request.then((res) => {
       wx.hideLoading()
-      wx.setStorageSync('course', res.data.course)
+      let courseList = res.data.course
+      if (!stu_id || tmp_class) {
+        courseList = res.data
+      }
+      wx.setStorageSync('course', courseList)
       wx.setStorageSync('course_term', term)
       let courseTerm = course.getNowCourseTerm()
       _this.setData({

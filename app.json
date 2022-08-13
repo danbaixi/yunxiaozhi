@@ -5,7 +5,6 @@
     "pages/my/my",
     "pages/my/userInfo/userInfo",
     "pages/tool/tool",
-    "pages/tools/score/ana/ana",
     "pages/bind/bind",
     "pages/tools/score/score",
     "pages/tools/exam/exam",
@@ -34,8 +33,6 @@
     "pages/course/add/add",
     "pages/course/setBg/setBg",
     "pages/tools/confession/confession",
-    "pages/tools/score/rank/rank",
-    "pages/tools/rank/rank",
     "pages/tools/credit/credit",
     "pages/tools/course/theory/theory",
     "pages/tools/course/train/train",
@@ -60,7 +57,6 @@
     "pages/tools/matriculate/matriculate",
     "pages/tools/matriculate/zcb/zcb",
     "pages/tools/matriculate/bk/bk",
-    "pages/tools/tiangou/tiangou",
     "pages/course/share/share",
     "pages/tools/newstudent/newstudent",
     "pages/tools/sport/sport",
@@ -71,11 +67,34 @@
     "pages/tools/score/fail/fail",
     "pages/news/news",
     "pages/tools/discount/discount",
-    "pages/tools/library/index",
-    "pages/tools/library/search/index",
-    "pages/tools/library/detail/index",
-    "pages/tools/library/top/index"
+    "pages/qingguo/index",
+    "pages/article/article",
+    "pages/tools/emptyroom/list/list"
   ],
+  "subpackages": [
+    {
+      "root": "subPages",
+      "pages": [
+        "score-ana/index",
+        "library/index",
+        "library/mine/index",
+        "library/home/index",
+        "library/detail/index",
+        "library/search/index",
+        "library/top/index",
+        "tiangou/index",
+        "score-rank/index",
+        "term-rank/index"
+      ]
+    }
+  ],
+  "preloadRule": {
+    "pages/index/index": {
+      "packages": [
+        "subPages"
+      ]
+    }
+  },
   "window": {
     "navigationStyle": "custom",
     "backgroundTextStyle": "light",

@@ -22,7 +22,7 @@
 }
 
 text[class*="icon-"],
-view[class*="icon-"],
+/* view[class*="icon-"], */
 button[class*="icon-"] {
     font-family: "cuIcon" !important;
     font-size: inherit;
