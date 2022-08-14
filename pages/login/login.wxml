@@ -14,7 +14,7 @@
   </view>
   <view class='login text-center'>
     <!-- <button open-type="getUserInfo" bindgetuserinfo='doWechatLogin' class="cu-btn bg-yellow text-white"> -->
-    <button bindtap="doWechatLogin" class="cu-btn bg-yellow text-white">
+    <button bindtap="doWechatLogin" open-type="getUserInfo" class="cu-btn bg-yellow text-white">
       <text class="icon-weixin" style="margin-right:10px;font-size:44rpx"></text> 微信登录
     </button>
   </view>

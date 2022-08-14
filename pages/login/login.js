@@ -1,6 +1,11 @@
 const app = getApp()
-const loginApi = require('../api/login')
-const { loginRedirect,updateAndGetCourseList } = require('../../utils/common')
+import {
+  wechatLogin
+} from '../api/login.js'
+const {
+  loginRedirect,
+  updateAndGetCourseList
+} = require('../../utils/common')
 Page({
 
   /**
@@ -23,12 +28,12 @@ Page({
     })
     let info = wx.getSystemInfoSync()
     _this.setData({
-      winWidth:info.windowWidth,
-      winHeight:info.windowHeight,
-      redirect:redirect
+      winWidth: info.windowWidth,
+      winHeight: info.windowHeight,
+      redirect: redirect
     })
   },
-  getCode:function(){
+  getCode: function () {
     const _this = this
     wx.login({
       success: (res) => {
@@ -43,10 +48,10 @@ Page({
   },
 
   //执行登录
-  doWechatLogin:function(){
+  doWechatLogin: function () {
     let _this = this
     //通过微信接口获取用户基本&加密信息
-    if(!wx.getUserProfile){
+    if (!wx.getUserProfile) {
       wx.showToast({
         title: '微信版本过低，请先升级微信版本',
         icon: 'none',
@@ -62,7 +67,7 @@ Page({
           title: '正在登录',
           mask: true
         })
-        if(!wechatInfo.encryptedData || !wechatInfo.iv){
+        if (!wechatInfo.encryptedData || !wechatInfo.iv) {
           wx.showToast({
             title: '微信版本过低，请先升级微信版本',
             icon: 'none',
@@ -70,20 +75,17 @@ Page({
           })
           return
         }
-        //获取SessionKey
-        loginApi.getOpenidFromCode(_this.data.code).then((res) => {
-          if(res.status == 0){
-            return loginApi.wechatLogin(_this.data.code,wechatInfo)
-          }
-          //刷新code
-          _this.getCode()
+        wechatLogin({
+          code: _this.data.code,
+          encryptedData: wechatInfo.encryptedData,
+          iv: wechatInfo.iv
         }).then((resolve) => {
-          if(resolve.status == 0){
-            app.msg("登录成功","success")
+          if (resolve.status == 0) {
+            app.msg("登录成功", "success")
             wx.setStorageSync('login_session', resolve.data.session)
             wx.setStorageSync('user_id', resolve.data.stu_id)
             wx.setStorageSync('user_info', resolve.data.info)
-            if(!resolve.data.stu_id){
+            if (!resolve.data.stu_id) {
               wx.redirectTo({
                 url: '/pages/bind/bind?redirect=' + _this.data.redirect,
               })
@@ -96,14 +98,15 @@ Page({
             // updateAndGetCourseList()
             setTimeout(() => {
               loginRedirect(_this.data.redirect)
-            },1000)
+            }, 1000)
           }
         }).catch((error) => {
           _this.getCode()
           app.msg(error.message)
         })
       },
-      fail: () => {
+      fail: (err) => {
+        console.error(err)
         app.msg("您拒绝了授权，无法正常登录")
       }
     })

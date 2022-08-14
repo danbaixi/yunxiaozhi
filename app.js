@@ -5,6 +5,9 @@ const {
 const {
   exitSaveData
 } = require('./utils/util')
+import {
+  updateConfig
+} from './utils/service'
 App({
   /** 小程序入口 */
   onLaunch: function () {
@@ -37,24 +40,30 @@ App({
     }
   },
   updateConfigRequest: function () {
-    let time = parseInt((new Date()).getTime() / 1000)
-    this.promiseRequest({
-      url: 'config/getMiniConfig',
-      needLogin: false,
-      data: {
-        stu_id: wx.getStorageSync('user_id') || ''
-      }
-    }).then((data) => {
-      if (data.status == 0) {
-        wx.setStorageSync('config_update_time', time)
-        wx.setStorageSync('configs', data.data)
+    updateConfig().then(res => {
+      if (res) {
         acceptTerms()
-      } else {
-        console.log('get config error')
       }
-    }).catch((error) => {
-      console.log(error)
     })
+    // todo 删除
+    // let time = parseInt((new Date()).getTime() / 1000)
+    // this.promiseRequest({
+    //   url: 'config/getMiniConfig',
+    //   needLogin: false,
+    //   data: {
+    //     stu_id: wx.getStorageSync('user_id') || ''
+    //   }
+    // }).then((data) => {
+    //   if (data.status == 0) {
+    //     wx.setStorageSync('config_update_time', time)
+    //     wx.setStorageSync('configs', data.data)
+    //     acceptTerms()
+    //   } else {
+    //     console.log('get config error')
+    //   }
+    // }).catch((error) => {
+    //   console.log(error)
+    // })
   },
   //设置存储文件地址
   setFileUrl: function () {

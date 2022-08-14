@@ -16,14 +16,10 @@ function getOpenidFromCode(code){
 }
 
 // 微信登录
-function wechatLogin(code,res){
+function wechatLogin(data){
   return R({
-    url: 'wechat/wechatLoginV2',
-    data: {
-      code: code,
-      encryptedData:res.encryptedData,
-      iv:res.iv,
-    },
+    url: 'wechat/wechatLoginV3',
+    data,
     needLogin:false
   })
 }
