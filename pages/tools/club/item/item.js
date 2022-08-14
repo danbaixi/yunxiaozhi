@@ -1,5 +1,6 @@
 const app = getApp()
 const { getClubItem,starClub } = require('../../../api/other')
+import { openArticle } from '../../../../utils/common'
 Page({
 
   /**

@@ -1,0 +1,45 @@
+.container {
+  padding: 40rpx 30px;
+}
+
+.notice {
+  border-radius: 24rpx;
+  background-color: #fff;
+  font-size: 30rpx;
+  width: 100%;
+  height: 120rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.info {
+  border-radius: 24rpx;
+  background-color: #fff;
+  margin-top: 30rpx;
+  padding: 30rpx;
+}
+
+.info-item {
+  display: flex;
+  font-size: 32rpx;
+  margin-bottom: 40rpx;
+  align-items: center;
+}
+
+.info-col {
+  color: #666;
+  width: 160rpx;
+  flex: none;
+  font-weight: 28rpx;
+}
+
+.info-val {
+  color: #333;
+  margin-left: 10rpx;
+  font-weight: bold;
+}
+
+.qrcode {
+  width: 360rpx;
+}

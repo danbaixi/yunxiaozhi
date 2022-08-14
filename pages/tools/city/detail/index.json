@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "copy": "/pages/components/copy/copy"
+  }
+}
