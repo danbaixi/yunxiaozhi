@@ -21,6 +21,7 @@
       <view class="info-val">
         <block wx:if="{{qrcode}}">
           <image bindtap="viewQrcode" class="qrcode" show-menu-by-longpress mode="widthFix" src="{{qrcode}}"></image>
+          <view class="tips text-center">满人或过期请添加微信</view>
         </block>
         <block wx:else>待补充</block>
       </view>
