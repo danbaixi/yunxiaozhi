@@ -407,6 +407,14 @@ function getDiscountTypes(){
   })
 }
 
+function getSameCityDetail(data) {
+  return R({
+    url: 'city/getDetail',
+    data,
+    needLogin: false
+  })
+}
+
 module.exports = {
   getAttendanceList,
   updateAttendanceList,
@@ -456,5 +464,6 @@ module.exports = {
   getIsHideSoul,
   getDiscountList,
   getDiscountTypes,
-  getQuantityFromDormitory
+  getQuantityFromDormitory,
+  getSameCityDetail
 }

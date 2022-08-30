@@ -403,6 +403,13 @@
           "pathName": "subPages/library/top/index",
           "query": "type=new",
           "scene": null
+        },
+        {
+          "name": "同乡会详情",
+          "pathName": "pages/tools/city/detail/index",
+          "query": "id=3",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

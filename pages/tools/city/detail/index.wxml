@@ -1,0 +1,30 @@
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="back">返回</view>
+  <view slot="content">{{name ? name : '同乡会详情'}}</view>
+</cu-custom>
+<view class="container" wx:if="{{!loading}}">
+  <view bindtap="viewNotice" class="notice">
+    若需要更新信息，点击联系小智助手。
+  </view>
+  <view class="info">
+    <view class="info-item">
+      <view class="info-col">负责人</view>
+      <view class="info-val">{{linker}}</view>
+    </view>
+    <view class="info-item">
+      <view class="info-col">微信</view>
+      <view class="info-val">{{phone}} <copy content="{{phone}}"></copy>
+      </view>
+    </view>
+    <view class="info-item">
+      <view class="info-col">群二维码(长按识别)</view>
+      <view class="info-val">
+        <block wx:if="{{qrcode}}">
+          <image bindtap="viewQrcode" class="qrcode" show-menu-by-longpress mode="widthFix" src="{{qrcode}}"></image>
+          <view class="tips text-center">满人或过期请添加微信</view>
+        </block>
+        <block wx:else>待补充</block>
+      </view>
+    </view>
+  </view>
+</view>

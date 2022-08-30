@@ -218,15 +218,15 @@ Page({
         needLogin: false,
         url: '/pages/tools/club/club',
       },
-      // {
-      //   icon: 'bad',
-      //   color: 'red',
-      //   badge: '',
-      //   name: '找同乡',
-      //   icon: 'tongxiang',
-      //   needLogin: false,
-      //   url: '/pages/tools/city/city'
-      // },
+      {
+        icon: 'bad',
+        color: 'red',
+        badge: '',
+        name: '找同乡',
+        icon: 'tongxiang',
+        needLogin: false,
+        url: '/pages/tools/city/city'
+      },
       {
         icon: 'bad',
         color: 'red',

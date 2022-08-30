@@ -69,7 +69,8 @@
     "pages/tools/discount/discount",
     "pages/qingguo/index",
     "pages/article/article",
-    "pages/tools/emptyroom/list/list"
+    "pages/tools/emptyroom/list/list",
+    "pages/tools/city/detail/index"
   ],
   "subpackages": [
     {

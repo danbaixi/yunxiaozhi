@@ -1,5 +1,7 @@
 const app = getApp()
-const { getSameCityList } = require('../../api/other')
+const {
+  getSameCityList
+} = require('../../api/other')
 Page({
 
   /**
@@ -23,14 +25,14 @@ Page({
   onLoad: function (options) {
     let auditing = app.getConfig('auditing')
     const functionStatus = app.getConfig('functions.city')
-    if(!functionStatus || functionStatus.status == 0){
+    if (!functionStatus || functionStatus.status == 0) {
       this.setData({
-        openStatus:functionStatus.status,
+        openStatus: functionStatus.status,
         openTips: functionStatus.tips
       })
     }
     this.setData({
-      auditing:auditing
+      auditing: auditing
     })
     this.getList()
   },
@@ -86,7 +88,7 @@ Page({
       p: _this.data.p,
       length: _this.data.length,
     }).then((res) => {
-      if(res.status == 0){
+      if (res.status == 0) {
         let list = _this.data.list
         if (res.data.list.length < _this.data.length) {
           res.data.notMore = true
@@ -101,17 +103,21 @@ Page({
   },
 
   // 详情
-  viewItem:function(e){
-    if(this.data.auditing == 1){
+  viewItem: function (e) {
+    if (this.data.auditing == 1) {
+      app.msg('数据同步中，请稍后再试')
       return
     }
     let index = e.currentTarget.dataset.index
-    if(this.data.list[index].url == ''){
-      app.msg("信息待补充")
-      return
-    }
     wx.navigateTo({
-      url: '/pages/article/article?src=' + encodeURIComponent(this.data.list[index].url) + '&title=' + this.data.list[index].name + '详情',
+      url: `/pages/tools/city/detail/index?id=${this.data.list[index].id}`,
     })
+    // if(this.data.list[index].url == ''){
+    //   app.msg("信息待补充")
+    //   return
+    // }
+    // wx.navigateTo({
+    //   url: '/pages/article/article?src=' + encodeURIComponent(this.data.list[index].url) + '&title=' + this.data.list[index].name + '详情',
+    // })
   }
 })
