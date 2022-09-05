@@ -32,7 +32,7 @@ page {
   --gray: #aaa;
   --black: #333;
   --white: #fff;
-  --background: #f5f6f7;
+  --background: #f7f8f9;
   --gradualRed: linear-gradient(45deg, #f43f3b, #ec008c);
   --gradualOrange: linear-gradient(45deg, #ff9700, #ed1c24);
   --gradualGreen: linear-gradient(45deg, #39b54a, #8dc63f);

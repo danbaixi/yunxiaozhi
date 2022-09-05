@@ -3,7 +3,7 @@
 </view>
 <view class="container">
   <view class="userinfo" data-page='/pages/my/userInfo/userInfo' bindtap="{{session?(user_id?'goPage':'bind'):'login'}}">
-    <view class="nickname text-black">{{user_name}}</view>
+    <view class="nickname text-black">{{user_id?user_name: '点击绑定教务系统账号'}}</view>
     <view class="stuId text-grey">
       <text class="icon-vipcard"></text>
       <text class="padding-left-xs">{{user_id?user_id:'未绑定'}}</text>

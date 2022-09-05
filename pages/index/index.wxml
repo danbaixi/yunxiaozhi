@@ -1,132 +1,95 @@
 <import src="index.skeleton.wxml" />
 <template is="skeleton" wx:if="{{loading}}" />
 <view wx:else>
+  <cu-custom bgColor="bg-white">
+    <view slot="content">首页</view>
+  </cu-custom>
   <view class="add_tips shadow" style="top:{{customBar + 8}}px" wx:if="{{add_tips}}">
-  <view>点击<text class="icon-more"></text>添加到我的小程序  <text class="icon-close" bindtap="closeAddTip"></text></view>
-  <view>微信下拉就能找到我啦</view>
-</view>
-<swiper class="screen-swiper square-dot" indicator-dots="{{articleBanners.length>1?true:false}}" circular="true" autoplay="true" interval="5000" duration="500">
-  <swiper-item wx:for="{{articleBanners}}" wx:key="key" bindtap="viewArticle" data-index="{{index}}">
-    <image src="{{item.img}}" mode="aspectFill"></image>
-    <view><text>{{item.title}}</text></view>
-  </swiper-item>
-</swiper>
-<view class="container">
-  <view class="cu-list grid col-{{gridCol}} no-border tools">
-    <view class="cu-item" wx:for="{{tools}}" wx:key="key" data-tab="{{item.tab}}" data-url="{{item.url}}"  data-appid="{{item.appid}}" data-path="{{item.path}}" data-needLogin="{{item.needLogin}}" bindtap='openTool'>
-      <view class="app-icon" style="position: relative; left: 0rpx; top: 10rpx">
-        <image mode="widthFix" src="/pages/assets/imgs/app_icon/{{item.icon}}.png"></image>
-      </view>
-      <text>{{item.name}}</text>
-    </view>
+    <view>点击<text class="icon-more"></text>添加到我的小程序 <text class="icon-close" bindtap="closeAddTip"></text></view>
+    <view>微信下拉就能找到我啦</view>
   </view>
+  <view class="container">
+    <view class="y-radius margin-top banners">
+      <swiper class="screen-swiper square-dot" indicator-dots="{{articleBanners.length>1?true:false}}" circular="true" autoplay="true" interval="6000" duration="1000">
+        <swiper-item wx:for="{{articleBanners}}" wx:key="key" bindtap="viewArticle" data-index="{{index}}">
+          <image src="{{item.img}}" mode="aspectFill"></image>
+          <view><text>{{item.title}}</text></view>
+        </swiper-item>
+      </swiper>
+    </view>
+    <view class="cu-list grid col-{{gridCol}} no-border tools y-radius margin-top y-shadow">
+      <view class="cu-item" wx:for="{{tools}}" wx:key="key" data-tab="{{item.tab}}" data-url="{{item.url}}" data-appid="{{item.appid}}" data-path="{{item.path}}" data-needLogin="{{item.needLogin}}" bindtap='openTool'>
+        <view class="app-icon" style="position: relative; left: 0rpx; top: 10rpx">
+          <image mode="aspectFill" src="/pages/assets/imgs/app_icon/{{item.icon}}.png"></image>
+        </view>
+        <text>{{item.name}}</text>
+      </view>
+    </view>
 
-  <view class='box'>
-    <view class="cu-bar bg-white solid-bottom arrow" bindtap='goCourse'>
-      <view class="action">
-        <text class="text-black text-xl text-bold">今日课表</text>
-      </view>
-      <view class="action" wx:if="{{session}}">
-        {{now_week_text}} 周{{WEEKDAY}}
-      </view>
-    </view>
-    <view wx:if="{{tmpClass!=''}}" class="yxz-tips" bindtap="restore">
-      当前课表非本班课表，点击切换回本班课表
-    </view>
-    <view class="cu-list menu" wx:if="{{course.length>0}}">
-      <view class="cu-item" wx:for="{{course}}" wx:key="key" bindtap='displayCourseInfo' data-num='{{item.indexNum}}'>
-        <view class="content text-cut">
-          <text class="text-grey">{{item.jie}}-{{item.jie_end ? item.jie_end : item.jie}} </text>
-          <text class="text-black">{{item.name}}</text>
-        </view>
+    <view class='box y-radius margin-top y-shadow'>
+      <view class="cu-bar bg-white solid-bottom arrow" bindtap='goCourse'>
         <view class="action">
-          <text class="text-black text-sm">{{item.address ? item.address : '未知'}}</text>
+          <text class="text-black text-lg">今日课表</text>
+        </view>
+        <view class="action" wx:if="{{session}}">
+          {{now_week_text}} 周{{WEEKDAY}}
         </view>
       </view>
-    </view>
-    <view wx:if="{{tmpClass == '' && !session}}" class='course_list unlogin'>
-      <text bindtap='goLogin'>登录后可查看，点击登录</text>
-    </view> 
-    <view wx:if="{{tmpClass == '' && session && !user_id}}" class='course_list unlogin'>
-      <text bindtap='goBind'>您未绑定教务系统账号，点击绑定</text>
-    </view> 
-    <view wx:if="{{session && user_id && (course.length<=0 || course == null)}}" class='course_list unlogin'>
-      <view wx:if="{{soul && hideSoul == 0}}" class="text-left">
-        <view bindtap="goSoul" class="soul">{{soul.title}}</view>
-        <view class="like margin-top-sm text-right">
-          <view bindtap="likeSoul" data-id="{{soul.id}}">
-            <text class="icon-{{likeSoul?'likefill':'like'}} text-pink"></text>
-            <text class="text-pink"> {{soul.like_count}}</text>
+      <view wx:if="{{tmpClass!=''}}" class="yxz-tips" bindtap="restore">
+        当前课表非本班课表，点击切换回本班课表
+      </view>
+      <view class="cu-list menu" wx:if="{{course.length>0}}">
+        <view class="cu-item" wx:for="{{course}}" wx:key="key" bindtap='displayCourseInfo' data-num='{{item.indexNum}}'>
+          <view class="content text-cut">
+            <text class="text-grey">{{item.jie}}-{{item.jie_end ? item.jie_end : item.jie}} </text>
+            <text class="text-black text-df">{{item.name}}</text>
+          </view>
+          <view class="action">
+            <text class="text-black text-sm">{{item.address ? item.address : '未知'}}</text>
           </view>
         </view>
       </view>
-      <view wx:else>
-        今天没课，去充实一下自己呗
+      <view wx:if="{{tmpClass == '' && !session}}" class='course_list unlogin'>
+        <text bindtap='goLogin'>登录后可查看，点击登录</text>
+      </view>
+      <view wx:if="{{tmpClass == '' && session && !user_id}}" class='course_list unlogin'>
+        <text bindtap='goBind'>您未绑定教务系统账号，点击绑定</text>
+      </view>
+      <view wx:if="{{session && user_id && (course.length<=0 || course == null)}}" class='course_list unlogin'>
+        <view wx:if="{{soul && hideSoul == 0}}" class="text-left">
+          <view bindtap="goSoul" class="soul">{{soul.title}}</view>
+          <view class="like margin-top-sm text-right">
+            <view bindtap="likeSoul" data-id="{{soul.id}}">
+              <text class="icon-{{likeSoul?'likefill':'like'}} text-pink"></text>
+              <text class="text-pink"> {{soul.like_count}}</text>
+            </view>
+          </view>
+        </view>
+        <view wx:else>
+          今天没课，去充实一下自己呗
+        </view>
       </view>
     </view>
-  </view>
 
-  <view class='box' wx:if="{{displayExam}}">
-    <view class="cu-bar bg-white solid-bottom arrow" bindtap='goExam'>
-      <view class="action">
-        <text class="text-black text-xl text-bold">考试安排</text>
-      </view>
-      <view class="action">
-        <button class="cu-btn sm round line-theme">查看全部</button>
-      </view>
-    </view>
-    <view class="cu-list menu">
-      <view class="cu-item"  wx:if="{{item.days>=0}}" bindtap='goExam' wx:index="{{index}}" wx:for="{{my_exams}}" wx:key="key">
-        <view class="content">
-          <text class="text-black">{{item.exam_name}}</text>
+    <view class='box' wx:if="{{displayExam}}">
+      <view class="cu-bar bg-white solid-bottom arrow" bindtap='goExam'>
+        <view class="action">
+          <text class="text-black text-xl text-bold">考试安排</text>
         </view>
         <view class="action">
-          <text>剩余<text class='days'>{{item.days}}</text>天</text>
+          <button class="cu-btn sm round line-theme">查看全部</button>
+        </view>
+      </view>
+      <view class="cu-list menu">
+        <view class="cu-item" wx:if="{{item.days>=0}}" bindtap='goExam' wx:index="{{index}}" wx:for="{{my_exams}}" wx:key="key">
+          <view class="content">
+            <text class="text-black">{{item.exam_name}}</text>
+          </view>
+          <view class="action">
+            <text>剩余<text class='days'>{{item.days}}</text>天</text>
+          </view>
         </view>
       </view>
     </view>
   </view>
-
-  <!-- <view class="float-image" wx:if="{{!hideNewStudentFloat}}"> -->
-  <view class="float-image" wx:if="{{false}}">
-    <image bindtap="goNewStudent" mode="widthFix" src="https://mmbiz.qpic.cn/mmbiz_png/YWKTC18p77I5Sd7C9QvPoO14xz9GEtE2xh5k1ib28iazSXw2x99HhpQibL2rhx56JaHxbjOZjLybSOn64G0mb6VrQ/0?wx_fmt=png"></image>
-    <view class="text-center margin-top-xs" bindtap="closeNewStudentFloat">
-      <text class="icon-close"></text>
-    </view>
-  </view>
-
-</view>
-
-<view class="cu-modal {{newVersionTip?'show':''}}">
-  <view class="cu-dialog">
-    <view class="cu-bar bg-white justify-end">
-      <view class="content">新版本提示</view>
-      <view class="action" bindtap="hideVersionTips">
-        <text class="icon-close text-red padding-right"></text>
-      </view>
-    </view>
-    <view class="padding-xl">
-      <view class="padding-top-xs">新版本的云小智已采用微信登录</view>
-      <view class="text-theme padding-top-xs">请退出后重新登录即可正常使用</view>
-      <view class="padding-top-xs">感谢您的理解与支持</view>
-    </view>
-    <view class="cu-bar bg-white justify-end">
-      <view class="action">
-        <button class="cu-btn bg-gray margin-right" bindtap="hideVersionTips">取消</button>
-        <button class="cu-btn bg-green margin-right" bindtap="goLogin">点击重新登录</button>
-      </view>
-    </view>
-  </view>
-</view>
-
-<view class="cu-modal {{showNewStudentTips?'show':''}}" bindtap="hideNewStudentTips">
-  <view class="cu-dialog new-student-tips">
-    <view bindtap="goNewStudent" class="bg-img" style="height:400px;background-image: url('https://mmbiz.qpic.cn/mmbiz_png/YWKTC18p77KMycwJceMjyNQfWT4d5DXibImp9udEzVty9esBSDTyicbzDEZoibxpvDrH0kTaJX7lvfR1GpcOFHY3w/0?wx_fmt=png')"></view>
-    <view class="cu-bar bg-transparent" bindtap="closeNewStudentTips">
-      <view class="action margin-0 flex-sub solid-left">
-        <view class="margin-left-xs text-grey text-sm">不再弹出</view>
-      </view>
-    </view>
-  </view>
-</view>
 </view>

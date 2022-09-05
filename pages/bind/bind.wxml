@@ -37,7 +37,7 @@
         <text class="text-gray" bindtap="loginTest">使用测试账号登录</text>
       </view> -->
       <view class="padding-top-xl text-center">
-        <text bindtap="help" class="text-yellow">新生登录指南</text>
+        <text bindtap="help" class="text-yellow">新生绑定指南</text>
       </view>
 
     </form>

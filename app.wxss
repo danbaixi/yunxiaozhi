@@ -10,7 +10,7 @@ page{
 
 /** 扩展 */
 .y-radius {
-  border-radius: 12rpx;
+  border-radius: 18rpx;
 }
 .bg-color{
   background-color: var(--background)
@@ -46,12 +46,16 @@ checkbox.theme[checked] .wx-checkbox-input, radio.theme[checked] .wx-radio-input
 }
 
 .app-icon{
-  margin-top: 10rpx;
+  margin-top: 0!important;
   text-align: center;
 }
 .app-icon image{
-  width: 56rpx!important;
-  height: 56rpx!important;
+  width: 50rpx;
+  height: 50rpx;
+}
+
+.cu-list.grid>.cu-item text {
+  font-size: 24rpx;
 }
 
 /* yxz-bar */
@@ -386,3 +390,7 @@ ad{
 }
 
 /* 分类列表结束 */
+
+.y-shadow {
+  box-shadow: 0 4rpx 40rpx 10rpx rgba(0, 0, 0, 0.05);
+}

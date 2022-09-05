@@ -1,87 +1,108 @@
 @import 'index.skeleton.wxss';
-page{
+
+page {
   position: relative;
   width: 100%;
+  background-color: #fff;
 }
-.bg{
+
+.bg {
   z-index: 1;
 }
-.container{
-  box-sizing: border-box;
+
+.container {
+  padding: 0 30rpx;
 }
-.box{
+
+.box {
   width: 100%;
   background: #fff;
-  margin: 20rpx 0 20rpx;
-  padding: 0 3% 20rpx;
+  padding: 0 30rpx;
 }
-.screen-swiper {
-  min-height: 320rpx;
+
+.banners {
+  border-radius: 18rpx;
   overflow: hidden;
-  -webkit-backface-visibility: hidden;
-  -webkit-transform: translate3d(0, 0, 0);
 }
+
+.screen-swiper {
+  height: 240rpx !important;
+  min-height: 240rpx;
+}
+
+.swiper-item image {
+  border-radius: 18rpx;
+}
+
 .cu-bar .action:first-child {
   margin: 0;
 }
+
 .cu-bar .action:last-child {
   margin: 0;
 }
+
 .cu-list.menu>.cu-item {
   padding: 0;
 }
-.tools{
-  padding: 6rpx 0!important;
-}
 
-.icon{
-  width: 80rpx;  
-  height: 80rpx;  
+.icon {
+  width: 80rpx;
+  height: 80rpx;
   margin: 10rpx auto;
   display: flex;
   justify-content: center;
 }
-.title{
-  display: block;  
-  text-align: center;   
-  font-size: 28rpx;  
-  white-space: nowrap;  
-  text-overflow: ellipsis;  
-  overflow: hidden; 
+
+.title {
+  display: block;
+  text-align: center;
+  font-size: 28rpx;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
   padding-bottom: 10rpx;
 }
-.swiper-box{ 
-  display: block; 
+
+.swiper-box {
+  display: block;
   width: 100%;
   height: 360rpx;
-  overflow: hidden; 
+  overflow: hidden;
 }
-.dots{
+
+.dots {
   height: 16rpx;
   width: 44rpx;
   margin: 14rpx auto;
 }
-.dot{
+
+.dot {
   width: 16rpx;
   height: 16rpx;
   background: #aaa;
   border-radius: 16rpx;
   float: left;
 }
-.on{
-    background: #6ed4e6;
+
+.on {
+  background: #6ed4e6;
 }
-.dot:first-child{
+
+.dot:first-child {
   margin-right: 12rpx;
 }
-.page-content{
+
+.page-content {
   width: 100%;
   padding-top: 20rpx;
 }
-.message{
+
+.message {
   margin-bottom: 20rpx;
 }
-.message_content{
+
+.message_content {
   height: 100rpx;
   background: #fff;
   padding: 0 20rpx;
@@ -91,101 +112,118 @@ page{
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.course_list{
+
+.course_list {
   width: 100%;
 }
-.course_li{
+
+.course_li {
   height: 90rpx;
   margin: 14rpx 0;
   border-bottom: 1rpx solid #f2f2f2;
 }
-.course_li:last-child{
+
+.course_li:last-child {
   border-bottom: 0;
 }
-.jieci{
+
+.jieci {
   border-left: 2px solid #6ed4e6;
   float: left;
-  margin-right:20rpx;
+  margin-right: 20rpx;
   padding-left: 20rpx;
   line-height: 80rpx;
   font-size: 50rpx;
-  color:#6ed4e6;
+  color: #6ed4e6;
 }
-.course_name{
+
+.course_name {
   float: left;
   width: 40%;
   overflow: hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   margin-left: 20rpx;
   font-size: 30rpx;
   line-height: 80rpx;
 }
-.course_address{
+
+.course_address {
   width: 30%;
   overflow: hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-size: 30rpx;
   line-height: 80rpx;
   text-align: right;
   float: right;
   padding-right: 10px
 }
-.week{
+
+.week {
   font-size: 30rpx;
   float: right;
   color: #ccc;
 }
-.header{
+
+.header {
   background: #fff;
-  padding: 20rpx 0; 
+  padding: 20rpx 0;
   height: 90rpx;
   width: 100%;
   font-size: 36rpx;
   line-height: 50rpx;
   border-bottom: 1px solid #f3f3f3;
 }
-.header_title{
+
+.header_title {
   float: left;
   padding: 0 20rpx;
 }
-.news{
+
+.news {
   width: 100%;
 }
-.news_list{
-  padding-left:20rpx;
+
+.news_list {
+  padding-left: 20rpx;
   background: #fff;
   margin-bottom: 20rpx;
 }
-.news_li{
-  width: 100%; 
+
+.news_li {
+  width: 100%;
   border-bottom: 1px solid #eee;
 }
-.news_title{
+
+.news_title {
   font-size: 30rpx;
   line-height: 42rpx;
   float: left;
   padding: 14rpx 20rpx 14rpx 0;
 }
-.news_date{
+
+.news_date {
   font-size: 20rpx;
   padding-bottom: 14rpx;
   clear: left;
   color: #aaa;
 }
-.loading{
+
+.loading {
   width: 32rpx;
   height: 32rpx;
   margin: 0 20rpx;
 }
-.more{
+
+.more {
   width: 30rpx;
   height: 30rpx;
   float: right;
-  margin: 10rpx 10rpx 10rpx 20rpx; 
+  margin: 10rpx 10rpx 10rpx 20rpx;
 }
-.unlogin{
+
+.unlogin {
   text-align: center;
   padding: 40rpx 30rpx 20rpx;
 }
@@ -193,75 +231,91 @@ page{
 .banner {
   height: 200rpx;
 }
+
 .banner swiper-item image {
   width: 100%;
   height: 100%;
 }
-.exam{
+
+.exam {
   height: 80rpx;
   padding: 8rpx 20rpx;
   background: #fff;
   border-bottom: 1px solid #f1f1f1;
   margin-top: 10rpx;
 }
-.name{
+
+.name {
   margin: 8rpx 0;
   font-size: 36rpx;
   float: left;
 }
-.diff{
+
+.diff {
   margin: 8rpx 20rpx;
   float: right;
   color: #333;
 }
-.days{
+
+.days {
   font-size: 36rpx;
   font-weight: bold;
   color: var(--theme);
   padding: 0 10rpx;
 }
-.like{
+
+.like {
   padding: 10rpx 20rpx;
 }
-.soul{
+
+.soul {
   line-height: 1.5;
   letter-spacing: 2rpx;
 }
-.cu-list.grid.no-border>.cu-item{
-  padding-bottom: 10rpx;
+
+.tools.cu-list.grid.no-border {
+  padding: 20rpx 10rpx 10rpx;
 }
-.news-img{
+
+.news-img {
   box-sizing: border-box;
 }
-.news-img image{
+
+.news-img image {
   width: 897rpx;
   height: 383rpx;
   border-radius: 12rpx;
 }
-.new-student-tips{
+
+.new-student-tips {
   width: 600rpx;
   background: transparent;
 }
-.new-student-tips .bg-img{
+
+.new-student-tips .bg-img {
   border-radius: 8rpx;
 }
-.float-image{
+
+.float-image {
   position: fixed;
   bottom: 80rpx;
   right: 20rpx;
   width: 140rpx;
   height: 140rpx;
 }
-.float-image image{
+
+.float-image image {
   width: 100%;
 }
-.float-image .icon-close{
+
+.float-image .icon-close {
   border-radius: 50%;
-  background: rgba(0,0,0,.5);
+  background: rgba(0, 0, 0, .5);
   padding: 2rpx;
   color: #fff;
 }
-.add_tips{
+
+.add_tips {
   position: absolute;
   right: 10px;
   padding: 4px 10px;
@@ -270,10 +324,12 @@ page{
   border-radius: 4px;
   z-index: 9999;
 }
-.add_tips .icon-close{
+
+.add_tips .icon-close {
   padding: 10px 2px;
 }
-.add_tips::before{
+
+.add_tips::before {
   content: " ";
   position: absolute;
   top: -22px;
