@@ -1,15 +1,17 @@
-<cu-custom bgColor="bg-white" isBack="true">
+<cu-custom bgColor="bg-transparent" isBack="true">
   <view slot="back">返回</view>
-	<view slot="content">社团详情</view>
+  <view slot="content"> </view>
 </cu-custom>
 <list-loading loading="{{loading}}"></list-loading>
 <empty display="{{!loading&&!exist}}"></empty>
 <view class="container" wx:if="{{!loading&&exist}}">
-  <view class="header text-center padding">
-    <image class="bg" src="{{club.logo}}" mode="widthFix"></image>
-    <view><image class="logo shadow-blur" mode="widthFix" src="{{club.logo}}"></image></view>
-    <view class="padding-sm">
-      <view><text class="text-white bg-yellow name shadow-blur">{{club.name}}</text></view>
+  <image class="bg" src="{{club.logo}}" mode="widthFix"></image>
+  <view class="header text-center">
+    <image class="logo shadow-blur" mode="aspectFill" src="{{club.logo}}"></image>
+    <view class="padding-sm margin-top">
+      <view class="flex justify-center">
+        <view class="text-white bg-yellow name shadow-blur">{{club.name}}</view>
+      </view>
       <view class="margin-top">
         <button class="cu-btn text-red bg-white star-btn" bindtap="star">
           <text class="icon-like{{stared==1?'fill':''}}"></text>

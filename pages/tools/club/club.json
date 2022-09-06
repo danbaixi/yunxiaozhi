@@ -1,6 +1,8 @@
 {
   "navigationBarTitleText": "找社团 - 云小智",
   "usingComponents": {
-    "notice": "/pages/components/notice/notice"
+    "notice": "/pages/components/notice/notice",
+    "van-dropdown-menu": "@vant/weapp/dropdown-menu/index",
+    "van-dropdown-item": "@vant/weapp/dropdown-item/index"
   }
 }

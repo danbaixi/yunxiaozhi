@@ -1,14 +1,13 @@
 <cu-custom bgColor="bg-white" isBack="true">
   <view slot="back">返回</view>
-	<view slot="content">找社团</view>
+  <view slot="content">社团</view>
 </cu-custom>
 <view class="container" style="top:{{customBar}}px">
   <view class="cu-bar bg-white search fixed" style="top:{{customBar}}px">
     <view class="action">
-      <picker mode="selector" range="{{category}}" range-key="name" bindchange="selectCategory" value="{{cid}}">
-        <text class="padding-right-xs">{{category[cid].name}}</text>
-        <text class="icon-triangledownfill"></text>
-      </picker>
+      <van-dropdown-menu active-color="#1380ff">
+        <van-dropdown-item bind:change="selectCategory" value="{{cid}}" options="{{ category }}" />
+      </van-dropdown-menu>
     </view>
     <view class="search-form round">
       <text class="icon-search"></text>

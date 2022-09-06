@@ -2,14 +2,13 @@
   width: 160rpx;
   height: 160rpx;
   border-radius: 50%;
-  box-shadow: 0 0 2px 2px rgba(0,0,0,.2);
+  box-shadow: 0 0 20rpx 4rpx rgba(0,0,0,.1);
 }
 .cu-list.menu>.cu-item .content {
   font-size: 28rpx;
 }
 .header{
   width: 100%;
-  height: 360rpx;
   position: relative;
   overflow: hidden;
 }
@@ -25,7 +24,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  filter: blur(60rpx) opacity(60%);
+  filter: blur(30rpx) opacity(50%);
   z-index: -1;
 }
 .options{
