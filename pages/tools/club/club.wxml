@@ -34,7 +34,7 @@
         </view>
         <view class="action" bindtap="star" data-index="{{index}}">
           <view class="text-red">
-            <text class="icon-like{{item.stared==1?'fill':''}}"></text> {{item.star}}
+            <text class="icon-appreciate{{item.stared==1?'fill':''}}"></text> {{item.star}}
           </view>
         </view>
       </view>

@@ -126,17 +126,18 @@
   <van-popup show="{{ showUpdate }}" round closeable="{{!updateCourseStatus}}" close-on-click-overlay="{{false}}" custom-style="width: 90%" bind:close="hideUpdate">
     <view class="padding">
       <view class="text-center bg-white y-radius text-left">
-        <view class="text-yellow text-center text-lg">请认真阅读以下使用条款</view>
+        <view class="text-yellow text-center text-lg">更新课表</view>
         <view class="margin-top-sm bg-gray padding-sm y-radius">
           <view>
-            云小智课表是通过非官方渠道从教务系统获取数据，无法保证课表完整无误，请以老师发的课表为准！
-            <text class="text-theme">我们只负责搬运和整理数据，使用过程中产生的后果由使用者自负！</text>
+            云小智课表数据是通过非官方渠道从教务系统导入课表数据，并不会实时同步教务系统数据。
+            <text class="text-theme">如有临时调课、教室更换，请按学校官方公布的课表为准！</text>
           </view>
         </view>
-        <view class="margin-top-sm text-grey text-left">
+        <!-- 不显示这个 -->
+        <view wx:if="{{false}}" class="margin-top-sm text-grey text-left">
           <radio-group bindchange="acceptTerms">
             <label>
-              <radio value="acceptTerms" class="theme"></radio><text class="padding-left-xs">本人已阅读条款并愿承担一切风险</text>
+              <radio value="acceptTerms" class="theme"></radio><text class="padding-left-xs">已阅读条款并愿承担一切风险</text>
             </label>
           </radio-group>
         </view>

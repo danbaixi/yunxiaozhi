@@ -1,24 +1,24 @@
-.logo{
+.logo {
   width: 160rpx;
   height: 160rpx;
   border-radius: 50%;
-  box-shadow: 0 0 20rpx 4rpx rgba(0,0,0,.1);
+  box-shadow: 0 0 20rpx 4rpx rgba(0, 0, 0, 0.1);
 }
-.cu-list.menu>.cu-item .content {
+.cu-list.menu > .cu-item .content {
   font-size: 28rpx;
 }
-.header{
+.header {
   width: 100%;
   position: relative;
   overflow: hidden;
 }
-.name{
+.name {
   letter-spacing: 4px;
   font-weight: bold;
   padding: 8px 20px;
   border-radius: 30rpx;
 }
-.bg{
+.bg {
   width: 100%;
   height: 360rpx;
   position: absolute;
@@ -27,24 +27,40 @@
   filter: blur(30rpx) opacity(50%);
   z-index: -1;
 }
-.options{
+.options {
   position: absolute;
   right: 20rpx;
 }
-.star-btn{
+.star-btn {
   border-radius: 30rpx;
   height: 48rpx;
   line-height: 48rpx;
 }
-.share-btn{
+.share-btn {
   top: 20rpx;
 }
-.share-btn button{
+.share-btn button {
   border: 1px solid var(--theme);
 }
-.edit-btn{
+.edit-btn {
   top: 90rpx;
 }
-.edit-btn button{
+.edit-btn button {
   border: 1px solid var(--yellow);
+}
+
+.photos {
+  display: flex;
+  padding: 20rpx 0;
+}
+
+.photos image {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 12rpx;
+  box-shadow: 0 0 10rpx 2rpx rgba(0, 0, 0, 0.1);
+}
+
+.photos image:not(:last-child) {
+  margin-right: 20rpx;
 }

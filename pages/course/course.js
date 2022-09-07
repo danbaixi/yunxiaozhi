@@ -63,7 +63,7 @@ Page({
     scrollTop: "",
     courseTerm: null,
     noticeDisplay: false,
-    acceptTerms: false,
+    acceptTerms: true,
     showUpdate: false, // 显示更新弹窗
     updateCourseStatus: false, // 正在更新课表状态
     updateList: [], // 更新记录

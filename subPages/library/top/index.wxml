@@ -3,8 +3,11 @@
   <view slot="content">{{type == 'hot' ? '热读推荐' : '新书速递'}}</view>
 </cu-custom>
 <view class="container">
-  <view class="list">
+  <view class="list" wx:if="{{list.length > 0}}">
     <book-item wx:for="{{list}}" wx:key="key" info="{{item}}" img="{{bookImgList[index]}}"></book-item>
     <view wx:if="{{loading || finish}}" class="cu-load {{!finish?'loading':(list.length>=5?'over':'')}}"></view>
+  </view>
+  <view wx:else>
+    <van-empty description="暂无内容" />
   </view>
 </view>

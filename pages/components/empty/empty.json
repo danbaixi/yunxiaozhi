@@ -1,4 +1,6 @@
 {
   "component": true,
-  "usingComponents": {}
+  "usingComponents": {
+    "van-empty": "@vant/weapp/empty/index"
+  }
 }

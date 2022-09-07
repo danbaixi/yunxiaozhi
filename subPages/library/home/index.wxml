@@ -26,7 +26,7 @@
     <view class="section" mark:type="hot">
       <view class="title">
         <view>热读推荐</view>
-        <view bindtap="viewMore" class="action">更多<text class="icon-right"></text></view>
+        <!-- <view bindtap="viewMore" class="action">更多<text class="icon-right"></text></view> -->
       </view>
       <view class="section-content">
         <scroll-view scroll-x class="book-list" wx:if="{{hot.length > 0}}">
@@ -43,7 +43,7 @@
     <view class="section" mark:type="new">
       <view class="title">
         <view>新书速递</view>
-        <view bindtap="viewMore" class="action">更多<text class="icon-right"></text></view>
+        <!-- <view bindtap="viewMore" class="action">更多<text class="icon-right"></text></view> -->
       </view>
       <view class="section-content">
         <scroll-view scroll-x class="book-list" wx:if="{{new.length > 0}}">
@@ -54,7 +54,7 @@
             <view class="book-item-title">{{item.title}}</view>
           </view>
         </scroll-view>
-        <view wx:else class="empty">暂无数据</view>
+        <view wx:else class="empty">最近一个月没有新书到馆</view>
       </view>
     </view>
   </view>

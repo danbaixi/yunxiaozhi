@@ -84,16 +84,22 @@ Page({
       resultKey = 'searchResult'
     }
     r.then(res => {
-      that.getBookImg(res.data.imgData)
       let finish = false
-      if (res.data.length < that.data.rows) {
+      let list = []
+      if (res.data != null) {
+        that.getBookImg(res.data.imgData)
+        list = res.data[resultKey]
+        if (list.length < that.data.rows) {
+          finish = true
+        }
+      } else {
         finish = true
       }
       that.setData({
         finish,
         loading: false,
         finish,
-        list: [...that.data.list, ...res.data[resultKey]]
+        list: [...that.data.list, ...list]
       })
     })
   },
