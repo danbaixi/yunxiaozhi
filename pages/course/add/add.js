@@ -226,8 +226,7 @@ Page({
         getCourseList().then((result) => {
           if (result.status == 0) {
             app.msg("保存成功", "success")
-            wx.setStorageSync('course', result.data.course);
-            wx.setStorageSync('train', result.data.train_course);
+            wx.setStorageSync('course', result.data.course)
           } else {
             app.msg("保存成功，获取课表失败，请手动更新课表")
           }
@@ -240,12 +239,7 @@ Page({
   //获取课程
   getCourse: function (id) {
     let _this = this
-    wx.showLoading({
-      title:'正在加载',
-      mask: true
-    })
     getCourseById({id: id}).then((res) => {
-      app.msg(res.message)
       if(res.status != 0){
         wx.navigateBack({})
         return
@@ -280,8 +274,7 @@ Page({
               getCourseList().then((result) => {
                 if (result.status == 0) {
                   app.msg("删除成功", "success")
-                  wx.setStorageSync('course', result.data.course);
-                  wx.setStorageSync('train', result.data.train_course);
+                  wx.setStorageSync('course', result.data.course)
                 } else {
                   app.msg("删除成功，更新课表失败，请手动更新课表")
                 }
@@ -296,14 +289,21 @@ Page({
   },
   comeBack:function(){
     let _this = this
+    wx.setStorageSync('refresh_course', true)
     setTimeout(function(){
       if(_this.data.from == 'info'){
         wx.switchTab({
           url: '/pages/course/course',
         })
       }else{
+        // 刷新
+        const pages = getCurrentPages()
+        const curPage = pages[pages.length - 2]
+        curPage.setData({
+          refresh: true
+        })
         wx.navigateBack({
-          delta: 0,
+          delta: 1,
         })
       }
     },1000)

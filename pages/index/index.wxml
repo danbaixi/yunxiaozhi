@@ -11,8 +11,8 @@
   <view class="container">
     <view class="y-radius margin-top banners">
       <swiper class="screen-swiper square-dot" indicator-dots="{{articleBanners.length>1?true:false}}" circular="true" autoplay="true" interval="6000" duration="1000">
-        <swiper-item wx:for="{{articleBanners}}" wx:key="key" bindtap="viewArticle" data-index="{{index}}">
-          <image src="{{item.img}}" mode="aspectFill"></image>
+        <swiper-item class="y-radius" wx:for="{{articleBanners}}" wx:key="key" bindtap="viewArticle" data-index="{{index}}">
+          <image class="y-radius" src="{{item.img}}" mode="aspectFill"></image>
           <view><text>{{item.title}}</text></view>
         </swiper-item>
       </swiper>
@@ -25,6 +25,12 @@
         <text>{{item.name}}</text>
       </view>
     </view>
+
+    <!-- <view class="component-list">
+      <view wx:for="{{3}}" class="component-item shadow-blur">
+        
+      </view>
+    </view> -->
 
     <view class='box y-radius margin-top y-shadow'>
       <view class="cu-bar bg-white solid-bottom arrow" bindtap='goCourse'>
@@ -50,7 +56,7 @@
         </view>
       </view>
       <view wx:if="{{tmpClass == '' && !session}}" class='course_list unlogin'>
-        <text bindtap='goLogin'>登录后可查看，点击登录</text>
+        <text bindtap='goLogin'>登录后可查看课表，<text class="text-theme">点击登录</text></text>
       </view>
       <view wx:if="{{tmpClass == '' && session && !user_id}}" class='course_list unlogin'>
         <text bindtap='goBind'>您未绑定教务系统账号，点击绑定</text>
@@ -66,18 +72,18 @@
           </view>
         </view>
         <view wx:else>
-          今天没课，去充实一下自己呗
+          今天没课，去充实一下自己啦！
         </view>
       </view>
     </view>
 
-    <view class='box' wx:if="{{displayExam}}">
+    <view class='box y-radius margin-top y-shadow' wx:if="{{displayExam}}">
       <view class="cu-bar bg-white solid-bottom arrow" bindtap='goExam'>
         <view class="action">
-          <text class="text-black text-xl text-bold">考试安排</text>
+          <text class="text-black">考试安排</text>
         </view>
         <view class="action">
-          <button class="cu-btn sm round line-theme">查看全部</button>
+          <text class="icon-right"></text>
         </view>
       </view>
       <view class="cu-list menu">

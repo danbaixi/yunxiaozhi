@@ -145,7 +145,9 @@ Page({
       icon: 'success'
     })
     setTimeout(()=>{
-      wx.navigateBack({})
+      // 返回刷新课表背景
+      wx.setStorageSync('refresh_course_bg', true)
+      wx.navigateBack()
     },1000)
   },
 

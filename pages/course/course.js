@@ -1,7 +1,11 @@
 var colors = require('../../utils/colors.js')
 const TIMES = require('../../utils/course-time.js')
 const courseFn = require('../../utils/course')
-const util = require('../../utils/util')
+import course from '../../utils/course'
+import {
+  deepCopyArray,
+  formatAddress
+} from '../../utils/util'
 const {
   checkCourseInWeek,
   setUpdateTime,
@@ -20,29 +24,16 @@ Page({
    * 页面的初始数据
    */
   data: {
+    colorArrays: colors,
     zhou: ['一', '二', '三', '四', '五', '六', '日'],
-    zhou_num: ['第1周', '第2周', '第3周', '第4周', '第5周', '第6周', '第7周', '第8周', '第9周', '第10周', '第11周', '第12周', '第13周', '第14周', '第15周', '第16周', '第17周', '第18周', '第19周', '第20周'],
-    now_week: 1,
+    weekCount: 20, // 周数量
+    showWeekList: false, // 显示周数弹窗
+    courseList: [], // 课程列表
+    now_week: 1, // 选中周
     now_day: [1, 2, 3, 4, 5, 6, 7],
     now_month: 1,
-    course: [],
     train_course_id: 0,
     showSetting: false,
-    sheet_visible: false,
-    toggleDelay: false, //延迟加载
-    ad: {
-      display: false,
-      week: 7,
-      jie: 1,
-      jieshu: 2,
-      background: "#6ed4e6",
-      color: "#fff",
-      title: "这是广告位置欢迎投放广告",
-      font_size: 10,
-      type: 1,
-      url: "",
-      content: ""
-    },
     login: true,
     tmpClass: '',
     display_course_time: 0,
@@ -69,130 +60,53 @@ Page({
     updateList: [], // 更新记录
     updateMaxCount: 3, // 最多更新次数
     updateStatus: app.globalData.updateStatus,
-    showConfirm: false, // todo:显示确认课表弹窗
     showShare: false, // 分享课表
+    firstEntry: true, // 首次进入
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var _this = this;
-    _this.isStop()
-    //设置默认参数
-    if (wx.getStorageSync('Kopacity') == '') {
-      wx.setStorageSync('Kopacity', 90)
-    }
-    if (wx.getStorageSync('Copacity') == '') {
-      wx.setStorageSync('Copacity', 12)
-    }
-    if (wx.getStorageSync('onlyThisWeek') === '') {
-      wx.setStorageSync('onlyThisWeek', true)
-    }
-    //每周起始日
-    var startDay = wx.getStorageSync('start_day') || 1
-    var winHeight = wx.getSystemInfoSync().windowHeight;
-    _this.setData({
-      showSetting: false,
-      Kopacity: wx.getStorageSync('Kopacity'),
-      Copacity: wx.getStorageSync('Copacity'),
-      fontSize: wx.getStorageSync('fontSize'),
+    const winHeight = wx.getSystemInfoSync().windowHeight;
+    this.setData({
       winHeight: winHeight,
-      onlyThisWeek: wx.getStorageSync('onlyThisWeek'),
-      startDay: startDay,
-      colorArrays: colors
+      imageUrl: wx.getStorageSync('bg_img')
     })
-
-    _this.getCourseTerm()
-    var week = _this.getNowWeek();
-    var startDay = wx.getStorageSync('start_day')
-    var day = _this.getDayOfWeek(week, startDay)
-    var month = _this.getMonth((week - 1) * 7);
-
-    _this.setData({
-      now_day: day,
-      now_week: week,
-      nowWeek: week,
-      now_month: month,
-      now_month_number: month / 1, // 当前月份数字类型，用于数字运算
-    })
-
-    // ad
-    var time = (new Date).getTime()
-    var score_ad = wx.getStorageSync('score_ad_display');
-    if (score_ad == '' || (Math.floor((time - score_ad) / 1000) > app.globalData.adTime * 24 * 60)) {
-      if (wx.createInterstitialAd) {
-        var interstitialAd = wx.createInterstitialAd({
-          adUnitId: 'adunit-fa394b5b086dc048'
-        })
-        setTimeout(() => {
-          interstitialAd.show()
-        }, 1500)
-        wx.setStorageSync('score_ad_display', time)
-      } else {
-        app.msg("您当前微信版本较低，建议升级到最新版本")
-      }
-    }
+    // 加载课表
+    this.loadCourse()
+    // 功能状态
+    this.isStop()
+    // 设置默认参数
+    this.initCourseConfig()
     //获取公告
-    _this.getCourseNotice()
+    this.getCourseNotice()
+    // ad
+    this.initAd()
+    //获取设置，隐藏上课时间
+    this.getConfigData()
+    // 判断背景图片是否存在
+    this.bgIsExist()
   },
 
   onShow: function () {
-    let _this = this
-    // 获取课表
-    if (!wx.getStorageSync('course') && wx.getStorageSync('login_session')) {
-      _this.getCourseListRequest()
+    const refresh = wx.getStorageSync('refresh_course')
+    if (refresh && !this.data.firstEntry) {
+      this.loadCourse()
+      this.setData({
+        showSetting: false,
+        showMoreCourse: false
+      })
+      wx.removeStorageSync('refresh_course')
     }
-    // 背景
-    _this.setData({
-      imageUrl: wx.getStorageSync('bg_img')
-    })
-    // 判断班级是否变化
-    var tmpClass = wx.getStorageSync('tmp_class'); //临时设置班级
-
-    // 以 上个周数来获取数据
-    var week = _this.data.now_week
-    var zhou_num = _this.data.zhou_num
-    // 如果不是当前学期的课表，就变回当前周
-    if (_this.data.courseTerm.term != _this.data.thisTerm) {
-      _this.getCourseTerm()
-      week = _this.getNowWeek()
+    const refreshBg = wx.getStorageSync('refresh_course_bg')
+    if (refreshBg) {
+      this.setData({
+        showSetting: false,
+        imageUrl: wx.getStorageSync('bg_img')
+      })
+      wx.removeStorageSync('refresh_course_bg')
     }
-    var n = zhou_num[week - 1].search(/(本周)/i);
-    if (n == -1) {
-      zhou_num[week - 1] = zhou_num[week - 1] + "(本周)";
-    }
-
-    //课表学期
-    _this.getCourseTerm()
-    // 更新日期
-    _this.selectWeek(week)
-
-    //获取当前日期
-    let {
-      todayMonth,
-      todayDay
-    } = _this.getTodayDate()
-
-    //获取课表
-    _this.getCourse(week, true, false);
-    _this.setData({
-      now_week: week,
-      nowWeek: week,
-      todayMonth,
-      todayDay,
-      tmpClass,
-      showMoreCourse: false,
-      showSetting: false,
-      zhou_num
-    })
-
-    //获取设置，隐藏上课时间
-    _this.getConfigData()
-
-    // 判断背景图片是否存在
-    _this.bgIsExist()
-
   },
   /**
    * 用户点击右上角分享
@@ -215,6 +129,87 @@ Page({
     }
     return app.share('看课表，一个云小智就够了！', 'course.png', this.route)
   },
+
+  // 初始化默认参数
+  initCourseConfig() {
+    let Kopacity = wx.getStorageSync('Kopacity')
+    let Copacity = wx.getStorageSync('Copacity')
+    let onlyThisWeek = wx.getStorageSync('onlyThisWeek')
+    if (Kopacity == '') {
+      Kopacity = 90
+      wx.setStorageSync('Kopacity', Kopacity)
+    }
+    if (Copacity == '') {
+      Copacity = 12
+      wx.setStorageSync('Copacity', Copacity)
+    }
+    if (onlyThisWeek === '') {
+      onlyThisWeek = true
+      wx.setStorageSync('onlyThisWeek', onlyThisWeek)
+    }
+    this.setData({
+      Kopacity,
+      Copacity,
+      onlyThisWeek
+    })
+  },
+
+  initAd() {
+    const time = (new Date).getTime()
+    const score_ad = wx.getStorageSync('score_ad_display');
+    if (score_ad == '' || (Math.floor((time - score_ad) / 1000) > app.globalData.adTime * 24 * 60)) {
+      if (wx.createInterstitialAd) {
+        var interstitialAd = wx.createInterstitialAd({
+          adUnitId: 'adunit-fa394b5b086dc048'
+        })
+        setTimeout(() => {
+          interstitialAd.show()
+        }, 1500)
+        wx.setStorageSync('score_ad_display', time)
+      } else {
+        app.msg("您当前微信版本较低，建议升级到最新版本")
+      }
+    }
+  },
+
+  // 加载课表
+  async loadCourse() {
+    try {
+      await this.getCourseTerm()
+      const week = this.getNowWeek();
+      const startDay = wx.getStorageSync('start_day') || 1
+      const day = this.getDayOfWeek(week, startDay)
+      const month = this.getMonth((week - 1) * 7);
+      //临时设置班级
+      const tmpClass = wx.getStorageSync('tmp_class');
+      //获取当前日期
+      let {
+        todayMonth,
+        todayDay
+      } = this.getTodayDate()
+      this.setData({
+        startDay,
+        now_day: day,
+        now_week: week,
+        thisWeek: week,
+        now_month: month,
+        now_month_number: month / 1, // 当前月份数字类型，用于数字运算
+        tmpClass,
+        todayMonth,
+        todayDay,
+        firstEntry: false
+      })
+      // 获取课表
+      if (!wx.getStorageSync('course') && wx.getStorageSync('login_session')) {
+        await this.getCourseListRequest()
+      }
+      this.getCourseList()
+    } catch (e) {
+      app.msg('获取课表失败')
+      return
+    }
+  },
+
   /**
    * 获取第几周后的月份
    */
@@ -230,30 +225,28 @@ Page({
    */
   getDay: function (days) {
     let [year, month, day] = this.getTermDate()
-    var date = new Date(year, month - 1, day);
+    const date = new Date(year, month - 1, day);
     date.setDate(date.getDate() + days); //获取n天后的日期      
-    var d = date.getDate() < 10 ? "0" + date.getDate() : date.getDate(); //获取当前几号，不足10补0    
+    const d = date.getDate() < 10 ? "0" + date.getDate() : date.getDate(); //获取当前几号，不足10补0    
     return d;
   },
   /**
    * 获取当前周
    */
   getNowWeek: function () {
-    var date = new Date();
+    const date = new Date();
     let [year, month, day] = this.getTermDate()
-
-    //这里减1，不知道为什么输出的月份比原来的大1..
-    var start = new Date(year, month - 1, day);
+    const start = new Date(year, month - 1, day);
     //计算时间差
-    var left_time = parseInt((date.getTime() - start.getTime()) / 1000);
+    let left_time = parseInt((date.getTime() - start.getTime()) / 1000);
     //如果从周日算起，需要+1天
     if (this.data.startDay == 0) {
       left_time += 24 * 60 * 60
     }
 
-    var days = parseInt(left_time / 3600 / 24);
-    var week = Math.floor(days / 7) + 1;
-    var result = week
+    const days = parseInt(left_time / 3600 / 24);
+    const week = Math.floor(days / 7) + 1;
+    let result = week
     if (week > 20 || week <= 0) {
       result = this.data.now_week;
     }
@@ -287,7 +280,7 @@ Page({
         }
         //格式化上课地点
         data[a]['full_address'] = data[a]['course_address']
-        data[a]['course_address'] = util.formatAddress(data[a]['course_address'])
+        data[a]['course_address'] = formatAddress(data[a]['course_address'])
         //将课程通过周次节次分组
         let key = data[a]['course_week'] + '-' + jie
         if (courseGroup[key]) {
@@ -371,17 +364,116 @@ Page({
 
     that.getTrain(week)
   },
-  selectWeek: function (week) {
-    this.getCourse(week, false, true);
-    this.getTrain(week);
-    var month = this.getMonth((week - 1) * 7);
+  getCourseList() {
+    const data = wx.getStorageSync('course');
+    if (!data) {
+      return
+    }
+    const courseList = []
+    for (let weekIndex = 0; weekIndex < this.data.weekCount; weekIndex++) {
+      let courses = [],
+        courseGroup = {}
+      let week = weekIndex + 1
+      for (let a = 0; a < data.length; a++) {
+        if (typeof data[a].course_weekly == "undefined") {
+          continue
+        }
+        const tmp = data[a]['course_section'].split("-")
+        const jie = tmp[0];
+        let jieshu = 1
+        if (tmp.length != 1) {
+          jieshu = tmp[1] - tmp[0] + 1;
+        }
+        //格式化上课地点
+        data[a]['full_address'] = data[a]['course_address']
+        data[a]['course_address'] = formatAddress(data[a]['course_address'])
+        //将课程通过周次节次分组
+        let key = data[a]['course_week'] + '-' + jie
+        if (courseGroup[key]) {
+          courseGroup[key].push(a)
+        } else {
+          courseGroup[key] = [a]
+        }
+
+        if (jieshu == 4) {
+          key = data[a]['course_week'] + '-' + (Number(jie) + 2)
+          if (courseGroup[key]) {
+            courseGroup[key].push(a)
+          } else {
+            courseGroup[key] = [a]
+          }
+        }
+        let display = false
+        //是否是当周课表
+        let thisWeek = checkCourseInWeek(week, data[a])
+        if (thisWeek || !this.data.onlyThisWeek) {
+          display = true
+        }
+        const course = {
+          week: data[a]['course_week'],
+          jie: jie,
+          jieshu: jieshu,
+          name: this.fiterCourseTitle(data[a]['course_name'], jieshu),
+          fullName: data[a]['course_name'],
+          address: data[a]['course_address'],
+          fullAddress: data[a]['full_address'],
+          num: data[a]['num'],
+          zhoushu: data[a]['course_weekly'],
+          teacher: data[a]['course_teacher'],
+          credit: data[a]['course_credit'],
+          method: data[a]['course_method'],
+          category: data[a]['course_category'],
+          type: data[a]['course_type'] ? data[a]['course_type'] : 1,
+          id: data[a]['course_id'] ? data[a]['course_id'] : 0,
+          danshuang: data[a]['course_danshuang'],
+          thisWeek,
+          display,
+          courseNum: 1,
+        };
+        courses.push(course)
+      }
+      //隐藏存在冲突的课程
+      for (let g in courseGroup) {
+        if (courseGroup[g].length == 1) {
+          continue
+        }
+        let hasThisWeek = false
+        let index = 0
+        for (let i in courseGroup[g]) {
+          index = courseGroup[g][i]
+          if (!hasThisWeek && courses[index].thisWeek) {
+            courses[index].display = true
+            hasThisWeek = index
+          } else {
+            courses[index].display = false
+          }
+        }
+        if (!hasThisWeek && !this.data.onlyThisWeek) {
+          courses[index].display = true
+          hasThisWeek = index
+        }
+        if (hasThisWeek) {
+          courses[hasThisWeek].courseNum = courseGroup[g].length
+        }
+      }
+      courseList.push({
+        courses,
+        courseGroup
+      })
+    }
+    this.setData({
+      courseList
+    })
+  },
+  selectWeek(week) {
+    const month = this.getMonth((week - 1) * 7);
     this.setData({
       now_week: week,
       now_month: month,
       now_month_number: month / 1, // 当前月份数字类型，用于数字运算
     });
-    var startDay = wx.getStorageSync('start_day')
-    var day = this.getDayOfWeek(week, startDay)
+    const startDay = wx.getStorageSync('start_day')
+    const day = this.getDayOfWeek(week, startDay)
     this.setData({
       now_day: day,
     })
@@ -390,27 +482,32 @@ Page({
    * 选择周数
    */
   select: function (e) {
-    var week = parseInt(e.detail.value) + 1;
+    var week = parseInt(e.currentTarget.dataset.index) + 1;
     this.selectWeek(week)
+    this.hideWeekList()
   },
   /**
    * 显示课表详细内容
    */
   displayCourseInfo: function (e) {
-    var indexNum = e.currentTarget.dataset.num;
-    var display = e.currentTarget.dataset.display;
-    var data = this.data.course[indexNum];
+    const index = e.currentTarget.dataset.index;
+    const type = e.currentTarget.dataset.type;
+    const {
+      courses,
+      courseGroup
+    } = this.data.courseList[this.data.now_week - 1];
+    const course = type === 'more' ? this.data.moreCourseList[index] : courses[index]
     //如果有多个课程则展开
-    if (!display && data.courseNum > 1) {
+    if (course.courseNum > 1 && type !== 'more') {
       //获取同时间的课程
       let ids = [],
-        courses = []
-      let key = data.week + '-' + data.jie
-      ids = ids.concat(this.data.courseGroup[key])
-      if (data.jieshu == 4) {
-        key = data.week + '-' + (Number(data.jie) + 2)
-        for (let i in this.data.courseGroup[key]) {
-          let val = this.data.courseGroup[key][i]
+        moreCourse = []
+      let key = course.week + '-' + course.jie
+      ids = ids.concat(courseGroup[key])
+      if (course.jieshu == 4) {
+        key = course.week + '-' + (Number(course.jie) + 2)
+        for (let i in courseGroup[key]) {
+          let val = courseGroup[key][i]
           if (ids.indexOf(val) == -1) {
             ids.push(val)
           }
@@ -418,16 +515,16 @@ Page({
       }
       for (let i = 0; i < ids.length; i++) {
         let index = ids[i]
-        courses.push(this.data.course[index])
+        moreCourse.push(courses[index])
       }
       this.setData({
         showMoreCourse: true,
-        moreCourseList: courses
+        moreCourseList: moreCourse
       })
       return
     }
     wx.navigateTo({
-      url: "info/info?internet_course_time=" + this.data.internet_course_time + "&data=" + encodeURIComponent(JSON.stringify(data)),
+      url: "info/info?internet_course_time=" + this.data.internet_course_time + "&data=" + encodeURIComponent(JSON.stringify(course)),
     })
     this.setData({
       showMoreCourse: false
@@ -543,13 +640,9 @@ Page({
 
   //获取课表
   getCourseListRequest() {
-    let that = this
-    getCourseList().then((res) => {
-      if (res.status == 0) {
-        wx.setStorageSync('course', res.data.course);
-        wx.setStorageSync('train', res.data.train_course);
-        that.onShow()
-      }
+    return getCourseList().then((res) => {
+      wx.setStorageSync('course', res.data.course)
+      wx.setStorageSync('train', res.data.train_course)
     })
   },
 
@@ -582,9 +675,6 @@ Page({
         app.msg("更新成功", 'success')
         setTimeout(() => {
           that.hideUpdate()
-          that.setData({
-            showConfirm: true
-          })
         }, 1000);
         return
       }
@@ -614,7 +704,7 @@ Page({
   /**
    * 对话框确认按钮点击事件
    */
-  update: function (e) {
+  update() {
     var that = this;
     var user_id = wx.getStorageSync('user_id');
     if (!user_id) {
@@ -735,18 +825,6 @@ Page({
     wx.setStorageSync('close_ad_time', (new Date()).getTime())
   },
 
-  toggleDelay() {
-    var that = this;
-    that.setData({
-      toggleDelay: true
-    })
-    setTimeout(function () {
-      that.setData({
-        toggleDelay: false
-      })
-    }, 1000)
-  },
-
   //处理中文标点符号，课程名称过长
   fiterCourseTitle: function (title, jieshu) {
     title = title.replace(/\uff08/, '(')
@@ -794,7 +872,7 @@ Page({
     if (this.data.display_course_time == 0) {
       return
     }
-    let times = util.deepCopyArray(TIMES)
+    let times = deepCopyArray(TIMES)
 
     if (this.data.area == '' || this.data.area == 0) {
       app.msg("您未设置校区，无法显示上课时间")
@@ -912,23 +990,16 @@ Page({
     wx.setStorageSync('start_day', val)
     let week = this.data.now_week
     let day = this.getDayOfWeek(week, val)
-    let zhou_num = this.data.zhou_num
-    let n = zhou_num[week - 1].search(/(本周)/i);
-    if (n == -1) {
-      zhou_num[week - 1] = zhou_num[week - 1] + "(本周)";
-    }
     let month = this.getMonth((week - 1) * 7);
 
     this.setData({
       startDay: val,
       now_week: week,
       now_day: day,
-      zhou_num: zhou_num,
       showSetting: 0,
       now_month: month,
       now_month_number: month / 1, // 当前月份数字类型，用于数字运算
     })
-    this.getCourse(week, true, false)
   },
 
   displayOnlyWeek: function () {
@@ -937,7 +1008,7 @@ Page({
       onlyThisWeek: result
     })
     wx.setStorageSync('onlyThisWeek', result)
-    this.getCourse(this.data.now_week, true, false);
+    this.getCourseList()
   },
   hideMoreCourse: function () {
     this.setData({
@@ -997,57 +1068,6 @@ Page({
     wx.navigateTo({
       url: '/pages/course/setTime/setTime',
     })
-  },
-
-  touchStart: function (e) {
-    this.setData({
-      "touch.x": e.changedTouches[0].clientX,
-      "touch.y": e.changedTouches[0].clientY,
-    });
-  },
-  touchEnd: function (e) {
-    let x = e.changedTouches[0].clientX;
-    let y = e.changedTouches[0].clientY;
-    let time = new Date().getTime()
-    if (time - this.data.clickScreenTime < 1000) {
-      app.msg("不要操作那么快啦！")
-      return
-    }
-    this.switchWeek(x, y)
-  },
-  switchWeek: function (x, y) {
-    var direction = util.getTouchData(x, y, this.data.touch.x, this.data.touch.y)
-    var week = this.data.now_week
-    if (direction == "") {
-      return
-    } else if (direction == "left") {
-      week++
-    } else if (direction == "right") {
-      week--
-    }
-    this.setData({
-      scrollTop: 0
-    })
-    if (week < 1) {
-      app.msg("已经是第一周啦！")
-      return
-    } else if (week > 20) {
-      app.msg("已经是最后一周啦！")
-      return
-    }
-    this.setData({
-      clickStatus: 'finish',
-      finishX: x,
-      finishY: y,
-      clickScreenTime: (new Date().getTime())
-    })
-    let _this = this
-    setTimeout(function () {
-      _this.setData({
-        clickStatus: ''
-      })
-    }, 500)
-    this.selectWeek(week)
   },
 
   getCourseTerm: function () {
@@ -1159,7 +1179,6 @@ Page({
             let url
             if (!bg_type) {
               app.msg("课表背景图片不存在，请重新设置")
-              return
             } else if (bg_type == 'diy') {
               url = _this.data.courseFileUrl + wx.getStorageSync('upload_course_bg')
             } else {
@@ -1222,5 +1241,22 @@ Page({
     this.setData({
       showSetting: false
     })
+  },
+
+  showWeekList() {
+    this.setData({
+      showWeekList: true
+    })
+  },
+
+  hideWeekList() {
+    this.setData({
+      showWeekList: false
+    })
+  },
+
+  changeWeek(e) {
+    const index = e.detail.current
+    this.selectWeek(index + 1)
   }
 })

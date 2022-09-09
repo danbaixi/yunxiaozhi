@@ -1,7 +1,7 @@
-page{
+page {
   background: #fff;
 }
-.form-btn{
+.form-btn {
   background: transparent;
   width: 98rpx;
   margin: 2px 0 0;
@@ -10,23 +10,25 @@ page{
   border-radius: 0;
   line-height: 34rpx;
   text-align: left;
-  padding:0 4rpx;
-  text-overflow:ellipsis;
-  overflow:hidden;
+  padding: 0 4rpx;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
-.form-btn::after{
+.form-btn::after {
   border: none;
 }
-.course-content{
+.course-content {
   height: 1580rpx;
   width: 100%;
   display: flex;
 }
-.course{
-  width: 92%;
-  margin: 0 auto;
+.course {
+  width: 100%;
+  height: 100%;
+  /* padding: 0 10rpx; */
+  display: inline-block;
 }
-.select_week{
+.select_week {
   background: transparent;
   position: relative;
   color: var(--black);
@@ -34,40 +36,40 @@ page{
   z-index: 1000;
   font-size: 16px;
 }
-.xiala{
+.xiala {
   width: 20px;
   height: 20px;
-  margin-left:  5px;
+  margin-left: 5px;
 }
-.week_num{
+.week_num {
   color: #fff;
   justify-content: center;
   display: flex;
   height: 100%;
   line-height: 32px;
 }
-.settings{
+.settings {
   position: absolute;
   justify-content: center;
   left: 0;
-  font-size: 48rpx!important;
+  font-size: 48rpx !important;
   /* line-height: 32px; */
   transition: 0.5s;
   padding: 0 30rpx;
 }
-.course-labels{
+.course-labels {
   position: fixed;
   bottom: 10px;
   right: 10px;
 }
-.course-labels .label{
+.course-labels .label {
   padding: 8rpx 10px;
-  background: rgba(0,0,0,.4);
+  background: rgba(0, 0, 0, 0.4);
   color: #fff;
   border-radius: 8rpx;
 }
 .kcb-item {
-  width: calc(92% / 7);
+  width: calc(100% / 7);
   position: absolute;
   justify-content: center;
   display: flex;
@@ -83,11 +85,12 @@ page{
   color: #fff;
   border-radius: 8rpx;
   padding: 2rpx 4rpx;
-  text-overflow: ellipsis;  
+  text-overflow: ellipsis;
   overflow: hidden;
-  word-break:break-all;
+  word-break: break-all;
   display: -webkit-box;
   -webkit-box-orient: vertical;
+  white-space: normal;
 }
 
 .top {
@@ -98,55 +101,57 @@ page{
   color: #3f3f3f;
   line-height: 1.4;
 }
-.jie{
+.jie {
   width: 7%;
   font-size: 24rpx;
   display: inline-block;
-  color:#3f3f3f;
+  color: #3f3f3f;
   text-align: center;
+  flex: none;
 }
-.month{
+.month {
   height: 100%;
   padding: 8rpx 0;
 }
-.date{
-  width: calc(100% - 8%);
-  margin: 0 auto;
+.date {
+  width: calc(100% - 7%);
+  /* padding: 0 10rpx; */
 }
-.date .week{
+.date .week {
   height: 100%;
   text-align: center;
 }
-.date .week-item{
+.date .week-item {
   font-size: 24rpx;
   font-weight: 700;
   line-height: 1.8;
 }
-.date .date-item{
+.date .date-item {
   font-size: 22rpx;
   color: #333;
 }
-.course-table{
+.course-table {
   width: calc(100% / 7);
   display: inline-block;
+  flex: none;
 }
 
 .top-text {
   width: 98rpx;
   height: 35rpx;
-  padding: 0 2rpx;  
+  padding: 0 2rpx;
   margin: 0 3rpx;
   font-size: 9pt;
   justify-content: center;
   display: flex;
-  align-items: center; 
+  align-items: center;
 }
-.todayDate{
+.todayDate {
   background: var(--theme);
   border-radius: 8rpx;
   color: #fff;
 }
-.todayDate .date-item{
+.todayDate .date-item {
   color: #fff;
 }
 
@@ -165,51 +170,51 @@ page{
   align-items: center;
   z-index: 0;
 }
-.left .number{
+.left .number {
   font-size: 24rpx;
   line-height: 110rpx;
 }
-.bg-content{
+.bg-content {
   width: 100%;
   height: 100%;
-  z-index: -10; 
+  z-index: -10;
   position: absolute;
   top: 0;
   left: 0;
 }
-.course_bg{
+.course_bg {
   width: 100%;
   height: 100%;
   position: absolute;
   top: 0;
   left: 0;
 }
-.ad_close{
+.ad_close {
   display: block;
   width: 20rpx;
   height: 20rpx;
   padding: 2rpx 6rpx;
   position: absolute;
-  top:174rpx;
+  top: 174rpx;
   right: 39rpx;
 }
- .ad_title{
+.ad_title {
   display: table-cell;
   text-align: center;
-  font-size:22rpx;
+  font-size: 22rpx;
   padding: 2rpx 4rpx;
-  color:#fff;
-} 
-.ad_button{
+  color: #fff;
+}
+.ad_button {
   display: inline-block;
   position: absolute;
   top: 6rpx;
   right: 6rpx;
   border-radius: 0px;
-  height:160rpx;
+  height: 160rpx;
   width: 98rpx;
   background: red;
-  opacity: 0;  
+  opacity: 0;
 }
 .mask {
   width: 100%;
@@ -224,11 +229,11 @@ page{
 }
 
 /** 更新课表 */
-.img_yzm{
+.img_yzm {
   float: right;
   margin: 4rpx;
   width: 200rpx;
-  height: 76rpx
+  height: 76rpx;
 }
 
 .modal-mask {
@@ -257,19 +262,19 @@ page{
   margin: -180rpx 105rpx;
   border-radius: 28rpx;
 }
-.input_focus{
+.input_focus {
   top: 30%;
 }
 
 .modal-title {
-  padding-top: 50rpx; 
+  padding-top: 50rpx;
   font-size: 36rpx;
   color: #030303;
   text-align: center;
 }
 
 .modal-content {
-   padding: 50rpx 32rpx; 
+  padding: 50rpx 32rpx;
 }
 
 .modal-input {
@@ -318,38 +323,38 @@ input-holder {
 }
 
 /**下拉列表**/
-.list{
+.list {
   width: 100%;
 }
-.text_left{
+.text_left {
   float: left;
   font-size: 14px;
   line-height: 40px;
 }
-.slider{
+.slider {
   width: 70%;
   height: 40px;
   float: right;
   margin-top: -9px;
 }
-.add{
+.add {
   position: absolute;
   right: 40rpx;
   bottom: 100rpx;
   z-index: 100;
 }
-.ad-close{
+.ad-close {
   position: absolute;
   bottom: 4rpx;
 }
-.newStudentTips{
+.newStudentTips {
   width: 70%;
   position: absolute;
   top: 500rpx;
   left: 15%;
   z-index: 99999;
 }
-.course-time{
+.course-time {
   height: 110rpx;
   width: 100%;
   position: absolute;
@@ -358,31 +363,31 @@ input-holder {
   right: 0;
 }
 .course-time .time-start,
-.course-time .time-end{
+.course-time .time-end {
   position: absolute;
   width: 100%;
   left: 0;
 }
 
-.course-time .time-start{
+.course-time .time-start {
   top: 12rpx;
 }
-.course-time .time-end{
+.course-time .time-end {
   bottom: 12rpx;
 }
-.cu-list+.cu-list {
+.cu-list + .cu-list {
   margin-top: 0;
 }
 .cu-list.grid.no-border {
   padding: 0;
 }
-.course-icon image{
+.course-icon image {
   width: 78rpx;
 }
-.cu-list.grid>.cu-item:after{
+.cu-list.grid > .cu-item:after {
   border-right: 0;
 }
-.courseNum{
+.courseNum {
   color: #fff;
   background: var(--yellow);
   width: 30rpx;
@@ -393,73 +398,73 @@ input-holder {
   bottom: -16rpx;
   right: -16rpx;
 }
-.moreCourse{
-  box-shadow: 0px -4px 0px 0px rgba(0,0,0,.2) inset;
+.moreCourse {
+  box-shadow: 0px -4px 0px 0px rgba(0, 0, 0, 0.2) inset;
 }
-.showMoreCourse{
+.showMoreCourse {
   width: 100%;
   height: 100%;
   position: absolute;
   top: 0;
-  background: rgba(255,255,255,.85);
+  background: rgba(255, 255, 255, 0.85);
   z-index: 999;
   overflow: auto;
   padding: 280rpx 0;
 }
-.showMoreCourse .courseList .li{
+.showMoreCourse .courseList .li {
   height: 150px;
   padding: 40rpx 20rpx;
   border-radius: 12rpx;
 }
 
-.water{
+.water {
   position: absolute;
   border-radius: 100%;
-  position:absolute;
+  position: absolute;
   width: 0px;
   height: 0px;
   background: #1380ff;
 }
-.water.finish{
+.water.finish {
   width: 30px;
   height: 30px;
   animation: finishScreen 1s infinite;
 }
 @keyframes finishScreen {
   0% {
-    transform:scale(1,1);
+    transform: scale(1, 1);
     opacity: 0.5;
- }
- 100% {
-    transform:scale(100,100);
+  }
+  100% {
+    transform: scale(100, 100);
     opacity: 0;
- }
+  }
 }
-.course-options.grid>.cu-item [class*=icon] {
+.course-options.grid > .cu-item [class*="icon"] {
   margin-top: 0px;
 }
-.course-notice{
+.course-notice {
   flex-direction: column;
   padding: 6rpx;
-  background: rgba(0, 0, 0, .5);
+  background: rgba(0, 0, 0, 0.5);
   border-radius: 8rpx;
 }
-.course-notice .notice-content{
+.course-notice .notice-content {
   text-align: justify;
 }
-.course-notice .notice-close{
+.course-notice .notice-close {
   text-align: center;
 }
-.stop-course{
+.stop-course {
   z-index: 9999;
   position: fixed;
-  background: rgba(255,255,255,.85);
+  background: rgba(255, 255, 255, 0.85);
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
 }
-.stop-course .stop-content{
+.stop-course .stop-content {
   display: flex;
   height: 100%;
   width: 100%;
@@ -495,4 +500,44 @@ input-holder {
 
 .options .cu-btn {
   width: 40%;
+}
+
+.week-list__popup {
+  padding: 40rpx;
+}
+
+.week-list__popup .week-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.week-list__popup .week-item {
+  width: calc(90% / 5);
+  height: 100rpx;
+  border-radius: 18rpx;
+  background-color: #f2f3f4;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20rpx;
+  font-size: 28rpx;
+}
+
+.week-list__popup .week-item.this-week {
+  color: var(--theme);
+}
+
+.week-list__popup .week-item.active {
+  background-color: var(--theme);
+  color: #fff;
+}
+
+.course-container {
+}
+
+.course-swpier {
+  width: 100%;
+  height: 100%;
 }

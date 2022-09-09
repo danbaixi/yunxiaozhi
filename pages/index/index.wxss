@@ -21,17 +21,12 @@ page {
 }
 
 .banners {
-  border-radius: 18rpx;
   overflow: hidden;
 }
 
 .screen-swiper {
   height: 240rpx !important;
   min-height: 240rpx;
-}
-
-.swiper-item image {
-  border-radius: 18rpx;
 }
 
 .cu-bar .action:first-child {
@@ -225,7 +220,7 @@ page {
 
 .unlogin {
   text-align: center;
-  padding: 40rpx 30rpx 20rpx;
+  padding: 40rpx 30rpx;
 }
 
 .banner {
@@ -338,4 +333,19 @@ page {
   border-style: solid;
   border-color: transparent var(--theme) transparent transparent;
   transform: rotate(90deg);
+}
+
+.component-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 30rpx;
+}
+
+.component-item {
+  width: 48%;
+  height: 240rpx;
+  background-color: var(--yellow);
+  border-radius: 24rpx;
+  margin-bottom: 30rpx;
 }

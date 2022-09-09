@@ -1,6 +1,6 @@
 <cu-custom bgColor="bg-white" isBack="true">
   <view slot="back">返回</view>
-	<view slot="content">课程管理</view>
+	<view slot="content">课表管理</view>
 </cu-custom>
 <view class="container">
   <view class="bg-white padding margin-sm y-radius">

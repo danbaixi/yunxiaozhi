@@ -27,13 +27,24 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    this.loadData()
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    if (this.data.refresh) {
+      this.loadData()
+      this.setData({
+        refresh: false
+      })
+      // 刷新首页的课表
+      wx.setStorageSync('refresh_course', true)
+    }
+  },
+
+  loadData() {
     let tmpClass = wx.getStorageSync('tmp_class')
     let courseStu = wx.getStorageSync('course_stu')
     let userId = app.getUserId()
@@ -303,6 +314,7 @@ Page({
         courseList = res.data
       }
       wx.setStorageSync('course', courseList)
+      wx.setStorageSync('refresh_course', true)
       wx.setStorageSync('course_term', term)
       let courseTerm = course.getNowCourseTerm()
       _this.setData({

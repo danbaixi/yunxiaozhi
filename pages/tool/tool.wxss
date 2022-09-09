@@ -26,7 +26,7 @@
   text-align: center
 }
 .cu-list.grid>.cu-item{
-  padding: 10rpx 0 18rpx;
+  padding: 18rpx 0;
 }
 .cu-list.grid>.cu-item [class*=icon]{
   font-size: 40rpx;

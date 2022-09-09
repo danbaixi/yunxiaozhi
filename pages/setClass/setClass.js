@@ -136,13 +136,12 @@ Page({
       wx.removeStorageSync('course_stu')
       wx.setStorageSync('tmp_class', tmpClass)
       wx.setStorageSync('course', res.data)
-      wx.navigateBack({
-        delta: 0,
-      })
+      that.backAndRefresh()
     })
   },
 
   restore: function () {
+    const that = this
     app.isBind().then((resolve) => {
       if (resolve) {
         wx.showLoading({
@@ -165,9 +164,7 @@ Page({
             wx.setStorageSync('course_term', nowTerm)
             wx.setStorageSync('course', res.data.course);
             wx.setStorageSync('train', res.data.train_course);
-            wx.navigateBack({
-              delta: 0,
-            })
+            that.backAndRefresh()
           }
         })
       }
@@ -247,6 +244,17 @@ Page({
           })
         }
       }
+    })
+  },
+
+  backAndRefresh() {
+    const pages = getCurrentPages()
+    const curPage = pages[pages.length - 2]
+    curPage.setData({
+      refresh: true
+    })
+    wx.navigateBack({
+      delta: 1,
     })
   }
 })

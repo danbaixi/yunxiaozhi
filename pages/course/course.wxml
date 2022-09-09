@@ -1,12 +1,10 @@
 <view class="diy-nav" style="height:{{customBar}}px;">
   <view class='select_week' style="height:{{customBar}}px;padding-top:{{statusBar}}px;">
-    <picker class='week_num' mode="selector" range="{{zhou_num}}" bindchange="select" value="{{now_week-1}}">
-      <view style="line-height:{{customBar-statusBar}}px;height:100%">
-        <text class="text-black text-lg">第 {{now_week}} 周 </text>
-        <text class="icon-unfold lg text-black"></text>
-      </view>
-    </picker>
-    <text class=" icon-add settings text-black" style="top:{{statusBar}}px;line-height:{{customBar-statusBar}}px;height:{{customBar-statusBar}}px;transform:rotate({{showSetting?135:0}}deg)" bindtap='listDisplay'>
+    <view bindtap="showWeekList" class='week_num' style="line-height:{{customBar-statusBar}}px;height:100%">
+      <text class="text-black text-lg">第 {{now_week}} 周 </text>
+      <text class="icon-unfold lg text-black margin-left-xs"></text>
+    </view>
+    <text class="icon-add settings text-black" style="top:{{statusBar}}px;line-height:{{customBar-statusBar}}px;height:{{customBar-statusBar}}px;transform:rotate({{showSetting?135:0}}deg)" bindtap='listDisplay'>
     </text>
   </view>
 </view>
@@ -23,7 +21,7 @@
     <view>月</view>
   </view>
   <view class="date">
-    <view class="course-table week {{(todayMonth == now_month_number && now_week==nowWeek&&todayDay==item)?'todayDate':''}}" wx:for="{{now_day}}" wx:key="key" wx:index="index">
+    <view class="course-table week {{(todayMonth == now_month_number && now_week==thisWeek&&todayDay==item)?'todayDate':''}}" wx:for="{{now_day}}" wx:key="key" wx:index="index">
       <view class="week-item">周{{zhou[index]}}</view>
       <view class="date-item">{{
         index > 0 && ((now_day[index] == 1 && startDay == 1) || (now_day[index] == 1 && startDay==0 && zhou[index] != '日')) ?
@@ -32,7 +30,8 @@
     </view>
   </view>
 
-  <scroll-view scroll-x="false" scroll-y="true" scroll-top="{{scrollTop}}" class="scroll" bindtouchstart='touchStart' bindtouchend="touchEnd">
+  <!-- <scroll-view scroll-y scroll-top="{{scrollTop}}" class="scroll" bindtouchstart='touchStart' bindtouchend="touchEnd"> -->
+  <scroll-view scroll-y scroll-top="{{scrollTop}}" class="scroll">
     <view class='course-content'>
       <view class='jie' style="background-color:rgba(220,220,220,{{(100-Kopacity)/100}})">
         <view wx:for="{{12}}" wx:key="key" wx:index="index" class="left">
@@ -44,16 +43,11 @@
         </view>
       </view>
 
-      <view class="course">
+      <view wx:if="{{false}}" class="course">
         <view class="{{toggleDelay?'animation-scale-up':''}} kcb-item" wx:for="{{course}}" wx:key="key" wx:if="{{item.display}}" bindtap="displayCourseInfo" data-num="{{item.indexNum}}" form-type="submit" style="animation-delay: {{(index%2==0?(index/2):(index-1)/2+1)*0.1}}s;margin-left:{{(item.week - startDay)*(92/7)}}%;margin-top:{{(item.jie-1)*110+4}}rpx;height:{{item.jieshu*110 - 4}}rpx">
 
           <view class="smalltext {{item.courseNum>1?'moreCourse':''}}" style="color:{{!item.thisWeek?'#aab9cc':'#fff'}};background-color:rgba({{!item.thisWeek?'236,245,255':colorArrays[item.num]}},{{(100-Copacity)/100}});-webkit-line-clamp: {{item.jieshu*3}};">{{!item.thisWeek?'[非本周]':''}}{{item.name}}{{item.address ? '@' + item.address : ''}}
           </view>
-        </view>
-
-        <view wx:if="{{ad.display}}" class='kcb-item' style="margin-left:{{(ad.week-1)*(92/7)}}%;margin-top:{{(ad.jie-1)*110+4}}rpx;height:{{ad.jieshu*110 - 4}}rpx">
-          <view class="smalltext" bindtap="goAd" style="background:{{ad.background}};color:{{ad.color}};">{{ad.title}}</view>
-          <view bindtap="closeAd" class="ad-close icon-roundclose text-center text-grey"></view>
         </view>
 
         <view class="course-notice kcb-item" style="font-size:{{startDay==1?28:24}}rpx;width:calc(92% / 7 * {{startDay==1?2:1}} - 2px);margin-left:{{(startDay==1?5:6)*92/7}}%;margin-top:4rpx" wx:if="{{noticeDisplay}}">
@@ -70,46 +64,45 @@
           <view class="margin-top-sm text-right course-term" wx:if="{{courseTerm && courseTerm.term && courseTerm.term != thisTerm}}"><text class="label">{{courseTerm.name}}</text></view>
         </view>
       </view>
-    </view>
-  </scroll-view>
-  <view class="water {{clickStatus}}" style="top:{{finishY}}px;left:{{finishX}}px;"></view>
-  <!--更新课表输入验证码弹窗-->
-  <view class="modal-mask" bindtap="hideModal" style='height:{{winHeight}}px;' catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
-  <view class="modal-dialog" wx:if="{{showModal}}" class="{{input_focus == 1?'modal-dialog input_focus':'modal-dialog'}}">
-    <view class="modal-title">更新课表</view>
-    <view class="modal-content">
-      <view class="modal-input">
-        <input placeholder-class="input-holder" bindfocus="inputFocus" bindblur="inputBlur" bindinput="yzmInput" maxlength="4" class="input">
-        </input>
-        <image bindtap='freshYzm' class="img_yzm" src="{{yzmUrl}}"></image>
+
+      <swiper class="course-swpier" current="{{now_week - 1}}" bindchange="changeWeek">
+        <swiper-item id="course-{{index+1}}" wx:for="{{courseList}}" wx:key="*this" wx:for-item="courseItem" class="course">
+          <view class="kcb-item" wx:for="{{courseItem.courses}}" wx:key="id" wx:if="{{item.display}}" bindtap="displayCourseInfo" data-index="{{index}}" style="margin-left:{{(item.week - startDay)*(100/7)}}%;margin-top:{{(item.jie-1)*110+6}}rpx;height:{{item.jieshu*110 - 6}}rpx">
+            <view class="smalltext {{item.courseNum>1?'moreCourse':''}}" style="color:{{!item.thisWeek?'#aab9cc':'#fff'}};background-color:rgba({{!item.thisWeek?'236,245,255':colorArrays[item.num]}},{{(100-Copacity)/100}});-webkit-line-clamp: {{item.jieshu*3}};">{{item.name}}{{item.address ? '@' + item.address : ''}}
+            </view>
+          </view>
+        </swiper-item>
+      </swiper>
+      <view class="course-labels">
+        <view class="margin-top-sm text-right tmp-class" wx:if="{{tmpClass!=''}}"><text class="label">{{tmpClass.name}}</text></view>
+        <view class="margin-top-sm text-right user-term" wx:if="{{userTerm}}"><text class="label">{{userTerm.name}}({{userTerm.classname}})</text></view>
+        <view class="margin-top-sm text-right course-term" wx:if="{{courseTerm && courseTerm.term && courseTerm.term != thisTerm}}"><text class="label">{{courseTerm.name}}</text></view>
       </view>
     </view>
-    <view class="modal-footer">
-      <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
-      <view class="btn-confirm" bindtap="update" data-status="confirm">确定</view>
-    </view>
-  </view>
+  </scroll-view>
 
   <view class="showMoreCourse" wx:if="{{showMoreCourse}}" bindtap="hideMoreCourse">
     <view class="courseList grid col-2">
       <!-- 本周的课程 -->
-      <view class="animation-scale-up padding" style="animation-duration: 0.2s" wx:if="{{item.thisWeek}}" wx:for="{{moreCourseList}}" wx:key="key" bindtap="displayCourseInfo" data-display="true" data-num="{{item.indexNum}}">
+      <view class="animation-scale-up padding" style="animation-duration: 0.2s" wx:if="{{item.thisWeek}}" wx:for="{{moreCourseList}}" wx:key="*this" bindtap="displayCourseInfo" data-type="more" data-index="{{index}}">
         <view class="li shadow-blur text-white" style="background-color:rgba({{item.num<colorArrays.length-1?colorArrays[item.num]:colorArrays[colorArrays.length-1]}})">
-          <view>
-            <view class="cu-tag radius line-white">本周</view>
-            <text class="text-bold"> {{item.fullName}}</text>
+          <view><text class="text-bold"> {{item.fullName}}</text>
           </view>
-          <view class="margin-top-sm">{{item.address ? '@' + item.address : ''}}</view>
+          <view class="margin-top-xs">{{item.address ? '@' + item.address : ''}}</view>
+          <view class="margin-top-xs">
+            周数：{{item.zhoushu}}{{item.danshuang > 0 ? '(' + (item.danshuang == 1 ? '单' : '双') + ')' : ''}}
+          </view>
         </view>
       </view>
       <!-- 非本周的课程 -->
-      <view class="animation-scale-up padding" style="animation-duration: 0.2s" wx:if="{{!item.thisWeek}}" wx:for="{{moreCourseList}}" wx:key="key" bindtap="displayCourseInfo" data-display="true" data-num="{{item.indexNum}}">
+      <view class="animation-scale-up padding" style="animation-duration: 0.2s" wx:if="{{!item.thisWeek}}" wx:for="{{moreCourseList}}" wx:key="*this" bindtap="displayCourseInfo" data-type="more" data-index="{{index}}">
         <view class="li shadow-blur text-grey" style="background-color:rgba(236,245,255)">
-          <view>
-            <view class="cu-tag radius line-grey">非本周</view>
-            <text class="text-bold"> {{item.fullName}}</text>
+          <view><text class="text-bold"> {{item.fullName}}</text>
           </view>
-          <view class="margin-top-sm">{{item.address ? '@' + item.address : ''}}</view>
+          <view class="margin-top-xs">{{item.address ? '@' + item.address : ''}}</view>
+          <view class="margin-top-xs">
+            周数：{{item.zhoushu}}{{item.danshuang > 0 ? '(' + (item.danshuang == 1 ? '单' : '双') + ')' : ''}}
+          </view>
         </view>
       </view>
     </view>
@@ -179,7 +172,7 @@
     </view>
   </van-popup>
 
-  <van-popup show="{{showSetting}}" position="top" round  custom-style="min-width: 100%" bind:close="hideSetting">
+  <van-popup show="{{showSetting}}" position="top" round custom-style="min-width: 100%" bind:close="hideSetting">
     <view class="list" style="padding-top:{{customBar}}px">
       <view class="course-options cu-list grid col-4">
         <view class="cu-item" bindtap='showUpdate'>
@@ -192,7 +185,7 @@
           <view class="course-icon">
             <image mode="widthFix" src="/pages/assets/imgs/course_icon/add.png"></image>
           </view>
-          <text>课程管理</text>
+          <text>课表管理</text>
         </view>
         <view class="cu-item" bindtap='setTime'>
           <view class="course-icon">
@@ -247,6 +240,18 @@
               <slider data-type='course' bindchange="sliderchange" activeColor="#1380ff" value='{{Copacity}}' min="0" max="100" show-value />
             </view>
           </view>
+        </view>
+      </view>
+    </view>
+  </van-popup>
+
+  <van-popup show="{{showWeekList}}" bind:close="hideWeekList" position="bottom" round>
+    <view class="week-list__popup">
+      <view class="text-center padding text-lg">切换周数</view>
+      <view class="week-list">
+        <view bindtap="select" data-index="{{index}}" wx:for="{{weekCount}}" wx:key="*this" class="week-item {{thisWeek == item + 1 ? 'this-week' : ''}} {{now_week == item + 1 ? 'active' : ''}}">
+          <block wx:if="{{thisWeek == item + 1}}">本周</block>
+          <block wx:else>{{item < 9 ? 0 : '' }}{{item + 1}}</block>
         </view>
       </view>
     </view>

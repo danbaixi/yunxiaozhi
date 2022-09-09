@@ -18,18 +18,18 @@ function isTabPath(path){
 // 登录后跳转
 function loginRedirect(path){
   if(!path){
-    wx.switchTab({
+    wx.reLaunch({
       url: '/pages/index/index'
     })
     return
   }
   path = decodeURIComponent(path)
   if(isTabPath(path)){
-    wx.switchTab({
+    wx.reLaunch({
       url: '/' + path,
     })
   }else{
-    wx.redirectTo({
+    wx.reLaunch({
       url: '/' + path,
     })
   }
@@ -45,8 +45,7 @@ async function updateAndGetCourseList(){
       wx.removeStorageSync('tmp_class')
       wx.setStorageSync('course', res.data.course)
       wx.setStorageSync('train', res.data.train_course)
-      // 不记录时间
-      // wx.setStorageSync('course_update_time', dayjs().unix())
+      wx.setStorageSync('refresh_course', true)
       return true
     }else if(res.status == 1005){
       //重新获取一遍
@@ -130,7 +129,7 @@ function backPage(from = ''){
 }
 
 // 判断是否可以更新数据
-const UPDATE_TIME = 3600 //时间间隔1h
+const UPDATE_TIME = 300 //时间间隔5min
 const TIME_KEY = {
   score: 'score_update_time', //成绩
   course: 'course_update_time', //课表

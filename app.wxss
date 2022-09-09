@@ -10,7 +10,7 @@ page{
 
 /** 扩展 */
 .y-radius {
-  border-radius: 18rpx;
+  border-radius: 24rpx;
 }
 .bg-color{
   background-color: var(--background)
