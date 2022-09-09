@@ -1,11 +1,14 @@
 <view class="diy-nav" style="height:{{customBar}}px;">
   <view class='select_week' style="height:{{customBar}}px;padding-top:{{statusBar}}px;">
-    <view bindtap="showWeekList" class='week_num' style="line-height:{{customBar-statusBar}}px;height:100%">
-      <text class="text-black text-lg">第 {{now_week}} 周 </text>
-      <text class="icon-unfold lg text-black margin-left-xs"></text>
+    <view class='week_num' style="line-height:{{customBar-statusBar}}px;height:100%">
+      <view bindtap="showWeekList">
+        <text class="text-black text-lg">第 {{now_week}} 周 </text>
+        <text class="icon-unfold lg text-black margin-left-xs"></text>
+      </view>
+      <image class="settings" bindtap='listDisplay' src="../assets/imgs/other/course_more.png" mode="aspectFill"></image>
     </view>
-    <text class="icon-add settings text-black" style="top:{{statusBar}}px;line-height:{{customBar-statusBar}}px;height:{{customBar-statusBar}}px;transform:rotate({{showSetting?135:0}}deg)" bindtap='listDisplay'>
-    </text>
+    <!-- <text class="icon-add settings text-black" style="top:{{statusBar}}px;line-height:{{customBar-statusBar}}px;height:{{customBar-statusBar}}px;transform:rotate({{showSetting?135:0}}deg)" bindtap='listDisplay'>
+    </text> -->
   </view>
 </view>
 

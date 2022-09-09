@@ -65,6 +65,7 @@ Page({
       wx.removeStorageSync('course_stu')
       wx.setStorageSync('tmp_class', tmpClass)
       wx.setStorageSync('course', res.data)
+      wx.setStorageSync('refrsh_course', true)
       wx.setStorageSync('course_term', term)
       wx.switchTab({
         url: '/pages/course/course',

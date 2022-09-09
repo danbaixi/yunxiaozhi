@@ -1,4 +1,4 @@
-var colors =  [
+export default [
   "93,113,213",
   "133,93,213",
   "193,93,213",
@@ -29,5 +29,3 @@ var colors =  [
   "55,151,164",
   "104,134,197"
 ]
-
-module.exports = colors

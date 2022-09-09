@@ -516,6 +516,7 @@ Page({
           })
           wx.removeStorageSync('tmp_class')
           wx.setStorageSync('course', res.data.course)
+          wx.setStorageSync('refresh_course', true)
           wx.setStorageSync('train', res.data.train_course)
           _this.getCourse(_this.data.now_week); //获取课
         })

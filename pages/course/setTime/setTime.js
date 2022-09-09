@@ -44,6 +44,7 @@ Page({
         that.setData({
           area: area
         })
+        wx.setStorageSync('refresh_course_time', true)
         wx.setStorageSync('user_area', area)
     }).catch((message) => {
       app.msg(message)
@@ -66,10 +67,11 @@ Page({
         that.setData({
           status: status
         })
+        wx.setStorageSync('refresh_course_time', true)
         wx.setStorageSync('display_course_time', status)
       })
       .catch((message) => {
         app.msg(message)
       })
-  }
+  },
 })

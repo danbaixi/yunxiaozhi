@@ -1,9 +1,13 @@
 const app = getApp()
-const TIMES = require('../../../utils/course-time.js')
-const courseFn = require('../../../utils/course')
-const util = require('../../../utils/util')
-const { openArticle } = require('../../../utils/common.js')
-const { getStudentCount } = require('../../api/course')
+import TIMES from '../../../utils/course-time'
+import {
+  getNowCourseTerm
+} from '../../../utils/course'
+import {
+  deepCopyArray
+} from '../../../utils/util'
+import { openArticle } from '../../../utils/common'
+import { getStudentCount } from '../../api/course'
 Page({
 
   /**
@@ -37,7 +41,7 @@ Page({
     let tmpName = data.address.split("楼")
     let floor = '' //教学楼
     let floorNum = 0 //第几层
-    let timesData = util.deepCopyArray(TIMES) //数组深拷贝
+    let timesData = deepCopyArray(TIMES) //数组深拷贝
     if(tmpName.length == 2){
       floor = tmpName[0]
       floorNum = tmpName[1].substr(0, 1)
@@ -134,7 +138,7 @@ Page({
   getStudent:function(data){
     var that = this
     var section = data.jie + (data.jieshu > 1 ? ('-' + (parseInt(data.jie) + parseInt(data.jieshu) - 1)) : '')
-    let courseTerm = courseFn.getNowCourseTerm()
+    let courseTerm = getNowCourseTerm()
     getStudentCount({
       term:courseTerm.term,
       name:(data.fullName || data.name),

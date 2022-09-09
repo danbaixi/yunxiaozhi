@@ -42,6 +42,7 @@ page {
   margin-left: 5px;
 }
 .week_num {
+  position: relative;
   color: #fff;
   justify-content: center;
   display: flex;
@@ -50,12 +51,12 @@ page {
 }
 .settings {
   position: absolute;
-  justify-content: center;
-  left: 0;
-  font-size: 48rpx !important;
-  /* line-height: 32px; */
-  transition: 0.5s;
-  padding: 0 30rpx;
+  left: 20rpx;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 60rpx;
+  height: 60rpx;
+  padding: 10rpx;
 }
 .course-labels {
   position: fixed;

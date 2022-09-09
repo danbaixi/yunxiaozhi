@@ -1,23 +1,25 @@
-var colors = require('../../utils/colors.js')
-const TIMES = require('../../utils/course-time.js')
-const courseFn = require('../../utils/course')
-import course from '../../utils/course'
+import colors from '../../utils/colors'
+import TIMES from '../../utils/course-time'
+import {
+  getNowCourseTerm,
+  setCourseToNowTerm
+} from '../../utils/course'
 import {
   deepCopyArray,
   formatAddress
 } from '../../utils/util'
-const {
+import {
   checkCourseInWeek,
   setUpdateTime,
   canUpdate,
   getNotice,
   noticeClickEvent
-} = require('../../utils/common')
-const {
+} from '../../utils/common'
+import {
   updateCourse,
   getCourseList,
   getAreaInfo
-} = require('../api/course')
+} from '../api/course'
 const app = getApp()
 Page({
   /**
@@ -106,6 +108,14 @@ Page({
         imageUrl: wx.getStorageSync('bg_img')
       })
       wx.removeStorageSync('refresh_course_bg')
+    }
+    const refreshTime = wx.getStorageSync('refresh_course_time')
+    if (refreshTime) {
+      this.getConfigData()
+      this.setData({
+        showSetting: false
+      })
+      wx.removeStorageSync('refresh_course_time')
     }
   },
   /**
@@ -665,7 +675,7 @@ Page({
         that.getCourseListRequest()
         setUpdateTime('course')
         //切换为当前学期
-        courseFn.setCourseToNowTerm()
+        setCourseToNowTerm()
         //切换成当周
         let week = that.getNowWeek()
         that.selectWeek(week)
@@ -1071,7 +1081,7 @@ Page({
   },
 
   getCourseTerm: function () {
-    let nowTerm = courseFn.getNowCourseTerm()
+    let nowTerm = getNowCourseTerm()
     let thisTerm = app.getConfig('nowTerm.term')
     let userTerm = wx.getStorageSync('course_stu')
     this.setData({

@@ -77,7 +77,7 @@ Page({
   /**
    * 绑定教务系统
    */
-  login: function(e) {
+  login() {
     var that = this;
     var user_id = that.data.user_id;
     var password = that.data.user_password;
@@ -122,7 +122,7 @@ Page({
           //更新获取课表
           updateAndGetCourseList()
           setTimeout(function () {
-            loginRedirect(that.data.redirect)
+            loginRedirect(that.data.redirect, true)
           }, 1000);
           return
         }

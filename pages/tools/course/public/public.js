@@ -1,6 +1,5 @@
 const { getPublicCourseList } = require('../../../api/course')
 const { backPage,getGradeList } = require('../../../../utils/common')
-const { sort } = require('../../../../utils/colors')
 const app = getApp()
 Page({
 

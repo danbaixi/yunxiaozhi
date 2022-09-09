@@ -16,8 +16,8 @@ function isTabPath(path){
 }
 
 // 登录后跳转
-function loginRedirect(path){
-  if(!path){
+function loginRedirect(path, bind = false){
+  if(!path || bind){
     wx.reLaunch({
       url: '/pages/index/index'
     })

@@ -18,7 +18,7 @@
     <view>
       <view wx:if="{{collects.length>0}}">
         <button class="cu-btn sm text-xs text-gray margin-top-xs margin-right-xs collect-class" 
-          wx:for="{{collects}}" wx:key="key" data-type="collect" data-index="{{index}}" bindtap="select" bindlongtap="delectCollect" >
+          wx:for="{{collects}}" wx:key="key" data-type="collect" data-index="{{index}}" bindtap="select" catchlongtap="delectCollect" >
           {{item.name}}
         </button>
       </view>

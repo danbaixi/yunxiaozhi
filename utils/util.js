@@ -186,6 +186,7 @@ function exitSaveData(){
   wx.clearStorageSync()
   wx.setStorageSync('bg_imgs', bg_imgs)
   wx.setStorageSync('bg_img', bg_img)
+  wx.setStorageSync('refresh_course', true)
   app.updateConfigRequest()
 }
 
