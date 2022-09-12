@@ -37,7 +37,7 @@ Page({
    */
   onShareAppMessage: function () {
     return {
-      title: "欢迎加入我们" + this.data.club.name,
+      title: `「${this.data.club.name}」详细介绍`,
       imageUrl: this.data.club.logo,
       path: `/pages/tools/club/item/item?id=${this.data.id}`
     }
@@ -55,6 +55,11 @@ Page({
           app.msg("该社团不存在")
           return
         }
+        let photos = item.photos != '' ? (JSON.parse(item.photos) || []) : []
+        if (photos.length > 5) {
+          photos = photos.slice(0,5)
+        }
+        item.photos = photos.filter(item => item != '')
         _this.setData({
           loading: false,
           exist: true,
@@ -97,19 +102,11 @@ Page({
     })
   },
 
-  viewPhotos:function(){
-    if(this.data.club.photos == ''){
-      app.msg("暂无照片")
-      return
-    }
-    let photos = JSON.parse(this.data.club.photos)
-    if(photos.length == 0){
-      app.msg("暂无照片")
-      return
-    }
+  viewPhoto(e){
+    const index = e.currentTarget.dataset.index
     wx.previewImage({
-      current: photos[0],
-      urls: photos
+      current: this.data.club.photos[index],
+      urls: this.data.club.photos
     })
   },
 

@@ -23,3 +23,11 @@
   margin-bottom: 20rpx;
   border-radius: 12rpx;
 }
+
+.action .van-dropdown-menu {
+  box-shadow: none;
+}
+
+.cu-bar .search-form {
+  margin: 0 20rpx 0 30rpx;
+}

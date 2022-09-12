@@ -213,7 +213,7 @@ Page({
         icon: 'bad',
         color: 'red',
         badge: '',
-        name: '找社团',
+        name: '社团',
         icon: 'club',
         needLogin: false,
         url: '/pages/tools/club/club',
@@ -239,7 +239,7 @@ Page({
       {
         icon: 'bad',
         color: 'red',
-        badge: '新',
+        badge: '',
         name: '图书馆',
         icon: 'library',
         needLogin: false,
@@ -349,15 +349,15 @@ Page({
         needLogin: false,
         url: '../article/article?src=' + encodeURIComponent('http://mp.weixin.qq.com/s?__biz=MzI1NTUwNDIzNQ==&mid=100002861&idx=1&sn=bc55ac93a14feb1025bbe9e93d74d8d5&chksm=6a35b6295d423f3f5ee553af9eed5f63582bf5853db8c8cfa9e17cf9aba27647d745a0c9137c#rd'),
       },
-      {
-        color: 'red',
-        badge: '新',
-        name: '优惠中心',
-        icon: 'discount',
-        needLogin: false,
-        auditing: true,
-        url: '/pages/tools/discount/discount'
-      },
+      // {
+      //   color: 'red',
+      //   badge: '',
+      //   name: '优惠中心',
+      //   icon: 'discount',
+      //   needLogin: false,
+      //   auditing: true,
+      //   url: '/pages/tools/discount/discount'
+      // },
     ]
   },
 

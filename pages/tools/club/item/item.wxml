@@ -1,29 +1,31 @@
-<cu-custom bgColor="bg-white" isBack="true">
+<cu-custom bgColor="bg-transparent" isBack="true">
   <view slot="back">返回</view>
-	<view slot="content">社团详情</view>
+  <view slot="content"> </view>
 </cu-custom>
 <list-loading loading="{{loading}}"></list-loading>
 <empty display="{{!loading&&!exist}}"></empty>
 <view class="container" wx:if="{{!loading&&exist}}">
-  <view class="header text-center padding">
-    <image class="bg" src="{{club.logo}}" mode="widthFix"></image>
-    <view><image class="logo shadow-blur" mode="widthFix" src="{{club.logo}}"></image></view>
-    <view class="padding-sm">
-      <view><text class="text-white bg-yellow name shadow-blur">{{club.name}}</text></view>
+  <image class="bg" src="{{club.logo}}" mode="widthFix"></image>
+  <view class="header text-center">
+    <image class="logo shadow-blur" mode="aspectFill" src="{{club.logo}}"></image>
+    <view class="padding-sm margin-top-xs">
+      <view class="flex justify-center">
+        <view class="text-white bg-yellow name shadow-blur">{{club.name}}</view>
+      </view>
       <view class="margin-top">
         <button class="cu-btn text-red bg-white star-btn" bindtap="star">
-          <text class="icon-like{{stared==1?'fill':''}}"></text>
+          <text class="icon-appreciate{{stared==1?'fill':''}}"></text>
           <text class="padding-left-xs">{{club.star}}</text>
         </button>
       </view>
     </view>
     <view class="share-btn options">
-      <button class="cu-btn text-theme padding-xs bg-white sm" open-type='share'>
+      <button class="cu-btn bg-theme padding-xs sm" open-type='share'>
         <text class="icon-share"></text><text class="padding-left-xs">分享</text>
       </button>
     </view>
     <view class="edit-btn options">
-      <button class="cu-btn text-yellow padding-xs bg-white sm" bindtap="edit">
+      <button class="cu-btn bg-yellow padding-xs sm" bindtap="edit">
         <text class="icon-edit"></text><text class="padding-left-xs">编辑</text>
       </button>
     </view>
@@ -44,8 +46,8 @@
           <text class="icon-newshot text-theme"></text>
           <text class="text-theme"> 简介　</text>
         </view>
-        <view class="content">
-          <text class="text-black">{{club.desc}}</text>
+        <view class="content padding-tb-xs">
+          <text class="text-black">{{club.desc ? club.desc : '-'}}</text>
         </view>
       </view>
       <view class="cu-item">
@@ -54,18 +56,15 @@
           <text class="text-theme"> 联系　</text>
         </view>
         <view class="content">
-          <text class="text-black">{{club.linker?club.linker:''}}{{club.phone?'（'+club.phone+'）':'无'}}</text>
+          <text class="text-black">{{club.linker?club.linker:'-'}}{{club.phone?'（'+club.phone+'）':''}}</text>
           <copy wx:if="{{club.phone!=''}}" content="{{club.phone}}"></copy>
         </view>
       </view>
-      <view class="cu-item">
-        <view class="action">
-          <text class="icon-pic text-theme"></text>
-          <text class="text-theme"> 相册　</text>
-        </view>
+      <view class="cu-item" wx:if="{{club.photos.length > 0}}">
         <view class="content text-black">
-          <text wx:if="{{club.photos}}" bindtap="viewPhotos">点击查看<text class="icon-right"></text></text>
-          <text wx:else>无</text>
+          <view class="photos {{club.photos.length == 5 ? 'justify-between' : 'justify-center'}}">
+            <image bindtap="viewPhoto" data-index="{{index}}" wx:for="{{club.photos}}" wx:key="*this" mode="aspectFill" src="{{item}}"></image>
+          </view>
         </view>
       </view>
     </view>
