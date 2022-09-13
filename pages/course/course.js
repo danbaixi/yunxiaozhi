@@ -215,6 +215,7 @@ Page({
       }
       this.getCourseList()
     } catch (e) {
+      console.error(e)
       app.msg('获取课表失败')
       return
     }

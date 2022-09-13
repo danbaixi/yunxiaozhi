@@ -25,7 +25,7 @@ function term2Name(term){
 function getNowCourseTerm(){
   let cache = wx.getStorageSync('course_term')
   if(!cache || !cache.term){
-    let term = this.getNowTerm()
+    let term = getNowTerm()
     wx.setStorageSync('course_term', term)
     return term
   }

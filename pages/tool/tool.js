@@ -222,7 +222,7 @@ Page({
         icon: 'bad',
         color: 'red',
         badge: '',
-        name: '找同乡',
+        name: '同乡',
         icon: 'tongxiang',
         needLogin: false,
         url: '/pages/tools/city/city'

@@ -1,6 +1,6 @@
 <cu-custom bgColor="bg-white" isBack="true">
   <view slot="back">返回</view>
-	<view slot="content">找同乡</view>
+	<view slot="content">同乡</view>
 </cu-custom>
 <view wx:if="{{openStatus == 0}}" class="empty">
   <empty display="{{true}}" content="{{openTips}}"></empty>
