@@ -1,10 +1,10 @@
 <cu-custom bgColor="bg-white" isBack="true">
   <view slot="back">返回</view>
-	<view slot="content">个人信息</view>
+  <view slot="content">个人信息</view>
 </cu-custom>
 <view class='content'>
   <view class="cu-list menu">
-    <view class="cu-item arrow" bindtap="updateImg">
+    <button class="cu-item arrow tr-btn avatar-btn" open-type="chooseAvatar" bindchooseavatar="updateImg">
       <view class="content">
         <text class="text-black">头像</text>
       </view>
@@ -13,7 +13,7 @@
           <view class="cu-avatar round sm" style="background-image:url({{user_img}});"></view>
         </view>
       </view>
-    </view>
+    </button>
     <view class="cu-item arrow" bindtap="openUpdateName">
       <view class="content">
         <text class="text-black">昵称</text>
@@ -28,7 +28,7 @@
       学籍信息
     </view>
     <view class="action">
-     同步学籍信息 <text class="icon-right"></text>
+      同步学籍信息 <text class="icon-right"></text>
     </view>
   </view>
   <list-loading loading="{{loading}}"></list-loading>
@@ -69,18 +69,18 @@
   </view>
 </view>
 
-  <!--修改用户昵称-->
-  <view class="modal-mask"bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
-  <view class="modal-dialog" wx:if="{{showModal}}" class="{{input_focus == 1?'modal-dialog input_focus':'modal-dialog'}}">
-    <view class="modal-title">修改昵称</view>
-      <view class="modal-content">
-        <view class="modal-input">
-          <input focus='true' placeholder='{{user_name}}' placeholder-class="input-holder" bindfocus="inputFocus" bindblur="inputBlur" bindinput="yzmInput" maxlength="32" class="input">
-          </input>
-        </view>  
-      </view>
-      <view class="modal-footer">
-        <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
-        <view class="btn-confirm" bindtap="updateName" data-status="confirm">确定</view>
-      </view>
+<!--修改用户昵称-->
+<view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
+<view class="modal-dialog" wx:if="{{showModal}}" class="{{input_focus == 1?'modal-dialog input_focus':'modal-dialog'}}">
+  <view class="modal-title">修改昵称</view>
+  <view class="modal-content">
+    <view class="modal-input">
+      <input focus='true' placeholder='{{user_name}}' placeholder-class="input-holder" bindfocus="inputFocus" bindblur="inputBlur" bindinput="yzmInput" maxlength="32" class="input">
+      </input>
+    </view>
   </view>
+  <view class="modal-footer">
+    <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
+    <view class="btn-confirm" bindtap="updateName" data-status="confirm">确定</view>
+  </view>
+</view>
