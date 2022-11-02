@@ -785,6 +785,7 @@ Page({
     var date = new Date();
     var month = date.getMonth();
     var day = date.getDate();
+    console.log(date,month,day)
     return {
       todayMonth: month + 1,
       todayDay: day
