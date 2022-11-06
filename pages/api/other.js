@@ -415,6 +415,23 @@ function getSameCityDetail(data) {
   })
 }
 
+//初始化空教室查询
+function initEmptyRoom() {
+  return R({
+    url: 'emptyroom/init',
+    needLogin: false
+  })
+}
+
+// 查询空教室v2
+function getEmptyRoomV2(data) {
+  return R({
+    url: 'emptyroom/getEmptyRoomV2',
+    data,
+    needLogin: false
+  })
+}
+
 module.exports = {
   getAttendanceList,
   updateAttendanceList,
@@ -465,5 +482,7 @@ module.exports = {
   getDiscountList,
   getDiscountTypes,
   getQuantityFromDormitory,
-  getSameCityDetail
+  getSameCityDetail,
+  initEmptyRoom,
+  getEmptyRoomV2
 }

@@ -1,57 +1,120 @@
 <cu-custom bgColor="bg-white" isBack="true">
   <view slot="back">返回</view>
-	<view slot="content">空教室查询</view>
+  <view slot="content">空教室查询</view>
 </cu-custom>
 <empty display="{{openStatus == 0}}" content="{{openTips}}"></empty>
-<view wx:if="{{openStatus == 1}}" class="cu-card">
-  <view class="cu-item shadow">
-    <form>
-      <view class="cu-form-group">
-        <view class="title">校区</view>
-        <picker bindchange="selectArea" value="{{area}}" range="{{areas}}">
-          <view class="picker">
-            {{areas[area]}}
-          </view>
-        </picker>
+<block wx:if="{{openStatus == 1}}">
+  <van-empty wx:if="{{initErr}}" image="error" description="{{initMessage}}" />
+  <view wx:else class="container">
+    <view class="query-form">
+      <view class="form-group">
+        <view bindtap="select" data-column="area" class="form-item">
+          <view class="form-item__title">校区</view>
+          <view class="form-item__val">{{form.area[selected.area]}}</view>
+        </view>
+        <view bindtap="select" data-column="floor" class="form-item">
+          <view class="form-item__title">教学楼</view>
+          <view class="form-item__val">{{form.floor.length > 0 ? form.floor[selected.floor]['name'] : '加载中...'}}</view>
+        </view>
       </view>
-      <view class="cu-form-group">
-        <view class="title">教学楼</view>
-        <picker bindchange="selectFloor" value="{{floor}}" range="{{floors}}" range-key="name">
-          <view class="picker">
-            {{floors.length > 0 ? floors[floor]['name'] : '加载中...'}}
-          </view>
-        </picker>
+      <view class="form-group">
+        <view bindtap="select" data-column="weekly" class="form-item">
+          <view class="form-item__title">周数</view>
+          <view class="form-item__val">{{form.weekly[selected.weekly]}}</view>
+        </view>
+        <view bindtap="select" data-column="week" class="form-item">
+          <view class="form-item__title">星期</view>
+          <view class="form-item__val">{{form.week[selected.week]}}</view>
+        </view>
+        <view bindtap="select" data-column="section" class="form-item">
+          <view class="form-item__title">节数</view>
+          <view class="form-item__val">{{form.section[selected.section]}}</view>
+        </view>
       </view>
-      <view class="cu-form-group">
-        <view class="title">周数</view>
-        <picker bindchange="selectWeekly" value="{{weekly}}" range="{{weeklys}}">
-          <view class="picker">
-            {{weekly?'第' + weeklys[weekly] + '周':'请选择'}}
+      <view class="form-group">
+        <view class="form-item">
+          <view class="form-item__val">
+            <image bindtap="refreshCode" wx:if="{{cookie}}" class="validate-img" mode="aspectFill" src="{{domain}}emptyroom/getValidateImg?cookie={{cookie}}&t={{t}}"></image>
           </view>
-        </picker>
-      </view>
-      <view class="cu-form-group">
-        <view class="title">星期</view>
-        <picker bindchange="selectWeek" value="{{index}}" range="{{weeks}}">
-          <view class="picker">
-            {{weeks[week]}}
+        </view>
+        <view class="form-item">
+          <view class="form-item__title">请输入验证码</view>
+          <view class="form-item__val">
+            <input class="code-input" maxlength="4" type="text" model:value="{{code}}" />
           </view>
-        </picker>
+        </view>
+        <view bindtap="getList" class="form-item query-btn bg-theme shadow-blur">
+          查询
+        </view>
       </view>
-      <view class="cu-form-group">
-        <view class="title">节数</view>
-        <picker bindchange="selectSection" value="{{index}}" range="{{sections}}">
-          <view class="picker">
-            {{sections[section]}}
+      <view wx:if="{{false}}" class="cu-item shadow">
+        <form>
+          <view class="cu-form-group">
+            <view class="title">校区</view>
+            <picker bindchange="selectArea" value="{{area}}" range="{{areas}}">
+              <view class="picker">
+                {{areas[area]}}
+              </view>
+            </picker>
           </view>
-        </picker>
+          <view class="cu-form-group">
+            <view class="title">教学楼</view>
+            <picker bindchange="selectFloor" value="{{floor}}" range="{{floors}}" range-key="name">
+              <view class="picker">
+                {{floors.length > 0 ? floors[floor]['name'] : '加载中...'}}
+              </view>
+            </picker>
+          </view>
+          <view class="cu-form-group">
+            <view class="title">周数</view>
+            <picker bindchange="selectWeekly" value="{{weekly}}" range="{{weeklys}}">
+              <view class="picker">
+                {{weekly?'第' + weeklys[weekly] + '周':'请选择'}}
+              </view>
+            </picker>
+          </view>
+          <view class="cu-form-group">
+            <view class="title">星期</view>
+            <picker bindchange="selectWeek" value="{{index}}" range="{{weeks}}">
+              <view class="picker">
+                {{weeks[week]}}
+              </view>
+            </picker>
+          </view>
+          <view class="cu-form-group">
+            <view class="title">节数</view>
+            <picker bindchange="selectSection" value="{{index}}" range="{{sections}}">
+              <view class="picker">
+                {{sections[section]}}
+              </view>
+            </picker>
+          </view>
+          <view class="cu-form-group">
+            <view class="title"><input type="text" model:value="{{code}}" /></view>
+            <image wx:if="{{cookie}}" class="validate-img" mode="aspectFill" src="{{domain}}emptyroom/getValidateImg?cookie={{cookie}}&t={{t}}"></image>
+          </view>
+        </form>
       </view>
-    </form>
+    </view>
+    <view class="result-list">
+      <view class="floor-item" wx:for="{{list}}" wx:key="index">
+        <view class="floor-title">{{item.floor}}</view>
+        <view class="rooms">
+          <view class="room-item" bindtap="viewName" data-name="{{item.name}}" wx:for="{{item.list}}" wx:key="name">
+            {{item.number}}
+          </view>
+        </view>
+      </view>
+    </view>
   </view>
-  <view class="padding flex flex-direction" style="padding-top:0">
-    <button bindtap="getList" class="cu-btn bg-theme margin-tb-sm lg">查询</button>
+</block>
+<van-popup show="{{showSelect}}" round position="bottom" custom-style="min-height: 20%" closeable="{{true}}" bind:close="closeSelectPopup">
+  <view class="select-popup">
+    <view class="select-popup__title">请选择{{titles[selectColumn]}}</view>
+    <view class="select-popup__list">
+      <view bindtap="selectItem" data-index="{{index}}" wx:for="{{form[selectColumn]}}" wx:key="" class="select-popup__item {{selected[selectColumn] == index ? 'active' : ''}}">
+        {{selectColumn == 'floor' ? item.name : item}}
+      </view>
+    </view>
   </view>
-  <view class="padding-left padding-right">
-    <ad-custom unit-id="adunit-03cb7d5f81c96d3c"></ad-custom>
-  </view>
-</view>
+</van-popup>

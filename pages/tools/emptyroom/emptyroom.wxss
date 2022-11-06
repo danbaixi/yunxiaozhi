@@ -1,0 +1,136 @@
+.validate-img {
+  width: 100%;
+  height: 66rpx;
+}
+
+.query-form {
+  padding: 30rpx 30rpx 0;
+}
+
+.form-group {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30rpx;
+}
+
+.form-item {
+  background-color: #fff;
+  border-radius: 20rpx;
+  box-shadow: 0px 0px 30rpx 0px rgba(215, 219, 221, 0.3);
+  padding: 14rpx 30rpx;
+  flex: 1;
+}
+
+.form-item.no-border {
+  box-shadow: none;
+  background-color: transparent;
+  padding: 0;
+}
+
+.form-item:not(:last-child) {
+  margin-right: 30rpx;
+}
+
+.form-item__title {
+  color: #666;
+  font-size: 24rpx;
+}
+
+.form-item__val {
+  color: #333;
+  font-weight: 500;
+  margin-top: 10rpx;
+  font-size: 30rpx;
+}
+
+.select-popup {
+  padding: 30rpx 20rpx;
+}
+
+.select-popup__title {
+  text-align: center;
+  font-size: 32rpx;
+  font-weight: 500;
+  margin-bottom: 40rpx;
+}
+
+.select-popup__list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.select-popup__item {
+  min-width: 120rpx;
+  min-height: 80rpx;
+  padding: 12rpx 14rpx;
+  color: #666;
+  border-radius: 12rpx;
+  border: 2rpx solid #666;
+  text-align: center;
+  font-size: 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20rpx;
+  margin-bottom: 30rpx;
+}
+
+.select-popup__item.active {
+  border-color: var(--theme);
+  background-color: var(--theme);
+  color: #fff;
+}
+
+.code-input {
+  height: 40rpx;
+  border-bottom: 2rpx solid #666;
+  color: #333;
+  font-size: 36rpx;
+  font-weight: 500;
+  text-align: center;
+}
+
+.query-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--theme);
+  color: #fff;
+  font-size: 32rpx;
+  font-weight: 700;
+  letter-spacing: 6rpx;
+}
+
+.result-list {
+  padding: 0 30rpx 30rpx;
+}
+
+.floor-item {
+  margin-top: 30rpx;
+}
+
+.floor-title {
+  font-size: 30rpx;
+  font-weight: 500;
+  color: #333;
+}
+
+.rooms {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20rpx;
+}
+
+.room-item {
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 0px 30rpx 0px rgba(215, 219, 221, 0.3);
+  padding: 14rpx 18rpx;
+  border-radius: 12rpx;
+  color: #333;
+  margin-bottom: 20rpx;
+  margin-right: 30rpx;
+}
