@@ -6,7 +6,7 @@
       <view class="cu-bar fixed bg-white" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px">
         <view class="action border-custom" style="width:{{Custom.width}}px;height:{{Custom.height}}px;margin-left:calc(750rpx - {{Custom.right}}px)">
           <text class="icon-back text-black text-bold" bindtap="backPageBtn"></text>
-          <text class="icon-refresh text-black text-bold" bindtap="showUpdate"></text>
+          <text class="icon-refresh text-black text-bold" bindtap="updateV2"></text>
         </view>
         <view class="content-yxz" style="top:{{StatusBar}}px">
           <text>成绩</text>
@@ -20,7 +20,7 @@
         <view class="padding-bottom-sm">
           <text class="text-black">上次更新：</text>
           <text class="text-gray">{{update_time}}</text>
-          <text class="bg-yellow option-btn margin-left-sm" bindtap="showUpdate">更新成绩</text>
+          <text class="bg-yellow option-btn margin-left-sm" bindtap="updateV2">更新成绩</text>
           <!-- <text class="bg-{{demandId ? 'theme' : 'grey'}} option-btn" bindtap="subscribe">订阅通知</text> -->
         </view>
         <view class="padding-top-sm">

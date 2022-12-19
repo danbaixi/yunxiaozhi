@@ -410,6 +410,13 @@
           "query": "id=3",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "搜题",
+          "pathName": "pages/tools/question/question",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

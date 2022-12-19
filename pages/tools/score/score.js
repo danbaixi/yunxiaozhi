@@ -256,6 +256,40 @@ Page({
     })
   },
 
+  updateV2() {
+    const that = this
+    const time = dayjs().unix()
+    const canUpdateResult = canUpdate('score')
+    if (canUpdateResult !== true) {
+      app.msg(canUpdateResult)
+      return
+    }
+    wx.showLoading({
+      title: '更新中...',
+    })
+    updateScore({
+      time
+    }).then((res) => {
+      wx.hideLoading()
+      if (res.status == 0) {
+        app.msg(res.message, 'success')
+        wx.setStorageSync('scores', '')
+        that.getScore(true)
+        setUpdateTime('score', time)
+        return
+      }
+      // 教务系统限制
+      if (res.status == 404) {
+        wx.showModal({
+          title: '温馨提示',
+          content: '抱歉，更新失败！目前教务系统限制了云小智服务器访问，请稍后再来更新。请您谅解！',
+          showCancel: false
+        })
+        return
+      }
+    })
+  },
+
   subscribe() {
     const that = this
     if (!that.data.demandId) {
