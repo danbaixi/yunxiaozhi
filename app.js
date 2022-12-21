@@ -375,5 +375,27 @@ App({
         })
       }, delay);
     }
+  },
+
+  // 获取跳转登录页面前的路由
+  getRedirect() {
+    const pages = getCurrentPages()
+    const currentPage = pages[pages.length - 1]
+    const url = currentPage.route
+    const options = currentPage.options
+    let params = []
+    for (let k in options) {
+      params.push(`${k}=${options[k]}`)
+    }
+    return encodeURIComponent(url + (params.length > 0 ? '?' + params.join('&') : ''))
+  },
+
+  // 去登录
+  toLogin() {
+    const redirect = this.getRedirect()
+    const url = `/pages/login/login?redirect=${redirect}`
+    wx.navigateTo({
+      url,
+    })
   }
 })

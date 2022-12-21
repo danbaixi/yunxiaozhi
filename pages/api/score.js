@@ -60,7 +60,8 @@ function getScoreAnalysis(){
 // 获取挂科率榜
 function getScoreFailRank(){
   return R({
-    url: 'score/getScoreFailRank'
+    url: 'score/getScoreFailRank',
+    needLogin: false
   })
 }
 

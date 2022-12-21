@@ -69,6 +69,22 @@ Page({
   },
 
   setOnlyMe: function(){
+    const loginStatus = app.getLoginStatus()
+    if (!loginStatus) {
+      const that = this
+      wx.showModal({
+        title:'温馨提示',
+        content: '需要登录才能查看哦',
+        showCancel: false,
+        confirmText: '去登录',
+        success(res) {
+          if (res.confirm) {
+            app.toLogin()
+          }
+        }
+      })
+      return
+    }
     this.setData({
       onlyMe: !this.data.onlyMe
     })

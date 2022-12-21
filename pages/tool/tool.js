@@ -40,7 +40,7 @@ Page({
         badge: 0,
         name: '挂科率榜',
         icon: 'score_fail',
-        needLogin: true,
+        needLogin: false,
         url: '/pages/tools/score/fail/fail',
       }, {
         color: 'orange',
