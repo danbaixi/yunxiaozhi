@@ -45,13 +45,11 @@
         当前课表非本班课表，点击切换回本班课表
       </view>
       <view class="cu-list menu" wx:if="{{course.length>0}}">
-        <view class="cu-item" wx:for="{{course}}" wx:key="key" bindtap='displayCourseInfo' data-num='{{item.indexNum}}'>
-          <view class="content text-cut">
-            <text class="text-grey">{{item.jie}}-{{item.jie_end ? item.jie_end : item.jie}} </text>
-            <text class="text-black text-df">{{item.name}}</text>
-          </view>
-          <view class="action">
-            <text class="text-black text-sm">{{item.address ? item.address : '未知'}}</text>
+        <view class="cu-item course-item" wx:for="{{course}}" wx:key="key" bindtap='displayCourseInfo' data-num='{{item.indexNum}}'>
+          <view class="text-grey course-item__section">{{item.jie}}-{{item.jie_end ? item.jie_end : item.jie}} </view>
+          <view class="text-black text-df course-item__name">{{item.name}}</view>
+          <view class="action course-address text-sm">
+            {{item.address ? item.address : '未知'}}
           </view>
         </view>
       </view>

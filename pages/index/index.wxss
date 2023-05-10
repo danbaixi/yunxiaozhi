@@ -349,3 +349,25 @@ page {
   border-radius: 24rpx;
   margin-bottom: 30rpx;
 }
+
+.course-item {
+  display: flex;
+  align-items: center;
+}
+
+.course-item__section {
+  width: 60rpx;
+  flex: none;
+}
+
+.course-item__name {
+  margin-left: 10rpx;
+  flex: 1;
+}
+
+.course-address {
+  margin-left: 10rpx;
+  color: #666;
+  justify-self: flex-end;
+  max-width: 240rpx;
+}
