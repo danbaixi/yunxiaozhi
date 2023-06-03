@@ -1,8 +1,9 @@
 <p align="center">
   <a href="https://www.yunxiaozhi.cn">
-    <img src="http://qiniu.yunxiaozhi.cn/mu.png"/>
+    <img src="https://s2.loli.net/2023/06/03/A614uRihCNPl7fX.png"/>
   </a>
 </p>
+
 
 <h1 align="center">云小智</h1>
 <div align="center">
@@ -11,10 +12,9 @@
 
 ## 简介
 一款广东白云学院教务查询微信小程序，由学生自主开发，非官方应用。
-<img src="http://qiniu.yunxiaozhi.cn/preview2.png">
 
 ## 预览
-<img width="200" src="http://qiniu.yunxiaozhi.cn/9978f799-bf6d-45d7-9ff8-a1befb9243bd.jpg">
+<img width="200" src="https://s2.loli.net/2023/06/03/pRLzNi4Z2oS9xck.jpg">
 
 ## 测试
 如果你没有白云学院教务系统账号，可使用以下测试账号绑定：
